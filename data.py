@@ -17,5 +17,5 @@ import os
 
 def load_local_data(db_path="local.db"):
     print(f"Loading local data from {db_path}...")
-    # Replace this with your actual local data loading logic
+    # Replace this with local data loading logic later. 
     return {"courses": ["CS101", "CS102", "CS103"]}
