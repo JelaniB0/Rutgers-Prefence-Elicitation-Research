@@ -9,3 +9,17 @@ Things to be done:
 3. Implement the student LLM agent using appropriate LLM technologies, decide what specific LLM model to use. 
 """
 
+import os
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
+
+from utils.azure_local import get_environment
+from data import load_local_data
+
+USE_AZURE, blob_service_client = get_environment()
+
+if USE_AZURE:
+    print("Fetching data from Azure")
+else:
+    print("Fetching data locally")
+    data = load_local_data(os.getenv("LOCAL_DB_PATH", "local.db"))
