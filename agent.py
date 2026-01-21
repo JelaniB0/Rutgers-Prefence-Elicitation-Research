@@ -106,7 +106,7 @@ agent = ChatAgent(
 
 # Interactive async loop
 async def main():
-    print("🎓 Welcome to the Rutgers CS Course Planner Agent!")
+    print("Welcome to the Rutgers CS Course Planner Agent!")
     print("Type 'quit' to exit.")
     while True:
         user_query = input("\nEnter your query: ")
@@ -118,7 +118,7 @@ async def main():
             response = await agent.run(user_query)
             last_message = response.messages[-1]
             text_content = last_message.contents[0].text
-            print("\n🎓 Course plan / suggestion:")
+            print("\n Course plan / suggestion:")
             print(text_content)
         except Exception as e:
             print(f" Error occurred: {e}")
