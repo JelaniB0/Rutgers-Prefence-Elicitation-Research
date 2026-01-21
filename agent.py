@@ -8,6 +8,11 @@ from agent_framework.openai import OpenAIChatClient
 # Load environment variables
 load_dotenv()
 
+url= os.environ.get("GITHUB_ENDPOINT", "https://models.inference.ai.azure.com"),
+key= os.environ["GITHUB_TOKEN"],
+model= os.environ["GITHUB_MODEL_ID"]
+
+
 # Rutgers CS Major Core Courses Starter Data
 COURSES = [
     {
@@ -88,9 +93,9 @@ def get_course_info(course_name: str):
 
 # Initialize OpenAIChatClient for GitHub Models
 openai_chat_client = OpenAIChatClient(
-    base_url=os.environ.get("GITHUB_ENDPOINT", "https://models.inference.ai.azure.com"),
-    api_key=os.environ["GITHUB_TOKEN"],
-    model_id=os.environ["GITHUB_MODEL_ID"]
+    base_url= url,
+    api_key= key,
+    model_id= model
 )
 
 # Instantiate the ChatAgent
