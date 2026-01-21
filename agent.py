@@ -52,7 +52,7 @@ COURSES = [
     },
     {
         "code": "01:198:211",
-        "name": "Computer Architecture & Systems Programming",
+        "name": "Computer Architecture",
         "credits": 3,
         "prerequisites": ["01:198:112"],
         "description": (
