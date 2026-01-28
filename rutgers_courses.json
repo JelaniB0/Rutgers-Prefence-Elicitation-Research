@@ -1,0 +1,388 @@
+[
+  {
+    "code": "01:198:111",
+    "title": "Introduction to Computer Science",
+    "credits": "4",
+    "prerequisites": [],
+    "description": "Intensive introduction to CS with problem decomposition, programming in Java, recursive algorithms, and basic data structures.",
+    "item_id": "required_111",
+    "course_type": "required"
+  },
+  {
+    "code": "01:198:112",
+    "title": "Data Structures",
+    "credits": "4",
+    "prerequisites": [
+      "01:198:111"
+    ],
+    "description": "Study of data abstraction and organization: lists, stacks, queues, trees, sorting/searching, and complexity analysis.",
+    "item_id": "required_112",
+    "course_type": "required"
+  },
+  {
+    "code": "01:198:205",
+    "title": "Discrete Structures I",
+    "credits": "4",
+    "prerequisites": [
+      "01:198:111"
+    ],
+    "description": "Introduction to discrete mathematical structures for computer science, including logic, sets, and proof techniques.",
+    "item_id": "required_205",
+    "course_type": "required"
+  },
+  {
+    "code": "01:198:206",
+    "title": "Discrete Structures II",
+    "credits": "4",
+    "prerequisites": [
+      "01:198:205"
+    ],
+    "description": "Continuation of discrete mathematics: counting, relations, graph theory, and recurrence relations.",
+    "item_id": "required_206",
+    "course_type": "required"
+  },
+  {
+    "code": "01:198:211",
+    "title": "Computer Architecture",
+    "credits": "4",
+    "prerequisites": [
+      "01:198:112"
+    ],
+    "description": "Introduction to computer systems, C programming, memory, and the software/hardware interface.",
+    "item_id": "required_211",
+    "course_type": "required"
+  },
+  {
+    "code": "01:198:344",
+    "title": "Design and Analysis of Algorithms",
+    "credits": "3",
+    "prerequisites": [
+      "01:198:112",
+      "01:198:205",
+      "01:198:206"
+    ],
+    "description": "Algorithm design paradigms (greedy, dynamic programming, divide and conquer) and rigorous analysis of correctness and efficiency.",
+    "item_id": "required_344",
+    "course_type": "required"
+  },
+  {
+    "code": "01:198:210",
+    "title": "Data Management for Data Science (NB)",
+    "item_id": "49543",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=49543&catid=750&degreeid=731",
+    "description": "Provides knowledge and skills needed to acquire and curate real word data, to explore the data to discover patterns and distributions, and to manage large datasets with databases.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:213",
+    "title": "Software Methodology (NB)",
+    "item_id": "2801",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2801&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:112. Principles, techniques, tools, and methods used to build modern software applications. Object-oriented design and implementation, graphical user interfaces, portability to the mobile platform, and collaborative work.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:214",
+    "title": "Systems Programming (NB)",
+    "item_id": "2802",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2802&catid=750&degreeid=731",
+    "description": "C-level programming and its accompanying paradigm; mapping of high-level language programs to underlying computing architecture; tools for effective scaling; automation using scripts.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:314",
+    "title": "Principles of Programming Languages (NB)",
+    "item_id": "2810",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2810&catid=750&degreeid=731",
+    "description": "Prerequisites: 01:198:205, 01:198:211 and Calc II. Syntax: formal languages, parsing. Design: modeling relations, modules, information hiding, abstraction. Concepts: compilers, interpreters, names, binding, memory, pointers, types. Paradigms: functional, imperative, object-oriented, logic, parallel.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:323",
+    "title": "Numerical Analysis and Computing (NB)",
+    "item_id": "2813",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2813&catid=750&degreeid=731",
+    "description": "Prerequisites: 01:640:152 and 01:640:250, both with grades of C or better. Credit not given for both this course and 01:640:373. Approximation, interpolation, numerical differentiation, integration; numerical solution of nonlinear equations, linear algebraic systems, and ordinary differential equations.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:324",
+    "title": "Numerical Methods (NB)",
+    "item_id": "2814",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2814&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:323 with a grade of C or better or 01:640:373 with a grade of C or better. Credit not given for both this course and 01:640:374. Computational methods for linear algebraic systems, eigen-values and eigenvectors, approximation of functions, splines;numerical solution of initial and boundary value problems for differential equations.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:334",
+    "title": "Introduction to Imaging and Multimedia (NB)",
+    "item_id": "2815",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2815&catid=750&degreeid=731",
+    "description": "Prerequisites: 01:198:112 or 14:332:351; 01:198:206 or 14:332:226 or 01:640:477; 01:640:250. Introduction to digital image processing, computer vision, and multimedia computing; image, video, and audio formation and processing; the basics of multimedia lossless and lossy compression.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:336",
+    "title": "Principles of Information and Data Management (NB)",
+    "item_id": "2816",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2816&catid=750&degreeid=731",
+    "description": "Describing and querying various forms of information: structured data in relational databases, unstructured text, semi-structured data; deductive knowledge. Conceptual modeling and schema design. Basics of database management system services. Advanced topics: patterns in data, information mapping and integration.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:345",
+    "title": "ALGORITHMS IN SOCIETY (NB)",
+    "item_id": "56897",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=56897&catid=750&degreeid=731",
+    "description": "Prereq: 01:198:112 or 01:198:210. This class introduces students to various types of algorithms used for real-world decisions in a wide range of applications: public policy, health, e-commerce, and justice.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:352",
+    "title": "Internet Technology (NB)",
+    "item_id": "2819",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2819&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:211 or 14:332:331; and 01:198:206 or 01:640:477 or 14:332:321. TCP/IP protocols, media access protocols, socket programmingin C/UNIX, multicasting, wireless and mobile communication, multimedia over the Internet, ATM, switching theory, andnetwork architectures.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:411",
+    "title": "Computer Architecture (NB)",
+    "item_id": "2824",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2824&catid=750&degreeid=731",
+    "description": "Prerequisites: 198:205 and either 198:211 or 332:331, all with grades of C or better. Characteristics of a modern Computer. Topics to be covered include: pipelining, instruction-level parallelism, VLIW and speculative dynamic superscalar architectures, computer arithmetic, assessing performance, memory hierarchy , input-output, and multiprocessors.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:415",
+    "title": "Compilers (NB)",
+    "item_id": "2825",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2825&catid=750&degreeid=731",
+    "description": "Prerequisites: 01:198:211 with a grade of C or better or 14:332:331 with a grade of C or better and 01:198:314, with a grade of C or better. Study of compilers and interpreters. Parsing, lexical analysis, semantic analysis, code generation, and optimization.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:416",
+    "title": "Operating Systems Design (NB)",
+    "item_id": "2829",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2829&catid=750&degreeid=731",
+    "description": "Prerequisites: 01:198:214 or (14:332:331 and 14:332:351). Computer organization, process and thread management, synchronization, scheduling, memory management, virtual memory, I/O management, file systems, and case studies.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:417",
+    "title": "Distributed Systems: Concepts and Design (NB)",
+    "item_id": "2831",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2831&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:416, with a grade of C or better. Introduction to the concepts and design principles used in distributed computer systems. Communication methods, concepts and strategies used in distributed services such as file systems, distributed shared memory, and distributed operating systems.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:419",
+    "title": "Computer Security (NB)",
+    "item_id": "2833",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2833&catid=750&degreeid=731",
+    "description": "Introduction to computer security. Topics include applied cryptography, authentication, authorization and basic security principles, as well as recent topics such as Web security and virtual machine-based security.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:424",
+    "title": "Modeling and Simulation of Continuous Systems (NB)",
+    "item_id": "2834",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2834&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:221 with a grade of C or better or 323 with a grade of C or better or 01:640:373 with a grade of C or better or permission of instructor. Principles and examples of mathematical models in the physical, economic, and life sciences. Numerical methods for differential equations. Special computers and languages for the simulationof continuous systems. Individual projects.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:425",
+    "title": "Brain-inspired Computing (NB)",
+    "item_id": "2835",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2835&catid=750&degreeid=731",
+    "description": "Prerequisites: 01:198:206 Overview of the fundamental concepts and current trends in neuro-mimetic and neuro-inspired Computing with a focus on designing neuromorphic networks for vision and movement.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:428",
+    "title": "Introduction to Computer Graphics (NB)",
+    "item_id": "2837",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2837&catid=750&degreeid=731",
+    "description": "Prerequisite: CALC2 and 01:640:250; and 01:198:112 or 14:332:351. Credit not given for both this course and 14:332:474. Displays, colors, perception, images, sampling, image processing, geometric transformations, viewing and visibility, modeling hierarchies, curve and surface design, animation, lighting, rendering, rasterization, shading, and ray tracing.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:431",
+    "title": "Software Engineering (NB)",
+    "item_id": "2840",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2840&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:213 and one of 01:198:314, 336, 352, or 416. Credit not given for both this course and 14:332:452. Problems and techniques involved in the specification, design,and implementation of large-scale software systems, studied in conjunction with actual group construction of such a system.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:437",
+    "title": "Database Systems Implementation (NB)",
+    "item_id": "2844",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2844&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:336, 01:198:214. Focuses on the implementation of data management systems. Provides students the tools to understand the internals of a DBMS: transaction management, query processing and query optimization, implementation of systems handling text data, management issues in a web context.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:439",
+    "title": "Introduction to Data Science (NB)",
+    "item_id": "2845",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2845&catid=750&degreeid=731",
+    "description": "Focuses on algorithms and tools for solving data-science problems, including preparation, characterization and presentation, analysis, and applications.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:440",
+    "title": "Introduction to Artificial Intelligence (NB)",
+    "item_id": "2846",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2846&catid=750&degreeid=731",
+    "description": "Prereq: (01:198:205 INTRODUCTION TO DISCRETE STRUCTURES I or 14:332:202 DISCRETE MATH ECE or 14:332:312 DISCRETE MATHEMATICS ECE) AND (01:640:152 CALCULUS II FOR MATHEMATICAL AND PHYSICAL SCIENCES or 01:640:192 HONORS CALCULUS II) Broad introduction to artificial intelligence, including search, knowledge representation, natural language understanding, and computer vision.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:442",
+    "title": "Topics in Computer Science (NB)",
+    "item_id": "2847",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2847&catid=750&degreeid=731",
+    "description": "Prereq: 01:198:111 or 01:198:142 Advanced topics in computer science. Topics vary from year to year according to the interests of students and faculty.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:443",
+    "title": "Topics in Computer Science (NB)",
+    "item_id": "2848",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2848&catid=750&degreeid=731",
+    "description": "Advanced topics in computer science. Topics vary from year to year according to the interests of students and faculty.",
+    "credits": "3"
+  },
+  {
+    "code": "01:198:444",
+    "title": "Topics in Computer Science (NB)",
+    "item_id": "2849",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2849&catid=750&degreeid=731",
+    "description": "Advanced topics in computer science. Topics vary from year to year according to the interests of students and faculty.",
+    "credits": "3"
+  },
+  {
+    "code": "01:198:452",
+    "title": "Formal Languages and Automata (NB)",
+    "item_id": "2852",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2852&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:344 with a grade of C or better. Finite automata and regular languages; context free languages, pushdown automata and parsing; language hierarchies; Turing machines; decidability and complexity of languages. Applications emphasized throughout.",
+    "credits": "3"
+  },
+  {
+    "code": "01:198:460",
+    "title": "INTRODUCTION TO COMPUTATIONAL ROBOTICS (NB)",
+    "item_id": "2853",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2853&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:206 or permission of instructor General introduction to robotics from a computational perspective with a focus on mobile robots. Provides hands-on experience through projects on various robotic platforms including exposure to industry standard software.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:461",
+    "title": "MACHINE LEARNING PRINCIPLES (NB)",
+    "item_id": "51265",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=51265&catid=750&degreeid=731",
+    "description": "Systematic introduction to machine learning, covering theoretical as well as practical aspects of the use of statistical methods. Topics include linear models for classification and regression, support vector machines, regularization and model selection, and introduction to deep learning. Application examples are taken from areas like computer vision, natural language processing, information retrieval and others.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:462",
+    "title": "INTRODUCTION TO DEEP LEARNING (NB)",
+    "item_id": "51266",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=51266&catid=750&degreeid=731",
+    "description": "Introduction to deep learning. Includes theories, principles, and practices of traditional neural networks and modern deep learning. The topics include fundamentals of Machine Learning, neural networks, modern deep learning, and applications and advanced topics.",
+    "credits": "4"
+  },
+  {
+    "code": "01:198:463",
+    "title": "DESIGN AND ANALYSIS OF RANDOMIZED ALGORITHMS (NB)",
+    "item_id": "56924",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=56924&catid=750&degreeid=731",
+    "description": "Prereq: 01:198:344. This course offers an introduction into the tools and techniques of randomized algorithms, at a level accessible to advanced undergraduates.",
+    "credits": "4"
+  },
+  {
+    "code": "01:615:441",
+    "title": "Linguistics and Cognitive Science (NB)",
+    "item_id": "6395",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=6395&catid=750&degreeid=731",
+    "description": "Prereq: 01:615:305, 315, 325, or 350. Linguistic theory and the human mind/brain. Acquisition and processing of natural language. Parsing. Formal learning. Language deficits. Symbolic and connectionist approaches to language.",
+    "credits": "3"
+  },
+  {
+    "code": "01:730:315",
+    "title": "Applied Symbolic Logic (NB)",
+    "item_id": "6937",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=6937&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:730:201. Use of deduction techniques (see 01:730:201) to formalize various subject matters such as modal logic, set theory, formal arithmetic, and relevance logic.",
+    "credits": "3"
+  },
+  {
+    "code": "01:730:329",
+    "title": "Minds, Machines, and Persons (NB)",
+    "item_id": "6945",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=6945&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:198:205 Comparison of the nature of the human mind and that of complex machines. Consequences for questions about the personhoodof robots.",
+    "credits": "3"
+  },
+  {
+    "code": "01:730:407",
+    "title": "Intermediate Logic I (NB)",
+    "item_id": "7001",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=7001&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:730:201. Metatheory of propositional and first-order predicate logic. Completeness is proved and its consequences are explored.",
+    "credits": "3"
+  },
+  {
+    "code": "01:730:408",
+    "title": "Intermediate Logic II (NB)",
+    "item_id": "7003",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=7003&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:730:407. Computability and recursiveness; metatheory of first-order theories; incompleteness theorems; special topics as time permits.",
+    "credits": "3"
+  },
+  {
+    "code": "01:730:424",
+    "title": "The Logic of Decision (NB)",
+    "item_id": "7027",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=7027&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:730:201 or 315 or 407 or 408 or 422. Analysis of rational preference and nondeductive inferencewith special emphasis on the examination of alternative conceptsof utility and probability.",
+    "credits": "3"
+  },
+  {
+    "code": "01:960:384",
+    "title": "Intermediate Statistical Analysis (NB)",
+    "item_id": "8875",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=8875&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:960: 211, 285, 379, 381, or permission of the instructor. Credit not given for this course and 01:960:212 or 484. Credit not given for this course and 01:960:401 unless 401 is being used, with permission of the department, as a prerequisite for this course. Application of statistical techniques to the analysis of data; tests of significance, correlation and regression analysis, confidence intervals, analysis of variance and some design of experiments, analysis of cross-classified data, chi-square tests. The course requires the use of a basic statistics computer package.",
+    "credits": "3"
+  },
+  {
+    "code": "01:960:463",
+    "title": "Regression Methods (NB)",
+    "item_id": "8883",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=8883&catid=750&degreeid=731",
+    "description": "Prerequisite: Level II Statistics. Multiple and nonlinear correlation and regression techniques for analysis of events in time and space: analysis of variance and covariance, related multivariate techniques, response surface approaches.",
+    "credits": "3"
+  },
+  {
+    "code": "01:960:476",
+    "title": "Introduction to Sampling (NB)",
+    "item_id": "8885",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=8885&catid=750&degreeid=731",
+    "description": "Prerequisite: 01:960:379 or 381 with a C or better or equivalent or permission of department. Principles of sampling application for economic procurement or assessment of data. Current techniques for area sampling, sampling of accounts, large-scale surveys, stratification.",
+    "credits": "3"
+  },
+  {
+    "code": "01:960:486",
+    "title": "APPLIED STATISTICAL LEARNING (NB)",
+    "item_id": "57807",
+    "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=57807&catid=750&degreeid=731",
+    "description": "Prereq: (01:960:212 STATISTICS II ) OR (01:960:291 Inference Data Science) OR (01:960:380 ) OR (01:960:384 INTRMD STAT ANALYSIS ) OR (01:960:401 BASIC STATISTICS FOR RESEARCH ) OR (01:960:484 BASIC APPLIED STATISTICS ) Use of various computer-based techniques, including graphical, to understand and interpret data. Exposure to basic analysis of categorical, time-series, and multivariate data in applied areas such as biostatistics, quality control, and others.",
+    "credits": "3"
+  }
+]
