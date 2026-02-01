@@ -128,7 +128,7 @@ if __name__ == "__main__":
     
     # cookies pasted here
     cookies = {
-       
+        # enter cookies here
     }
     
     if not cookies or all(not v for v in cookies.values()):
