@@ -1,0 +1,435 @@
+{
+  "schema_version": "1.0",
+  "description": "Query validation schema for course recommendation system",
+  "last_updated": "2024-01-15",
+  
+  "valid_intents": [
+    "course_recommendation",
+    "clarification",
+    "general_question",
+    "prerequisite_check",
+    "schedule_planning",
+    "degree_requirements",
+    "course_info"
+  ],
+  
+  "intent_definitions": {
+    "course_recommendation": {
+      "description": "User wants personalized course suggestions",
+      "examples": [
+        "What courses should I take next semester?",
+        "I'm interested in AI, what classes do you recommend?",
+        "Help me choose courses for my junior year"
+      ],
+      "required_entities": ["year", "interests"],
+      "optional_entities": ["credit_hours", "career_path", "gpa_priority"]
+    },
+    "clarification": {
+      "description": "User is providing additional information after being asked",
+      "examples": [
+        "I'm a junior",
+        "I want to take 12 credits",
+        "I'm interested in machine learning and databases"
+      ],
+      "required_entities": [],
+      "optional_entities": ["year", "interests", "credit_hours", "career_path"]
+    },
+    "general_question": {
+      "description": "User has a general question about CS program",
+      "examples": [
+        "What are the core CS requirements?",
+        "How many electives do I need?",
+        "What's the difference between CS and CE?"
+      ],
+      "required_entities": [],
+      "optional_entities": ["year"]
+    },
+    "prerequisite_check": {
+      "description": "User wants to verify course eligibility",
+      "examples": [
+        "Can I take CS 450 if I haven't taken CS 350?",
+        "What are the prerequisites for Machine Learning?",
+        "Do I need Calculus 2 for Algorithms?"
+      ],
+      "required_entities": ["specific_courses"],
+      "optional_entities": ["prerequisites_taken"]
+    },
+    "schedule_planning": {
+      "description": "User wants help planning their entire semester",
+      "examples": [
+        "Help me plan my fall semester",
+        "I need a 15 credit schedule",
+        "What's a good course load for next term?"
+      ],
+      "required_entities": ["year", "credit_hours"],
+      "optional_entities": ["interests", "time_constraints"]
+    },
+    "degree_requirements": {
+      "description": "User wants to know about graduation requirements",
+      "examples": [
+        "What do I need to graduate?",
+        "How many credits for a CS degree?",
+        "What are the major requirements?"
+      ],
+      "required_entities": [],
+      "optional_entities": ["year"]
+    },
+    "course_info": {
+      "description": "User wants details about a specific course",
+      "examples": [
+        "Tell me about CS 101",
+        "What does Data Structures cover?",
+        "Is Operating Systems hard?"
+      ],
+      "required_entities": ["specific_courses"],
+      "optional_entities": []
+    }
+  },
+  
+  "entity_definitions": {
+    "year": {
+      "type": "categorical",
+      "description": "Student's current academic year",
+      "valid_values": ["freshman", "sophomore", "junior", "senior", "graduate"],
+      "aliases": {
+        "freshman": ["freshman", "1st year", "first year", "frosh", "year 1"],
+        "sophomore": ["sophomore", "2nd year", "second year", "soph", "year 2"],
+        "junior": ["junior", "3rd year", "third year", "year 3"],
+        "senior": ["senior", "4th year", "fourth year", "year 4"],
+        "graduate": ["graduate", "grad student", "masters", "phd", "5th year"]
+      },
+      "extraction_patterns": [
+        "I'm a {year}",
+        "I am {year}",
+        "as a {year}",
+        "{year} student",
+        "currently {year}"
+      ]
+    },
+    
+    "interests": {
+      "type": "list",
+      "description": "CS topics/areas the student is interested in",
+      "valid_categories": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Data Science",
+        "Web Development",
+        "Mobile Development",
+        "Systems Programming",
+        "Cybersecurity",
+        "Database Systems",
+        "Algorithms",
+        "Theory",
+        "Software Engineering",
+        "Computer Graphics",
+        "Computer Networks",
+        "Cloud Computing",
+        "DevOps",
+        "Game Development",
+        "Human-Computer Interaction",
+        "Robotics",
+        "Natural Language Processing",
+        "Computer Vision"
+      ],
+      "keyword_mapping": {
+        "Artificial Intelligence": ["ai", "artificial intelligence", "intelligent systems"],
+        "Machine Learning": ["ml", "machine learning", "deep learning", "neural networks"],
+        "Data Science": ["data science", "data analysis", "big data", "analytics"],
+        "Web Development": ["web dev", "web development", "frontend", "backend", "full stack", "javascript", "react"],
+        "Mobile Development": ["mobile", "mobile dev", "android", "ios", "app development"],
+        "Systems Programming": ["systems", "operating systems", "os", "low-level", "embedded"],
+        "Cybersecurity": ["security", "cybersecurity", "infosec", "ethical hacking", "penetration testing"],
+        "Database Systems": ["databases", "db", "sql", "nosql", "data management"],
+        "Algorithms": ["algorithms", "data structures", "competitive programming"],
+        "Theory": ["theory", "theoretical cs", "computational theory", "complexity"],
+        "Software Engineering": ["software engineering", "swe", "agile", "software design"],
+        "Computer Graphics": ["graphics", "computer graphics", "3d", "rendering", "visualization"],
+        "Computer Networks": ["networks", "networking", "distributed systems"],
+        "Cloud Computing": ["cloud", "aws", "azure", "gcp", "cloud computing"],
+        "DevOps": ["devops", "ci/cd", "docker", "kubernetes"],
+        "Game Development": ["game dev", "game development", "unity", "unreal"],
+        "Human-Computer Interaction": ["hci", "ux", "ui", "user experience", "interaction design"],
+        "Robotics": ["robotics", "autonomous systems", "robot"],
+        "Natural Language Processing": ["nlp", "natural language", "text processing"],
+        "Computer Vision": ["computer vision", "cv", "image processing"]
+      },
+      "extraction_patterns": [
+        "interested in {interests}",
+        "like {interests}",
+        "want to learn {interests}",
+        "focus on {interests}",
+        "passionate about {interests}",
+        "enjoy {interests}"
+      ]
+    },
+    
+    "credit_hours": {
+      "type": "numeric",
+      "description": "Number of credit hours student wants to take",
+      "valid_range": {
+        "min": 3,
+        "max": 21,
+        "typical": [12, 15, 18]
+      },
+      "extraction_patterns": [
+        "{number} credits",
+        "{number} credit hours",
+        "{number} units",
+        "take {number} credits"
+      ]
+    },
+    
+    "career_path": {
+      "type": "text",
+      "description": "Student's intended career direction",
+      "common_paths": [
+        "Software Engineer",
+        "Data Scientist",
+        "Machine Learning Engineer",
+        "Web Developer",
+        "Mobile Developer",
+        "DevOps Engineer",
+        "Security Analyst",
+        "Database Administrator",
+        "Systems Administrator",
+        "Research Scientist",
+        "Product Manager",
+        "UX Designer",
+        "Game Developer",
+        "Cloud Architect"
+      ],
+      "extraction_patterns": [
+        "want to be a {career}",
+        "become a {career}",
+        "career in {career}",
+        "work as a {career}",
+        "interested in {career} role"
+      ]
+    },
+    
+    "gpa_priority": {
+      "type": "categorical",
+      "description": "How much the student prioritizes GPA vs. learning",
+      "valid_values": ["high", "medium", "low"],
+      "indicators": {
+        "high": [
+          "need good grades",
+          "maintain gpa",
+          "important for grad school",
+          "keep my grades up",
+          "gpa matters",
+          "competitive"
+        ],
+        "medium": [
+          "balanced",
+          "moderate challenge",
+          "some challenge okay"
+        ],
+        "low": [
+          "want to be challenged",
+          "learning over grades",
+          "don't care about gpa",
+          "want hard courses",
+          "challenge me"
+        ]
+      }
+    },
+    
+    "specific_courses": {
+      "type": "list",
+      "description": "Specific course codes or names mentioned",
+      "course_code_pattern": "^[A-Z]{2,4}\\s?\\d{3,4}[A-Z]?$",
+      "examples": ["CS 101", "DATA 301", "MATH 241", "CS450"],
+      "extraction_patterns": [
+        "{COURSE_CODE}",
+        "{course_name}",
+        "course {COURSE_CODE}",
+        "class {COURSE_CODE}"
+      ]
+    },
+    
+    "prerequisites_taken": {
+      "type": "list",
+      "description": "Courses the student has already completed",
+      "extraction_patterns": [
+        "already took {courses}",
+        "completed {courses}",
+        "finished {courses}",
+        "taken {courses}"
+      ]
+    },
+    
+    "difficulty_preference": {
+      "type": "categorical",
+      "description": "Preferred course difficulty level",
+      "valid_values": ["easy", "moderate", "challenging"],
+      "indicators": {
+        "easy": ["easy", "light", "not too hard", "manageable", "simple"],
+        "moderate": ["moderate", "medium difficulty", "balanced", "reasonable"],
+        "challenging": ["challenging", "hard", "difficult", "rigorous", "advanced"]
+      }
+    },
+    
+    "time_constraints": {
+      "type": "text",
+      "description": "Schedule preferences or constraints",
+      "common_patterns": [
+        "no early morning classes",
+        "only MWF",
+        "only Tuesday Thursday",
+        "afternoon classes",
+        "evening classes",
+        "online only",
+        "in-person only"
+      ]
+    },
+    
+    "professor_preference": {
+      "type": "list",
+      "description": "Preferred or avoided professors",
+      "extraction_patterns": [
+        "professor {name}",
+        "taught by {name}",
+        "avoid {name}",
+        "not {name}"
+      ]
+    }
+  },
+  
+  "validation_rules": {
+    "course_recommendation": {
+      "minimum_confidence": 0.5,
+      "required_entity_combinations": [
+        ["year", "interests"],
+        ["interests", "credit_hours"],
+        ["year", "credit_hours", "interests"]
+      ],
+      "validation_messages": {
+        "missing_year": "To recommend courses, I need to know what year you're in.",
+        "missing_interests": "What CS topics are you interested in?",
+        "missing_credit_hours": "How many credit hours are you planning to take?"
+      }
+    },
+    "prerequisite_check": {
+      "minimum_confidence": 0.6,
+      "required_entity_combinations": [
+        ["specific_courses"]
+      ],
+      "validation_messages": {
+        "missing_courses": "Which course are you asking about?"
+      }
+    },
+    "schedule_planning": {
+      "minimum_confidence": 0.5,
+      "required_entity_combinations": [
+        ["year", "credit_hours"],
+        ["credit_hours", "interests"]
+      ]
+    }
+  },
+  
+  "invalid_query_patterns": [
+    {
+      "category": "homework_help",
+      "keywords": [
+        "do my homework",
+        "solve this problem",
+        "answer key",
+        "solution to problem",
+        "help with assignment",
+        "complete my project"
+      ],
+      "confidence_threshold": 0.7,
+      "error_message": "I can help with course selection, but I cannot help with homework or assignments."
+    },
+    {
+      "category": "exam_cheating",
+      "keywords": [
+        "exam answers",
+        "test solutions",
+        "cheat on exam",
+        "quiz answers",
+        "exam questions"
+      ],
+      "confidence_threshold": 0.8,
+      "error_message": "I cannot provide exam answers or help with academic dishonesty."
+    },
+    {
+      "category": "off_topic",
+      "keywords": [
+        "weather",
+        "sports",
+        "politics",
+        "cooking",
+        "fashion",
+        "dating",
+        "travel"
+      ],
+      "confidence_threshold": 0.6,
+      "error_message": "I'm a course recommendation assistant. Please ask questions related to course selection and academic planning."
+    },
+    {
+      "category": "spam",
+      "keywords": [
+        "buy now",
+        "click here",
+        "free money",
+        "limited offer",
+        "act now",
+        "earn cash"
+      ],
+      "confidence_threshold": 0.9,
+      "error_message": "Invalid query detected."
+    },
+    {
+      "category": "personal_info_request",
+      "keywords": [
+        "give me your password",
+        "admin access",
+        "database credentials",
+        "student records",
+        "grades database"
+      ],
+      "confidence_threshold": 0.8,
+      "error_message": "I cannot provide access to private systems or information."
+    }
+  ],
+  
+  "course_related_keywords": [
+    "course", "class", "semester", "credit", "credits", "major", "degree",
+    "cs", "computer science", "programming", "algorithm", "data structures",
+    "software", "take", "enroll", "register", "schedule", "prerequisite",
+    "requirement", "elective", "core", "year", "junior", "senior",
+    "freshman", "sophomore", "recommend", "suggest", "help", "planning",
+    "graduation", "transcript", "gpa", "grade", "professor", "instructor",
+    "syllabus", "curriculum", "catalog"
+  ],
+  
+  "confidence_calculation": {
+    "weights": {
+      "intent_clarity": 0.3,
+      "entity_completeness": 0.3,
+      "course_keyword_presence": 0.2,
+      "schema_match": 0.2
+    },
+    "thresholds": {
+      "high_confidence": 0.8,
+      "medium_confidence": 0.5,
+      "low_confidence": 0.3
+    }
+  },
+  
+  "response_templates": {
+    "needs_clarification": {
+      "low_confidence": "I'm not sure I understand. Are you asking about course recommendations?",
+      "missing_entities": "To help you better, I need to know: {missing_fields}",
+      "ambiguous_intent": "Are you asking about {option1} or {option2}?"
+    },
+    "invalid_query": {
+      "off_topic": "I'm here to help with course selection and academic planning. Could you ask a question related to choosing courses?",
+      "inappropriate": "Please ensure your query is appropriate and related to academic advising.",
+      "too_vague": "Could you provide more details about what you're looking for?"
+    }
+  }
+}
