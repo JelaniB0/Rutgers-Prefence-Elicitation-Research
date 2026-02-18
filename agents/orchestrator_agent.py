@@ -135,30 +135,42 @@ class OrchestratorAgent():
         except Exception as e:
             print(f"Failed to initialize PlanningAgent: {e}")
 
-    async def process_query(self, user_query: str) -> str:
+    def _format_history(self, state: ConversationState) -> str:
+        """Helper to format conversation history for LLM input"""
+        if not state.conversation_history:
+            return ""
+        
+        history_str = "Previous conversation:\n"
+        for msg in state.conversation_history:
+            role = "Student" if msg['role'] == 'user' else "Advisor"
+            history_str += f"{role}: {msg['content']}\n"
+        return history_str + "\n"
+
+    async def process_query(self, user_query: str, state: ConversationState) -> tuple[str, list]:
         """
         Processes user query
         """
+        agents_invoked = []
 
         if self.parser_agent is not None:
             try:
+                state.user_query = user_query
                 print("\n[Orchestrator] Invoking Parser Agent...")
-                # conversation state for agent
-                state = ConversationState(user_query=user_query)
+                agents_invoked.append("ParserAgent")
 
                 parser_response = await self.parser_agent.parse(user_query, state)
                 print(f"[Parser Agent] success: {parser_response.success}")
 
                 if not parser_response.success:
-                    return f"I had trouble understanding your request: {', '.join(parser_response.errors)}"
+                    return f"I had trouble understanding your request: {', '.join(parser_response.errors)}", agents_invoked
                 
                 parsed_data = parser_response.data
 
                 if not parsed_data.get('is_course_related', False):
-                    return "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+                    return "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?", agents_invoked
                 
                 if parsed_data.get('intent') == 'off_topic':
-                    return "I specialize in helping Rutgers CS students find courses. Could you ask me something about course selection?"
+                    return "I specialize in helping Rutgers CS students find courses. Could you ask me something about course selection?", agents_invoked
                     
                 if parsed_data.get('needs_clarification', False):
                     suggestions = parsed_data.get('suggested_clarifications', [])
@@ -171,22 +183,22 @@ class OrchestratorAgent():
         
                         # Force clarification for overly generic queries
                         if not interests or interests == ['Computer Science'] or interests == ['CS']: # kinda hardcoded for now. 
-                            return f"I'd love to help you find courses! To give you the best recommendations, could you tell me:\n" + "\n".join(f"- {s}" for s in suggestions)
+                            return f"I'd love to help you find courses! To give you the best recommendations, could you tell me:\n" + "\n".join(f"- {s}" for s in suggestions), agents_invoked
                 
                 print(f"[Parser Agent] Intent: {parsed_data.get('intent')}")
                 print(f"[Parser Agent] Entities: {parsed_data.get('entities')}")
 
                 if self.data_agent is None:
-                        return "the data retrieval system is not available yet. "
+                        return "the data retrieval system is not available yet. ", agents_invoked
                    
-
+                agents_invoked.append("Data Agent")
                 data_response = await self.data_agent.fetch_courses(
                     parsed_data=parsed_data,
                     state=state
                 )
 
                 if not data_response.success:
-                    return f"I couldn't retrieve course data: {', '.join(data_response.errors)}"
+                    return f"I couldn't retrieve course data: {', '.join(data_response.errors)}", agents_invoked
                 
                 courses = data_response.data.get('courses', [])
                 print(f"[Data Agent] Found {len(courses)} relevant courses")
@@ -194,34 +206,10 @@ class OrchestratorAgent():
                 # course ranking logic in orchestrator 
 
                 if len(courses) == 0:
-                    return "I couldn't find any courses matching your criteria. Could you try rephrasing your interests or being more specific?"
-                
-                if self.planning_agent is None:
-                    print("\n[Orchestrator] Planning agent not available, showing unranked results...")
-
-                    print("\n[Orchestrator] Generating response...")
-
-                    context = f"""
-                    Student Query: {user_query}
-
-                    Parsed Intent: {parsed_data.get('intent')}
-                    Student Interests: {parsed_data.get('entities', {}).get('interests')}
-                    Student Year: {parsed_data.get('entities', {}).get('year')}
-
-                    Retrieved Relevant Courses:
-                    {json.dumps(courses, indent=2)}
-
-                    Based on this information, provide a helpful response to the student.
-                    Present the relevant courses you found and explain why they might be good matches.
-                    Note: Course ranking is not yet available.
-
-                    Keep your response conversational and helpful.
-                    """
-                    
-                    response = await self.agent.run(context)
-                    return response.messages[-1].contents[0].text
+                    return "I couldn't find any courses matching your criteria. Could you try rephrasing your interests or being more specific?", agents_invoked
                 
                 print("\n[Orchestrator] Invoking Planning Agent...")
+                agents_invoked.append("Planning Agent")
                 planning_response = await self.planning_agent.rank_courses(
                     courses=courses,
                     parsed_data=parsed_data,
@@ -230,7 +218,7 @@ class OrchestratorAgent():
                 )
 
                 if not planning_response.success:
-                    return f"I had trouble ranking the courses: {', '.join(planning_response.errors)}"
+                    return f"I had trouble ranking the courses: {', '.join(planning_response.errors)}", agents_invoked
                 
                 ranked_data = planning_response.data
                 ranked_courses = ranked_data.get('ranked_courses', [])
@@ -240,6 +228,7 @@ class OrchestratorAgent():
                 print("\n[Orchestrator] Generating final response...")
 
                 context = f"""
+                {self._format_history(state)}
                 Student Query: {user_query}
 
                 Student Profile:
@@ -269,7 +258,7 @@ class OrchestratorAgent():
 
                 response = await self.agent.run(context)
                 final_response = response.messages[-1].contents[0].text
-                return final_response
+                return final_response, agents_invoked
                     
             except Exception as e:
                 print(f"[Orchestrator] Error in pipeline: {e}")
@@ -278,14 +267,15 @@ class OrchestratorAgent():
                 
                 # Fallback to basic response
                 print("\n[Orchestrator] Falling back to basic response...")
-                response = await self.agent.run(user_query)
-                return response.messages[-1].contents[0].text
+                fallback_context = f"{self._format_history(state)}Student Query: {user_query}"
+                response = await self.agent.run(fallback_context)
+                return response.messages[-1].contents[0].text, agents_invoked
         
 """
 Notes on code:
 - Now includes Planning Agent for course ranking
-- Pipeline: Parser → Data → Planning → Final Response
-- Still no conversation memory (future improvement)
+- Pipeline: Orchestrator -> Parser → Data → Planning → Orchestrator Final Response
+- Still no conversation memory (future improvement) -> slightly improved with conversation history formatting, but not true memory yet
 - Still no prerequisite validation (waiting for ConstraintAgent)
 - No safeguards against agent hallucination yet
 - Not capable of holding a full back and forth conversation right now
@@ -294,11 +284,6 @@ Notes on code:
 """
 
 # initialize agents expands later. 
-
-
-
-
-
 
 # general note for this week, follow tutorial very closely. 
 

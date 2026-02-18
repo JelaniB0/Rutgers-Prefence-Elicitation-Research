@@ -185,6 +185,20 @@ Always return valid JSON with your analysis.
         Match the query against the valid_intents in the schema. Determine what the student is trying to accomplish.
         If the query matches invalid_query_patterns, mark it as off_topic.
 
+        DOMAIN RESTRICTION:
+        This system ONLY handles Rutgers Computer Science courses.
+        Use the schema's "interests.valid_categories" as the definitive list of valid topics.
+        Use the schema's "course_related_keywords" to determine if a query is course-related.
+
+        If the student's interests do not map to anything in "interests.valid_categories", set:
+        - is_course_related: false
+        - intent: "off_topic"
+
+        Examples of what should be off_topic:
+        - Environmental Science → not in valid_categories → off_topic
+        - Biology, Chemistry, History, Economics → off_topic
+        - Machine Learning, Cybersecurity, Web Development → valid, proceed normally
+
         KEY RULES:
         - Students saying "I need help", "I don't know where to start", "What should I take?" are seeking course recommendations
         - Only mark as off_topic if clearly unrelated to courses/academics (weather, sports, entertainment, etc.)
@@ -280,152 +294,3 @@ Always return valid JSON with your analysis.
             traceback.print_exc()
             return self._get_fallback_parse(query)
     
-    # Match parsed data against schema patterns
-
-    # LLM extracts query data, parses that data into structured formatting, then uses this hard-coded schema to match against query_schema.json with queries we are expecting or looking
-    # for. Is this better? In terms of cost and speed? As well as LLM understanding not being a factor and us already knowing what we are looking for/expecting? 
-    # Or is this worst because we are not leveraging how flexible LLM can be with different queries? 
-    # Can consider a bit of both -- need to do further testing with this method and our confidence scoring method. 
-    # def _match_schema(self, parsed_data: Dict) -> Dict:
-    #     """
-    #     Match parsed data against the query schema
-    #     Uses NEW schema structure with intent_definitions
-        
-    #     Args:
-    #         parsed_data: Parsed data from LLM
-            
-    #     Returns:
-    #         Dictionary with schema matching results
-    #     """
-    #     intent = parsed_data.get("intent", "unknown")
-    #     entities = parsed_data.get("entities", {})
-        
-    #     # Check if intent is valid
-    #     valid_intents = self.query_schema.get("valid_intents", [])
-    #     is_valid_intent = intent in valid_intents
-        
-    #     # Get required entities for this intent from NEW schema structure
-    #     intent_definitions = self.query_schema.get("intent_definitions", {})
-    #     intent_def = intent_definitions.get(intent, {})
-    #     required_entities = intent_def.get("required_entities", [])
-        
-    #     # Check which entities are present
-    #     present_entities = [key for key, value in entities.items() 
-    #                       if value is not None and value != [] and value != ""]
-        
-    #     # Find missing required entities
-    #     missing_required = [e for e in required_entities if e not in present_entities]
-        
-    #     # Calculate match score
-    #     if is_valid_intent:
-    #         if not missing_required:
-    #             match_score = 1.0  # Perfect match
-    #         elif required_entities:
-    #             # Partial match based on how many required entities are present
-    #             present_required = len(required_entities) - len(missing_required)
-    #             match_score = 0.3 + (0.5 * (present_required / len(required_entities)))
-    #         else:
-    #             match_score = 0.8  # Valid intent but no required entities defined
-    #     else:
-    #         match_score = 0.0  # Invalid intent
-        
-    #     return {
-    #         "is_valid_intent": is_valid_intent,
-    #         "match_score": match_score,
-    #         "missing_required_entities": missing_required,
-    #         "present_entities": present_entities,
-    #         "required_entities": required_entities
-    #     }
-    
-    
-    # # skeptical about this. 
-    # def _calculate_confidence(self, parsed_data: Dict, schema_match: Dict) -> float:
-    #     """
-    #     Calculate overall confidence score for the parse
-    #     Uses weights from schema if available
-        
-    #     Args:
-    #         parsed_data: Parsed data from LLM
-    #         schema_match: Schema matching results
-            
-    #     Returns:
-    #         Confidence score between 0.0 and 1.0
-    #     """
-    #     # Get confidence calculation weights from schema
-    #     confidence_config = self.query_schema.get("confidence_calculation", {})
-    #     weights = confidence_config.get("weights", { # How do we correctly set weights here? 
-    #         "intent_clarity": 0.3,
-    #         "entity_completeness": 0.3,
-    #         "course_keyword_presence": 0.2,
-    #         "schema_match": 0.2
-    #     })
-        
-    #     # 1. Intent clarity (schema match score)
-    #     intent_clarity = schema_match["match_score"]
-        
-    #     # 2. Entity completeness
-    #     entities = parsed_data.get("entities", {})
-    #     non_null_entities = sum(1 for v in entities.values() 
-    #                            if v is not None and v != [] and v != "")
-    #     total_possible_entities = len(entities)
-        
-    #     if total_possible_entities > 0:
-    #         entity_completeness = non_null_entities / total_possible_entities
-    #     else:
-    #         entity_completeness = 0.0
-        
-    #     # 3. Course keyword presence
-    #     course_related = 1.0 if parsed_data.get("is_course_related", True) else 0.0
-        
-    #     # 4. Schema match (already calculated)
-    #     schema_match_score = schema_match["match_score"]
-        
-    #     # Calculate weighted confidence
-    #     confidence = (
-    #         intent_clarity * weights.get("intent_clarity", 0.3) +
-    #         entity_completeness * weights.get("entity_completeness", 0.3) +
-    #         course_related * weights.get("course_keyword_presence", 0.2) +
-    #         schema_match_score * weights.get("schema_match", 0.2)
-    #     )
-        
-    #     # Boost if all required entities are present
-    #     if not schema_match.get("missing_required_entities", []):
-    #         confidence = min(1.0, confidence + 0.1)
-        
-    #     return round(confidence, 2)
-
-# Code to consider LLM with hardcoded schema approach. 
-
-# async def _llm_parse_with_schema(self, query: str, state: ConversationState) -> Dict:
-#     """LLM sees full schema and makes intelligent decisions"""
-    
-#     prompt = f"""<query_schema>
-# {json.dumps(self.query_schema, indent=2)}
-# </query_schema>
-
-# Parse this query according to the schema above.
-# Query: "{query}"
-
-# IMPORTANT:
-# - Choose intent from valid_intents
-# - Extract entities matching entity_definitions
-# - Check against invalid_query_patterns
-# - Explain your reasoning
-
-# Return ONLY JSON."""
-    
-#     response = await self.run(prompt)
-#     return self._extract_json(response)
-
-# def _validate_llm_output(self, parsed: Dict) -> Dict:
-#     """Python does safety validation on LLM output"""
-    
-#     # Safety: ensure intent is valid
-#     if parsed["intent"] not in self.query_schema["valid_intents"]:
-#         parsed["intent"] = "unknown"
-#         parsed["validation_error"] = "Invalid intent from LLM"
-    
-#     # Safety: ensure entity types match
-#     # (but don't be too strict - let LLM be smart)
-    
-#     return parsed

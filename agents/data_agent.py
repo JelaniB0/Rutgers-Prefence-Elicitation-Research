@@ -224,7 +224,8 @@ class DataAgent(ChatAgent):
         print(f"[DataAgent] RAG query: {query}")
         
         # builds metadata filters -> look into this later
-        where_filter = self._build_metadata_filters(entities)
+        # where_filter = self._build_metadata_filters(entities)
+        where_filter = None
 
         # retrieve courses from vector DB
         retrieval_results = self.vector_db.query(
@@ -268,15 +269,15 @@ class DataAgent(ChatAgent):
         
         return " ".join(query_parts) if query_parts else "computer science courses"
     
-    def _build_metadata_filters(self, entities: Dict) -> Dict:
-        """Build metadata filters for vector search (optional pre-filtering)"""
-        filters = {}
+    # def _build_metadata_filters(self, entities: Dict) -> Dict:
+    #     """Build metadata filters for vector search (optional pre-filtering)"""
+    #     filters = {}
         
-        # Optional: Filter by course level based on year
-        year = entities.get('year')
-        if year in ['freshman', 'sophomore']:
-            filters['level'] = {'$in': ['intro', 'intermediate']}
-        elif year in ['junior', 'senior']:
-            filters['level'] = {'$in': ['intermediate', 'advanced']}
+    #     # Optional: Filter by course level based on year
+    #     year = entities.get('year')
+    #     if year in ['freshman', 'sophomore']:
+    #         filters['level'] = {'$in': ['intro', 'intermediate']}
+    #     elif year in ['junior', 'senior']:
+    #         filters['level'] = {'$in': ['intermediate', 'advanced']}
         
-        return filters if filters else None
+    #     return filters if filters else None
