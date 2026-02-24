@@ -40,6 +40,86 @@
         }
       ],
       "ended_at": "2026-02-18T01:16:12.082534"
+    },
+    {
+      "session_id": "2026-02-18 12:39:43",
+      "started_at": "2026-02-18T12:39:43.833293",
+      "turns": [
+        {
+          "timestamp": "2026-02-18T12:44:12.083394",
+          "user_query": "I'm interested in Computer Science",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- Can you tell me what year you're in (e.g., freshman, sophomore, etc.)?\n- Are there specific topics in Computer Science you're interested in? For example, AI, cybersecurity, or software engineering.\n- How many courses or credit hours are you planning to take next semester?"
+        },
+        {
+          "timestamp": "2026-02-18T12:45:17.609787",
+          "user_query": "I am a junior",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- Can you tell me more about what CS topics interest you? For example, AI, cybersecurity, web development, etc.\n- How many courses or credit hours are you planning to take next semester?"
+        },
+        {
+          "timestamp": "2026-02-18T12:45:35.979227",
+          "user_query": "I am interested in AI",
+          "agents_invoked": [
+            "ParserAgent",
+            "Data Agent",
+            "Planning Agent"
+          ],
+          "response": "That\u2019s fantastic! Since you\u2019re interested in Artificial Intelligence (AI) and are in your junior year, I\u2019ve put together a list of courses that I think would really fit your interests and set you up for success in the field. Here are the top five recommendations for AI-related courses, ranked just for you:\n\n---\n\n### **#1 - 01:198:440: Introduction to Artificial Intelligence (New Brunswick)**  \nThis is the perfect starting point for diving deeper into AI\u2014it\u2019s hands-down THE foundational course for understanding what AI is all about. From search algorithms to natural language understanding to computer vision, it gives you a wide-ranging overview of the major areas of AI. Since you're a junior, you\u2019ll likely have the background to handle this course, and it\u2019ll set you up for more advanced AI topics later on.  \n\n**Why this is great for you:**  \n- It aligns directly with your interest in AI.  \n- You\u2019ll build a strong foundation in all the essentials of AI.  \n- It\u2019s critical whether your goal is deeper studies or industry applications.  \n\n---\n\n### **#2 - 01:198:462: Introduction to Deep Learning (New Brunswick)**  \nDeep learning is at the core of most cutting-edge AI technologies today, and this course is all about that. It focuses on understanding and building neural networks, which power things like image recognition and natural language processing. If you want to learn the techniques that make breakthroughs in AI possible, this is the course for you.  \n\n**Why this is great for you:**  \n- It\u2019s perfect for going beyond the basics once you\u2019re familiar with foundational AI concepts.  \n- You\u2019ll gain highly practical skills for tackling real-world AI problems.  \n- It\u2019s a great choice for shaping a career in modern AI, especially in areas like computer vision.  \n\n---\n\n### **#3 - 01:198:461: Machine Learning Principles (New Brunswick)**  \nMachine learning (ML) is essentially a building block of AI, and this course gives you a mix of theory and practical knowledge. From learning about algorithms to applying them to solve data-driven problems, this course will deepen your understanding of how AI systems work.   \n\n**Why this is great for you:**  \n- It drills into the \u201chow\u201d and \u201cwhy\u201d of AI systems, teaching you theoretical and practical methods.  \n- You\u2019ll tackle topics like support vector machines and deep learning techniques\u2014skills in demand across AI fields.  \n- Whether you want to go into AI development or data analysis, this course will be incredibly useful.  \n\n---\n\n### **#4 - 01:198:425: Brain-Inspired Computing (New Brunswick)**  \nThis one is really cool\u2014if you\u2019re intrigued by the connection between how the human brain works and how we build computational systems, this course is worth exploring. It focuses on neuro-inspired computing and how biological systems influence AI, particularly in things like neuromorphic computing.  \n\n**Why this is great for you:**  \n- It\u2019s a unique, cutting-edge course that combines neuroscience and computer science\u2014perfect if you\u2019re curious about interdisciplinary approaches in AI.  \n- It helps you think about AI from a completely different perspective, which could be valuable for research or innovative projects in the future.  \n- It\u2019s a deeper dive into creative and experimental parts of AI development.  \n\n---\n\n### **#5 - 01:198:439: Introduction to Data Science (New Brunswick)**  \nAI runs on data, and this course focuses on exactly what you need to know to prep, analyze, and extract insights from data. It\u2019s not purely an AI course, but mastering data science is a crucial complementary skill for anyone interested in AI.  \n\n**Why this is great for you:**  \n- You\u2019ll build hands-on skills to manipulate and analyze data\u2014essential for developing AI models.  \n- It gives you practical tools for data exploration, which translates directly to AI problem-solving.  \n- It\u2019s highly relevant in every corner of AI, especially for building data-driven systems.  \n\n---\n\n### A quick note:  \nWhile these courses are excellent picks for your AI interests, I recommend you check their prerequisites as I can\u2019t confirm them for you (our Constraint Agent isn\u2019t active yet). If you'd like guidance on preparing for any of these, let me know!\n\nI\u2019m so excited for you\u2014AI is such a fascinating and fast-growing field! Whether your goal is expanding your knowledge for research or gearing up for industry jobs, these courses are a solid step forward. Let me know if you want me to help with enrollment strategies or any other advice. \ud83d\ude0a"
+        },
+        {
+          "timestamp": "2026-02-18T12:49:56.525743",
+          "user_query": "I'm interested in courses related to environmental science",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        }
+      ],
+      "ended_at": "2026-02-18T13:31:49.515850"
+    },
+    {
+      "session_id": "2026-02-18 15:53:00",
+      "started_at": "2026-02-18T15:53:00.697655",
+      "turns": [
+        {
+          "timestamp": "2026-02-18T15:54:13.178430",
+          "user_query": "hi",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- Could you tell me how I can assist you? Are you looking for course recommendations or information about Rutgers CS courses?"
+        }
+      ]
+    },
+    {
+      "session_id": "2026-02-18 15:57:23",
+      "started_at": "2026-02-18T15:57:23.139567",
+      "turns": [
+        {
+          "timestamp": "2026-02-18T15:57:45.839474",
+          "user_query": "actually, instead of me asking you questions. what questions would u want me to ask you regarding computer science?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- What specific areas of computer science are you interested in?\n- Are you looking for help understanding CS courses or the program overall?\n- Do you have questions about any specific topics, like AI, web development, or theory?"
+        },
+        {
+          "timestamp": "2026-02-18T15:59:25.632325",
+          "user_query": "tell me more about security engineering, I want to work at Apple",
+          "agents_invoked": [
+            "ParserAgent",
+            "Data Agent",
+            "Planning Agent"
+          ],
+          "response": "That\u2019s awesome to hear you\u2019re interested in security engineering and working at Apple! Cybersecurity is such an exciting and in-demand field, and I\u2019m really glad you\u2019re exploring it. I\u2019ve picked out five courses at Rutgers that I think would be especially helpful for you as someone focused on becoming a Security Analyst. Here\u2019s a personalized breakdown of those courses, ranked by how well they align with your goals:\n\n---\n\n**#1 - 01:198:419: Computer Security**  \nThis course is the *top recommendation* for you because it dives straight into what you're passionate about\u2014cybersecurity. You'll learn essential skills like applied cryptography, authentication, and modern topics such as web security and protecting virtual machine environments. These are exactly the sort of skills that someone in a Security Analyst role at Apple would need to succeed. Plus, understanding these principles is critical for tackling real-world security challenges.\n\n*Why it's perfect for you:* It directly aligns with the cybersecurity expertise you want to develop, and it's packed with practical, career-relevant topics. If you\u2019re excited about designing secure systems and staying ahead of cyber threats, this will be a game-changer for you.\n\n---\n\n**#2 - 01:198:214: Systems Programming**  \nCybersecurity professionals often need a strong grasp of how systems operate under the hood, and this course covers just that. Systems Programming teaches you to interact directly with operating systems, manage low-level resources, and work in languages like C, which is widely used in security-focused roles. These skills are critical for understanding vulnerabilities and building secure systems\u2014a must for future security engineers.\n\n*Why it's perfect for you:* This course lays the groundwork for identifying and patching security flaws in complex systems. It\u2019ll help you develop the technical depth that companies like Apple look for in security-focused roles.\n\n---\n\n**#3 - 01:198:416: Operating Systems Design**  \nKnowing how operating systems work is key to cybersecurity, and this course gives you that foundation. You'll get to explore how systems handle processes, memory, and file storage\u2014which are areas often targeted by attackers. With this knowledge, you'll be better equipped to secure systems from the ground up.\n\n*Why it's perfect for you:* This course is a must for understanding and preventing vulnerabilities within operating systems, which are critical skills for ensuring the security of applications and hardware.\n\n---\n\n**#4 - 01:198:352: Internet Technology**  \nThis course dives into how the internet actually works\u2014network protocols, socket programming, and, most importantly, the basics of network security. A huge part of working in cybersecurity involves understanding network vulnerabilities and protecting communications, so this one could be both fascinating and highly practical for you.\n\n*Why it's perfect for you:* It will help you connect the dots between network technologies and security strategies, which are key to becoming a strong Security Analyst. If you\u2019re curious about online threats and how to defend against them, this class will be exciting for you.\n\n---\n\n**#5 - 01:198:213: Software Methodology**  \nThis course may seem a bit like a general software engineering class, but it\u2019s highly relevant to security because creating secure software requires a strong foundation in software design and development practices. You\u2019ll learn how to collaborate on projects, work in object-oriented designs, and improve your coding skills\u2014all of which are important when building or auditing secure software.\n\n*Why it's perfect for you:* Security isn't just about defending systems\u2014it\u2019s also about creating strong, secure systems from the start. This class will give you the skills to write software that\u2019s harder for attackers to exploit, which is something Apple or any other tech company would value in a Security Analyst.\n\n---\n\n**A quick note about prerequisites:** These courses may have some prerequisites you\u2019ll need to complete first. When you decide which courses you\u2019d like to pursue, we can chat about your academic plan and make sure everything aligns to get you prepared.\n\n---\n\nEach of these courses will help you build a strong foundation in cybersecurity, systems, and secure development, which are all critical areas for working at Apple\u2014or any other company in the tech industry! If any of these courses stand out to you or if you\u2019d like to explore more options, let me know. I\u2019ll be here to help you plan your path forward. You\u2019ve got this!"
+        }
+      ],
+      "ended_at": "2026-02-18T16:07:15.845590"
     }
   ]
 }
