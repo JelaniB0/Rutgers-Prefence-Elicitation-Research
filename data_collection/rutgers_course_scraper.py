@@ -138,7 +138,7 @@ if __name__ == "__main__":
         courses, soup, session, headers = scrape_rutgers_courses(cookies)
         
         if courses:
-            print(f"\n✓ Found {len(courses)} courses!")
+            print(f"\n Found {len(courses)} courses!")
             
             # Now fetch details for each course
             print("\nFetching detailed information for each course...")
