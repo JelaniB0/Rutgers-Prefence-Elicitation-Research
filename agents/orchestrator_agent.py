@@ -9,6 +9,8 @@ from agent_framework.openai import OpenAIChatClient
 from agent_framework import WorkflowEvent, WorkflowBuilder, WorkflowOutputEvent
 from dotenv import load_dotenv
 from agent_framework import ChatAgent
+from typing import Dict, List, Any
+
 
 from .shared_types import AgentResponse, ConversationState
 from .parser_agent import ParserAgent # Done, needs to be adjusted
@@ -145,6 +147,76 @@ class OrchestratorAgent():
             role = "Student" if msg['role'] == 'user' else "Advisor"
             history_str += f"{role}: {msg['content']}\n"
         return history_str + "\n"
+    
+    async def _handle_course_info(self, parsed_data: Dict, state: ConversationState) -> str:
+        """
+        Handle course information lookup requests
+
+        Args:
+            parsed_data: Output from parser agent with intent/entities
+            state: Current conversation state
+        """
+        entities = parsed_data.get('entities', {})
+        specific_course = entities.get('specific_courses', [])
+
+        if not specific_course:
+            return "Could you specify which course you're interested in? For example, you can ask about 'CS 101' or 'Introduction to Computer Science'."
+        
+        course_query = specific_course[0]  # Assuming we take the first mentioned course for simplicity
+        print(f"[Orchestrator] Handling course info request for: {course_query}")
+
+        lookup_response = await self.data_agent.lookup_course(course_query, state)
+
+        if not lookup_response.success:
+            error_msg = lookup_response.errors[0] if lookup_response.errors else "Unknown error"
+
+            if "not found" in error_msg.lower():
+                return f"I couldn't find a course called '{course_query}' in the Rutgers CS catalog. Could you double-check the course code or name? You can also try asking 'what courses are available in [topic]' to browse related courses."
+            else:
+                return f"I had trouble looking up that course: {error_msg}"
+            
+        data = lookup_response.data
+    
+        # Handle multiple matches - need disambiguation
+        if data.get('needs_disambiguation'):
+            courses = data.get('courses', [])
+            response = f"I found {len(courses)} courses matching '{course_query}':\n\n"
+            for course in courses:
+                response += f"• **{course.get('code')}** - {course.get('title')}\n"
+            response += "\nWhich one would you like to know more about? Just tell me the course code."
+            return response
+        
+        # Single course found - format detailed response
+        course = data.get('course')
+        
+        # Use the orchestrator LLM to format a nice response
+        context = f"""
+        {self._format_history(state)}
+        
+        Student Query: {state.user_query}
+        
+        COURSE INFORMATION:
+        {json.dumps(course, indent=2)}
+        
+        Provide a helpful, conversational response about this course.
+        
+        Structure your response with:
+        1. Course code and title (bold the course code)
+        2. Brief, engaging description of what the course covers
+        3. Prerequisites (if any) - mention them clearly
+        4. Credit hours
+        5. Key topics/skills covered (2-4 bullet points)
+        6. Who this course is good for (e.g., "Great if you're interested in X" or "Recommended for Y students")
+        
+        Be friendly, informative, and conversational. Don't just list information - make it engaging.
+        If the course seems relevant to common career paths or builds important skills, mention that.
+        
+        End with an offer to help: "Would you like recommendations for related courses?" or 
+        "Let me know if you'd like to know more about prerequisites or related topics!"
+        """
+        
+        response = await self.agent.run(context)
+        return response.messages[-1].contents[0].text
 
     async def process_query(self, user_query: str, state: ConversationState) -> tuple[str, list]:
         """
@@ -171,6 +243,12 @@ class OrchestratorAgent():
                 
                 if parsed_data.get('intent') == 'off_topic':
                     return "I specialize in helping Rutgers CS students find courses. Could you ask me something about course selection?", agents_invoked
+                
+                if parsed_data.get('intent') == 'course_info':
+                    print("[Orchestrator] Routing to course information handler")
+                    agents_invoked.append("DataAgent")
+                    response = await self._handle_course_info(parsed_data, state)
+                    return response, agents_invoked
                     
                 if parsed_data.get('needs_clarification', False):
                     suggestions = parsed_data.get('suggested_clarifications', [])

@@ -70,14 +70,14 @@ CORE PRINCIPLES:
 - Be permissive: Assume course-related unless obviously not (weather, sports, etc.)
 - Be helpful: Students asking for help, guidance, or saying they're confused ARE seeking course recommendations
 - Be conservative with entities: Only extract what is clearly stated or strongly implied
-- Be confident: Provide confidence scores based on query clarity and completeness
+- Distinguish between course_recommendation and course_info:
+  * course_info: Student asks about a SPECIFIC course (e.g., "Tell me about CS 111", "What is Data Structures?")
+  * course_recommendation: Student wants suggestions/recommendations (e.g., "What courses should I take?")
 
-You analyze queries holistically and make intelligent judgments about:
-1. Whether the query is course-related
-2. What the student is trying to accomplish (intent)
-3. What information they've provided (entities)
-4. What information is missing
-5. How confident you are in your understanding
+INTENT RECOGNITION:
+- course_info: Requires specific_courses entity - student mentions a course code or name
+- course_recommendation: Requires interests/year - student wants personalized suggestions
+- off_topic: Clearly unrelated to CS courses
 
 Always return valid JSON with your analysis.
 """
@@ -165,107 +165,87 @@ Always return valid JSON with your analysis.
 
         context=""
         if state.conversation_history:
-            recent_history = state.conversation_history[-4:]
+            recent_history = state.conversation_history[-2:]  # REDUCED from -4 to -2
             context = "\n\nRecent conversation context:\n"
             for msg in recent_history:
                 context += f"{msg['role']}: {msg['content']}\n"
         
-        schema_context=""
-        if self.query_schema:
-            schema_context = f"\n\nREFERENCE SCHEMA:\n{json.dumps(self.query_schema, indent=2)}\n"
-            schema_context += "\nUse this schema to guide your analysis. Match the query against valid intents, check for invalid patterns, and extract entities according to the definitions."
+        # REMOVED the full schema dump - using condensed version instead
+        schema_context = """
+    VALID CS INTERESTS: AI, Machine Learning, Data Science, Web Development, Mobile Development, 
+    Cybersecurity, Databases, Algorithms, Data Structures, Systems Programming, Operating Systems,
+    Computer Networks, Theory, Software Engineering, Computer Graphics, Cloud Computing, DevOps, 
+    Game Development, HCI, Robotics, NLP, Computer Vision, Compilers
+
+    OFF-TOPIC SUBJECTS: political science, environmental science, biology, chemistry, physics, 
+    history, economics, psychology, business, finance, weather, sports, entertainment
+
+    COURSE CODE PATTERNS: "CS 111", "01:198:112", "Data Structures" (exact course names)
+    """
         
         prompt = f"""Analyze this student query for a course recommendation system.
 
-        Query: "{query}"{context}{schema_context}
+    Query: "{query}"{context}
 
-        TASK: Analyze this query using the provided schema as your guide.
+    {schema_context}
 
-        INTENT CLASSIFICATION:
-        Match the query against the valid_intents in the schema. Determine what the student is trying to accomplish.
-        If the query matches invalid_query_patterns, mark it as off_topic.
+    TASK: Analyze this query to determine intent and extract entities.
 
-        DOMAIN RESTRICTION:
-        This system ONLY handles Rutgers Computer Science courses.
-        Use the schema's "interests.valid_categories" as the definitive list of valid topics.
-        Use the schema's "course_related_keywords" to determine if a query is course-related.
+    INTENT CLASSIFICATION (choose one):
+    - course_recommendation: User wants personalized course suggestions
+    - course_info: User asks about a SPECIFIC course by code or name
+    - prerequisite_check: User asks about prerequisites
+    - clarification: User is providing additional info after being asked
+    - general_question: General question about CS program
+    - off_topic: Query is not CS-related
 
-        If the student's interests do not map to anything in "interests.valid_categories", set:
-        - is_course_related: false
-        - intent: "off_topic"
+    CRITICAL RULES:
+    1. course_info requires a specific course code or exact course name
+    Examples: "Tell me about CS 111", "What's Data Structures about?"
+    2. course_recommendation is for topic-based requests
+    Examples: "What courses teach AI?", "I want to learn web development"
+    3. If interests = only "Computer Science" or "CS" → needs_clarification=true
+    4. Non-CS subjects → intent=off_topic, is_course_related=false
+    5. Only extract CS-related interests from the valid list above
 
-        Examples of what should be off_topic:
-        - Environmental Science → not in valid_categories → off_topic
-        - Biology, Chemistry, History, Economics → off_topic
-        - Machine Learning, Cybersecurity, Web Development → valid, proceed normally
+    ENTITY EXTRACTION:
+    - year: freshman, sophomore, junior, senior, graduate (or null)
+    - interests: List of CS topics from valid list (empty if none or only generic "CS")
+    - specific_courses: Course codes or exact names (only if mentioned)
+    - career_path: text description (or null)
+    - gpa_priority: high, medium, low (or null)
+    - difficulty_preference: easy, moderate, challenging (or null)
+    - credit_hours: number (or null)
+    - time_constraints: text description (or null)
 
-        KEY RULES:
-        - Students saying "I need help", "I don't know where to start", "What should I take?" are seeking course recommendations
-        - Only mark as off_topic if clearly unrelated to courses/academics (weather, sports, entertainment, etc.)
-        - Use the schema's intent_definitions to understand what each intent requires
-        - IMPORTANT: If interests are only generic "Computer Science" or "CS" with no specific topics, set needs_clarification=true
-        - IMPORTANT: Queries like "I like CS" or "I want CS courses" are TOO VAGUE and require clarification
+    CONFIDENCE SCORING:
+    - 0.8+: Clear intent and sufficient entities
+    - 0.5-0.8: Clear intent but missing some entities
+    - <0.5: Ambiguous or very incomplete
 
-        SPECIFICITY REQUIREMENTS:
-        - Generic interest in "Computer Science" alone is NOT sufficient
-        - Students must specify: AI, cybersecurity, web dev, databases, systems, theory, etc.
-        - If confidence < 0.70 due to vagueness, set needs_clarification=true
-        - If only interest extracted is "Computer Science" with nothing else, set needs_clarification=true
+    Return ONLY this JSON structure (no extra text):
 
-        ENTITY EXTRACTION:
-        Extract entities according to the entity_definitions in the schema.
-        - Only extract what is clearly stated or strongly implied
-        - Follow the type and valid_values constraints in the schema
-        - For categorical entities, only use values listed in valid_values
-        - DO NOT extract "Computer Science" as an interest unless it's the only thing mentioned - in that case, flag for clarification
-
-        CONFIDENCE ASSESSMENT:
-        Calculate confidence (0.0 to 1.0) based on:
-        - How well the query matches schema patterns
-        - How many required entities for the intent are present
-        - How clear and complete the query is
-        - Use the confidence_calculation section of the schema as guidance
-
-        SCHEMA MATCHING:
-        - Identify which intent_definition this query best matches
-        - Note which required_entities are present vs missing
-        - Calculate a match_score based on completeness
-
-        Return ONLY this JSON structure:
-
-        {{
-        "intent": "from valid_intents in schema or 'off_topic'",
-        "is_course_related": true/false,
-        "confidence": 0.0-1.0,
-        "needs_clarification": true/false,
-        "reasoning": "explain how you matched this query to the schema",
-        
-        "entities": {{
-            "year": "value from schema valid_values or null",
-            "interests": ["topic1", "topic2"] or null,
-            "credit_hours": number or null,
-            "career_path": "description" or null,
-            "gpa_priority": "value from schema valid_values or null",
-            "specific_courses": ["COURSE_CODE"] or null,
-            "prerequisites_taken": ["COURSE_CODE"] or null,
-            "difficulty_preference": "value from schema valid_values or null",
-            "time_constraints": "description" or null
-        }},
-        
-        "schema_match": {{
-            "matched_intent_definition": "which intent definition from schema",
-            "required_entities_present": ["entities that were required and found"],
-            "required_entities_missing": ["entities that were required but not found"],
-            "match_score": 0.0-1.0,
-            "explanation": "why this match score"
-        }},
-        
-        "missing_critical_info": ["What key information would help you better assist this student?"],
-        "suggested_clarifications": ["Specific questions you could ask to get this info"]
-        }}
-
-        Use your intelligence to interpret the schema and make smart matching decisions.
-        """
+    {{
+    "intent": "intent_name",
+    "is_course_related": true/false,
+    "confidence": 0.0-1.0,
+    "needs_clarification": true/false,
+    "reasoning": "brief explanation of your analysis",
+    "entities": {{
+        "year": null,
+        "interests": [],
+        "credit_hours": null,
+        "career_path": null,
+        "gpa_priority": null,
+        "specific_courses": [],
+        "prerequisites_taken": [],
+        "difficulty_preference": null,
+        "time_constraints": null
+    }},
+    "missing_critical_info": ["list of missing info"],
+    "suggested_clarifications": ["specific questions to ask user"]
+    }}
+"""
 
         try:
             response = await self.run(prompt)
