@@ -188,6 +188,17 @@ class DataAgent(ChatAgent):
 
             matched_courses = await self._rag_retrieve(entities, intent)
 
+            # filter out courses already taken or in progress based on transcript data in conversation state. 
+            if state.transcript_data:
+                completed = {c["code"] for c in state.transcript_data.get("completed_courses", [])}
+                in_progress = {c["code"] for c in state.transcript_data.get("in_progress_courses", [])}
+                exclude = completed | in_progress
+
+                before = len(matched_courses)
+                matched_courses = [c for c in matched_courses if c.get("code") not in exclude]
+                print(f"[DataAgent] Filtered {before - len(matched_courses)} already-taken courses, {len(matched_courses)} remaining")
+
+
             return AgentResponse(
                 success=True,
                 data={ # data dictionary

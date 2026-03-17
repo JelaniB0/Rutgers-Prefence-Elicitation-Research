@@ -1,1 +1,1 @@
-__all__ = ['OrchestratorAgent', 'ParserAgent', 'DataAgent', 'PlanningAgent']
+__all__ = ['OrchestratorAgent', 'ParserAgent', 'DataAgent', 'PlanningAgent', 'TranscriptAgent']

@@ -15,7 +15,9 @@ from typing import Dict, List, Any
 from .shared_types import AgentResponse, ConversationState
 from .parser_agent import ParserAgent # Done, needs to be adjusted
 from .data_agent import DataAgent # Done, needs to be adjusted
-from .planning_agent import PlanningAgent # Done, needs to bne adjusted
+from .planning_agent import PlanningAgent # Done, needs to be adjusted
+from .transcript_agent import TranscriptAgent # Done. 
+
 
 try:
     from .constraint_agent import ConstraintAgent # Not done
@@ -137,6 +139,16 @@ class OrchestratorAgent():
         except Exception as e:
             print(f"Failed to initialize PlanningAgent: {e}")
 
+        try:
+            print("Initializing transcript agent...")
+            self.transcript_agent = TranscriptAgent(
+                client=self.chat_client,
+                model=self.model_id
+            )
+        except Exception as e:
+            print(f"Failed to initialize TranscriptAgent: {e}")
+            self.transcript_agent = None
+
     def _format_history(self, state: ConversationState) -> str:
         """Helper to format conversation history for LLM input"""
         if not state.conversation_history:
@@ -217,6 +229,49 @@ class OrchestratorAgent():
         
         response = await self.agent.run(context)
         return response.messages[-1].contents[0].text
+    
+    async def load_transcript(self, pdf_path: str, state: ConversationState) -> str:
+        """
+        Call this before process_query() when a student uploads a transcript.
+        Parses it and stores data in state so all agents can access it.
+        """
+        if self.transcript_agent is None:
+            return "Transcript reading is not available right now."
+
+        print(f"[Orchestrator] Loading transcript from: {pdf_path}")
+        response = await self.transcript_agent.parse_transcript(pdf_path, state)
+
+        if not response.success:
+            return f"I couldn't read that transcript: {', '.join(response.errors)}"
+
+        data = response.data
+
+        completed_cs = [
+            c for c in data.get("completed_courses", []) if ":198:" in c.get("code", "")
+        ]
+        in_progress_cs = [
+            c for c in data.get("in_progress_courses", []) if ":198:" in c.get("code", "")
+        ]
+
+        completed_str = "\n".join(
+            f"  - {c['code']}: {c['title']} ({c.get('grade', 'P')})"
+            for c in completed_cs
+        ) or "  - None found"
+
+        in_progress_str = "\n".join(
+            f"  - {c['code']}: {c['title']}"
+            for c in in_progress_cs
+        ) or "  - None found"
+
+        return (
+            f"Got it! I've read your transcript. Here's what I found:\n\n"
+            f"**Year:** {data.get('year_standing')}\n"
+            f"**GPA:** {data.get('cumulative_gpa')}\n"
+            f"**Credits Completed:** {data.get('total_degree_credits')}\n\n"
+            f"**CS Courses Completed:**\n{completed_str}\n\n"
+            f"**CS Courses In Progress:**\n{in_progress_str}\n\n"
+            f"I'll factor all of this in when making recommendations."
+        )
 
     async def process_query(self, user_query: str, state: ConversationState) -> tuple[str, list]:
         """
@@ -305,6 +360,10 @@ class OrchestratorAgent():
                 print(f"[PlanningAgent] Ranked {len(ranked_courses)} courses")
                 print("\n[Orchestrator] Generating final response...")
 
+                transcript_context = ""
+                if state.transcript_data:
+                    transcript_context = self.transcript_agent.summarize_for_prompt(state.transcript_data)
+
                 context = f"""
                 {self._format_history(state)}
                 Student Query: {user_query}
@@ -315,6 +374,9 @@ class OrchestratorAgent():
                 - Career Path: {parsed_data.get('entities', {}).get('career_path')}
                 - Difficulty Preference: {parsed_data.get('entities', {}).get('difficulty_preference')}
                 - GPA Priority: {parsed_data.get('entities', {}).get('gpa_priority')}
+
+                {transcript_context}
+
 
                 Ranking Summary: {ranking_summary}
 
@@ -330,6 +392,8 @@ class OrchestratorAgent():
 
                 Use a friendly, advisor-like tone. Make it feel personal and encouraging.
                 Remember: Prerequisites are not yet validated, so mention this if relevant.
+                If transcript data is available, acknowledge what the student has already completed
+                and avoid recommending courses they've taken or are currently enrolled in.
 
                 Keep your response conversational and helpful.
                 """

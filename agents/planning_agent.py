@@ -13,7 +13,6 @@ from agent_framework import ChatAgent
 from agent_framework.openai import OpenAIChatClient
 
 from .shared_types import AgentResponse, ConversationState
-
 class PlanningAgent(ChatAgent):
     """
     Planning agent to rank courses with LLM reasoning (placeholder for algorithm later)

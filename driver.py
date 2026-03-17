@@ -9,9 +9,9 @@ import json
 import os
 from datetime import datetime
 
-"""added convesation_log json file functionality to log conversations for later analysis.
+"""
+added convesation_log json file functionality to log conversations for later analysis.
 The log file stores conversations(user queries and agent responses), agents invoked, and timestamps for each turn in a conversation session. 
-
 """
 log_file = "conversation_log.json"
 
@@ -45,6 +45,18 @@ async def main():
 
     state = ConversationState()
 
+    # optional transcript upload 
+    transcript_input = input("Do you have a transcript to upload? (press Enter to skip, or enter file path): ").strip()
+    if transcript_input:
+        if not os.path.exists(transcript_input):
+            print(f"File not found: '{transcript_input}', continuing without transcript.\n")
+        else:
+            response = await orchestrator.load_transcript(transcript_input, state)
+            print(f"\nAgent Service: {response}\n")
+    else:
+        print("No transcript uploaded. You can still ask for course recommendations!\n")
+
+
     log = load_log()
     session = {
         "session_id": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -64,6 +76,22 @@ async def main():
             break
 
         if not user_input:
+            continue
+
+        # Handle transcript uploads
+        if user_input.lower().startswith("upload transcript"):
+            parts = user_input.split(maxsplit=2)
+            if len(parts) < 3:
+                print("\nAgent Service: Please provide a path. Usage: upload transcript <path/to/transcript.pdf>\n")
+                continue
+            
+            pdf_path = parts[2].strip()
+            if not os.path.exists(pdf_path):
+                print(f"\nAgent Service: File not found: '{pdf_path}'\n")
+                continue
+
+            response = await orchestrator.load_transcript(pdf_path, state)
+            print(f"\nAgent Service: {response}\n")
             continue
 
         try:
