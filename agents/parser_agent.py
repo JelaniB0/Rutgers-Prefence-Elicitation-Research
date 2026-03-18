@@ -56,9 +56,9 @@ class ParserAgent(ChatAgent):
         self.schema_path = schema_path
         self.query_schema = self._load_schema()
         
-        print(f"[ParserAgent] Initialized with model: {model}")
-        print(f"[ParserAgent] Loaded query schema from: {schema_path}")
-        print(f"[ParserAgent] Using LLM to match queries against schema")
+        print(f"[Parser Agent] Initialized with model: {model}")
+        print(f"[Parser Agent] Loaded query schema from: {schema_path}")
+        print(f"[Parser Agent] Using LLM to match queries against schema")
     
     def _get_system_message(self) -> str:
         """Define the system message for the parser agent"""
@@ -207,6 +207,17 @@ Always return valid JSON with your analysis.
     3. If interests = only "Computer Science" or "CS" → needs_clarification=true
     4. Non-CS subjects → intent=off_topic, is_course_related=false
     5. Only extract CS-related interests from the valid list above
+    6. transcript_upload examples:
+       "can you look at my transcript?", "upload my transcript",
+       "here's my transcript", "I have a PDF of my transcript",
+       "wait can you check my transcript", "look at what I've taken"
+       "can I show you the courses I've taken",       
+       "want to see what I've already completed",      
+       "I can share my course history",                
+       "let me show you what I've taken",             
+       "here are the courses I've completed",         
+       "I've already taken some CS courses",          
+       A bare filename ending in .pdf → transcript_upload, NOT off_topic
 
     ENTITY EXTRACTION:
     - year: freshman, sophomore, junior, senior, graduate (or null)
@@ -216,6 +227,7 @@ Always return valid JSON with your analysis.
     - gpa_priority: high, medium, low (or null)
     - difficulty_preference: easy, moderate, challenging (or null)
     - credit_hours: number (or null)
+    - transcript_upload: User wants to upload, share, or have agent review their transcript
     - time_constraints: text description (or null)
 
     CONFIDENCE SCORING:
@@ -241,6 +253,7 @@ Always return valid JSON with your analysis.
         "prerequisites_taken": [],
         "difficulty_preference": null,
         "time_constraints": null
+        "file_path": null   
     }},
     "missing_critical_info": ["list of missing info"],
     "suggested_clarifications": ["specific questions to ask user"]

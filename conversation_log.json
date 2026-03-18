@@ -667,6 +667,221 @@
         }
       ],
       "ended_at": "2026-03-16T20:47:37.439689"
+    },
+    {
+      "session_id": "2026-03-17 14:36:35",
+      "started_at": "2026-03-17T14:36:39.609321",
+      "turns": [],
+      "ended_at": "2026-03-17T14:36:42.383345"
+    },
+    {
+      "session_id": "2026-03-17 14:38:09",
+      "started_at": "2026-03-17T14:38:46.528977",
+      "turns": [
+        {
+          "timestamp": "2026-03-17T14:39:05.233089",
+          "user_query": "I want more info on CS 336",
+          "agents_invoked": [
+            "ParserAgent",
+            "DataAgent"
+          ],
+          "response": "Sure! Here's a breakdown of everything you need to know about **CS 336: Principles of Information and Data Management** at Rutgers:\n\n---\n\n### **Course Code and Title**  \n**01:198:336 - Principles of Information and Data Management (NB)**\n\n---\n\n### **What\u2019s this course about?**\nThis course is all about diving into the world of data and learning how to manage and work with it efficiently. You'll explore how data is described, queried, and organized across different forms\u2014whether it's structured data (like relational databases), unstructured text, or even semi-structured data like JSON and XML. It's basically the foundation of data management and is perfect for learning how real-world systems handle the enormous amounts of information we encounter every day.\n\n---\n\n### **Prerequisites**  \nUnfortunately, I can't check prerequisites for you at the moment, but Rutgers typically lists this undergrads course as requiring foundational CS classes. Let me know if you'd like help finding that info!\n\n---\n\n### **Credit Hours**  \nThis course is 4 credits, which means it's a bit more in-depth and hands-on than most 3-credit courses. Expect both lectures and projects that will help you really master the material.\n\n---\n\n### **Key Topics and Skills You\u2019ll Cover**  \n- **Relational databases:** How they\u2019re structured, designed, and queried using SQL.  \n- **Schema design and conceptual modeling:** Learn to architect databases effectively.  \n- **Database management systems:** Understand the inner workings of these tools and how they store and retrieve data.  \n- **Advanced data concepts:** Explore data patterns, integration, and dealing with semi-structured data like JSON.  \n\n---\n\n### **Who is this course great for?**  \nThis course is a *must* if:  \n- You\u2019re eyeing a career in **data science, software engineering, or database management**.  \n- Databases, big data, and the systems that power modern web apps fascinate you.  \n- You want to sharpen your skills in **SQL**, schemas, and organizing/searching large datasets\u2014skills that are in very high demand in tech industries.  \n- You\u2019re planning to delve into advanced database topics for graduate school or partnering with research labs.  \n\nIt\u2019s also a great course if you love practical, hands-on learning and building the backend infrastructure that powers the digital world.\n\n---\n\nThis class lays down crucial foundations for any student looking to work in fields involving data and backend development\u2014they\u2019re skills that will keep resurfacing throughout your career!\n\nWould you like help finding **related courses** to explore more about databases or data-oriented careers? Or, if you'd prefer, I can try to find out more specifics about the prerequisites for you. Just let me know! \ud83d\ude0a"
+        },
+        {
+          "timestamp": "2026-03-17T14:40:14.075545",
+          "user_query": "I want to take courses in AI",
+          "agents_invoked": [
+            "ParserAgent",
+            "Data Agent",
+            "Planning Agent"
+          ],
+          "response": "Hi Jelani! \ud83d\ude0a It\u2019s exciting to hear that you\u2019re interested in exploring AI courses\u2014it\u2019s such a dynamic and impactful field! Based on your impressive transcript and senior standing, I\u2019ve curated a list of top course recommendations that align with your passion for AI. These courses will help deepen your knowledge and give you hands-on experience with cutting-edge technologies. Let\u2019s dive into the recommendations, ranked just for you!\n\n---\n\n### **#1 - 01:198:425: Brain-Inspired Computing**  \nThis course is a fantastic choice for you because it explores how to design computing systems inspired by how the human brain processes information. It\u2019s a fascinating blend of AI and neuroscience, diving into topics like neuromorphic networks for tasks such as vision and movement.  \n\n#### **Why it\u2019s awesome for you:**  \n- It bridges two innovative fields: AI and cognitive science.  \n- You\u2019ll get hands-on experience with neuromorphic systems, which are at the forefront of AI research.  \n- It\u2019s perfect for someone excited to push the boundaries of what AI can do by learning about how intelligence is modeled.\n\n---\n\n### **#2 - 01:198:460: Introduction to Computational Robotics**  \nRobotics is one of the most thrilling applications of AI! This course focuses on how AI is integrated into robots to make them \"think and act.\" You\u2019ll learn about intelligent systems and the decision-making that powers autonomous robots.  \n\n#### **Why it\u2019s great for you:**  \n- You\u2019ll get practical experience designing and working with real robots, which will give you insight into how AI interacts with the physical world.  \n- Robotics brings together several core AI skills like machine learning, movement, and autonomy\u2014all of which are invaluable for an AI career.  \n- If you\u2019ve ever wanted to work on autonomous systems (like self-driving cars or drones), this class is a stepping stone.\n\n---\n\n### **#3 - 01:198:210: Data Management for Data Science**  \nHere\u2019s why this course is a hidden gem for AI: great AI models need great data, and this course teaches you how to manage, clean, and organize the datasets that fuel intelligent systems. It\u2019s the foundation of solid AI development.  \n\n#### **Why it\u2019s a perfect fit for you:**  \n- You\u2019ll gain hands-on experience with tools and techniques for working with large datasets\u2014an essential skill for training AI models.  \n- It builds on some of the skills you already learned in CS courses like 440 (Intro to AI), adding critical depth in data pipelines.  \n- Perfect for learning how to work with real-world datasets before diving deeper into advanced AI topics.\n\n---\n\n### **#4 - 01:960:486: Applied Statistical Learning**  \nThis course is all about building your statistical foundation, which is a key pillar of AI. Statistical learning techniques are the underpinnings of most machine learning algorithms, making this class incredibly relevant for you.  \n\n#### **Why you\u2019ll love it:**  \n- It focuses on practical applications of statistical models, which will help you better understand how AI systems analyze data.  \n- You\u2019ll work on hands-on computational exercises to process and interpret data, which will strengthen your skills for AI-related projects.  \n- It\u2019s a great way to round out your learning with more exposure to statistical thinking and modeling.\n\n---\n\n### **#5 - 01:198:336: Principles of Information and Data Management**  \nYou might remember we talked about this one earlier! It\u2019s making another appearance because it\u2019s incredibly important to know how to manage and query data effectively when working on AI systems. Whether it\u2019s organizing structured data in databases or handling semi-structured formats like JSON, these skills directly support AI projects.  \n\n#### **Why it\u2019s still relevant for you:**  \n- It\u2019s a natural complement to your progress in CS 440 (Intro to AI), giving you foundational skills critical for data-heavy AI applications.  \n- The mix of theoretical and practical learning will boost your ability to work with different types of data at scale.  \n- Since you\u2019re already excelling in your CS coursework, this kind of data management expertise will make you even more well-rounded as you approach graduation.\n\n---\n\n### **Important Note**  \nAs your advisor, I need to mention that I can\u2019t verify prerequisites at the moment. Since you\u2019ve already completed most upper-level CS courses, you\u2019ll likely meet most of the requirements\u2014but definitely double-check through the course catalog or with the department to confirm.\n\n---\n\n### **Next Steps**  \nLet me know if you\u2019d like help narrowing this list down further or if you\u2019re curious about enrolling in any of these courses. I\u2019m here to make sure you feel confident in your choices as you wrap up your degree and head toward an exciting career in AI! \ud83d\ude0a"
+        }
+      ],
+      "ended_at": "2026-03-17T14:41:08.344684"
+    },
+    {
+      "session_id": "2026-03-17 14:56:30",
+      "started_at": "2026-03-17T14:56:33.571226",
+      "turns": [
+        {
+          "timestamp": "2026-03-17T14:56:53.255988",
+          "user_query": "which courses are recommended for me to take in my junior year",
+          "agents_invoked": [
+            "Parser Agent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- What are your specific interests in computer science (e.g., AI, Machine Learning, Web Development)?\n- Do you have any preferences for the difficulty level of the courses?\n- Are there any particular career goals you are aiming to align your courses with?\n- Are there any constraints like credit hours or time availability we should consider?"
+        },
+        {
+          "timestamp": "2026-03-17T14:58:10.409942",
+          "user_query": "I'd like for the course to be fairly hard. No limits on credit hours and im not totally sure what niche of computer science I want to indulge in by that point.",
+          "agents_invoked": [
+            "Parser Agent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- Could you tell me about any specific topics in computer science you'd like to explore, such as AI, cybersecurity, or web development?\n- Do you have any career goals you'd like to align your courses with?\n- What courses or topics have you already completed or are familiar with?"
+        },
+        {
+          "timestamp": "2026-03-17T14:58:34.375392",
+          "user_query": "transcriptone.pdf",
+          "agents_invoked": [
+            "Parser Agent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-17T14:59:21.043730",
+          "user_query": "Yes, what courses should I take in my freshmen year.",
+          "agents_invoked": [
+            "Parser Agent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- Do you have specific interests in CS topics such as AI, web development, or cybersecurity?\n- Do you have a preferred difficulty level (easy, moderate, challenging)?\n- Are you planning to prioritize GPA or explore advanced topics?\n- How many credit hours are you planning to take in your first semester?"
+        },
+        {
+          "timestamp": "2026-03-17T14:59:48.361336",
+          "user_query": "easy for now because I don't have much experience with CS yet, long term goal is AI.",
+          "agents_invoked": [
+            "Parser Agent",
+            "Data Agent"
+          ],
+          "response": "I couldn't retrieve course data: Data retrieval error: 'ConversationState' object has no attribute 'transcript_data'"
+        }
+      ],
+      "ended_at": "2026-03-17T15:00:30.952422"
+    },
+    {
+      "session_id": "2026-03-17 15:05:43",
+      "started_at": "2026-03-17T15:05:45.955289",
+      "turns": [
+        {
+          "timestamp": "2026-03-17T15:06:12.913567",
+          "user_query": "what courses should I take in my freshmen year? I don't necessarily have any preferences for career or interest yet",
+          "agents_invoked": [
+            "Parser Agent",
+            "Data Agent",
+            "Planning Agent"
+          ],
+          "response": "Hi there! Welcome to Rutgers CS\u2014it\u2019s exciting to see you dive into your first year! Freshman year is all about building a solid foundation, especially since you\u2019re still exploring your interests and career path. I've put together a list of courses that will set you up for success no matter what direction you choose in the future. Let\u2019s go over them, step by step:\n\n---\n\n### **#1 - 01:198:111: Introduction to Computer Science**  \nThis is the best place to start! It's designed for students who are just beginning their CS journey, and it introduces the basics of programming and problem-solving using Java. Even if you\u2019re not sure which specific area of CS you\u2019ll pursue, this course gives you a strong foundation that you\u2019ll need for almost every advanced class later on.  \n\n**Why it\u2019s great for you:**  \n- It\u2019s beginner-friendly, so you\u2019ll ease into coding without being overwhelmed.  \n- You\u2019ll learn the building blocks of programming, which future courses heavily rely on.  \n- It\u2019s a prerequisite for most of the upper-level CS courses, so it\u2019s an essential first step.  \n\n---\n\n### **#2 - 01:198:112: Data Structures**  \nAfter you\u2019ve nailed the basics in 01:198:111, this is the logical next step. Data Structures dives deeper into programming by teaching you how to organize and manage data efficiently. You'll work with concepts like stacks, queues, and trees\u2014essential skills for tackling real-world problems later.  \n\n**Why it\u2019s great for you:**  \n- It builds on the knowledge from 01:198:111, helping you grow as a programmer.  \n- You\u2019ll start thinking about how to write more efficient and scalable programs.  \n- This course is another foundational block for advanced classes, like algorithms and systems programming.  \n\n*Quick note:* Check with an advisor to confirm when you\u2019re ready for this class, as it typically follows after 01:198:111.\n\n---\n\n### **#3 - 01:198:205: Discrete Structures I**  \nNow, this is a slightly different kind of course\u2014a math-focused one, but don\u2019t let that scare you! Discrete Structures covers topics like logic, sets, and proof techniques, which are essential tools for understanding how computers and algorithms work. Even if you\u2019re more into coding than theory, this course will sharpen your problem-solving and analytical skills\u2014super useful for everything else in CS.\n\n**Why it\u2019s great for you:**  \n- It develops your logical thinking and gets you comfortable with \u201cmathematical\u201d computer science.  \n- It prepares you for more advanced topics like algorithms and complexity analysis.  \n- It complements programming courses by helping you think structurally and critically.  \n\n---\n\n### **#4 - 01:198:211: Computer Architecture**  \nIf you\u2019re curious about how computers work under the hood, this course is an exciting dive into systems and hardware. You\u2019ll learn about how software interacts with hardware, memory, and processing at a low level using C programming. It\u2019s a bit more advanced, so while it\u2019s a great course, it\u2019s worth planning for after you\u2019ve taken 01:198:112.  \n\n**Why it\u2019s great for you:**  \n- It bridges theoretical CS with practical systems knowledge.  \n- You\u2019ll dig into essential topics like memory and hardware-software interfaces.  \n- It\u2019s a key course for understanding low-level programming and designing efficient systems.  \n\n*Heads-up:* This course typically has prerequisites. Double-check that you\u2019ve met them before enrolling!\n\n---\n\n### **#5 - 01:198:214: Systems Programming**  \nThis course takes low-level programming to another level. You\u2019ll learn system-level coding using the C language and get practice with tasks like debugging, file management, and process handling. While it\u2019s a fantastic course, it\u2019s usually better suited for your sophomore year after you\u2019ve mastered earlier topics like Data Structures.  \n\n**Why it\u2019s great for you:**  \n- You\u2019ll gain hands-on experience with system operations and low-level programming.  \n- It sets the stage for advanced topics like operating systems and high-performance computing.  \n- It\u2019s highly practical\u2014many of the skills you\u2019ll learn apply directly to internships or research.  \n\nAgain, keep in mind that this course has prerequisites, so plan for this one a little further down the road.\n\n---\n\n### Wrapping Up  \nSo, to summarize, for your first year, I\u2019d strongly recommend starting with **Introduction to Computer Science (01:198:111)** and **Discrete Structures I (01:198:205)** in your first semester. These will give you a great mix of programming and problem-solving skills. Once you complete 01:198:111, you can move on to **Data Structures (01:198:112)** in your second semester.\n\nFor the more advanced courses like **Computer Architecture** and **Systems Programming**, it\u2019s great to keep them on your radar for the future, but let\u2019s take it step by step. After all, you\u2019re just getting started, and you\u2019ve got plenty of time to explore!\n\n---\n\nDo you feel good about this plan? Or is there anything specific you\u2019d like to explore further? Rutgers has amazing resources, and I\u2019m here to help every step of the way! \ud83d\ude0a"
+        },
+        {
+          "timestamp": "2026-03-17T15:07:31.459267",
+          "user_query": "transcriptone.pdf",
+          "agents_invoked": [
+            "Parser Agent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        }
+      ],
+      "ended_at": "2026-03-17T15:07:44.098512"
+    },
+    {
+      "session_id": "2026-03-17 15:34:40",
+      "started_at": "2026-03-17T15:34:40.861046",
+      "turns": [
+        {
+          "timestamp": "2026-03-17T15:34:52.030729",
+          "user_query": "I would like to upload my transcript",
+          "agents_invoked": [
+            "Parser Agent"
+          ],
+          "response": "Sure! Go ahead and drop the path to your transcript PDF."
+        },
+        {
+          "timestamp": "2026-03-17T15:35:07.669106",
+          "user_query": "transcriptone.pdf",
+          "agents_invoked": [],
+          "response": "Got it! I've read your transcript. Here's what I found:\n\n**Year:** Senior\n**GPA:** 3.743\n**Credits Completed:** 91.0\n\n**CS Courses Completed:**\n  - 01:198:110: Principles of CS (A)\n  - 01:198:111: Intro Computer Sci (A)\n  - 01:198:112: Data Structures (A)\n  - 01:198:205: Intr Discret Strct I (A)\n  - 01:198:206: Intr Discrt Strct II (A)\n  - 01:198:211: Computer Architectur (B+)\n  - 01:198:344: Dsgn&Anal Comp Algor (B+)\n  - 01:198:440: Intro Artific Intell (B)\n\n**CS Courses In Progress:**\n  - 01:198:439: Intro Data Science\n  - 01:198:461: ML Principles\n  - 01:198:462: Deep Learning\n\nI'll factor all of this in when making recommendations."
+        },
+        {
+          "timestamp": "2026-03-17T15:40:40.990568",
+          "user_query": "I would like to take difficult courses. I am toward the end of my college career and have exhausted almost all the courses I want to take so, recommend me some courses, especially based on courses you already see on my transcript.",
+          "agents_invoked": [
+            "Parser Agent",
+            "Data Agent",
+            "Planning Agent"
+          ],
+          "response": "Based on the information you've shared and the courses you've already completed or are currently taking, I\u2019m really excited to provide you with some recommendations that align with your interests in AI, machine learning, data science, and algorithms! Since you mentioned you\u2019re looking for challenging courses as a senior, I've emphasized advanced and rigorous options that will help expand your skills and deepen your knowledge. Here's what I suggest:\n\n---\n\n### **#1 - 01:198:463: Design and Analysis of Randomized Algorithms**  \nThis course is a perfect fit for someone with your strong background in algorithms. Since you've done well in **Design and Analysis of Computer Algorithms (344)**, this class will take your skills to the next level by introducing you to randomized techniques in problem-solving. It\u2019s not only a great intellectual challenge but also highly relevant to AI and data science, where these concepts are often applied in optimization and probabilistic modeling.  \n**Why it's great for you:** You'll tackle advanced algorithmic techniques, which opens up amazing opportunities in research or higher-level roles in AI and machine learning. Plus, it builds directly on your completed coursework in algorithms!  \n\n---\n\n### **#2 - 01:198:425: Brain-inspired Computing**  \nThis class is fascinating if you\u2019re passionate about AI and machine learning. It dives into cutting-edge concepts like neuromorphic computing, which is about designing AI systems that mimic the human brain. It\u2019s challenging but a great way to explore a niche within AI that\u2019s becoming increasingly relevant.  \n**Why it's great for you:** Completing this type of course could help you stand out to employers or graduate programs, as you\u2019ll gain rare and innovative knowledge. It also aligns beautifully with your growing expertise in AI and machine learning.  \n\n---\n\n### **#3 - 01:960:486: Applied Statistical Learning**  \nGiven your background and interests, this course complements your current studies, especially with you're taking **ML Principles** and **Deep Learning** right now. It focuses on statistical methods that are foundational for applying machine learning to solve real-world problems, which is highly valued in the data science industry.  \n**Why it's great for you:** This class will help you refine your data analysis skills while solidifying your understanding of critical statistical concepts that drive machine learning. It\u2019s a great technical addition to your senior-year plan.\n\n---\n\n### **#4 - 01:198:443: Topics in Computer Science**  \nThis course's content changes depending on the semester, but it usually covers innovative or advanced topics in computer science\u2014frequently in areas like AI or machine learning. If the topic is related to your interests, you'll get to work on cutting-edge problems while expanding your understanding of contemporary issues in CS.  \n**Why it's great for you:** As someone eager for challenges, you\u2019ll have the chance to tackle specialized, emerging topics in CS. It\u2019s a great way to cap off your senior year with a focus on advanced content. Just be sure to verify the exact topic being offered!\n\n---\n\n### **#5 - 01:198:345: Algorithms in Society**  \nThis class veers toward an interdisciplinary application of algorithms, exploring real-world societal challenges. While it may not be quite as technically rigorous as the others, it\u2019s still a compelling choice that will give you new perspectives on applying your skills to wider problems.  \n**Why it's great for you:** It ties into your love for algorithms, but instead of focusing on pure theory, it branches into practical use cases, especially in areas like ethical AI or data-driven policy. It\u2019s a well-rounded option to consider for broadening your horizons.\n\n---\n\n### A Few Additional Insights\nI tailored these recommendations to your interests, focusing on advanced, challenging courses that build on your current expertise in algorithms, AI, and data science. Since you\u2019ve already built a solid foundation with your previous and current courses, I believe these electives can help you push your skills even further. Based on your transcript, you\u2019ve done a fantastic job keeping your performance consistently strong\u2014and taking on these courses will only help you grow further.  \n\nOne thing to note: I can\u2019t confirm that you\u2019ve fulfilled the prerequisites for all of these courses, so you\u2019ll just want to double-check with the registration system or your advisor when you enroll.\n\n---\n\nDo any of these stand out to you? I\u2019m happy to go into more detail about any of these or help you strategize your schedule. You're doing really well and are set up for an exciting academic year ahead!"
+        },
+        {
+          "timestamp": "2026-03-17T15:41:44.273727",
+          "user_query": "Can you give me more information about Algorithms in Society?",
+          "agents_invoked": [
+            "Parser Agent",
+            "Data Agent"
+          ],
+          "response": "### **Course Code:** **01:198:345**  \n### **Title:** **Algorithms in Society**  \n\nThis intriguing course dives into how algorithms shape important decisions in areas like public policy, health, e-commerce, and even justice. It\u2019s a fresh take on computer science\u2014it moves beyond pure technical design and explores the ethical, societal, and practical impact of algorithmic decisions. As algorithms continue to play a big role in daily life, this class offers fascinating insights into their real-world applications.  \n\n---\n\n### **Prerequisites:**  \nYou must have completed either **01:198:112: Data Structures** or **01:198:210: Data Management for CS** to enroll in this course. Since you've finished **Data Structures**, you should be all set here!  \n\n---\n\n### **Credit Hours:**  \n4  \n\n---\n\n### **Key Topics/Skills Covered:**  \n- Understanding how algorithms influence decision-making in areas like health, law, public policy, and e-commerce  \n- Exploration of ethical concerns\u2014bias, fairness, and accountability in algorithm design  \n- Practical applications of algorithms in solving societal challenges  \n- Analysis of case studies where algorithmic decisions shaped outcomes in real-world scenarios  \n\n---\n\n### **Who This Course Is Good For:**  \nIf you're passionate about the broader impact of computer science beyond coding\u2014particularly in applying algorithms to solve societal problems\u2014this is the course for you. It\u2019s also a great fit if you\u2019re interested in interdisciplinary fields like ethical AI, data-driven policy, or computational social science. Employers in industries like tech, healthcare, and public services value professionals with this kind of holistic understanding of algorithms.  \n\n---\n\nSince you already have a strong foundation in algorithms from **01:198:344: Design and Analysis of Computer Algorithms**, this class would give you a fresh perspective and potentially inspire new career paths or research focuses. It's a great way to add breadth to your technical expertise as you round out your senior year!  \n\nWould you like more recommendations for related courses that explore topics like ethical AI or advanced applications? Or do you want help strategizing how this fits into your schedule? Let me know\u2014happy to help!"
+        },
+        {
+          "timestamp": "2026-03-17T15:42:42.948392",
+          "user_query": "Why would taking that course be good for me however?",
+          "agents_invoked": [
+            "Parser Agent",
+            "Data Agent",
+            "Planning Agent"
+          ],
+          "response": "Hi Jelani! Thanks for asking for more insights, and it\u2019s great to chat with you again about your course planning. You\u2019ve built such an impressive foundation in computer science, especially in algorithms, so I want to recommend courses that will really expand your horizons, challenge you academically, and tap into your passion for algorithms. Here's my ranked list of my recommendations, with a personal touch for why they\u2019d be great for you:\n\n---\n\n### **#1 - 01:198:463: Design and Analysis of Randomized Algorithms**  \nThis course is a perfect next step after your success in **Design and Analysis of Computer Algorithms (01:198:344)**. It dives deeper into algorithms, focusing specifically on randomized techniques for problem-solving in areas like optimization, which are super useful in fields like AI and data science.  \n\n**Why it's great for you:**  \n- You\u2019ve shown strong skills in algorithms, and this will build on that foundation while introducing you to advanced concepts.  \n- Randomized algorithms are widely used in modern research and industry\u2014these techniques are valued by employers, especially in high-tech and data-driven roles.  \n- This senior-level course will challenge you to think in new ways about problem-solving, which you seem ready for given your coursework and stellar GPA!\n\n---\n\n### **#2 - 01:198:345: Algorithms in Society**  \nThis one\u2019s a little different, but hear me out\u2014it\u2019s a fantastic option if you want to see the real-world impact of algorithms on problems like public health, law, and justice. It\u2019s more interdisciplinary, with a focus on the ethical, societal, and practical applications of algorithms.  \n\n**Why it\u2019s great for you:**  \n- You already have a superb technical foundation in algorithms, but this course adds a new layer by asking bigger \u201cwhy\u201d and \u201chow\u201d questions about their impact.  \n- Ethical AI and responsible algorithm design are hot topics in both academia and industry\u2014having this perspective could really set you apart in your career or graduate studies.  \n- By exploring case studies and applications, you can gain a deeper understanding of how your technical skills can make meaningful change in society.  \n\nIf you want to discuss this one more, let\u2019s dig deeper\u2014I think you could gain a lot from it!\n\n---\n\n### **#3 - 01:960:486: Applied Statistical Learning**  \nThis course builds beautifully on what you\u2019re currently studying in **ML Principles (01:198:461)** and **Deep Learning (01:198:462)**. It focuses on applying statistical methods in machine learning, which is a critical skill for solving real-world challenges in data science.  \n\n**Why it\u2019s great for you:**  \n- It provides a strong connection between algorithms and data-driven techniques, which complements your background.  \n- Employers love seeing both theoretical and applied machine learning skills, and mastering statistical learning will open new opportunities for you there.  \n- With your background in algorithms, you\u2019ll likely find these techniques intuitive but still challenging enough to push you further in senior-level coursework.\n\n---\n\n### **#4 - 01:730:408: Intermediate Logic II**  \nThis might not immediately come to mind, but it fits well with your interest in algorithms! This course delves into advanced logic, including computability and incompleteness theorems, which are foundational concepts in theoretical computer science.  \n\n**Why it\u2019s great for you:**  \n- Logic underpins many advanced areas of algorithm design, and this course strengthens the mathematical side of your skill set.  \n- If you\u2019re considering graduate school or research in CS, the material here will be especially valuable.  \n- It\u2019s a rigorous, senior-level course that aligns well with your interest in digging deeper into theory.\n\n---\n\n### **#5 - 01:198:417: Distributed Systems: Concepts and Design**  \nWhile slightly tangential to pure algorithms, this course is a great way to see how algorithmic thinking applies in the context of distributed systems\u2014like cloud platforms, databases, and other large-scale systems. It\u2019s senior-level and challenging but also highly practical.  \n\n**Why it\u2019s great for you:**  \n- You\u2019ll see firsthand how algorithms are applied in a distributed computing context, broadening how you think about problem-solving at scale.  \n- Distributed systems are incredibly relevant in tech industries today, so this course could give you a competitive edge.  \n- It\u2019s a good complementary choice if you want to diversify your skill set while staying connected to your love of algorithms.\n\n---\n\n### Why These Courses Were Chosen Just for You  \nJelani, I selected these courses with your interests in mind\u2014you're clearly passionate about algorithms, and you\u2019ve already built a strong foundation with courses like **Design and Analysis of Computer Algorithms (344)**. These recommendations focus on deepening that expertise, whether through theoretical rigor, practical application, or exploring their societal impact. With your superb academic track record (3.743 GPA!), I\u2019m confident these senior-level courses will be a great fit.\n\nOne quick note: I can\u2019t confirm if you\u2019ve satisfied all the prerequisites, so be sure to double-check with the registration system or talk to your advisor before enrolling.\n\n---\n\nLet me know which of these sounds most exciting to you, or if you want to explore other options\u2014this is your journey, and I\u2019m here to support you every step of the way! \ud83d\ude0a"
+        }
+      ],
+      "ended_at": "2026-03-17T15:43:42.493218"
+    },
+    {
+      "session_id": "2026-03-17 15:50:43",
+      "started_at": "2026-03-17T15:50:43.758125",
+      "turns": [
+        {
+          "timestamp": "2026-03-17T15:51:04.912766",
+          "user_query": "I would like to show you courses that I've already taken",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "Sure! Go ahead and drop the path to your transcript PDF."
+        },
+        {
+          "timestamp": "2026-03-17T15:51:15.022819",
+          "user_query": "transcriptone.pdf",
+          "agents_invoked": [],
+          "response": "Got it! I've read your transcript. Here's what I found:\n\n**Year:** Senior\n**GPA:** 3.743\n**Credits Completed:** 91.0\n\n**CS Courses Completed:**\n  - 01:198:110: Principles of CS (A)\n  - 01:198:111: Intro Computer Sci (A)\n  - 01:198:112: Data Structures (A)\n  - 01:198:205: Intr Discret Struct I (A)\n  - 01:198:206: Intr Discret Struct II (A)\n  - 01:198:211: Computer Architectur (B+)\n  - 01:198:344: Dsgn & Anal Comp Algor (B+)\n  - 01:198:440: Intro Artificial Intell (B)\n\n**CS Courses In Progress:**\n  - 01:198:439: Intro Data Science\n  - 01:198:461: ML Principles\n  - 01:198:462: Deep Learning\n\nI'll factor all of this in when making recommendations."
+        }
+      ],
+      "ended_at": "2026-03-17T15:51:32.195932"
+    },
+    {
+      "session_id": "2026-03-17 15:57:26",
+      "started_at": "2026-03-17T15:57:26.085665",
+      "turns": [
+        {
+          "timestamp": "2026-03-17T15:57:39.128201",
+          "user_query": "I would like to tell you the courses I've taken already",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- Can you share what topics or areas of computer science you're interested in?\n- What courses have you taken so far?\n- What is your current academic year (e.g., freshman, sophomore)?"
+        },
+        {
+          "timestamp": "2026-03-17T15:58:11.956394",
+          "user_query": "Can I show you the courses I've taken",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'd love to help you find courses! To give you the best recommendations, could you tell me:\n- What specific courses have you taken so far?\n- What topics or areas of computer science are you most interested in?\n- What is your current academic year (e.g., freshman, sophomore, etc.)?"
+        },
+        {
+          "timestamp": "2026-03-17T15:58:39.046410",
+          "user_query": "No like I'd want to upload my transcript",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "Sure! Go ahead and drop the path to your transcript PDF."
+        },
+        {
+          "timestamp": "2026-03-17T15:58:48.236768",
+          "user_query": "transcriptone.pdf",
+          "agents_invoked": [
+            "TranscriptAgent"
+          ],
+          "response": "Got it! I've read your transcript. Here's what I found:\n\n**Year:** Senior\n**GPA:** 3.743\n**Credits Completed:** 91.0\n\n**CS Courses Completed:**\n  - 01:198:110: Principles of CS (A)\n  - 01:198:111: Intro Computer Sci (A)\n  - 01:198:112: Data Structures (A)\n  - 01:198:205: Intr Discret Strct I (A)\n  - 01:198:206: Intr Discrt Strct II (A)\n  - 01:198:211: Computer Architectur (B+)\n  - 01:198:344: Dsgn&Anal Comp Algor (B+)\n  - 01:198:440: Intro Artific Intell (B)\n\n**CS Courses In Progress:**\n  - 01:198:439: Intro Data Science\n  - 01:198:461: ML Principles\n  - 01:198:462: Deep Learning\n\nI'll factor all of this in when making recommendations."
+        }
+      ],
+      "ended_at": "2026-03-17T15:59:20.593974"
     }
   ]
 }

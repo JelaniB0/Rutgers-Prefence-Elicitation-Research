@@ -279,6 +279,14 @@ class OrchestratorAgent():
         """
         agents_invoked = []
 
+        if getattr(state, 'awaiting_transcript_path', False):
+            state.awaiting_transcript_path = False
+            if not os.path.exists(user_query.strip()):
+                return f"I couldn't find a file at '{user_query.strip()}'. Could you double-check the path?", agents_invoked
+            agents_invoked.append("TranscriptAgent") 
+            response = await self.load_transcript(user_query.strip(), state)
+            return response, agents_invoked
+
         if self.parser_agent is not None:
             try:
                 state.user_query = user_query
@@ -304,6 +312,22 @@ class OrchestratorAgent():
                     agents_invoked.append("DataAgent")
                     response = await self._handle_course_info(parsed_data, state)
                     return response, agents_invoked
+                
+                if parsed_data.get('intent') == 'transcript_upload':
+                    file_path = parsed_data.get('entities', {}).get('file_path')
+                    
+                    if file_path:
+                        # user gave us the path directly in their message
+                        if not os.path.exists(file_path):
+                            return f"I couldn't find a file at '{file_path}'. Could you double-check the path?", agents_invoked
+                        
+                        agents_invoked.append("TranscriptAgent")
+                        response = await self.load_transcript(file_path, state)
+                        return response, agents_invoked
+                    else:
+                        # user asked naturally but didn't provide a path yet
+                        state.awaiting_transcript_path = True
+                        return "Sure! Go ahead and drop the path to your transcript PDF.", agents_invoked
                     
                 if parsed_data.get('needs_clarification', False):
                     suggestions = parsed_data.get('suggested_clarifications', [])
@@ -324,7 +348,7 @@ class OrchestratorAgent():
                 if self.data_agent is None:
                         return "the data retrieval system is not available yet. ", agents_invoked
                    
-                agents_invoked.append("Data Agent")
+                agents_invoked.append("DataAgent")
                 data_response = await self.data_agent.fetch_courses(
                     parsed_data=parsed_data,
                     state=state
@@ -342,7 +366,7 @@ class OrchestratorAgent():
                     return "I couldn't find any courses matching your criteria. Could you try rephrasing your interests or being more specific?", agents_invoked
                 
                 print("\n[Orchestrator] Invoking Planning Agent...")
-                agents_invoked.append("Planning Agent")
+                agents_invoked.append("PlanningAgent")
                 planning_response = await self.planning_agent.rank_courses(
                     courses=courses,
                     parsed_data=parsed_data,

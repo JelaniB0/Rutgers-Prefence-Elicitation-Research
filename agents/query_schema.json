@@ -11,6 +11,7 @@
     "prerequisite_check",
     "schedule_planning",
     "degree_requirements",
+    "transcript_upload",
     "off_topic"
   ],
   
@@ -36,6 +37,31 @@
         "looking for courses"
       ]
     },
+
+    "transcript_upload": {
+    "description": "User wants to upload, share, or have the agent review their academic transcript",
+    "examples": [
+        "can you look at my transcript?",
+        "upload my transcript",
+        "here's my transcript",
+        "I have a PDF of my transcript",
+        "can I show you the courses I've taken",
+        "want to see what I've already completed",
+        "let me show you what I've taken",
+        "here are the courses I've completed",
+        "I've already taken some CS courses"
+    ],
+    "required_entities": [],
+    "optional_entities": ["file_path"],
+    "minimum_confidence": 0.6,
+    "key_indicators": [
+        "transcript",
+        "upload",
+        "look at my courses",
+        "what I've taken",
+        ".pdf"
+    ]
+},
     
     "course_info": {
       "description": "User wants details about a specific course by code or name",

@@ -8,6 +8,7 @@ import asyncio
 import json
 import os
 from datetime import datetime
+from query_logger import log_query  
 
 """
 added convesation_log json file functionality to log conversations for later analysis.
@@ -25,6 +26,14 @@ def save_log(log_data: dict):
     with open(log_file, "w") as f:
         json.dump(log_data, f, indent=2)
 
+AGENT_SOURCES: dict[str, list[str]] = {
+    "ParserAgent":   ["LLM", "query_schema.json"],
+    "DataAgent":     ["rutgers_courses.json"],
+    "PlanningAgent": ["LLM"],
+    "TranscriptAgent": ["LLM", "transcript_pdf"],
+    # "ConstraintAgent": ["prerequisites_db"],  # uncomment when available
+}
+
 async def main():
     """
     Function to run Orchestrator code
@@ -41,25 +50,16 @@ async def main():
 
     print("Hello! I'm your Rutgers CS course advisor.")
     print("I am here to assist with course rankings and recommendations, please ask me about course recommendations.")
+    print("Feel free to share your transcript at any time and I'll factor in any information I can extract from it to give you better recommendations. ")  
     print("Type 'quit' to exit.\n")
 
     state = ConversationState()
 
-    # optional transcript upload 
-    transcript_input = input("Do you have a transcript to upload? (press Enter to skip, or enter file path): ").strip()
-    if transcript_input:
-        if not os.path.exists(transcript_input):
-            print(f"File not found: '{transcript_input}', continuing without transcript.\n")
-        else:
-            response = await orchestrator.load_transcript(transcript_input, state)
-            print(f"\nAgent Service: {response}\n")
-    else:
-        print("No transcript uploaded. You can still ask for course recommendations!\n")
-
+    session_id = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # stable session id for entire run. 
 
     log = load_log()
     session = {
-        "session_id": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "session_id": session_id,
         "started_at": datetime.now().isoformat(),
         "turns": []
     }
@@ -78,43 +78,45 @@ async def main():
         if not user_input:
             continue
 
-        # Handle transcript uploads
-        if user_input.lower().startswith("upload transcript"):
-            parts = user_input.split(maxsplit=2)
-            if len(parts) < 3:
-                print("\nAgent Service: Please provide a path. Usage: upload transcript <path/to/transcript.pdf>\n")
-                continue
-            
-            pdf_path = parts[2].strip()
-            if not os.path.exists(pdf_path):
-                print(f"\nAgent Service: File not found: '{pdf_path}'\n")
-                continue
-
-            response = await orchestrator.load_transcript(pdf_path, state)
-            print(f"\nAgent Service: {response}\n")
-            continue
-
         try:
-            agents_invoked = []
-            turns_start = datetime.now().isoformat()
+            turn_start = datetime.now().isoformat()
             response, agents_invoked = await orchestrator.process_query(user_input, state)
             print(f"\nAgent Service: {response}\n")
+ 
+            # Update conversation state
             state.add_message("user", user_input)
             state.add_message("assistant", response)
+ 
+            # CSV log — one row per query
+            # Build a per-turn agent_sources dict that only includes agents that were actually invoked this turn (subset of AGENT_SOURCES).
+
+            turn_sources = {
+                agent: AGENT_SOURCES.get(agent, ["LLM"])
+                for agent in agents_invoked
+            }
+            log_query(
+                session_id=session_id,
+                query=user_input,
+                response=response,
+                agents_invoked=agents_invoked,
+                agent_sources=turn_sources,
+            )
+ 
+            # JSON logging for conversation reconstruction and analysis — one entry per turn in a structured format
 
             turn = {
-                "timestamp": turns_start,
-                "user_query": user_input,
+                "timestamp":      turn_start,
+                "user_query":     user_input,
                 "agents_invoked": agents_invoked,
-                "response": response
+                "response":       response,
             }
             session["turns"].append(turn)
             log_to_save = {"sessions": log["sessions"] + [session]}
             save_log(log_to_save)
-
+ 
         except Exception as e:
-            print(f"Error: An error occured while processing request: {str(e)}")
-
+            print(f"Error: An error occurred while processing request: {str(e)}")
+ 
     session["ended_at"] = datetime.now().isoformat()
     log["sessions"].append(session)
     save_log(log)

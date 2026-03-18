@@ -115,7 +115,7 @@ class TranscriptAgent(ChatAgent):
             # store transcript info in conversation state for other agents to access transcript data. 
             state.transcript_data = data
 
-            print(f"[TranscriptParser] Parsed successfully: "
+            print(f"[Transcript Agent] Parsed successfully: "
                   f"{data.get('student_name')}, GPA: {data.get('cumulative_gpa')}, "
                   f"Year: {data.get('year_standing')}, "
                   f"Completed: {len(data.get('completed_courses', []))} courses")

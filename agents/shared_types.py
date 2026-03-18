@@ -35,7 +35,8 @@ class ConversationState:
         user_profile: Optional[Dict[str, Any]] = None,
         recommendations: Optional[List[Dict[str, Any]]] = None,
         clarification_needed: Optional[List[str]] = None,
-        session_id: Optional[str] = None
+        session_id: Optional[str] = None,
+        transcript_data: Optional[Dict[str, Any]] = None
     ):
         self.user_query = user_query
         self.conversation_history = conversation_history or []
@@ -45,6 +46,8 @@ class ConversationState:
         self.recommendations = recommendations or []
         self.clarification_needed = clarification_needed or []
         self.session_id = session_id
+        self.transcript_data = transcript_data
+
     
     def add_message(self, role: str, content: str):
         """Add a message to conversation history"""
@@ -67,7 +70,8 @@ class ConversationState:
             "user_profile": self.user_profile,
             "recommendations": self.recommendations,
             "clarification_needed": self.clarification_needed,
-            "session_id": self.session_id
+            "session_id": self.session_id,
+            "transcript_data": self.transcript_data
         }
 
 
@@ -131,6 +135,7 @@ class IntentType(Enum):
     PREREQUISITE_CHECK = "prerequisite_check"
     SCHEDULE_PLANNING = "schedule_planning"
     OFF_TOPIC = "off_topic"
+    TRANSCRIPT_UPLOAD = "transcript_upload"
     UNKNOWN = "unknown"
 
 
