@@ -429,3 +429,169 @@ I'll factor all of this in when making recommendations.",Orchestrator(LLM),Orche
   - 01:198:462: Deep Learning
 
 I'll factor all of this in when making recommendations.",TranscriptAgent,"TranscriptAgent:LLM,transcript_pdf"
+2026-03-18 13:09:27,2026-03-18 01:10:12 PM,Can you use my transcript,Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-18 13:09:27,2026-03-18 01:10:36 PM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn & Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",TranscriptAgent,"TranscriptAgent:LLM,transcript_pdf"
+2026-03-18 13:09:27,2026-03-18 01:11:43 PM,can you recommend me courses in AI,"Hi Jelani! Thanks for sharing your transcript—the details really help me tailor the recommendations to your interests and goals. Since you're a senior with an impressive 3.743 GPA and a solid foundation in AI-related coursework (like Machine Learning, Deep Learning, Data Science, and Artificial Intelligence), you're in a great position to dive even deeper into advanced and complementary AI topics. Here are five AI-related courses I recommend for you, ranked based on how well they align with your interests and academic focus. Let’s explore them!
+
+---
+
+### **#1 - 01:198:425: Brain-inspired Computing**
+This is my top recommendation for you! This cutting-edge course dives into how the brain inspires advanced AI designs, with a focus on neuro-mimetic and neuromorphic computing. It would really complement your Machine Learning and Deep Learning classes—you’ll explore innovative topics like building systems that mimic neural processes. 
+
+**Why this is perfect for you:**  
+- It aligns directly with your interest in AI by focusing on forward-thinking, specialized applications.  
+- It deepens knowledge that complements your current coursework.  
+- You’ll gain exposure to how AI mimics brain functions in areas like vision and movement.
+
+**Key Benefit:** It’s advanced, relevant, and likely manageable for you based on your strong academic background in AI.
+
+---
+
+### **#2 - 01:198:460: Introduction to Computational Robotics**  
+This course is an exciting way to explore how AI integrates with robotics to solve real-world problems. It focuses on autonomous systems and practical hands-on projects, so you’d explore areas like mobile robotics and the software behind it. 
+
+**Why this is a great fit for you:**  
+- It introduces a practical dimension to AI—understanding and working on autonomous systems.  
+- The hands-on nature will help you build skills with real-world AI applications.  
+- It’s a fantastic mix of theoretical learning and applied robotics, which could open doors to new career paths.
+
+**Key Benefit:** Whether you’ve thought about robotics as a career or not, this course connects AI to exciting, growing fields.
+
+---
+
+### **#3 - 01:960:486: Applied Statistical Learning**  
+Since you’re already tackling Machine Learning and Deep Learning, this course offers a grounded perspective by focusing on statistical approaches to learning. It’s also highly practical, covering topics like data analysis, biostatistics, and quality control.
+
+**Why it’s worth considering:**  
+- This course will strengthen your statistical understanding, which is a core skill for AI-related fields.  
+- It extends your data science expertise and applies it in real-world situations.  
+- With your strong GPA and aptitude for coursework, this manageable class helps maintain that academic momentum.
+
+**Key Benefit:** This course bridges AI, data science, and statistical methods to give you a well-rounded AI toolkit.
+
+---
+
+### **#4 - 01:615:441: Linguistics and Cognitive Science**  
+If you’re curious about Natural Language Processing (NLP) or symbolic AI (think: Siri, chatbots, etc.), this interdisciplinary course could be really exciting! It explores how linguistics and cognitive science intersect with AI systems.
+
+**Why it could be fun and valuable:**  
+- It gives you a deeper understanding of NLP, which is a fast-growing area in AI.  
+- It lets you study the connections between AI, cognitive science, and human language.  
+- The interdisciplinary approach broadens your academic skillset and adds valuable depth.
+
+**Key Benefit:** This will expand your AI expertise into the realm of language and cognition, which adds value to your technical skills.
+
+---
+
+### **#5 - 01:730:329: Minds, Machines, and Persons**  
+This course takes a step back from the technical side and dives into the philosophical and ethical dimensions of AI. What does it mean to be ""intelligent""? How does AI challenge our understanding of the mind? Questions like these are at the heart of this thought-provoking course.
+
+**Why it’s a great complement to your technical courses:**  
+- It challenges you to think critically about the nature of AI and its impact on society.  
+- It develops your understanding of ethical considerations in AI, a crucial topic for today’s tech leaders.  
+- It strengthens your reasoning and analytical thinking on complex topics—skills employers love to see.
+
+**Key Benefit:** It gives you a fresh perspective on AI, helping you think beyond the code to its broader implications.
+
+---
+
+### A Quick Note About Prerequisites  
+I tailored these recommendations to your senior standing, current AI coursework, and strong academic record. Remember, though—I wasn’t able to check whether you meet all the prerequisites for these courses, so we’ll need to confirm that before you register.
+
+---
+
+Jelani, you’re doing incredibly well—you’ve got a stellar GPA, a clear focus on AI, and a solid background in major foundational courses. With these targeted recommendations, you can build on your current strengths, gain expertise in complementary areas, and open exciting career doors in AI. Let me know if any of these resonate with you or if you’d like details on something specific! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-18 13:09:27,2026-03-18 01:14:11 PM,Can you recommend me courses that I should take in general,"Hi, Jelani! Thanks for trusting me to recommend some general courses for you—I’m really excited to help you make the most of your senior year! With your strong GPA (3.743—nice!), solid foundation in computer science, and clear focus on AI, Machine Learning, Deep Learning, and Data Science, you’re in a fantastic position to dive even deeper into advanced and meaningful topics. I kept all of that in mind when curating this list of recommendations. Here’s what I came up with for you:
+
+---
+
+### **#1 - 01:198:425: Brain-inspired Computing (New Brunswick)**
+This is my top recommendation for you because it’s such a natural fit for what you’re already studying. You’ve already done some great work in Machine Learning, Deep Learning, and AI in general, and this course will take you to the next level by exploring how the brain can inspire AI systems. Think topics like neuromorphic computing and designing systems that mimic neural processes!
+
+**Why it’s great for you:**  
+- It builds on the knowledge you’re already learning in Deep Learning and Machine Learning (like neural network design).  
+- You’ll gain insights into cutting-edge AI methods related to the brain, which are transforming fields like vision and robotics.  
+- It’s challenging and innovative, perfect for a senior like yourself who wants to stand out in AI.
+
+This one feels like a strong step forward for someone with your experience. 
+
+---
+
+### **#2 - 01:198:460: Introduction to Computational Robotics (New Brunswick)**  
+Here’s one to shake things up a little! This course gives you a hands-on introduction to building autonomous systems using robotics and AI. You’ll work with software and tools behind mobile robots, and this practical focus could give you the chance to apply your AI knowledge in an exciting, real-world way.  
+
+**Why it’s worth your time:**  
+- It’s hands-on, so you’ll gain practical skills in robotics, an industry where AI is playing a huge role.  
+- You’ll see how AI integrates into the physical world—in robots that navigate, sense, and make decisions.  
+- This could open new doors for your career if you decide robotics is an area you’d like to explore.  
+
+If you’ve been curious about trying something new while still building your AI expertise, this is an exciting (and likely super fun!) course to consider.
+
+---
+
+### **#3 - 01:960:486: Applied Statistical Learning (New Brunswick)**  
+AI starts and ends with data, and this class focuses on the statistical underpinnings behind data science and machine learning principles. Since you’re already strengthening your knowledge with courses like Data Science, Machine Learning, and Deep Learning, adding this statistical perspective will give you a rock-solid foundation in the math and analysis that power AI techniques.  
+
+**Why it aligns with your goals:**  
+- It complements your Machine Learning and Data Science courses beautifully—statistics is a cornerstone of these topics.  
+- You’ll learn how to use data for real-world applications like biostatistics and time-series analysis, boosting your practical skills.  
+- This course can also support your high GPA with its clear focus on fundamentals and applied examples.  
+
+If you want to enhance your ability to work with AI on a data-driven level, this course is a great option.
+
+---
+
+### **#4 - 01:198:443: Topics in Computer Science (New Brunswick)**
+This is a flexible course that often focuses on advanced, cutting-edge topics in computer science—topics chosen by professors and students alike. It’s a fantastic opportunity to explore niche areas or trends within AI, Machine Learning, or Data Science.  
+
+**Why this could be perfect for you:**  
+- You can customize your learning—you might get to focus even more deeply on the areas of AI that excite you most.  
+- The topics can vary, so you may be able to choose something complementary to what you’re already working on.  
+- It’s a chance to engage with instructors and peers on something highly specialized, which could be useful for research or your career goals.
+
+This course is as flexible as it is valuable—great if you want to dig deep into advanced areas of AI.
+
+---
+
+### **#5 - 01:615:441: Linguistics and Cognitive Science (New Brunswick)**
+If you’re even the slightest bit curious about Natural Language Processing (NLP)—think chatbots, virtual assistants like Siri, or language translation tools—this interdisciplinary course is for you. You’ll learn about how AI understands and processes human language, incorporating principles of both linguistics and cognitive science.  
+
+**Why it’s a strong match for you:**  
+- It’s a perfect introduction to the fascinating world of NLP, one of the hottest AI fields right now.  
+- The interdisciplinary nature of the course will help you see AI from another lens, enriching your knowledge base.  
+- It opens up career possibilities in industries where language processing is critical (e.g., tech, health, communication).  
+
+This class offers a unique way to round out your AI expertise with skills that are in high demand.
+
+---
+
+### **A Note About Prerequisites**  
+These recommendations were chosen based on your interests, senior standing, and strong academic background. However, since I can’t currently check prerequisites, I’d recommend reviewing them to make sure you qualify before registering for these courses.
+
+---
+
+Jelani, you’ve built such an amazing foundation in Computer Science, and you’re clearly diving headfirst into making the most out of your time at Rutgers. I hope these options resonate with you—they’re designed to help you deepen your AI expertise, expand into related fields, and keep that terrific GPA soaring. 
+
+Let me know which ones spark your interest, or if you’d like recommendations tailored for something totally different! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-18 13:09:27,2026-03-18 01:18:20 PM,Can you tell me the weather,"I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?",ParserAgent,"ParserAgent:LLM,query_schema.json"

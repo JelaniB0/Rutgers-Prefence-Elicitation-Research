@@ -13,7 +13,6 @@ import chromadb
 from chromadb.utils import embedding_functions
 from dotenv import load_dotenv
 
-
 from .shared_types import AgentResponse, ConversationState
 
 class DataAgent(ChatAgent):
