@@ -125,16 +125,15 @@
         "Do I need Calculus 2 for Algorithms?",
         "Am I eligible for CS 440?"
       ],
-      "required_entities": ["specific_courses"],
-      "optional_entities": ["prerequisites_taken"],
-      "minimum_confidence": 0.6,
+      "required_entities": ["target_course"],
+      "optional_entities": ["related_courses"],
+      "minimum_confidence": 0.7,
       "key_indicators": [
-        "prerequisite",
-        "prereq",
-        "eligible",
         "can I take",
+        "prerequisites",
+        "eligible for",
         "do I need",
-        "required for"
+        "am I eligible"
       ]
     },
     

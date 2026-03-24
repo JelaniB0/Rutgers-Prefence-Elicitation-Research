@@ -20,7 +20,7 @@ from .transcript_agent import TranscriptAgent # Done.
 
 
 try:
-    from .constraint_agent import ConstraintAgent # Not done
+    from .constraint_agent import ConstraintAgent # Done
     ALL_AGENTS_AVAILABLE=True
 except ImportError as e:
     print(f"Not all agents imported yet. ")
@@ -149,6 +149,16 @@ class OrchestratorAgent():
             print(f"Failed to initialize TranscriptAgent: {e}")
             self.transcript_agent = None
 
+        try:
+            print("Initializing constraint agent...")
+            self.constraint_agent = ConstraintAgent(
+                client=self.chat_client,
+                model=self.model_id
+            )
+        except Exception as e:
+            print(f"Failed to initialize ConstraintAgent: {e}")
+            self.constraint_agent = None
+
     def _format_history(self, state: ConversationState) -> str:
         """Helper to format conversation history for LLM input"""
         if not state.conversation_history:
@@ -229,6 +239,114 @@ class OrchestratorAgent():
         
         response = await self.agent.run(context)
         return response.messages[-1].contents[0].text
+    
+    async def _handle_prereq_check(self, parsed_data: Dict, state: ConversationState) -> str:
+        """
+        Handle prerequisite check requests.
+
+        Looks up the course(s) mentioned, runs constraint validation,
+        and returns a direct conversational answer about what the student
+        needs before they can enroll.
+
+        Args:
+            parsed_data: Output from ParserAgent with intent/entities
+            state: Current conversation state
+
+        Returns:
+            Formatted string response to present to the student
+        """
+        entities = parsed_data.get("entities", {})
+        
+        target_course = entities.get("target_course")
+        related_courses = entities.get("related_courses", [])
+
+        # If no target course, fallback
+        if not target_course:
+            specific_courses = entities.get("specific_courses", [])
+            if specific_courses:
+                target_course = specific_courses[0]
+                related_courses = specific_courses[1:]
+
+        # Look up target course only
+        print(f"[Orchestrator] Checking prerequisites for: {target_course}")
+        lookup_response = await self.data_agent.lookup_course(target_course, state)
+
+        if not lookup_response.success:
+            return (
+                f"I couldn't find a course called '{target_course}' in the Rutgers CS catalog. "
+                f"Could you double-check the course code or name?"
+            )
+
+        data = lookup_response.data
+        if data.get("needs_disambiguation"):
+            courses = data.get("courses", [])
+            msg = f"I found {len(courses)} courses matching '{target_course}':\n\n"
+            for c in courses:
+                msg += f"• **{c.get('code')}** - {c.get('title')}\n"
+            msg += "\nWhich one did you mean? Just give me the course code."
+            return msg
+
+        course = data.get("course")
+
+        # Run constraints only for target course
+        constraint_data = None
+        if self.constraint_agent:
+            constraint_response = await self.constraint_agent.check_single_course(course=course, state=state)
+            if constraint_response.success:
+                constraint_data = constraint_response.data
+
+        # Build transcript context if available
+        transcript_context = ""
+        if state.transcript_data:
+            transcript_context = self.transcript_agent.summarize_for_prompt(state.transcript_data)
+
+        # Build constraint context
+        constraint_context = ""
+        if constraint_data:
+            constraint_context = f"""
+            PREREQUISITE CHECK RESULT:
+            - Student is eligible: {constraint_data.get('eligible')}
+            - Met prerequisites: {constraint_data.get('met_prerequisites', [])}
+            - Unmet prerequisites: {constraint_data.get('unmet_prerequisites', [])}
+            - Reasoning: {constraint_data.get('reasoning')}
+            - Pathway suggestion: {constraint_data.get('pathway_suggestion')}
+            - Credit standing appropriate: {constraint_data.get('standing_eligible')}
+            - Standing note: {constraint_data.get('standing_note', '')}
+            """
+
+        related_note = ""
+
+        if related_courses:
+            related_note += f"\nAlso, the user mentioned {', '.join(related_courses)}. Include notes about how these relate to {target_course} if relevant."
+        else:
+            related_note = ""
+
+        context = f"""
+        {self._format_history(state)}
+        
+        Student Query: {state.user_query}
+        
+        COURSE INFORMATION:
+        {json.dumps(course, indent=2)}
+        
+        {transcript_context}
+        {constraint_context}
+        {related_note}
+        
+        The student is asking about prerequisites for this course.
+        Provide a clear, conversational answer that:
+        1. States the course name and code
+        2. Lists what prerequisites are required
+        3. Checks student transcript if available and explains eligibility
+        4. Suggests pathway if prerequisites not met
+        5. Mentions credit standing if relevant
+        """
+
+        response = await self.agent.run(context)
+        return response.messages[-1].contents[0].text
+            
+        #  # If we checked multiple courses, join the responses
+        # return "\n\n---\n\n".join(responses)
     
     async def load_transcript(self, pdf_path: str, state: ConversationState) -> str:
         """
@@ -324,10 +442,19 @@ class OrchestratorAgent():
                         agents_invoked.append("TranscriptAgent")
                         response = await self.load_transcript(file_path, state)
                         return response, agents_invoked
+                
                     else:
                         # user asked naturally but didn't provide a path yet
                         state.awaiting_transcript_path = True
                         return "Sure! Go ahead and drop the path to your transcript PDF.", agents_invoked
+                
+                if parsed_data.get('intent') == 'prerequisite_check':
+                    print("[Orchestrator] Routing to prerequisite check handler")
+                    agents_invoked.append("DataAgent")
+                    if self.constraint_agent is not None:
+                        agents_invoked.append("ConstraintAgent")
+                    response = await self._handle_prereq_check(parsed_data, state)
+                    return response, agents_invoked
                     
                 if parsed_data.get('needs_clarification', False):
                     suggestions = parsed_data.get('suggested_clarifications', [])
@@ -380,6 +507,24 @@ class OrchestratorAgent():
                 ranked_data = planning_response.data
                 ranked_courses = ranked_data.get('ranked_courses', [])
                 ranking_summary = ranked_data.get('ranking_summary', '')
+
+                # Newly implemented constraint check via constraint agent. 
+                constraint_context = ""
+                if self.constraint_agent is not None:
+                    agents_invoked.append("ConstraintAgent")
+                    constraint_response = await self.constraint_agent.validate_courses(
+                        courses=ranked_courses,
+                        state=state
+                    )
+                    if constraint_response.success:
+                        constraint_context = self.constraint_agent.summarize_for_prompt(
+                            constraint_response.data
+                        )
+                        # Replace ranked_courses with only eligible ones, preserving order
+                        eligible_codes = {
+                            c.get("code") for c in constraint_response.data.get("eligible_courses", [])
+                        }
+                        ranked_courses = [c for c in ranked_courses if c.get("course_code") in eligible_codes]
 
                 print(f"[PlanningAgent] Ranked {len(ranked_courses)} courses")
                 print("\n[Orchestrator] Generating final response...")

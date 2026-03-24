@@ -198,6 +198,7 @@ Always return valid JSON with your analysis.
     - clarification: User is providing additional info after being asked
     - general_question: General question about CS program
     - off_topic: Query is not CS-related
+    - transcript_upload: User wants to share or reference their transcript/course history
 
     CRITICAL RULES:
     1. course_info requires a specific course code or exact course name
@@ -218,6 +219,7 @@ Always return valid JSON with your analysis.
        "here are the courses I've completed",         
        "I've already taken some CS courses",          
        A bare filename ending in .pdf → transcript_upload, NOT off_topic
+    7. If a user repeats a question with the same intent (e.g., asks about prerequisites again), classify it as prerequisite_check, NOT clarification — even if it's in conversation history.
 
     ENTITY EXTRACTION:
     - year: freshman, sophomore, junior, senior, graduate (or null)
@@ -272,6 +274,18 @@ Always return valid JSON with your analysis.
                 required_fields = ['intent', 'is_course_related', 'confidence', 'needs_clarification', 'entities']
 
                 if all(field in parsed for field in required_fields):
+                    all_courses = parsed.get("entities", {}).get("specific_courses", [])
+
+                    target_course = None
+                    if all_courses:
+                        target_course = all_courses[0]
+
+                    related_courses = [c for c in all_courses if c != target_course]
+
+                    # Updated entities
+                    parsed['entities']['target_course'] = target_course
+                    parsed['entities']['related_courses'] = related_courses
+
                     return parsed
                 else:
                     print(f"[ParserAgent] WARNING: No JSON found in LLM response")

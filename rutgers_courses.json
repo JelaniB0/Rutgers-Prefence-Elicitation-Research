@@ -70,7 +70,7 @@
     "title": "Data Management for Data Science (NB)",
     "item_id": "49543",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=49543&catid=750&degreeid=731",
-    "description": "Provides knowledge and skills needed to acquire and curate real word data, to explore the data to discover patterns and distributions, and to manage large datasets with databases.",
+    "description": "Prereq: 01:198:142 or 01:960:142 or 01:198:111. Provides knowledge and skills needed to acquire and curate real word data, to explore the data to discover patterns and distributions, and to manage large datasets with databases.",
     "credits": "4"
   },
   {
@@ -86,7 +86,7 @@
     "title": "Systems Programming (NB)",
     "item_id": "2802",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2802&catid=750&degreeid=731",
-    "description": "C-level programming and its accompanying paradigm; mapping of high-level language programs to underlying computing architecture; tools for effective scaling; automation using scripts.",
+    "description": "Prerequisite: 01:198:112 and 01:640:152. Corequisite: 01:198:211. C-level programming and its accompanying paradigm; mapping of high-level language programs to underlying computing architecture; tools for effective scaling; automation using scripts.",
     "credits": "4"
   },
   {
@@ -182,7 +182,7 @@
     "title": "Computer Security (NB)",
     "item_id": "2833",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2833&catid=750&degreeid=731",
-    "description": "Introduction to computer security. Topics include applied cryptography, authentication, authorization and basic security principles, as well as recent topics such as Web security and virtual machine-based security.",
+    "description": "Prerequisite: 01:198:205 or 14:332:202; and one of 01:198:416 or 01:198:352 and 01:640:152. Introduction to computer security. Topics include applied cryptography, authentication, authorization and basic security principles, as well as recent topics such as Web security and virtual machine-based security.",
     "credits": "4"
   },
   {
@@ -230,7 +230,7 @@
     "title": "Introduction to Data Science (NB)",
     "item_id": "2845",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2845&catid=750&degreeid=731",
-    "description": "Focuses on algorithms and tools for solving data-science problems, including preparation, characterization and presentation, analysis, and applications.",
+    "description": "Prerequisites: 01:198:206, 01:198:336, and 01:640:152. Focuses on algorithms and tools for solving data-science problems, including preparation, characterization and presentation, analysis, and applications.",
     "credits": "4"
   },
   {
@@ -254,7 +254,7 @@
     "title": "Topics in Computer Science (NB)",
     "item_id": "2848",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2848&catid=750&degreeid=731",
-    "description": "Advanced topics in computer science. Topics vary from year to year according to the interests of students and faculty.",
+    "description": "Prereq: 01:198:111 or 01:198:142 Advanced topics in computer science. Advanced topics in computer science. Topics vary from year to year according to the interests of students and faculty.",
     "credits": "3"
   },
   {
@@ -262,7 +262,7 @@
     "title": "Topics in Computer Science (NB)",
     "item_id": "2849",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2849&catid=750&degreeid=731",
-    "description": "Advanced topics in computer science. Topics vary from year to year according to the interests of students and faculty.",
+    "description": "Prereq: 01:198:111 or 01:198:142 Advanced topics in computer science. Advanced topics in computer science. Topics vary from year to year according to the interests of students and faculty.",
     "credits": "3"
   },
   {
@@ -286,7 +286,7 @@
     "title": "MACHINE LEARNING PRINCIPLES (NB)",
     "item_id": "51265",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=51265&catid=750&degreeid=731",
-    "description": "Systematic introduction to machine learning, covering theoretical as well as practical aspects of the use of statistical methods. Topics include linear models for classification and regression, support vector machines, regularization and model selection, and introduction to deep learning. Application examples are taken from areas like computer vision, natural language processing, information retrieval and others.",
+    "description": "Prereq: 01:198112, 0:198:206, 01:640:250. Systematic introduction to machine learning, covering theoretical as well as practical aspects of the use of statistical methods. Topics include linear models for classification and regression, support vector machines, regularization and model selection, and introduction to deep learning. Application examples are taken from areas like computer vision, natural language processing, information retrieval and others.",
     "credits": "4"
   },
   {
@@ -294,7 +294,7 @@
     "title": "INTRODUCTION TO DEEP LEARNING (NB)",
     "item_id": "51266",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=51266&catid=750&degreeid=731",
-    "description": "Introduction to deep learning. Includes theories, principles, and practices of traditional neural networks and modern deep learning. The topics include fundamentals of Machine Learning, neural networks, modern deep learning, and applications and advanced topics.",
+    "description": "Prereq: 01:640:250 and 01:198:112 and (01:198:206 OR 01:640:477 OR 01:960:379). Introduction to deep learning. Includes theories, principles, and practices of traditional neural networks and modern deep learning. The topics include fundamentals of Machine Learning, neural networks, modern deep learning, and applications and advanced topics.",
     "credits": "4"
   },
   {

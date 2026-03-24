@@ -595,3 +595,1478 @@ Jelani, you’ve built such an amazing foundation in Computer Science, and you�
 
 Let me know which ones spark your interest, or if you’d like recommendations tailored for something totally different! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
 2026-03-18 13:09:27,2026-03-18 01:18:20 PM,Can you tell me the weather,"I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?",ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-23 01:07:01,2026-03-23 01:07:11 AM,Can you look at my transcript,Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-23 01:42:33,2026-03-23 01:42:56 AM,What courses should I take if I'm interested in machine learning?,"Hi there! It’s awesome to hear that you’re interested in machine learning—it’s such an exciting and growing field with tons of opportunities. I’ve reviewed some great courses that align with your interest and would help you build a strong foundation in this area. Let’s dive right in! Here are my top 5 recommendations for you:
+
+---
+
+### **#1 – 01:198:461: Machine Learning Principles**
+This is the ultimate starting point for anyone diving into machine learning. It covers all the key concepts like classification, regression, support vector machines, and even a bit of deep learning. The beauty of this course is how it ties together theoretical concepts with practical applications—so not only will you understand *what* machine learning is, but you’ll also get hands-on experience applying it. 
+
+**Why it’s perfect for you:**
+- It directly matches your interest in machine learning.
+- Covers all the foundational topics needed for future advanced courses.
+- It’s a comprehensive and well-rounded introduction to the field.
+
+If you’re looking for a first machine learning course, this is **the one** to start with!
+
+---
+
+### **#2 – 01:198:462: Introduction to Deep Learning**
+If you’re particularly excited about how machines learn to “think” the way humans do, this is the course for you. Deep learning is a powerful subset of machine learning, and this course focuses on understanding neural networks and cutting-edge techniques used in things like language recognition and image classification.
+
+**Why it’s great for you:**
+- You’ll learn about the coolest and most in-demand part of ML: deep learning.
+- It’s packed with both theory and practice, so you’ll be well-prepared to implement what you learn.
+- Perfect for rounding out a strong understanding of specialized ML techniques.
+
+Since this is a more advanced topic, you may need to ensure you’ve got the foundational knowledge first, like from the Machine Learning Principles course (#1 above). I’d be happy to chat more if you’d like help planning the right sequence!
+
+---
+
+### **#3 – 01:198:440: Introduction to Artificial Intelligence**
+This course broadens your scope beyond machine learning into the larger field of artificial intelligence. It introduces related concepts like natural language processing and computer vision, which are exciting areas that often overlap with ML. 
+
+**Why it’s worth your time:**
+- Many advanced applications of machine learning (like chatbots or facial recognition software) rely on AI concepts that you’ll explore here.
+- You’ll get a taste of how ML fits into big-picture AI systems.
+- Plus, it’s a versatile foundation that gives you career flexibility in AI as a whole.
+
+This might not focus on machine learning as directly as the top two, but it will enhance your knowledge of related fields that are vital to machine learning professionals.
+
+---
+
+### **#4 – 01:198:439: Introduction to Data Science**
+Now, machine learning doesn’t exist without data—it’s the fuel that powers everything! That’s why this course is a fantastic choice for developing the practical skills to analyze, clean, and work with datasets. You’ll learn important techniques to set you up for ML success.
+
+**Why it’s helpful for you:**
+- It builds your confidence in handling real-world data, a critical skill for ML.
+- You’ll understand the lifecycle of projects that incorporate data science and machine learning.
+- A strong foundation in data analysis means you’ll be ready to tackle more advanced ML techniques later on.
+
+---
+
+### **#5 – 01:960:486: Applied Statistical Learning**
+This course dives deep into the statistical side of machine learning. It’s a great way to develop mathematical and analytical thinking, which is essential for building accurate and reliable machine learning models.
+
+**Why it’s a smart pick:**
+- It strengthens your understanding of statistical tools and techniques you’ll use in ML.
+- Provides hands-on experience in solving real-world data challenges.
+- Builds a strong foundation for approaching machine learning from a mathematical perspective.
+
+This might be a slightly less hands-on approach to machine learning compared to the other options, but don’t overlook the value of a solid background in statistics!
+
+---
+
+### A Quick Note
+One thing to keep in mind: I haven’t checked to see if you’ve already completed any of these or if there are prerequisites we need to think about. If you know you’ve already taken a course on this list or have some questions about requirements, just let me know—I’m here to help you figure all that out! 
+
+---
+
+So, where do you want to start? Does one of these stand out to you as something you’re excited about? I’d love to hear your thoughts and help you plan your next steps in becoming a machine learning pro! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:42:33,2026-03-23 01:43:47 AM,"I'm a junior who wants to get into backend development, any suggestions?","Hi there! I’m so excited to hear about your interest in backend development—it’s such a versatile and in-demand field. As a junior, you’re at a great stage to dive deeper into courses that can give you the skills and knowledge needed to excel in building servers, databases, and APIs for web applications. 
+
+After reviewing the available courses and tailoring my recommendations to align with your goals in backend development, here are the **top 5 courses** I think would be a terrific fit for you:
+
+---
+
+### **#1 – 01:198:437: Database Systems Implementation**  
+If you’re aiming for backend development, this course is gold. It takes you deep into how databases—the heart of many backend systems—are implemented and optimized. You'll cover essential topics like transaction processing, query optimization, and system efficiency. These are **core skills** that every backend developer needs to create scalable and robust systems. Plus, there’s a hands-on component, so you’ll gain practical experience along the way.  
+
+**Why it’s ranked #1 for you:**  
+- Databases are central to backend systems, and this course strengthens your expertise in that area.  
+- You’ll gain skills directly applicable to backend career paths.  
+- As a junior, you likely have the foundational knowledge to succeed in this course.  
+
+---
+
+### **#2 – 01:198:336: Principles of Information and Data Management**  
+This is a perfect next step if you’re looking to deepen your understanding of relational databases and schema design. It covers how data is organized, stored, and retrieved—a cornerstone of backend development. You’ll also learn about more advanced topics, such as data integration and patterns, which are highly relevant for building modern web applications and backend systems.  
+
+**Why you should consider it:**  
+- You’ll build a strong theoretical foundation for working with databases and information management.  
+- It introduces key concepts that are widely applicable, no matter what backend environment you end up working in.  
+- It’s great for understanding how to efficiently design and manage databases.  
+
+---
+
+### **#3 – 01:198:419: Computer Security**  
+Security is critical in backend development because you’re the one ensuring the safety of data and systems. This course provides a solid introduction to web security, applied cryptography, and authentication—all crucial for protecting user data and building secure API layers. These are highly sought-after skills in the tech industry, and this course will create a solid foundation for ensuring safety in your backend projects.  
+
+**Why it’s an excellent pick for you:**  
+- You’ll learn how to secure the systems you may one day build as a backend developer.  
+- It’s incredibly practical, offering insights into real-world security challenges.  
+- Security expertise stands out on resumes and gives you a competitive edge.
+
+---
+
+### **#4 – 01:198:431: Software Engineering**  
+Backend developers are key players in creating large-scale software systems, and this course prepares you for exactly that. It teaches you about system design, implementation, and working within teams to create complex software solutions. Plus, it involves hands-on group projects, which will give you a taste of what it’s like to work on a professional backend team.  
+
+**Why it’s perfect for your goals:**  
+- Focuses on designing and developing large-scale, backend-related systems.  
+- Hands-on projects simulate real-world software environments, building teamwork and problem-solving skills.  
+- Gives you exposure to best practices for managing and maintaining backend codebases.  
+
+---
+
+### **#5 – 01:198:352: Internet Technology**  
+As a backend developer, a solid understanding of internet technologies like TCP/IP protocols, sockets, and client-server interactions is a must. This course equips you with that knowledge, so you can better understand how backend servers communicate with frontend clients or other services.  
+
+**Why it’s worth considering:**  
+- Covers the foundational internet protocols you’ll work with in backend systems.  
+- Helps you understand the communication layer in web applications.  
+- Sets the stage for implementing backend features connected to the internet.  
+
+---
+
+### A Few Notes  
+It’s worth checking to see if you’ve already taken any of these courses or met the prerequisites for them. While I don’t have information on your transcript or completed courses at the moment, let me know if you need guidance navigating that or prioritizing between these options.  
+
+Out of these recommendations, are there any courses that stand out as interesting? Or would you like help mapping a logical order to take them in? Let me know—I’m here to help you plan the perfect path toward your goals in backend development! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:42:33,2026-03-23 01:46:42 AM,"""Can you recommend some good electives for someone interested in cybersecurity?""","Hi there! I’m thrilled to hear about your interest in cybersecurity—it’s such a fascinating and high-demand field with tons of opportunities. Since you’re looking for some great electives tailored to your interests, I’ve put together a list of my **top 5 recommended courses** that align closely with cybersecurity and some complementary areas to boost your skills. Let’s dive in!
+
+---
+
+### **#1 – 01:198:419: Computer Security (NB)**  
+This is **the course to take** for anyone interested in cybersecurity. It gives you a solid foundation in protecting systems, data, and networks. From understanding web security to diving into applied cryptography and authentication methods, you’ll gain practical knowledge that’s essential for tackling real-world cybersecurity challenges. Whether you're planning to secure APIs, databases, or an entire network, this course has you covered.
+
+**Why it’s #1 for you:**  
+- It directly aligns with your interest in cybersecurity.  
+- You’ll learn critical skills to safeguard systems and prevent attacks.  
+- Security expertise is one of the most sought-after skills in the tech industry, so this will make your resume shine!  
+
+This should definitely be at the top of your list if you want to build a strong cybersecurity foundation. Just note that there may be prerequisites for this course, so we’ll want to double-check those before diving in.
+
+---
+
+### **#2 – 01:198:437: Database Systems Implementation (NB)**  
+While not directly about cybersecurity, this is still an excellent choice because securing databases is essential in protecting sensitive data. This course will teach you how databases are implemented and optimized for efficiency, covering topics like transaction processing and query management. These are key when designing secure backend systems that can handle scale and complexity.
+
+**Why it’s a great fit for you:**  
+- Databases are at the core of many backend and cybersecurity systems, so this will give you valuable insight.  
+- You’ll learn how to develop high-performing and secure databases from the ground up.  
+- Mastering these skills will make you an even more well-rounded cybersecurity professional.  
+
+---
+
+### **#3 – 01:198:416: Operating Systems Design (NB)**  
+For anyone interested in cybersecurity, understanding how operating systems work under the hood is vital. This course dives into topics like memory management, process scheduling, and file system organization—knowledge every cybersecurity professional and backend developer needs to secure systems effectively.
+
+**Why it’s ranked here for you:**  
+- You’ll gain critical insights into how hackers can exploit operating systems so you can build more secure ones.  
+- It covers essential backend topics, like synchronization and virtual memory, which give you the technical depth needed in this field.  
+
+This course is a bit technical, but as a junior, it’s a fantastic opportunity to sharpen your skills further.
+
+---
+
+### **#4 – 01:198:352: Internet Technology (NB)**  
+If you’ve ever wanted to learn how systems communicate securely over networks, this is the perfect course. It focuses on foundational networking concepts, like TCP/IP protocols, socket programming, and client-server interactions—key areas for anyone building or protecting web systems.
+
+**Why it’s worth your time:**  
+- You’ll understand how backend servers communicate, which is essential for securing them.  
+- It includes hands-on practice with practical tools like socket programming.  
+- It’s directly applicable to modern web security challenges, such as protecting data during transmission.  
+
+Developing a solid understanding of networking is a great complement to your cybersecurity interests!
+
+---
+
+### **#5 – 01:198:431: Software Engineering (NB)**  
+Building secure systems often requires working collaboratively on large, complex projects, and this course teaches exactly that. You’ll learn about software design, version control, testing, and working in teams—all while creating a functioning, scalable system.
+
+**Why you should consider this:**  
+- It improves your ability to build and maintain secure systems in a team setting.  
+- Hands-on projects mimic real-world development environments—a huge plus for your resume.  
+- Understanding the lifecycle of software development will give you better control over the security aspects of systems you create.  
+
+---
+
+### A Quick Reminder  
+I haven’t been able to check if you’ve already taken any of these courses or if there are specific prerequisites for them. If you’ve already tackled some of these topics or need help figuring out which ones fit your current progress, let me know, and we can adjust the plan.
+
+So, which of these electives catches your interest? Or would you like me to help create a sequence for taking them? I’m here to support you every step of the way on your journey into cybersecurity—let’s make it happen! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:42:33,2026-03-23 01:47:46 AM,I want to learn more about databases and data management,"Hi there! It’s so exciting to hear that you want to dive deeper into the world of databases and data management. Whether you’re exploring your interests or planning for a potential career in data, Rutgers has some great courses to help you build expertise and set you up for success. Based on what you’ve told me, I’ve put together a ranked list of 5 courses that align closely with your interests and will help you develop a strong foundation in databases and related areas. Let’s go through them:
+
+---
+
+### **#1 – 01:198:437: Database Systems Implementation (NB)**
+This course is an absolute must if you’re interested in databases. It goes beyond the basics and takes you into the behind-the-scenes world of how database management systems (DBMS) work. You’ll explore topics like transaction management, query optimization, and how databases store and retrieve data efficiently. It’s perfect for honing the kind of deep technical skills that can make you stand out in data management roles.
+
+**Why it’s ranked #1 for you:**
+- It’s laser-focused on how databases are built and run, which directly matches your interest.
+- You’ll gain practical skills to design and optimize databases, setting you up for future success.
+- It’s a great course for both understanding theory and applying it in real-world scenarios.
+
+If you’re ready to immerse yourself in the nuts and bolts of databases, this is the perfect place to start!
+
+---
+
+### **#2 – 01:198:336: Principles of Information and Data Management (NB)**
+If you’re looking to build a solid foundation in database concepts, this course is for you. It’s an introduction to relational databases, schema design, and writing queries in structured query languages—core skills that every database professional needs. It’s less about implementation (like #1) and more about understanding how to work with databases effectively.
+
+**Why it’s ranked #2 for you:**
+- It’s a comprehensive starting point that will strengthen your knowledge of how databases work.
+- You’ll learn critical concepts like designing efficient schemas and querying data.
+- It’s a fantastic complement to the more advanced Database Systems Implementation course.
+
+If databases are your area of interest, this course equips you with practical, foundational skills that will help you progress toward your goals.
+
+---
+
+### **#3 – 01:198:419: Computer Security (NB)**
+This course focuses on securing systems and the data they manage, which is vital knowledge for anyone interested in data management. Since databases store sensitive and valuable information, learning about applied cryptography, authentication, and system security can be a great asset, even if your primary focus is on databases.
+
+**Why it’s ranked #3 for you:**
+- You’ll learn how to protect the data and systems you work with in the future.
+- This course adds another layer to your understanding by addressing security concerns in storing and managing data.
+- Security-related knowledge is in high demand and will enhance your resume.
+
+This course may not be explicitly focused on databases, but it offers a perspective that will make you a more well-rounded data expert.
+
+---
+
+### **#4 – 01:198:210: Data Management for Data Science (NB)**
+If you want to focus on practical applications of data management, look no further than this course. It’s all about working with real-world datasets using databases and other tools. You’ll gain hands-on experience managing and analyzing large data, which is a critical skill in modern tech industries.
+
+**Why it’s ranked #4 for you:**
+- You’ll get hands-on experience in managing and working with complex, real-world data.
+- This course introduces tools and techniques common in data science—perfect for bolstering your skillset.
+- It’s a great way to understand how databases are applied in various data management and analysis scenarios.
+
+This is an excellent addition to the more theory-heavy database courses and a perfect opportunity to apply what you’ve learned.
+
+---
+
+### **#5 – 01:198:416: Operating Systems Design (NB)**
+While this might not seem like a database course at first glance, operating systems and databases go hand-in-hand. This course focuses on the systems-level knowledge you’ll need to understand how databases run—memory management, file systems, and other behind-the-scenes processes.
+
+**Why it’s ranked #5 for you:**
+- It deepens your understanding of the environment where databases operate.
+- Knowing technical details about file systems and memory management enhances your ability to optimize and troubleshoot databases.
+- Builds a broader skill set in backend system design, which complements your interest in databases.
+
+If you want to dive deeper into the infrastructure supporting databases, this course offers a strong technical perspective.
+
+---
+
+### Next Steps
+Before jumping into any of these, we’ll want to confirm that you’ve completed any necessary prerequisites. If you have a transcript or a list of courses you’ve taken so far, feel free to share it with me, and I can help tailor this plan even more. Remember, the sequence you take these courses in can make a difference—starting with foundational topics (like courses #2 or #4) might make it easier to succeed in more advanced courses like #1.
+
+How are you feeling about these recommendations? Do any of these stand out to you? Or, if you have something specific in mind, let me know, and I can refine the list further. You’ve got this, and I’m here to help you every step of the way! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:42:33,2026-03-23 01:49:49 AM,What are good courses for someone who wants to work at a big tech company?,"Hi there! It’s fantastic to hear about your interest in databases and data management—especially with your goal of working at a big tech company. These are highly valuable and in-demand fields, and there are some excellent courses at Rutgers that can help you build the expertise and practical skills you need to stand out in the industry.
+
+I’ve reviewed the course offerings and put together my **top 5 recommendations** for you, based on how they align with your interests and career goals. Let’s walk through them together!
+
+---
+
+### **#1 – 01:198:437: Database Systems Implementation (NB)**  
+This is the ultimate deep dive into the world of databases! In this course, you’ll learn how databases are built and operate internally, including transaction management, query optimization, and even how text data is handled. These are all must-have skills when working with databases at big tech companies, where performance and data handling are at the core of their operations.  
+
+**Key benefits for you:**  
+- You’ll gain an *in-depth understanding* of how database systems work behind the scenes.  
+- Develop hands-on skills to optimize and manage complex databases.  
+- Prepares you for technical roles in big tech, where database knowledge is highly valued.  
+
+If you’re ready to understand not just how to *use* databases but also how to *build* them, this course is a powerhouse of knowledge.
+
+---
+
+### **#2 – 01:198:336: Principles of Information and Data Management (NB)**  
+If Database Systems Implementation is the advanced study, this is the ideal foundation. This course digs into the essential concepts of relational databases, schema design, and query languages like SQL. It’s all about learning how to effectively manage and organize data, which is a core task for a database professional.  
+
+**Key benefits for you:**  
+- Strengthens your foundational knowledge of database systems and relational databases.  
+- You’ll learn practical, day-to-day skills like designing schemas and writing database queries.  
+- Perfect for building the skills big tech companies are looking for in database-related roles.  
+
+This course pairs beautifully with Database Systems Implementation and could serve as a great starting point if you’re looking to establish a strong base.
+
+---
+
+### **#3 – 01:198:210: Data Management for Data Science (NB)**  
+If you’re excited about real-world applications, this course is perfect. It emphasizes working with large datasets, using databases and tools commonly found in data science. Big tech companies love candidates who can manage and analyze real-world data effectively, so this course can give you a competitive edge.
+
+**Key benefits for you:**  
+- Hands-on experience with managing and curating complex, large datasets.  
+- Prepares you for working on data-intensive projects or in roles that combine database management with data analysis.  
+- Offers practical exposure to tools and techniques relevant to big tech environments.  
+
+This course is especially great for diving into data challenges and understanding the industry context of databases.
+
+---
+
+### **#4 – 01:198:419: Computer Security (NB)**  
+While you might not think of security as directly related to databases and data management, it’s actually a critical area to understand—especially for careers in big tech. With data security being a top concern for these companies, learning about applied cryptography, authentication, and authorization can really set you apart.  
+
+**Key benefits for you:**  
+- You’ll develop key skills to secure sensitive data stored in databases.  
+- Understand advanced security concepts and how they apply to real-world scenarios.  
+- A strong knowledge of security can help you stand out to big tech employers looking for engineers who know how to protect their systems.  
+
+This course could broaden your expertise beyond just managing data, making you a more well-rounded candidate in the industry.
+
+---
+
+### **#5 – 01:198:416: Operating Systems Design (NB)**  
+Databases don’t operate in isolation—they rely heavily on the underlying operating system. This course gives you insight into how things like memory management, file systems, and virtual memory work, which is super important for optimizing database performance in large-scale systems.  
+
+**Key benefits for you:**  
+- You’ll deepen your understanding of how databases interact with operating systems.  
+- Learn about crucial infrastructure concepts like file systems and memory management.  
+- Broaden your backend development skills, which are essential for working in big tech.  
+
+This course will help you think beyond just data and understand the larger ecosystem that supports high-performance database operations.
+
+---
+
+### Wrapping It Up  
+These courses are all excellent options to help you build a strong foundation in databases and data management and prepare you for the challenges (and rewards!) of working at a big tech company. That said, we should keep in mind that prerequisites haven’t been verified yet. If you know your academic progress and want help figuring out the best order to take these, just let me know! 
+
+Each of these courses ties directly to skills and knowledge that big tech values, so the choice really depends on where you’re starting and what excites you most. Do any of these stand out to you as a great place to begin? Let me know, and we can create a plan to help you reach your goals. 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:42:33,2026-03-23 01:51:33 AM,"I'm interested in AI and robotics, what should I take next semester?","It’s great to hear that you’re interested in exploring AI and robotics! Both of these areas are incredibly dynamic and full of exciting challenges and opportunities. To help you figure out the best courses for your next semester, I compiled a list of the **top 5 courses** at Rutgers that will give you a strong foundation in Artificial Intelligence (AI), robotics, and their various intersections like machine learning and computer vision.
+
+Let’s explore the recommendations:
+
+---
+
+### **#1 – 01:198:440: Introduction to Artificial Intelligence (NB)**  
+This is the cornerstone course for anyone interested in diving into the field of AI. It gives you a comprehensive introduction to core AI topics like search algorithms, game theory, constraint satisfaction problems, knowledge representation, and reasoning. This course is foundational for understanding the principles that underpin many AI and robotics systems.
+
+**Why it’s ranked #1 for you:**  
+- It’s *the* foundational course in AI, and a must-take for anyone interested in this field.  
+- Covers topics like problem-solving, decision making, and logic that are essential for robotics systems.  
+- Sets you up for more advanced courses in AI, robotics, and related applications.  
+
+If you haven’t taken this already, it’s the perfect starting point for your AI journey.
+
+---
+
+### **#2 – 01:198:493: Introduction to Robotics and Computer Vision (NB)**  
+This course is a perfect combination of robotics and AI. It covers robotic perception and motion, as well as computer vision techniques used in tasks like object tracking, recognition, and navigation. You’ll learn how robots “see” the world and make decisions based on visual data—a crucial skill if you’re pursuing robotics.  
+
+**Why it’s ranked #2 for you:**  
+- Combines two areas you’re passionate about—robotics and AI.  
+- Focuses on practical, hands-on projects, giving you experience building and working with real robotic systems.  
+- Introduces computer vision, a key skill for robotics and AI applications.  
+
+If you’re looking to get into robotics specifically, this should be high on your list.
+
+---
+
+### **#3 – 14:332:493: Introduction to Robotics and Automation (SOE)**  
+This engineering-focused robotics course offers a broad overview of the field and is suitable if you’re curious about designing and building robots. You’ll learn about kinematics, dynamics, control systems, and sensors—things crucial to understanding the mechanics of robotics.  
+
+**Why it’s ranked #3 for you:**  
+- Highly relevant if you’re interested in robotics systems and their physical components, not just software.  
+- Gives you a strong foundation in the mechanical and control aspects of robotics.  
+- An engineering-focused perspective complements the computational aspects of AI and robotics.  
+
+This works well alongside AI and computer vision courses to round out your understanding of how robots work both in hardware and software.
+
+---
+
+### **#4 – 01:198:462: Introduction to Deep Learning (NB)**  
+Deep learning is one of the most exciting and impactful areas within AI right now, and this course is perfect for diving into it. It teaches you about neural networks, backpropagation, and applications like natural language processing and image recognition. Many robotics systems use deep learning for tasks like object detection and real-time decision-making, so this course ties in well with your interests.  
+
+**Why it’s ranked #4 for you:**  
+- It focuses on one of the most in-demand and cutting-edge areas of AI research and application.  
+- Practical projects will help you understand how to apply neural networks to real-world challenges.  
+- It gears you up for specialized AI and robotics work at companies that rely on machine learning and AI.  
+
+This is a more advanced and specific course, so you’ll need a solid foundation in machine learning concepts (e.g., from a Machine Learning or AI Principles course) to succeed.
+
+---
+
+### **#5 – 01:198:433: Algorithm Design and Analysis (NB)**  
+While algorithms might not sound as exciting as the other courses, they’re absolutely crucial for AI and robotics. This course provides a deeper understanding of how algorithms work, focusing on optimization and efficiency—essential skills for programming intelligent systems and robots.  
+
+**Why it’s ranked #5 for you:**  
+- AI and robotics rely heavily on algorithms, especially for optimization and path planning.  
+- Teaches you how to approach and solve computational problems effectively.  
+- Provides a strong foundation for building complex, efficient systems.  
+
+If you haven’t taken a focused algorithms course yet, this can be a valuable addition to your knowledge base and a strong way to prepare for advanced AI/robotics work.
+
+---
+
+### A Few Bonus Mentions
+1. **14:332:465: Digital Signal Processing (SOE)** – Learn about processing signals, a skill often relevant in fields like robotics.  
+2. **14:332:331: Programming Methodology** – Gain hands-on experience designing programs for real-time applications.  
+3. **14:332:346: Microprocessors** – Explore embedded systems and microcontrollers, which play crucial roles in robotics.  
+
+---
+
+### How to Plan Your Semester  
+If you haven’t already taken any of these courses, starting with **Introduction to Artificial Intelligence (01:198:440)** is a great first step. It lays the groundwork for understanding AI concepts, which are critical for many robotics applications. If you want to supplement AI with robotics-specific knowledge, **Introduction to Robotics and Computer Vision (01:198:493)** or **Introduction to Robotics and Automation (14:332:493)** would be a great companion course.  
+
+It’s also a good idea to build your knowledge in areas like deep learning (**01:198:462**) or algorithms (**01:198:433**) if they fit your current skill level. Keep in mind that some of these courses may have prerequisites or recommended prior knowledge, so let me know if you’ve already completed other courses, and we can adjust the plan accordingly.  
+
+---
+
+What are your thoughts? Do any of these courses pique your interest, or is there a specific area you’d like to focus on first? Let me know, and I’ll help tailor this plan even more to suit your goals. 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:56:30,2026-03-23 01:56:54 AM,"I'm interested in AI and robotics, what should I take next semester?","Hi there! That’s such an exciting mix of interests—AI and robotics are truly fascinating fields with so much potential for innovation. I’ve put together a personalized list of five courses that I think would be a great fit for you this coming semester. Each one is closely connected to your interests and will help you build a strong foundation and hands-on skills in these areas. Let’s dive in!
+
+---
+
+### **#1 – 01:198:460: Introduction to Computational Robotics**
+If you’re passionate about robotics, this course is a must! It’s all about the computational side of robotics—how robots think, plan, and move. What’s especially exciting is that you’ll get hands-on experience using real robotic platforms and industry-standard software, which is super valuable if you’re looking to work on practical robotics projects or even pursue a career in the field. This course is ranked #1 because it aligns so perfectly with your interest in robotics and is incredibly hands-on and relevant.
+
+**Key Benefits for You:**
+- Strong focus on robotics, directly tied to your interests.
+- Hands-on work with actual robotic platforms (so cool!).
+- Exposure to tools and techniques used in the robotics industry.
+
+---
+
+### **#2 – 01:198:440: Introduction to Artificial Intelligence**  
+Since AI is one of your main interests, this is a great foundational course to consider. It covers a wide range of essential AI topics, from intelligent search methods to natural language processing and computer vision. Think of it as the course that introduces you to the broad landscape of AI and the endless possibilities within the field. It’s ranked #2 because it provides such a comprehensive starting point for exploring AI.
+
+**Key Benefits for You:**
+- Offers a fundamental understanding of AI concepts.
+- Covers exciting subfields like computer vision and knowledge representation.
+- Helps you understand the big picture of AI and sets you up for more advanced courses down the road.
+
+---
+
+### **#3 – 01:198:461: Machine Learning Principles**  
+Machine learning is the engine that powers so much of AI (and even some robotics applications), so this course will give you a critical toolset. You’ll learn both the theory and practical applications of machine learning, including topics like deep learning and model selection. It’s especially great if you’re curious about the algorithms behind AI systems and how they can be used to create intelligent behaviors in systems like robots.
+
+**Key Benefits for You:**
+- Teach the essential building blocks of machine learning, a cornerstone of AI.
+- Focus on practical applications, which are super relevant to robotics and AI.
+- Build skills in deep learning—the tech behind advances like image recognition and AI-driven robotics.
+
+---
+
+### **#4 – 01:198:462: Introduction to Deep Learning**  
+Deep learning is a fascinating and fast-growing area of AI. It’s the driving force behind some of the most advanced technologies today, including self-driving cars, voice recognition systems, and robotics applications. This course dives deep (pun intended!) into modern neural network techniques and their real-world applications. It’s ranked #4 because it focuses on cutting-edge AI that’s super relevant to robotics control systems and perception.
+
+**Key Benefits for You:**
+- Offers a deep dive into neural networks and their practical applications.
+- Equips you with skills in advanced AI methods like computer vision and robotics control.
+- Perfect for learning how AI powers complex systems in areas like robotics.
+
+---
+
+### **#5 – 01:198:425: Brain-inspired Computing**  
+This one’s a bit unique and worth considering if you’re fascinated by the overlap between neuroscience and technology. It’s all about taking inspiration from how the brain works to design AI and computing systems. This could be particularly relevant if you're interested in robotics that mimic human or animal behavior, such as movement and vision.
+
+**Key Benefits for You:**
+- Offers a cutting-edge look at neuro-inspired computing.
+- Links neuroscience with robotics, giving you a fresh perspective on AI and movement-based systems.
+- Helps you think outside the box—perfect for solving challenging AI and robotics problems.
+
+---
+
+### A Quick Note on Prerequisites  
+Since I can’t check the specific courses you’ve taken already, I just want to remind you that some of these courses might have beginner-level requirements. Make sure to double-check the prerequisites, and if you need help figuring it out, let me know—I’m here for you! 😊
+
+---
+
+I hope this gives you a solid starting point for planning your semester. If you want more recommendations, need help deciding which course to prioritize, or have questions about prerequisites, don’t hesitate to reach out. I’m here to support you as you explore these amazing fields!",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:56:30,2026-03-23 01:58:11 AM,Looking for challenging courses that will prepare me for grad school,"That’s awesome that you’re gearing up for challenging courses to prepare for grad school! Focused efforts now will definitely pay off for you later. Based on your interests in AI and robotics, I’ve created a personalized list of five great course recommendations for next semester. These are geared toward pushing you technically and giving you a strong foundation for graduate study. Let’s dive in!
+
+---
+
+### **#1 – 01:198:460 – *Introduction to Computational Robotics***  
+This course is a clear top pick for you because it centers on your interest in robotics while challenging you with hands-on work. It’s all about understanding how robots think, plan, and move—everything from navigation to control systems. You’ll also get the chance to work with real robotic platforms and learn industry-standard tools, making it a perfect stepping stone for grad school and for a career in cutting-edge robotics research.  
+
+**Why it’s a great fit for you:**  
+- Hits your robotics passion head-on with a focus on mobile robots and planning.  
+- Immerses you in hands-on projects on actual robotic hardware.  
+- Introduces you to tools and practices widely used in robotics research.  
+
+---
+
+### **#2 – 01:198:440 – *Introduction to Artificial Intelligence***  
+This course is the ideal starting point for a deeper dive into AI. It provides you with a big-picture understanding of the key concepts, like intelligent search, computer vision, and natural language processing. These foundational topics directly feed into more advanced AI work, so it’s the perfect match for someone who’s forward-thinking about their graduate school future.  
+
+**Why it’s a great fit for you:**  
+- Helps you build a solid base in essential AI concepts you’ll need for advanced research.  
+- Introduces exciting areas like knowledge representation and computer vision.  
+- Perfect preparation for taking on cutting-edge AI challenges at the graduate level.  
+
+---
+
+### **#3 – 01:198:461 – *Machine Learning Principles***  
+Machine learning is central to AI and robotics, so this course will be incredibly valuable for you as you prepare for grad school. You’ll build a strong toolkit for understanding how machines learn and make decisions. Key topics include deep learning and model selection, which are critical for creating AI systems and equipping robots with intelligence.  
+
+**Why it’s a great fit for you:**  
+- Gives you a firm grasp of machine learning theory and how to apply it.  
+- Offers practical experience with tools and techniques used in AI/robotics research.  
+- Covers deep learning concepts, which are crucial for both AI and robotics.  
+
+---
+
+### **#4 – 01:198:462 – *Introduction to Deep Learning***  
+If you’re ready to explore one of the most advanced branches of AI, this is the course for you. Deep learning powers innovations in areas from robotics perception to natural language systems, and this course has a laser focus on neural networks and their applications. It’s slightly more specialized than some of the earlier recommendations, which is why it’s ranked at #4, but it’s still highly relevant for someone preparing for graduate research.  
+
+**Why it’s a great fit for you:**  
+- Offers you an intensive look into neural networks and deep learning.  
+- Explores cutting-edge AI methods, from computer vision to robotics.  
+- Prepares you to tackle advanced research topics in AI and robotics.  
+
+---
+
+### **#5 – 01:198:425 – *Brain-inspired Computing***  
+This one’s a bit different, but it could give you a truly unique perspective. The course focuses on neuro-inspired computing—essentially, modeling AI systems after how the brain works. This could be especially exciting if you’re curious about pushing the boundaries in robotics, particularly in areas like vision and movement-based systems.  
+
+**Why it’s a great fit for you:**  
+- Helps you think outside the box with innovative, interdisciplinary approaches.  
+- Focus on neuromorphic networks directly ties into robotics research.  
+- Could give you an edge in developing novel solutions for robotics and AI problems.  
+
+---
+
+### A Few Quick Notes:  
+You mentioned wanting challenging courses, and all of these should satisfy that goal while preparing you for advanced research in graduate school. However, don’t forget to double-check the prerequisites (since I can’t verify them on my side). If you’d like help reviewing your transcript or mapping out a broader academic plan, just let me know—I’m here to support you at every step! 😊  
+
+Which of these courses excites you the most? Or is there a particular area where you’d like to dive even deeper? Let me know—I’d love to help you make the best decision for your goals!  ",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:59:41,2026-03-23 02:00:04 AM,Looking for challenging courses that will prepare me for grad school,"Sure thing! Thanks for sharing your academic goals with me—I think it’s great that you’re focused on preparing for grad school and are open to taking on challenging courses to build a strong foundation. I’ve reviewed your interests and prioritized courses that align with rigorous, research-oriented topics, so you’ll be in great shape as you take the next step in your academic journey. Here are my top 5 recommendations:
+
+---
+
+### #1 - **01:198:415 - Compilers**
+This course ranks at the top because it provides an in-depth understanding of how programming languages are translated into machine-executable code. For a grad-school-bound student like you, learning these concepts is fundamental, as compilers touch so many areas of advanced computer science, such as optimization and algorithm design. It's intellectually demanding and includes topics like parsing, lexical analysis, and program optimization techniques, all of which are key to understanding theoretical and practical aspects of programming.
+
+**Why it’s great for you:**
+- Strengthens your theoretical foundation for grad school.
+- Cultivates skills in program execution and optimization.
+- Perfect if you enjoy rigor and in-depth problem-solving.
+
+---
+
+### #2 - **01:198:417 - Distributed Systems: Concepts and Design**
+This course dives into distributed computing, covering real-world systems like distributed file storage and shared memory—all critical concepts in modern computing. It’s particularly challenging and will stretch your ability to think at scale, making it amazingly relevant for graduate-level research in systems design or software engineering.
+
+**Why it’s great for you:**
+- Builds expertise in designing and analyzing large-scale systems.
+- Offers advanced learning opportunities in distributed operating systems.
+- Perfect for someone seeking to strengthen their systems knowledge at a high level.
+
+---
+
+### #3 - **01:198:214 - Systems Programming**
+This course is great for honing your technical skills in systems-level programming and developing an appreciation for how computers work under the hood. Through hands-on practice with C programming and concepts like scaling and automation, you’ll gain core programming and problem-solving skills that are perfect prep for grad-level systems research.
+
+**Why it’s great for you:**
+- Teaches you foundational skills needed in systems research.
+- Focuses on real-world programming expertise in C.
+- Sets the stage for understanding advanced topics in operating systems and architecture.
+
+---
+
+### #4 - **01:198:440 - Introduction to Artificial Intelligence**
+AI is one of the fastest-growing fields in computer science, and for anyone planning to pursue graduate studies, it’s essential to build familiarity with machine learning, natural language processing, and computer vision. This course gives you a broad introduction to these subfields and will equip you with the foundational knowledge you need to dive deeper later on.
+
+**Why it’s great for you:**
+- Provides a solid overview of critical AI concepts.
+- Prepares you for research in areas with high academic and industry demand.
+- Covers key emerging technologies that are often explored in graduate programs.
+
+---
+
+### #5 - **01:198:411 - Computer Architecture**
+This course rounds out the list because understanding the inner workings of modern computer hardware, from pipelining to memory hierarchy and multiprocessors, is invaluable for graduate-level systems research. It’s a highly technical and challenging course, perfect for someone like you who’s excited to tackle advanced topics.
+
+**Why it’s great for you:**
+- Develops a deeper appreciation for how computers operate at the hardware level.
+- Covers cutting-edge topics like parallelism and multiprocessor systems.
+- Strong preparation for grad work in systems, hardware, or efficiency-oriented research.
+
+---
+
+### Some Notes:
+I haven’t validated prerequisites (our system doesn’t do that yet), so I encourage you to check if you meet the requirements before planning to enroll. Also, if there are any courses you’ve already taken or areas you’re especially interested in, feel free to let me know—I’ll refine the list further. 
+
+You're clearly motivated, which is really inspiring! These courses will challenge you while giving you a solid footing for grad school, and I’m confident you’d do great in any of these. What are your thoughts on this list? Is there a particular area you’d like me to focus on?",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 01:59:41,2026-03-23 02:01:29 AM,What courses cover web development or full stack?,"Thank you for following up! It’s awesome that you’re interested in web development and full-stack programming, especially as you’re planning for grad school. I’ve curated a list of challenging courses here at Rutgers that align closely with your goals and can help you develop the robust technical background a grad school program would value. Here's what I’d recommend diving into:
+
+---
+
+### **#1 - 01:198:352 - Internet Technology**
+This is the perfect place to start! It’s all about the backbone of web development—understanding the internet itself. This course will teach you how data actually moves across the web, with topics like TCP/IP protocols, network architecture, and socket programming. If you’ve ever wondered what makes the internet tick (and how to write scalable, efficient web systems), this is *the* course for you. 
+
+**Why this is a great pick for you:**
+- You’ll build a deep technical understanding of internet protocols—the foundation of any web app.
+- It’ll teach you how to handle network programming, which is invaluable for creating robust and responsive websites or applications.
+- This course is an excellent prep step for digging into web systems research down the line. 
+
+---
+
+### **#2 - 01:198:214 - Systems Programming**
+This one might not sound directly related to web dev at first—but stay with me! It gets into systems-level programming (things like C programming, automation, and understanding the foundations of computers). For someone serious about full-stack dev and grad school, this is where you can deepen your understanding of what happens behind the scenes when your code is executed. It really ups your technical expertise.
+
+**Why this is worth your time:**
+- It’ll sharpen your programming skills, especially in lower-level languages like C, which is great if you want to build fast and efficient systems.
+- You’ll grasp how applications truly interact with underlying hardware and software.
+- This knowledge is essential for advanced topics, like making scalable web apps or diving into distributed systems.
+
+---
+
+### **#3 - 01:198:437 - Database Systems Implementation**
+Let’s face it—web development without databases is … well, pretty much unheard of. This course will give you a behind-the-scenes look at how modern databases work. You’ll learn about essential concepts like transactions, query optimization, and even text data systems. These are crucial skills for designing fast, scalable web apps, especially if you want to work on database-heavy systems or even explore research in data management later on.
+
+**Why it’s a strong choice:**
+- You’ll gain a strong understanding of how to store and manage data efficiently—an essential skill for full-stack dev.
+- This course looks at the inner workings of databases, which could make you a much more well-rounded developer.
+- It’s a solid step for pursuing academic research in database or web-related fields in grad school.
+
+---
+
+### **#4 - 01:198:419 - Computer Security**
+Web development is not just about creating apps—it’s also about making sure they’re secure. This course explores applied cryptography, web security, and authentication methods. It’s highly recommended, especially if you want to learn how to protect websites and apps from modern threats like cyberattacks—a highly in-demand skill set.
+
+**Why I included this course for you:**
+- It’ll give you an advanced understanding of how to secure web applications—one of the most crucial aspects of modern web development.
+- You’ll learn skills and techniques to tackle real-world security challenges like handling sensitive data or preventing vulnerabilities.
+- If you’re thinking about exploring cybersecurity research for grad school, this is a natural stepping stone.
+
+---
+
+### **#5 - 01:198:213 - Software Methodology**
+Solid software design is at the core of web development—you just can’t escape it! This class will teach you the principles of building modern applications, emphasizing object-oriented programming, collaboration, and designing graphical user interfaces. These skills will come in handy for tackling bigger, more structured web projects, whether on your own or part of a team.
+
+**Why this made the list:**
+- It’ll help you master the building blocks of creating professional-level software applications that are scalable and easy to maintain.
+- The collaboration components in this course mirror the real-world experience of working on web projects with a team.
+- You’ll be in great shape for developing robust web apps and preparing for advanced study in software engineering.
+
+---
+
+### A Quick Reminder:
+These courses have been ranked specifically to help you build the expertise needed for both web development and preparing for grad school. The first couple of courses touch on the foundations of how the internet and systems work, while the others build skills for full-stack programming and web security. As before, I encourage you to double-check prerequisites to ensure you’re ready to enroll.
+
+What are your thoughts? Do any of these stand out to you? Or is there a particular track within web development (e.g., front-end, back-end, or full-stack) that you want me to focus on more? Always happy to refine further! 😊",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 02:02:48,2026-03-23 02:03:10 AM,"I'm a sophomore interested in systems programming, what do you recommend?","Hi there! Thanks for reaching out—it's awesome that you're already exploring systems programming as a sophomore. This is such an exciting area of computer science that opens doors to some fascinating career paths, and you're diving in at the perfect stage in your journey. Based on your interest, I've put together a list of five recommended courses. These should help you build a strong foundation and also prepare you for advanced topics later on. Let’s walk through them step by step:
+
+---
+
+### **#1 - 01:198:214: Systems Programming (NB)**
+This is your *must-take* class—it’s practically designed for students like you who want to specialize in systems programming. It focuses on programming in C, which is essential for writing low-level systems code. Plus, it gives you a behind-the-scenes look at how computers actually work, including memory and processing. 
+
+**Why I think this is a great fit for you:**
+- It gets you hands-on with low-level programming, which is crucial for systems development. 
+- You’ll learn tools and skills like scripting for systems automation, which are super useful for real-world applications.  
+- It opens the door to advanced courses like Operating Systems and Distributed Systems.
+
+Since you’re a sophomore, this is the perfect time to take on the challenge. It’ll set you up for success in subsequent systems-related courses.
+
+---
+
+### **#2 - 01:198:211: Computer Architecture**
+Want to know how your programs interact with hardware? This course dives into the guts of computer systems—memory, processors, and the hardware-software interface. These are key concepts for any systems programmer because they give you a detailed understanding of how your code translates into instructions that machines execute. 
+
+**Why this is great for you:**
+- It closely ties into your systems programming interests by focusing on how systems are built from the ground up. 
+- You’ll reinforce skills like C programming while learning about the innards of modern computer hardware.  
+- It lays a strong foundation for deeper explorations of topics like Operating Systems and parallel architectures later on.  
+
+---
+
+### **#3 - 01:198:416: Operating Systems Design (NB)**  
+Okay, so quick disclaimer—this course requires Systems Programming (01:198:214) as a prerequisite. But hear me out! This class is a treasure trove of knowledge for anyone serious about systems programming. It lets you dig into the workings of operating systems, covering process scheduling, memory management, and synchronization. Once you’ve ticked off 214, this course is a natural next step.  
+
+**Why this should be on your radar:**  
+- You’ll gain firsthand experience with essential concepts like how operating systems manage processes and threads.  
+- It’s highly applicable to systems programming work environments, so you’ll come out with skills you can put to use immediately.  
+- It’s often considered one of the hallmark courses for systems-focused students.
+
+---
+
+### **#4 - 01:198:213: Software Methodology (NB)**  
+This one takes a bit of a step back from traditional systems programming but focuses on solidifying your overall programming abilities. You’ll strengthen your foundation in writing and designing software systems—perfect for teamwork-heavy projects in the real world. Plus, understanding object-oriented design and modern development techniques will complement your systems expertise by teaching you how to work with higher-level tools.  
+
+**Key takeaways for you:**  
+- It emphasizes software engineering best practices, which will help in building efficient, maintainable systems programming projects.  
+- You’ll get experience with collaborative project work, which is invaluable in any CS-related career.  
+- The emphasis on GUI creation and object-oriented design can add to your toolbox when working on systems-related tasks.  
+
+---
+
+### **#5 - 01:198:314: Principles of Programming Languages (NB)**  
+Finally, here’s one a little outside the direct realm of systems programming, but still highly useful. This course gives you insight into different programming paradigms—imperative, functional, and more—and how programming languages are designed. Understanding these paradigms can help you think critically about the strengths and weaknesses of different languages, and why certain ones (like C in systems programming) are used for specific tasks.  
+
+**Why it’s worth considering:**  
+- You’ll learn about compilers and interpreters, which connect directly to systems-level topics like language runtime and optimization.  
+- It gives you a theoretical foundation that’s often overlooked but super useful in advanced programming work.  
+- If you’re curious about programming language design or want to become a better programmer across multiple types of systems, this class can give you a big boost.  
+
+---
+
+### What’s Next?  
+I feel great about these recommendations for you. Of course, keep in mind that you’ll need to double-check course prerequisites since I can’t access that information right now. But if you haven’t taken any of these yet, they will all help you build a solid foundation in systems programming while keeping the challenges manageable for where you are in your academic journey.
+
+If you haven’t already, I’d highly recommend getting in touch with your academic advisor or signing up early for registration—you don’t want to miss out on these great courses! And feel free to let me know if you want to explore other topics or need more guidance on long-term planning. :)
+
+What do you think? Do any of these sound particularly exciting to you?",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 02:02:48,2026-03-23 02:04:49 AM,Can you suggest courses that are good for a software engineering career path?,"Hi again! Great to see you’re diving into the software engineering career path—such an exciting and impactful field. For a sophomore like you, there’s so much room to explore and build the foundational skills that’ll set you up for success in the world of software development. Based on your interest, I’ve put together a personalized list of my top course recommendations for you. Let’s go through them step by step:
+
+---
+
+### **#1 - Systems Programming (01:198:214)**  
+This is hands down one of the most important courses for any aspiring software engineer—especially if you want to understand how code interacts with the underlying hardware. You’ll get to work with C programming (the bread and butter of systems work) and really get into the nitty-gritty of low-level programming. Sophomore year is a perfect time to take this class since it will form the foundation you can build upon in future, more advanced courses.
+
+**Why this is perfect for you:**  
+- Systems programming is a fundamental part of building a strong engineering mindset—great for understanding how software works under the hood.  
+- You’ll also learn practical tools like scripting for automation, which are super handy when you get to work on larger software projects.  
+- It sets you up for advanced, must-take courses like Operating Systems down the road.  
+
+---
+
+### **#2 - Software Methodology (01:198:213)**  
+If you’re interested in how to design *great* software and work effectively in teams, this course is an ideal choice. It’s focused on teaching you best practices in software development, like object-oriented programming and collaborative problem-solving. You’ll also get your first taste of working on more complex systems, which mirrors professional software engineering projects.
+
+**Why you should check this one out:**  
+- You’ll strengthen your programming skills while learning how to build software that’s efficient, clean, and maintainable.  
+- Team-based projects will give you real-world experience in working with others—a must-have skill for any software engineer!  
+- Plus, it’s structured to give you a solid base for tackling more advanced software engineering courses later on.  
+
+---
+
+### **#3 - Computer Architecture (01:198:211)**  
+Curious about how software interacts with hardware? This course dives into exactly that! You’ll explore concepts like how memory, processors, and other hardware components work together with software. It might seem more “hardware-focused,” but I promise these are essential concepts to understand for systems-oriented software engineers.
+
+**Why this fits your goals:**  
+- A deep understanding of the hardware-software connection will help you make better technical decisions when writing and optimizing code.  
+- You’ll also reinforce skills like C programming, which ties back to systems programming.  
+- This class is an excellent stepping stone if you see yourself moving toward complex areas like operating systems or embedded systems later in your career.  
+
+---
+
+### **#4 - Software Engineering (01:198:431)**  
+This course is pretty much *the* course that screams “software engineering career.” It focuses on building large-scale software systems, managing real-world projects, and collaborating effectively with others. Since it’s generally taken later in your academic career, it might be a course to plan for in the future, but it’s one you don’t want to miss.
+
+**Why it’s a must-have on your radar:**  
+- You’ll gain hands-on experience in end-to-end project management, which mirrors what you’d be doing in the industry.  
+- It helps sharpen your problem-solving and team collaboration skills, key for success in the workforce.  
+- You’ll learn how to create reliable, scalable, production-ready systems—core principles for any software engineer.
+
+Make sure to double-check prerequisites for this one and plan it into your schedule for the next year or beyond.
+
+---
+
+### **#5 - Operating Systems Design (01:198:416)**  
+This class dives deep into how operating systems work—things like memory management, process scheduling, and synchronization. Although this one has the Systems Programming course as a prerequisite, it’s a critical course if you’re aiming to be a software engineer with a specialty in systems-related areas.
+
+**Why this course can take your skills to the next level:**  
+- It’s perfect for learning how to design and work with the kinds of systems that make modern computing possible.  
+- You’ll walk away with practical knowledge of operating systems, which is invaluable for software engineers, especially in systems programming or backend roles.  
+- Building this level of expertise will make you stand out when it comes time to apply for internships or jobs.  
+
+---
+
+### Final Thoughts  
+This should give you a solid roadmap of where to start and where to aim as you evolve in your software engineering journey. Since I can’t verify prerequisites at the moment, be sure to check for prior requirements before registering. Also, if you’ve already tackled any of these courses, let me know, and I can adjust the recommendations accordingly!  
+
+Lastly, if you’re thinking about internships or specific areas to specialize in, feel free to ask—I’d love to help you plan ahead. Keep up the amazing work, and I can’t wait to hear how your journey unfolds! Which of these courses stands out to you the most? Or would you like more ideas?",ParserAgent|DataAgent|PlanningAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|PlanningAgent:LLM"
+2026-03-23 02:02:48,2026-03-23 02:05:42 AM,What is CS 440 about?,"Sure! Let me share what I found about this class in an engaging and helpful way:
+
+---
+
+### **Course Code:** **01:198:440**  
+**Course Title:** **Introduction to Artificial Intelligence (NB)**  
+
+---
+
+**Description:**  
+Get ready to dive into the fascinating world of Artificial Intelligence (AI)! This course offers a comprehensive introduction to the core concepts of AI, equipping you with the knowledge and skills to explore how machines can mimic human intelligence. From search algorithms to computer vision, this class will help you understand and even design systems that can ""think"" and make intelligent decisions.
+
+---
+
+**Prerequisites:**  
+To enroll in this course, you'll need to have completed:  
+- **One of the following discrete mathematics courses:**  
+  - 01:198:205 (*Introduction to Discrete Structures I*),  
+  - 14:332:202 (*Discrete Math for ECE*),  
+  - 14:332:312 (*Discrete Mathematics for ECE*).  
+- **And one of the following calculus courses:**  
+  - 01:640:152 (*Calculus II for Mathematical and Physical Sciences*),  
+  - 01:640:192 (*Honors Calculus II*).  
+
+If you've checked these off your list, you’re ready to go!
+
+---
+
+**Credit Hours:**  
+4 Credits
+
+---
+
+**Key Topics You’ll Explore:**  
+- **Search Algorithms:** The foundation of machine intelligence, including techniques to solve problems using search strategies.  
+- **Knowledge Representation:** Learn how data and rules are structured to help AI systems “reason” and solve complex problems.  
+- **Natural Language Understanding:** Explore how machines comprehend and process human language—great for diving into voice recognition or chatbots!  
+- **Computer Vision:** Get insights into how AI systems interpret and understand visual information, like images or videos.  
+
+---
+
+**Who Should Take This Course?**  
+This course is perfect for students who:  
+- Are curious about AI and its amazing applications, like self-driving cars, recommendation systems, and natural language processing.  
+- Wish to dive deeper into machine learning, data science, robotics, or programming intelligent systems.  
+- Are considering careers in research, AI engineering, or cutting-edge tech roles in companies like Google, Meta, or Microsoft.  
+
+If you enjoy problem-solving and have a knack for math and programming, this will be an incredibly rewarding class for you!
+
+---
+
+**Next Steps:**  
+If you're excited about building AI skills, this course is a great foundation! It’s a popular class, so act early when registration opens to secure your spot. Also, would you like recommendations for related courses—perhaps advanced AI or machine learning topics? Let me know, and I’d be happy to help you explore more paths! 😊",ParserAgent|DataAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json"
+2026-03-23 02:02:48,2026-03-23 02:06:24 AM,Tell me about Data Structures,"### **Course Code:** **01:198:112**  
+**Course Title:** **Data Structures**  
+
+---
+
+**Description:**  
+This course is like the Swiss Army knife of programming—a must-have for any Computer Science student. It’s all about learning how to organize, store, and manage data efficiently, which is critical for writing programs that are fast and scalable. From mastering how to structure data for practical use to understanding the trade-offs between efficiency and complexity, this course lays the foundation for tackling real-world problems in software development.
+
+---
+
+**Prerequisites:**  
+Before jumping into **Data Structures**, you’ll need to have completed:  
+- **01:198:111: Introduction to Computer Science** (or its equivalent).  
+
+This ensures you’re comfortable with fundamental programming principles like variables, control flow, functions, and arrays.
+
+---
+
+**Credit Hours:**  
+4 Credits  
+
+---
+
+**Key Topics/Skills Covered:**  
+- **Lists, Stacks, and Queues:** Learn how to utilize these basic data structures to organize and process data efficiently.  
+- **Trees:** Understand hierarchical relationships and how to navigate them, a fundamental concept for databases, file systems, and more.  
+- **Sorting and Searching Algorithms:** Discover methods to keep data organized and quickly accessible—key for any computational task.  
+- **Complexity Analysis:** Learn how to evaluate and optimize the performance of your algorithms, a vital skill for tackling large-scale problems.  
+
+---
+
+**Who This Course is Good For:**  
+This course is essential if you:  
+- Are pursuing a career in software engineering, AI, game development, or data science.  
+- Enjoy problem-solving and want to hone your logical thinking and analytical skills.  
+- Plan to dive into more advanced CS topics like algorithms, machine learning, or database systems, where data structures play a huge role.  
+
+Whether you’re aiming to land that software internship or just want to write better, faster programs, this class is where your coding skills level up!  
+
+---
+
+**Final Thoughts:**  
+Data Structures is a core class that you’ll use again and again, both in your academic journey and your career. It’s challenging but hugely rewarding—one of those courses where the hard work pays off big time.  
+
+Would you like recommendations for related courses, such as Algorithms or Advanced Data Structures? Or do you want to hear more about other foundational courses that might pair well with this one? Let me know—happy to help you plan your next steps! 😊",ParserAgent|DataAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json"
+2026-03-23 02:02:48,2026-03-23 02:07:30 AM,What topics does Operating Systems Design cover?,"### **Course Code:** **01:198:416**  
+**Course Title:** **Operating Systems Design (NB)**  
+
+---
+
+**Description:**  
+Ready to go behind the scenes of modern computing? This course dives deep into the backbone of computer systems: operating systems. You’ll explore the powerful mechanisms that allow computers to manage hardware and software resources efficiently. From scheduling processes to handling memory, this course equips you with a comprehensive understanding of how operating systems function and how to design them. If you’ve ever wondered what makes an operating system “tick,” this is your chance to find out.
+
+---
+
+**Prerequisites:**  
+Before you can take this course, you’ll need to have completed one of the following:  
+- **01:198:214: Systems Programming** (the most common prerequisite).  
+- OR both **14:332:331: Computer Architecture (for ECE students)** and **14:332:351: Digital System Design (for ECE students)**.
+
+Since I can’t verify your prerequisites, double-check your eligibility before signing up.  
+
+---
+
+**Credit Hours:**  
+4 Credits  
+
+---
+
+**Key Topics/Skills Covered:**  
+- **Process and Thread Management:** Learn how operating systems handle the execution of multiple processes and threads, ensuring efficiency and stability.  
+- **Memory Management and Virtual Memory:** Discover how operating systems manage memory allocation and optimize limited resources to avoid bottlenecks.  
+- **Synchronization and Scheduling:** Understand how tasks are prioritized and managed, a core skill for ensuring smooth multitasking in a system.  
+- **File Systems and I/O Management:** Explore how data is stored, retrieved, and structured on disk, as well as how hardware devices communicate with the OS.  
+
+---
+
+**Who Should Take This Course?**  
+This course is a must-take for students aiming to build their skills in:  
+- **Systems programming:** The knowledge gained here is invaluable for careers that involve creating low-level software like drivers, kernels, or real-time systems.  
+- **Backend development or infrastructure engineering:** Gain insights into how servers, databases, and distributed systems operate at their core.  
+- **Research or advanced problem-solving:** If you're curious about how to optimize or innovate within the field of OS, this class provides the technical foundation you need.  
+
+If you’re interested in developing a deeper understanding of how computers organize and process tasks—especially at the operating system level—this course is for you!
+
+---
+
+**Final Thoughts:**  
+Operating Systems Design is challenging but incredibly rewarding. It’s a critical course for those aiming to design efficient, secure, and scalable systems, and it’ll give you an edge as you work toward a career in software engineering, systems programming, or technology research.  
+
+Would you like recommendations for related classes, such as Distributed Systems or Advanced Programming? Or do you need help planning your path to fit this course in? Let me know—I’m here to help! 😊",ParserAgent|DataAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json"
+2026-03-23 02:02:48,2026-03-23 02:08:00 AM,Can you describe the Machine Learning Principles course?,"### **Course Code:** **01:198:461**  
+**Course Title:** **Machine Learning Principles (NB)**  
+
+---
+
+**Description:**  
+Are you fascinated by the idea of teaching computers to learn and make decisions like humans do? If so, you’ll love this course! **Machine Learning Principles** is a comprehensive introduction to machine learning. It focuses on both the theoretical concepts and practical applications of statistical methods to solve complex problems in areas like computer vision, natural language processing, and information retrieval. Whether you’re aiming to design predictive models, work with AI-powered systems, or delve into deep learning, this course delivers an exciting foundation.  
+
+---
+
+**Prerequisites:**  
+To set yourself up for success, make sure you’ve checked off the prerequisites:  
+- A solid background in statistics and probability (typically covered in earlier courses).  
+- A strong understanding of basic linear algebra and calculus—these are essential for working with machine learning algorithms.  
+
+Make sure to verify the specific prerequisite courses when enrolling.
+
+---
+
+**Credit Hours:**  
+4 Credits  
+
+---
+
+**Key Topics/Skills Covered:**  
+- **Linear Models for Classification and Regression:** Learn foundational techniques for predicting outcomes and classifying data.  
+- **Support Vector Machines (SVM):** Delve into this powerful algorithm for solving complex classification problems.  
+- **Regularization and Model Selection:** Master tools to prevent overfitting and choose the best models for your data.  
+- **Introduction to Deep Learning:** Get a sneak peek into the thrilling world of deep neural networks, opening the door to exciting specializations like computer vision and natural language processing.  
+
+---
+
+**Who Should Take This Course?**  
+This course is an excellent fit if you:  
+- Are intrigued by artificial intelligence and how machines can mimic human decision-making processes.  
+- Want to pursue careers in data science, AI engineering, robotics, or research in cutting-edge technologies.  
+- Enjoy solving real-world problems using statistics, programming, and mathematical models.  
+- Are curious about applying machine learning to fields like image recognition, speech processing, healthcare, or finance.  
+
+Whether you're eyeing a lucrative career in tech or simply want to learn about one of the most transformative technologies of our time, **Machine Learning Principles** is an incredible starting point.
+
+---
+
+**Final Thoughts:**  
+This course is a great mix of theory and practice, offering the tools to understand and apply machine learning concepts in powerful ways. It’s a must for anyone looking to make a mark in AI or data-driven fields.  
+
+Would you like help exploring related courses, such as Advanced Machine Learning or Artificial Intelligence? Or would you like to know more about how to prepare for the prerequisites? Let me know—I’d be happy to assist! 😊  ",ParserAgent|DataAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json"
+2026-03-23 02:02:48,2026-03-23 02:08:46 AM,What's covered in 01:198:344?,"### **Course Code:** **01:198:344**  
+**Course Title:** **Design and Analysis of Algorithms**  
+
+---
+
+**Description:**  
+This course is all about unlocking the secrets of solving problems efficiently. If you’ve ever wondered how to design algorithms that aren’t just correct but also optimized for speed and memory, this is the class for you. You’ll explore problem-solving strategies used by computer scientists around the world to tackle some of the most challenging computational problems—and learn how to prove that your solutions actually work!
+
+---
+
+**Prerequisites:**  
+To enroll in **Design and Analysis of Algorithms**, you’ll need to have completed:  
+- **01:198:112: Data Structures** (builds your foundation in data organization).  
+- **01:198:205: Introduction to Discrete Structures I** (offers key mathematical tools like logic and set theory).  
+- **01:198:206: Introduction to Discrete Structures II** (dives deeper into concepts like combinatorics and graph theory).  
+
+These prerequisites ensure you’re well-prepared for the mathematical rigor of this course.
+
+---
+
+**Credit Hours:**  
+3 Credits  
+
+---
+
+**Key Topics/Skills Covered:**  
+- **Algorithm Design Paradigms:** Master powerful strategies like greedy algorithms, divide and conquer, and dynamic programming to solve complex problems in elegant ways.  
+- **Efficiency Analysis:** Understand Big-O notation and learn how to measure the performance of your algorithms in terms of time and space.  
+- **Correctness Proofs:** Go beyond writing code by proving that your algorithms are not only efficient but also reliable and error-free.  
+- **Applications to Real-world Problems:** Whether you’re optimizing a delivery route or finding patterns in data, the skills you build here apply across industries.  
+
+---
+
+**Who Should Take This Course?**  
+This course is a game-changer for students pursuing careers in:  
+- **Software engineering:** Strong algorithmic thinking is critical when solving real-world challenges and coding problems.  
+- **Data science and AI:** Designing efficient algorithms is at the heart of machine learning, search engines, and data analysis.  
+- **Competitive programming:** If contests or technical interviews are part of your future, this course will sharpen your skills and give you an edge.  
+- **Research or grad school:** It’s a core course for establishing a theoretical foundation in Computer Science.  
+
+If you love problem-solving, thinking critically, and improving your programming efficiency, this is the class for you!  
+
+---
+
+**Final Thoughts:**  
+Design and Analysis of Algorithms is a cornerstone of your CS journey, teaching you to think like a computer scientist and prepare for advanced opportunities, whether in academia or industry.  
+
+Would you like recommendations for related courses, like Advanced Algorithms or Optimization techniques? Or do you want tips on preparing for the prerequisites? Let me know—I’d love to help you build a solid plan for success! 😊",ParserAgent|DataAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json"
+2026-03-23 02:02:48,2026-03-23 02:09:27 AM,Give me details about Introduction to Artificial Intelligence,I had trouble understanding your request: Parsing error: 'ParserAgent' object has no attribute '_get_fallback_parse',ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-23 02:12:38,2026-03-23 02:12:45 AM,Give me details about Introduction to Artificial Intelligence,I had trouble understanding your request: Parsing error: 'ParserAgent' object has no attribute '_get_fallback_parse',ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:07:09,2026-03-24 03:08:54 AM,Can you take my transcript?,Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:19:33,2026-03-24 03:19:49 AM,Can you look at my transcript?,Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:19:33,2026-03-24 03:20:13 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn&Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",TranscriptAgent,"TranscriptAgent:LLM,transcript_pdf"
+2026-03-24 03:19:33,2026-03-24 03:20:46 AM,What do I need to take before CS 344?,"The course you're asking about is **01:198:344 - Design and Analysis of Algorithms**. The prerequisites listed for this course are:
+
+- **01:198:112 - Data Structures**
+- **01:198:205 - Introduction to Discrete Structures I**
+- **01:198:206 - Introduction to Discrete Structures II**
+
+However, since you've already completed **01:198:344** (you received a **B+**), you’ve already met these prerequisites and successfully taken the course. So no further action is needed regarding prerequisites for this class.
+
+If you'd like, I can help you explore related advanced topics or suggest useful follow-up courses to strengthen areas like algorithms, optimization, or other complementary topics. Let me know how I can assist further!",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:19:33,2026-03-24 03:21:40 AM,Can I take Operating Systems without taking Systems Programming first?,"**Course Details**:  
+The course you're asking about is **01:198:416 - Operating Systems Design**. It’s a 4-credit course that covers important topics like computer organization, process and thread management, synchronization, scheduling, memory management, file systems, and more.
+
+**Prerequisites** (per the course description):  
+To enroll in **Operating Systems Design (01:198:416)**, you need **ONE** of the following:  
+1. **01:198:214 - Systems Programming**  
+   *OR*  
+2. Both **14:332:331 - Computer Architecture** and **14:332:351 - Systems Programming for Electrical & Computer Engineers**.  
+
+**Your Eligibility Based on Current Transcript**:  
+- You **do not meet the prerequisite requirements** for this course.  
+- You’ve completed **01:198:211 - Computer Architecture** (which is not equivalent to 14:332:331) but have **not completed 01:198:214** or any of the required Electrical and Computer Engineering (ECE) courses (**14:332:331 and 14:332:351**).  
+
+**Suggested Pathway**:  
+To become eligible for Operating Systems, it’s recommended that you take **01:198:214 - Systems Programming** first, as it's the simplest and most direct way to fulfill the prerequisite.  
+
+Since you're already a **senior** with strong academic standing (GPA 3.743), this additional course should fit well into your schedule. Plus, Systems Programming will provide essential foundational knowledge in low-level programming and system calls, which are critical for success in Operating Systems.  
+
+---
+
+Let me know if you’d like help planning when to take **01:198:214** or exploring other related courses you'd be eligible for in the meantime!
+
+---
+
+The course you're asking about is **01:198:416 - Operating Systems Design**. Its prerequisites are:
+
+- **01:198:211 - Computer Architecture**
+- **01:198:214 - Systems Programming**
+
+Looking at your transcript, you’ve successfully completed **01:198:211 (Computer Architecture)** with a **B+**, so that prerequisite is met. However, you haven’t completed **01:198:214 (Systems Programming)**. Based on the course requirements, **Systems Programming** is a prerequisite for **Operating Systems**, which means you would need to complete (or be in progress for) **Systems Programming** before enrolling in **Operating Systems**.
+
+Since you asked specifically whether you can take **Operating Systems** without first completing **Systems Programming**, the answer is no, based on the stated prerequisites. However, if you feel confident in your foundational programming and systems skills, you could consider discussing this with your academic advisor or the course instructor to see if exceptions are possible.
+
+Would you like me to recommend courses you can take before or alongside Systems Programming to prepare for Operating Systems? Let me know how I can assist further!",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:41:46,2026-03-24 03:41:52 AM,"""I want to upload my transcript so you can give me better recommendations""",Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:41:46,2026-03-24 03:42:14 AM,Can I take Operating Systems without taking Systems Programming first?,I couldn't find a file at 'Can I take Operating Systems without taking Systems Programming first?'. Could you double-check the path?,Orchestrator(LLM),Orchestrator:LLM
+2026-03-24 03:41:46,2026-03-24 03:42:27 AM,transciptone.pdf,I couldn't find a file at 'transciptone.pdf'. Could you double-check the path?,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:41:46,2026-03-24 03:42:55 AM,transcriptone,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn & Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",ParserAgent|TranscriptAgent,"ParserAgent:LLM,query_schema.json|TranscriptAgent:LLM,transcript_pdf"
+2026-03-24 03:41:46,2026-03-24 03:43:12 AM,Can I take Operating Systems without taking Systems Programming first?,"Great question! Based on your academic record and current course load, you seem to be a strong and dedicated student. Unfortunately, I can't directly confirm if you meet the prerequisites for Operating Systems (01:198:416) because the Constraint Agent is not available yet to verify prerequisites. However, I can share helpful context and guide you.
+
+### Typical Prerequisites for Operating Systems:
+At Rutgers, Operating Systems (01:198:416) usually requires **Systems Programming (01:198:214)** or equivalent knowledge because Systems Programming covers foundational skills like process communication, memory management, and programming in C, which are important for succeeding in Operating Systems. Since you've not taken Systems Programming or a similar course (according to your transcript), you may lack some of the foundational skills the course assumes.
+
+**Next Steps:**
+1. **Verify with your advisor or department:** I recommend emailing your academic advisor or the CS department to confirm if you can enroll without Systems Programming.
+2. **Evaluate foundational knowledge:** If you’re familiar with systems-level programming (e.g., using C, understanding operating system concepts like processes, threads, file systems, etc.) from elsewhere, you *might* be prepared. If not, consider taking Systems Programming first to set yourself up for success.
+3. **Course options for preparation:** If you’re interested, I can recommend some courses that align with your current strong performance and can help reinforce the skills needed for Operating Systems.
+
+Would you like me to recommend alternative courses to build your systems knowledge or courses that align with your AI/ML interest? Let me know! I’m here to help you craft the best path forward. 😊",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:44:17,2026-03-24 03:44:41 AM,"""I have a PDF of my academic history, can you read it?",Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:44:17,2026-03-24 03:44:45 AM,transcriptone,I couldn't find a file at 'transcriptone'. Could you double-check the path?,Orchestrator(LLM),Orchestrator:LLM
+2026-03-24 03:44:17,2026-03-24 03:45:01 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn&Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",ParserAgent|TranscriptAgent,"ParserAgent:LLM,query_schema.json|TranscriptAgent:LLM,transcript_pdf"
+2026-03-24 03:44:17,2026-03-24 03:45:25 AM,Can I take Operating Systems without taking Systems Programming first?,"Hi Jelani! Great question—I appreciate you seeking clarity about prerequisites! Let's review everything carefully.
+
+### Course Overview:
+The course you're interested in is **01:198:416 - Operating Systems Design**. This is a foundational course in understanding how operating systems function, covering topics like process management, synchronization, scheduling, memory management, and more.
+
+### Prerequisite Check:
+To register for Operating Systems Design, the following prerequisites must be met:
+1. **01:198:214 - Systems Programming**  
+   OR  
+2. Both **14:332:331 - Computer Architecture and Assembly Language**  
+   AND **14:332:351 - Computer Organization and Architecture**.
+
+Looking at your transcript:  
+- You haven't taken **01:198:214 (Systems Programming)**.  
+- While you've completed **01:198:211 (Computer Architecture)**, the required **14:332:331** or **14:332:351** are not part of your course history.
+
+### Eligibility:
+Unfortunately, at this point, you don’t meet the prerequisites for this course. To be eligible, you would first need to take **01:198:214 - Systems Programming** or both Electrical and Computer Engineering (ECE) courses (**14:332:331 and 14:332:351**). 
+
+### Suggested Pathway:
+Since you're primarily pursuing Computer Science (not ECE), your most direct and recommended pathway to meet the prerequisites for Operating Systems Design would be to take **01:198:214 - Systems Programming**. It’s specifically designed as a prerequisite, and the content will prepare you for topics covered in Operating Systems like process management, synchronization, and file systems.
+
+### Credit Standing:
+As a senior with solid credit progress and an impressive **GPA of 3.743**, you’re well-positioned to complete this course once prerequisites are met. Keep up the great work!
+
+### Key Notes on the Courses:
+- Systems Programming (01:198:214) is tightly connected to Operating Systems in terms of understanding low-level programming concepts and how to work with system-level APIs. It’s an excellent preparatory course and will make Operating Systems much more manageable.
+- If you find that you're particularly interested in hardware-focused aspects of CS or considering any involvement in hardware systems, you can explore the ECE option (14:332:331 and 14:332:351).
+
+Let me know what other questions you have or if you'd like me to walk you through other course recommendations! 😊",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:44:17,2026-03-24 03:46:05 AM,What are the prerequisites for Machine Learning Principles?,Which course are you asking about?,ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:44:17,2026-03-24 03:46:33 AM,What are the prerequisites for Machine Learning Principles,"I'd love to help you find courses! To give you the best recommendations, could you tell me:
+- Can you confirm the exact course code or institution's course name for 'Machine Learning Principles'?",ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:44:17,2026-03-24 03:47:40 AM,what do i need to take before CS 344?,"Great question, Jelani! Let's go over everything you need to know about **CS 344 - Design and Analysis of Algorithms**.
+
+### Course Details:
+- **Course Code:** 01:198:344  
+- **Title:** Design and Analysis of Algorithms  
+- **Credits:** 3  
+- **Description:** This course focuses on algorithm design paradigms like greedy algorithms, dynamic programming, and divide-and-conquer, along with rigorous analysis of their correctness and efficiency.
+
+---
+
+### Prerequisite Requirements:
+To take **CS 344**, students must complete the following courses:
+1. **01:198:112 - Data Structures**  
+2. **01:198:205 - Introduction to Discrete Structures I**  
+3. **01:198:206 - Introduction to Discrete Structures II**
+
+---
+
+### Your Transcript Review:
+Now, let me check your academic history:
+- **01:198:112 - Data Structures:** ✅ **Completed (Grade: A)**  
+- **01:198:205 - Intro Discrete Structures I:** ✅ **Completed (Grade: A)**  
+- **01:198:206 - Intro Discrete Structures II:** ✅ **Completed (Grade: A)**  
+
+You’ve **already completed all the prerequisites** for CS 344 and, in fact, you’ve also **already taken and passed CS 344**, earning a **B+**. 🎉 That’s great progress—well done on tackling such a challenging course!
+
+---
+
+### No Pathway Needed:
+Since you’ve already completed CS 344, you don’t need to take any additional courses related to its prerequisites. If this question was in preparation for optimizing your future technical course path, let me know—I’d be happy to recommend complementary advanced courses that would build on the skills you developed in CS 344.
+
+---
+
+### Summary:
+- You’ve already **completed** CS 344 with a strong B+. ⚡
+- All prerequisites for CS 344 have been met in your academic record.
+- Your credit progress and senior standing are ideal for taking more advanced electives as you wrap up your degree.
+
+Let me know if you want recommendations for follow-up courses in algorithms or any related domain, like optimization or computational theory! 😊",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:55:06,2026-03-24 03:55:11 AM,"""Want to see what I've completed so far?""",Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 03:55:06,2026-03-24 03:55:26 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Struct I (A)
+  - 01:198:206: Intr Discrt Struct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn&Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",TranscriptAgent,"TranscriptAgent:LLM,transcript_pdf"
+2026-03-24 03:55:06,2026-03-24 03:55:42 AM,What are the prerequisites for Machine Learning Principles?,"Great question, Jelani! Let’s break it down together.
+
+### Course Info:
+The course you're asking about is **Machine Learning Principles (01:198:461)**. It's a 4-credit course that provides a theoretical and practical introduction to machine learning. You'll cover topics like classification, regression, support vector machines, and even dip your toes into deep learning.
+
+---
+
+### Prerequisites:
+To enroll in **Machine Learning Principles**, you need to have completed the following courses:
+1. **01:198:112 - Data Structures**
+2. **01:198:206 - Intro to Discrete Structures II**
+3. **01:640:250 - Introductory Linear Algebra**
+
+---
+
+### Your Transcript Check:
+From your transcript, here's where you stand:
+1. **Data Structures (01:198:112)** - ✅ Completed with an A
+2. **Intro to Discrete Structures II (01:198:206)** - ✅ Completed with an A
+3. **Introductory Linear Algebra (01:640:250)** - ✅ Completed with a B+
+
+You’re fully eligible for this course! It’s great to see that you’ve already met all the prerequisites. Plus, as a senior with an impressive GPA (3.743) and strong coursework, you’re more than prepared to take on this challenge.
+
+---
+
+### Pathway (If Someone Wasn’t Eligible):  
+If you hadn’t met the prerequisites, I would recommend taking the missing courses first. But since you’ve already nailed them, there’s no extra pathway needed. You’re ready to dive into this advanced material.
+
+---
+
+### Credit Standing:
+At 91 credits, you’re well on track to graduate. This 4-credit course will count towards your credit goals, while also being an excellent addition to your Computer Science curriculum.
+
+---
+
+### Final Notes:
+You're currently enrolled in **Machine Learning Principles**, so you’re already set. With your strong foundation and your ongoing coursework in **Deep Learning (01:198:462)** and **Intro to Data Science (01:198:439)**, you’re building a robust skill set in AI and data analysis.
+
+Keep up the great work, and let me know if you have questions about course content, career applications, or anything else! You're doing fantastic so far.",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:55:06,2026-03-24 03:57:30 AM,What courses unlock after completing CS 211?,"Sure thing! Let’s talk about the course you’ve completed and the options it unlocks.
+
+### **Course Code**: **01:198:211**  
+### **Title**: Computer Architecture  
+
+This 4-credit course is a deep dive into the inner workings of computers and how software communicates with hardware. It’s where the theoretical meets the practical—you’ll get hands-on experience learning the foundations of how modern computers are built and operate. By the time you complete this course, you’ll have a solid understanding of the systems that power everything from simple programs to entire operating systems.
+
+---
+
+### **Prerequisite**:  
+Before taking this course, students need to complete **01:198:112 - Data Structures** to establish their ability to understand programming at a deeper level.
+
+---
+
+### **Key Skills & Topics Covered**:
+- **C Programming**: Building efficient and optimized programs using C, a foundational language for systems programming.  
+- **Memory Systems**: Learn how data is stored and accessed in hardware, and gain an in-depth understanding of concepts like caches, memory allocation, and pointers.  
+- **Processor Design & Assembly Language**: Understand how processors execute instructions and program in low-level assembly language (a crucial bridge between software and hardware).  
+- **Software-Hardware Interfacing**: Gain insights into how low-level code communicates with the hardware layer, enabling you to optimize code performance.
+
+---
+
+### **Who Should Take This Course?**  
+This course is ideal if:  
+- You’re interested in **systems programming**, **operating systems**, or **hardware engineering**.  
+- You’re curious about **how computers work under the hood** and want to improve your programming efficiency.  
+- You’re considering a career in fields like embedded systems, software development, or computer hardware engineering.  
+- You want to gain more proficiency in programming languages like **C** or work with memory management directly.  
+
+---
+
+### What Next? Courses That Unlock After CS 211  
+With **Computer Architecture** under your belt, you now qualify to take courses that focus on advanced systems, networking, and even operating systems. Here are some potential next steps:  
+
+1. **01:198:416 - Operating Systems Design**  
+   Dive into how operating systems work, from task management to memory allocation and scheduling. You'll build or analyze components of an OS, which is both challenging and rewarding.  
+
+2. **01:198:419 - Computer Security**  
+   Explore how to secure computer systems against cyber threats. Topics include cryptography, access controls, and ethical hacking principles. A fantastic course if you're interested in cybersecurity.
+
+3. **01:198:428 - Computer Networks**  
+   Learn about how computers communicate across networks! This includes protocols like TCP/IP, routing, and the infrastructure of the internet—essential knowledge for tech-focused careers.
+
+4. **01:198:411 - Compiler Design**  
+   A technical and theory-heavy course where you’ll write your own compiler while solidifying your understanding of how high-level code is interpreted into machine/assembly language.
+
+---
+
+These are just a few pathways to build on the foundation you’ve gained through Computer Architecture. Each course adds more specialized skills to your toolkit and can help shape the direction of your career.  
+
+Let me know if you’d like personalized recommendations based on your interests or want a deeper breakdown for any course! 😊",ParserAgent|DataAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json"
+2026-03-24 03:55:06,2026-03-24 03:59:15 AM,Do I need Discrete Structures before taking Algorithms?,"I found 2 courses matching 'Discrete Structures':
+
+• **01:198:205** - Discrete Structures I
+• **01:198:206** - Discrete Structures II
+
+Which one did you mean? Just give me the course code.",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 03:55:06,2026-03-24 04:00:48 AM,01:198:206,"### **Course Code:** **01:198:206**  
+### **Title:** Discrete Structures II  
+
+Hi Jelani! Let’s dive into *Discrete Structures II*—a fascinating and important course in the Computer Science curriculum.
+
+---
+
+### **What This Course is About**  
+Building on the foundational concepts from *Discrete Structures I*, this course takes you deeper into the mathematical tools and theories that are the backbone of computer science. It’s a continuation of discrete mathematics, with a focus on advanced concepts that help you think critically and solve complex problems in areas like algorithms, graph theory, and combinatorics.
+
+It’s a **4-credit course** that’s not just about math—it’s about learning to think like a computer scientist.
+
+---
+
+### **Prerequisites:**  
+Before taking **Discrete Structures II**, you need to complete:  
+- **01:198:205 - Discrete Structures I**  
+
+This ensures you’ve mastered the basics, such as set theory, logic, and number theory, which are essential for tackling this advanced course.
+
+---
+
+### **Key Topics You'll Explore:**  
+- **Counting Principles and Combinatorics**: Learn how to efficiently count and structure mathematical objects, which is crucial for analyzing algorithms.  
+- **Relations**: Understand properties of relations and how they apply to databases, data structures, and more.  
+- **Graph Theory**: Explore graphs and their applications in network analysis, shortest path problems, and even social media algorithms.  
+- **Recurrence Relations**: Crack the code behind sequences and patterns, an essential skill for designing and analyzing algorithms.
+
+---
+
+### **Who is This Course Great For?**  
+This course is ideal if you:  
+- Are interested in **algorithm design**—many of the foundational skills you learn here directly apply to analyzing and optimizing algorithms.  
+- Love math and want to see how it connects to solving practical computer science problems.  
+- Are planning to take more advanced courses like **Design and Analysis of Algorithms (01:198:344)** or wanting a better understanding of theory-heavy fields like **cryptography**, **AI**, or **data science**.  
+
+If you’re aiming for a career in software development, machine learning, or any tech field that requires critical problem-solving, *Discrete Structures II* is a must-have in your toolkit.
+
+---
+
+### **Final Thoughts**  
+Since you’ve already completed this course (and aced it with an A—congrats!), you’ve built a strong foundation for tackling some of the most challenging and rewarding topics in computer science. Whether you’re diving into algorithms, machine learning, or optimization problems, your *Discrete Structures II* knowledge will give you an edge.
+
+Would you like recommendations for advanced courses that build on these skills, or do you have questions about how discrete mathematics ties into other areas of CS? 😊",ParserAgent|DataAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json"
+2026-03-24 03:55:06,2026-03-24 04:01:36 AM,Do I need Discrete Structures II before taking Algorithms?,"I found 2 courses matching 'Discrete Structures II':
+
+• **01:198:205** - Discrete Structures I
+• **01:198:206** - Discrete Structures II
+
+Which one did you mean? Just give me the course code.",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 04:03:04,2026-03-24 04:03:24 AM,can i share my course history if that helps,Sure! Go ahead and drop the path to your transcript PDF.,ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 04:03:04,2026-03-24 04:03:39 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: PRINCIPLES OF CS (A)
+  - 01:198:111: INTRO COMPUTER SCI (A)
+  - 01:198:112: DATA STRUCTURES (A)
+  - 01:198:205: INTR DISCRET STRCT I (A)
+  - 01:198:206: INTR DISCRT STRCT II (A)
+  - 01:198:211: COMPUTER ARCHITECTUR (B+)
+  - 01:198:344: DSGN&ANAL COMP ALGOR (B+)
+  - 01:198:440: INTRO ARTIFIC INTELL (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: INTRO DATA SCIENCE
+  - 01:198:461: ML PRINCIPLES
+  - 01:198:462: DEEP LEARNING
+
+I'll factor all of this in when making recommendations.",TranscriptAgent,"TranscriptAgent:LLM,transcript_pdf"
+2026-03-24 04:03:04,2026-03-24 04:03:52 AM,"""I've taken CS 112, what courses am I now eligible for?""","Hi Jelani! Let’s clarify your query about eligibility and prerequisites. Since you specifically mentioned **CS 112 (Data Structures)**, here’s what I found:
+
+### Course Overview:
+- **Code:** 01:198:112
+- **Title:** Data Structures
+- **Prerequisites:** 01:198:111 (Introduction to Computer Science)
+- **Description:** Covers topics like data abstraction, organization, and complexity analysis with structures such as lists, stacks, queues, trees, and sorting/searching algorithms.
+
+### Your Status:
+- **Eligibility:** You are **not eligible** for this course. Why? You’ve already completed it with an **A grade**, so there’s no need to retake it.
+- **Prerequisites:** You’ve met all prerequisites (CS 111 was completed with an A as well).
+- **Credit Standing:** You’re in good standing with a senior credit load (91 credits) and a stellar **GPA of 3.743**. Great work!
+
+Since CS 112 is foundational in the Computer Science curriculum and you’ve successfully completed it, you’re now ready for diverse upper-level courses that build on this knowledge. 
+
+---
+
+### Suggested Pathway:
+Given your transcript and current courses in progress (Intro to Data Science, Machine Learning, and Deep Learning), I’d highly recommend you focus on classes that align with your AI/ML/Data Science interests. I can also find and recommend other advanced courses you’d be a great fit for. Let me know if you'd like me to help explore specific tracks or areas of interest!
+
+Keep it up! You’re making excellent progress. 😊",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 04:03:04,2026-03-24 04:04:59 AM,What do I need before I can take Compilers?,"Hi Jelani! Great question about taking **Compilers (01:198:415)**—this is a fascinating course where you'll dive deep into concepts like parsing, semantic analysis, and code optimization.
+
+### Let’s break it down:
+
+#### 1. **Course Name & Code**  
+The course is called **Compilers (01:198:415)**, and it’s a 4-credit course. Here’s more info: [Compilers Course Details](https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=2825&catid=750&degreeid=731).
+
+---
+
+#### 2. **Prerequisites for Compilers (01:198:415)**  
+To be eligible for this course, you need:  
+- **01:198:211: Computer Architecture** – Completed ✅  
+- **01:198:314: Principles of Programming Languages** – Not Completed ❌  
+- Or an alternative path: **14:332:331** (Electrical & Computer Engineering Systems Programming), which you haven’t taken, so this doesn’t apply.
+
+---
+
+#### 3. **Your Eligibility**  
+- After reviewing your transcript, I see you’ve already completed **01:198:211: Computer Architecture** with a **B+** (great!).  
+- However, you haven’t completed **01:198:314: Principles of Programming Languages**, which is also not listed as “in-progress.” Therefore, you’re **not yet eligible** to register for Compilers.  
+
+---
+
+#### 4. **Suggested Next Steps**  
+To qualify for Compilers, I’d recommend that you:  
+
+1. **Take 01:198:314: Principles of Programming Languages**  
+   This course focuses on programming language design and analysis, which directly ties into the concepts you’ll tackle in Compilers.
+
+   I can help you explore its availability in upcoming semesters and any time management tips to balance it with your other courses.
+
+2. **Make a Plan**  
+   Once you complete **01:198:314**, you’ll be ready to take **Compilers (01:198:415)**. Since Compilers is a higher-level, cornerstone course, I’d suggest taking it on its own or pairing it with a lighter workload if you have other tough classes planned.
+
+---
+
+#### 5. **Your Credit Standing**  
+As a senior with **91 credits** and a strong **3.743 GPA**, you’re in great shape for completing all the requirements to graduate. This course and its prerequisites fit well into your academic progression. It seems like you’re on a fantastic path—keep up the momentum! 🚀
+
+Would you like me to help you identify when **Principles of Programming Languages (01:198:314)** is being offered? Or do you want suggestions for courses that don’t require additional prerequisites? Let me know, and I’ll be happy to assist! 😊",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 04:03:04,2026-03-24 04:05:42 AM,Is there anything I need before taking Intro to AI?,"I found 8 courses matching 'Intro to AI':
+
+• **01:198:111** - Introduction to Computer Science
+• **01:198:334** - Introduction to Imaging and Multimedia (NB)
+• **01:198:428** - Introduction to Computer Graphics (NB)
+• **01:198:439** - Introduction to Data Science (NB)
+• **01:198:440** - Introduction to Artificial Intelligence (NB)
+• **01:198:460** - INTRODUCTION TO COMPUTATIONAL ROBOTICS (NB)
+• **01:198:462** - INTRODUCTION TO DEEP LEARNING (NB)
+• **01:960:476** - Introduction to Sampling (NB)
+
+Which one did you mean? Just give me the course code.",ParserAgent|DataAgent|ConstraintAgent,"ParserAgent:LLM,query_schema.json|DataAgent:rutgers_courses.json|ConstraintAgent:LLM"
+2026-03-24 04:11:37,2026-03-24 04:12:22 AM,Can you check what I've taken before recommending anything?,I had trouble understanding your request: Parsing error: 'ParserAgent' object has no attribute '_get_fallback_parse',ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 04:13:05,2026-03-24 04:13:21 AM,can you check what i've already taken before recommending anything?,I had trouble understanding your request: Parsing error: 'ParserAgent' object has no attribute '_get_fallback_parse',ParserAgent,"ParserAgent:LLM,query_schema.json"
+2026-03-24 04:13:53,2026-03-24 04:14:04 AM,can you checkc what i've already taken before recommendations?,I had trouble understanding your request: Parsing error: 'ParserAgent' object has no attribute '_get_fallback_parse',ParserAgent,"ParserAgent:LLM,query_schema.json"

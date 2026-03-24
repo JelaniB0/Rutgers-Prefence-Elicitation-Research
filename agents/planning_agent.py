@@ -112,6 +112,13 @@ class PlanningAgent(ChatAgent):
                 context+=f"{msg['role']}: {msg['content']}\n"
         
         courses_json = json.dumps(courses, indent=2)
+
+        # adjusting scores before passing to planning agent
+        for course in courses:
+            chk = course.get("constraint_check", {})
+            penalty = chk.get("standing_penalty", 0.0)
+
+            course["adjusted_score"] = course.get("semantic_similarity", 0.5) - penalty
         prompt = f"""Rank these Rutgers CS courses for a student based on their profile and preferences.
 
         STUDENT PROFILE:
@@ -138,6 +145,7 @@ class PlanningAgent(ChatAgent):
         - Clear reasoning for the ranking
         - Why it's a good match for THIS student specifically
         - What makes it better than courses ranked lower
+        - Use adjusted_score as the primary ranking signal. Courses with standing penalties should rank lower and your reasoning should explain why.
 
         Return ONLY this JSON structure:
 

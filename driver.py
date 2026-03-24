@@ -31,7 +31,7 @@ AGENT_SOURCES: dict[str, list[str]] = {
     "DataAgent":     ["rutgers_courses.json"],
     "PlanningAgent": ["LLM"],
     "TranscriptAgent": ["LLM", "transcript_pdf"],
-    # "ConstraintAgent": ["prerequisites_db"],  # uncomment when available
+    "ConstraintAgent": ["LLM"],  
 }
 
 async def main():
