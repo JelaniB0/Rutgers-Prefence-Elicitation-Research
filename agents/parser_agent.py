@@ -73,11 +73,34 @@ CORE PRINCIPLES:
 - Distinguish between course_recommendation and course_info:
   * course_info: Student asks about a SPECIFIC course (e.g., "Tell me about CS 111", "What is Data Structures?")
   * course_recommendation: Student wants suggestions/recommendations (e.g., "What courses should I take?")
+- For prerequisite check queries like "Do I need X before taking Y", the TARGET course (what they want to take) is Y, not X.
+  X is a related/mentioned course. Never set the prerequisite itself as the target.
 
 INTENT RECOGNITION:
-- course_info: Requires specific_courses entity - student mentions a course code or name
-- course_recommendation: Requires interests/year - student wants personalized suggestions
-- off_topic: Clearly unrelated to CS courses
+- course_info: Student asks about what a SPECIFIC named course covers, teaches, or contains.
+  The course may be referenced by full name, partial name, or informal shorthand.
+  Examples: "What is Software Methodology about?", "What do you learn in OS Design?",
+  "Tell me about Algorithms", "What topics does Data Structures cover?"
+  Key signal: one specific course is named + asking about its content/topics/structure.
+
+- course_recommendation: Student wants suggestions across multiple possible courses.
+  They describe interests, goals, or career paths rather than naming a specific course.
+  Examples: "What courses should I take for systems?", "Recommend me AI courses",
+  "I'm interested in machine learning, what should I take?"
+  Key signal: no specific course named, or asking for a list/suggestions.
+
+- prerequisite_check: Student asks if they can take a course or what they need first.
+  Examples: "Do I need Calc II for Systems Programming?", "Can I take OS Design?"
+
+- transcript_upload: Student wants to upload or share their transcript.
+
+- off_topic: Clearly unrelated to Rutgers CS courses, academic planning, or prerequisites.
+  Examples: "What's the weather?", "Tell me a joke", "Who won the game last night?"
+  Respond that you only assist with Rutgers CS course planning.
+
+If the query contains typos or is ambiguous, make your best guess at the intent
+and set needs_clarification: false unless the meaning is truly unrecoverable.
+Never stall on minor spelling errors.
 
 Always return valid JSON with your analysis.
 """
@@ -192,13 +215,17 @@ Always return valid JSON with your analysis.
     TASK: Analyze this query to determine intent and extract entities.
 
     INTENT CLASSIFICATION (choose one):
-    - course_recommendation: User wants personalized course suggestions
-    - course_info: User asks about a SPECIFIC course by code or name
-    - prerequisite_check: User asks about prerequisites
-    - clarification: User is providing additional info after being asked
-    - general_question: General question about CS program
-    - off_topic: Query is not CS-related
-    - transcript_upload: User wants to share or reference their transcript/course history
+    - course_recommendation: User wants suggestions across multiple possible courses.
+    Key signal: no specific course named, or asking for a list/suggestions.
+    - course_info: User asks about what a SPECIFIC named course covers, teaches, or contains.
+    Key signal: one specific course is named + asking about its content/topics/structure.
+    The course may be referenced by full name, partial name, or informal shorthand.
+    Examples: "What is Software Methodology about?", "What do you learn in OS Design?"
+    - prerequisite_check: User asks if they can take a course or what they need first.
+    - clarification: User is providing additional info after being asked.
+    - general_question: General question about CS program.
+    - off_topic: Clearly unrelated to Rutgers CS courses. Examples: weather, sports, jokes.
+    - transcript_upload: User wants to upload or share their transcript.
 
     CRITICAL RULES:
     1. course_info requires a specific course code or exact course name

@@ -296,11 +296,14 @@ class ConstraintAgent(ChatAgent):
             )
  
         prompt = f"""Check prerequisites for the following {len(courses)} courses.
- 
+
         STUDENT PROFILE:
-        - Completed courses: {sorted(completed) or ['none']}
-        - In-progress courses: {sorted(in_progress) or ['none']}
-        
+        - Completed courses (already finished, have grades): {sorted(completed) or ['none']}
+        - In-progress courses (currently enrolled this semester): {sorted(in_progress) or ['none']}
+
+        IMPORTANT: Completed courses are DONE. Never refer to them as corequisites 
+        in progress or currently enrolled. Only in-progress courses are active.
+
         COURSES TO VALIDATE:
         {course_lines}
         Return a JSON object keyed by course code as described in your instructions.
@@ -317,6 +320,8 @@ class ConstraintAgent(ChatAgent):
                 return {c.get("code", ""): self._safe_default() for c in courses}
  
             results = json.loads(json_match.group())
+            # print(f"[Debug] LLM prereq result for 01:198:214: {results.get('01:198:214')}")
+
  
             # Ensure every course has a result — fill gaps with safe default
             for course in courses:
@@ -328,8 +333,8 @@ class ConstraintAgent(ChatAgent):
                     results[code].setdefault("eligible", True)
                     results[code].setdefault("met_prerequisites", [])
                     results[code].setdefault("unmet_prerequisites", [])
-                    results[code].setdefault("reasoning", "")
                     results[code].setdefault("pathway_suggestion", None)
+                    results[code].pop("reasoning", None)
  
             return results
  
@@ -436,11 +441,17 @@ class ConstraintAgent(ChatAgent):
             return set(), set(), 0.0, 0.0
  
         td = state.transcript_data
-        completed_courses   = td.get("completed_courses", [])
         in_progress_courses = td.get("in_progress_courses", [])
  
-        completed   = {c["code"] for c in completed_courses   if c.get("code")}
+        completed = (
+            {c["code"] for c in td.get("completed_courses", []) if c.get("code")}
+            | {c["code"] for c in td.get("transfer_courses", []) if c.get("code")}
+            | {c["code"] for c in td.get("ap_credits", []) if c.get("code")}
+        )
         in_progress = {c["code"] for c in in_progress_courses if c.get("code")}
+
+        # print(f"[Debug] Transfer courses: {state.transcript_data.get('transfer_courses', [])}")
+        # print(f"[Debug] Completed codes: {sorted(completed)}")
  
         completed_credits = float(td.get("total_degree_credits") or 0.0)
         in_progress_credits = sum(float(c["credits"]) for c in in_progress_courses)

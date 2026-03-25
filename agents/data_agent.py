@@ -271,79 +271,77 @@ class DataAgent(ChatAgent):
         Returns: 
         AgentResponse with course details if found, or error message if not found
         """
+        try:
+            print(f"[DataAgent] Looking up course: {course_identifier}")
 
-        async def lookup_course(self, course_identifier: str, state: ConversationState) -> AgentResponse:
-            try:
-                print(f"[DataAgent] Looking up course: {course_identifier}")
+            normalized = course_identifier.strip().lower()
 
-                normalized = course_identifier.strip().lower()
+            #Exact code match first 
+            for course in self.courses_data:
+                course_code = course.get('code', '').upper()
+                normalized_search = normalized.replace(' ', '').replace(':', '')
+                normalized_code = course_code.replace(' ', '').replace(':', '')
+                number_only = re.search(r'\d+', normalized_search)
 
-                #Exact code match first 
-                for course in self.courses_data:
-                    course_code = course.get('code', '').upper()
-                    normalized_search = normalized.replace(' ', '').replace(':', '')
-                    normalized_code = course_code.replace(' ', '').replace(':', '')
-                    number_only = re.search(r'\d+', normalized_search)
-
-                    if (normalized in course_code or normalized_search in normalized_code or
-                        (number_only and number_only.group() in normalized_code.split(':')[-1])):
-                        print(f"[DataAgent] Found exact match: {course_code}")
-                        return AgentResponse(
-                            success=True,
-                            data={'course': course, 'lookup_method': 'exact_code_match'},
-                            metadata={'search_query': course_identifier, 'model_used': self.model}
-                        )
-
-                # Semantic search via vector DB
-                results = self.vector_db.query(
-                    query_texts=[course_identifier],
-                    n_results=3
-                )
-
-                codes = results['ids'][0]
-                distances = results['distances'][0]
-
-                # Strong single match
-                if codes and distances[0] < 0.25:
-                    course = next((c for c in self.courses_data if c.get('code') == codes[0]), None)
-                    if course:
-                        print(f"[DataAgent] Found semantic match: {codes[0]} (distance: {distances[0]:.3f})")
-                        return AgentResponse(
-                            success=True,
-                            data={'course': course, 'lookup_method': 'semantic_match'},
-                            metadata={'search_query': course_identifier, 'model_used': self.model}
-                        )
-
-                # Multiple close matches — disambiguate choices. 
-                close_matches = [
-                    next((c for c in self.courses_data if c.get('code') == code), None)
-                    for code, dist in zip(codes, distances) if dist < 0.4
-                ]
-                close_matches = [c for c in close_matches if c]
-
-                if len(close_matches) > 1:
+                if (normalized in course_code or normalized_search in normalized_code or
+                    (number_only and number_only.group() in normalized_code.split(':')[-1])):
+                    print(f"[DataAgent] Found exact match: {course_code}")
                     return AgentResponse(
                         success=True,
-                        data={'courses': close_matches, 'needs_disambiguation': True},
+                        data={'course': course, 'lookup_method': 'exact_code_match'},
                         metadata={'search_query': course_identifier, 'model_used': self.model}
                     )
 
-                print(f"[DataAgent] No matches found for: {course_identifier}")
+            # Semantic search via vector DB
+            results = self.vector_db.query(
+                query_texts=[course_identifier],
+                n_results=3
+            )
+
+            codes = results['ids'][0]
+            distances = results['distances'][0]
+
+            # Strong single match
+            if codes and distances[0] < 0.5:
+                course = next((c for c in self.courses_data if c.get('code') == codes[0]), None)
+                if course:
+                    print(f"[DataAgent] Found semantic match: {codes[0]} (distance: {distances[0]:.3f})")
+                    return AgentResponse(
+                        success=True,
+                        data={'course': course, 'lookup_method': 'semantic_match'},
+                        metadata={'search_query': course_identifier, 'model_used': self.model}
+                    )
+
+            # Multiple close matches — disambiguate choices. 
+            close_matches = [
+                next((c for c in self.courses_data if c.get('code') == code), None)
+                for code, dist in zip(codes, distances) if dist < 0.45
+            ]
+            close_matches = [c for c in close_matches if c]
+
+            if len(close_matches) > 1:
                 return AgentResponse(
-                    success=False,
-                    data={'attempted_search': course_identifier},
-                    errors=[f"No course found matching '{course_identifier}'"]
+                    success=True,
+                    data={'courses': close_matches, 'needs_disambiguation': True},
+                    metadata={'search_query': course_identifier, 'model_used': self.model}
                 )
 
-            except Exception as e:
-                print(f"[DataAgent] ERROR during course lookup: {str(e)}")
-                import traceback
-                traceback.print_exc()
-                return AgentResponse(
-                    success=False,
-                    data=None,
-                    errors=[f"Course lookup error: {str(e)}"]
-                )
+            print(f"[DataAgent] No matches found for: {course_identifier}")
+            return AgentResponse(
+                success=False,
+                data={'attempted_search': course_identifier},
+                errors=[f"No course found matching '{course_identifier}'"]
+            )
+
+        except Exception as e:
+            print(f"[DataAgent] ERROR during course lookup: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return AgentResponse(
+                success=False,
+                data=None,
+                errors=[f"Course lookup error: {str(e)}"]
+            )
               
     def _build_search_query(self, entities: Dict) -> str:
         """Builds natural language query for vector search"""

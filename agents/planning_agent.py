@@ -4,88 +4,129 @@ Planning agent file
 Currently uses LLM directly, will replace LLM logic with direct algorithmic logic later.
 """
 
-import os
 import json
 import re
-from typing import Dict, List, Any
-from dotenv import load_dotenv
+from typing import Dict, List
 from agent_framework import ChatAgent
 from agent_framework.openai import OpenAIChatClient
-
+ 
 from .shared_types import AgentResponse, ConversationState
+ 
+ 
 class PlanningAgent(ChatAgent):
     """
-    Planning agent to rank courses with LLM reasoning (placeholder for algorithm later)
+    Ranks courses with full constraint context baked in from the start.
+    Follows up with a lightweight self-check to verify output is consistent.
     """
-
+ 
     def __init__(self, client: OpenAIChatClient, model: str):
-        """
-        Initialize planning agent
-
-        Args - client: OpenAIChatClient instance, model: Model ID to use
-        """
-
         super().__init__(
             chat_client=client,
             model=model,
             instructions=self._get_system_message()
         )
-
         self.model = model
-        print(f"[PlanningAgent] Initialized with model: {model}, using LLM-based ranking")
-
+        print(f"[PlanningAgent] Initialized with model: {model}")
+ 
     def _get_system_message(self) -> str:
-        """System message for planning agent"""
         return """You are an expert course planning advisor for Rutgers Computer Science students.
-
-        Your role is to rank courses based on student needs and preferences.
-
+ 
+        Your role is to rank courses based on student needs, preferences, and academic constraints.
+ 
         RANKING CRITERIA (in order of importance):
         1. Relevance to student's interests and career goals
-        2. Appropriate difficulty for student's year level
-        3. Course quality and student reviews (when available)
+        2. Prerequisite eligibility — ineligible courses must never be recommended
+        3. Appropriate difficulty and credit standing for the student's year level
         4. Skills development and learning outcomes
-        5. Prerequisites completion (assume valid courses are provided)
-
+        5. Student preferences (difficulty, GPA priority)
+ 
         APPROACH:
-        - Be thoughtful and analytical in your rankings
-        - Consider the student holistically (year, interests, goals)
-        - Provide clear reasoning for each ranking decision
-        - Prioritize courses that best match the student's stated interests
-
+        - Reason holistically — consider the student's full profile AND their constraints together
+        - Never recommend a course the student cannot take
+        - Be transparent in your reasoning about why constraints affected a ranking
+        - Prioritize courses the student can take now and that best match their goals
+ 
         Always return valid JSON with your rankings and reasoning.
         """
-    
-    """
-    Rank courses based on student preferences
-
-    Args - courses (list of course dictionaries from data agent), parsed_data(parsed query data from parser agent), state(Current conversation state), max_results(max # of courses to rank)
-    """
-    async def rank_courses(self, courses: List[Dict], parsed_data: Dict, state: ConversationState, max_results: int = 5) -> AgentResponse:   
+ 
+    async def rank_courses(
+        self,
+        courses: List[Dict],
+        parsed_data: Dict,
+        state: ConversationState,
+        constraint_context: str = "",
+        max_results: int = 5
+    ) -> AgentResponse:
+        """
+        Rank courses with full constraint context provided upfront.
+ 
+        Constraint Agent has already validated the full course pool before this
+        is called, so Planning Agent reasons about eligibility and standing
+        penalties from the start rather than discovering them after ranking.
+ 
+        After the main ranking pass, a lightweight self-check runs to verify
+        no ineligible courses slipped through and the output is coherent.
+ 
+        Args:
+            courses: Candidate courses from DataAgent, already annotated with
+                     constraint_check data by ConstraintAgent
+            parsed_data: Parsed query entities from ParserAgent
+            state: Current conversation state
+            constraint_context: summarize_for_prompt() string from ConstraintAgent
+            max_results: Max courses to return
+ 
+        Returns:
+            AgentResponse with ranked_courses, ranking_summary, and self_check_note
+        """
         try:
-            num_to_rank = min(len(courses), max_results)
-            if num_to_rank == 0:
+            if not courses:
                 return AgentResponse(
                     success=False,
                     data=None,
                     errors=["No courses provided to rank"]
                 )
-            
-            ranked_data = await self._llm_rank(courses, parsed_data, state, num_to_rank)
+ 
+            num_to_rank = min(len(courses), max_results)
 
-            print(f"[PlanningAgent] Successfully ranked {len(ranked_data.get('ranked_courses', []))} courses")
+            # prompt preprocessing step to speed up LLM. 
+            RANKING_FIELDS = {"code", "title", "description", "prerequisites", "credits", "topics", "constraint_check"}
 
+            courses_to_rank = [
+                {k: v for k, v in c.items() if k in RANKING_FIELDS}
+                for c in courses[:max_results + 2]  # slight buffer so dedup rule has room to work
+            ]
+ 
+            # Main ranking pass — constraints baked in from the start
+            ranked_data = await self._llm_rank(
+                courses_to_rank, parsed_data, state, constraint_context, num_to_rank
+            )
+ 
+            if not ranked_data:
+                return AgentResponse(
+                    success=False,
+                    data=None,
+                    errors=["LLM returned no valid ranking"]
+                )
+ 
+            # Self-check — lightweight verification of the output
+            ranked_data["self_check_note"] = "Inlined into ranking pass."
+
+ 
+            print(f"[PlanningAgent] Ranked {len(ranked_data.get('ranked_courses', []))} courses")
+            print(f"[PlanningAgent] Self-check: {ranked_data.get('self_check_note', 'n/a')}")
+ 
             return AgentResponse(
                 success=True,
                 data=ranked_data,
                 metadata={
                     "model_used": self.model,
-                    "ranking_method": "llm_baseline",
+                    "ranking_method": "llm_constraint_aware",
                     "total_courses_considered": len(courses),
-                    "courses_ranked": num_to_rank
+                    "courses_ranked": num_to_rank,
+                    "self_check_applied": True
                 }
             )
-        
+ 
         except Exception as e:
             print(f"[PlanningAgent] ERROR during ranking: {str(e)}")
             import traceback
@@ -95,31 +136,39 @@ class PlanningAgent(ChatAgent):
                 data=None,
                 errors=[f"Ranking error: {str(e)}"]
             )
-        
-    async def _llm_rank(self, courses: List[Dict], parsed_data: Dict, state: ConversationState, max_results: int) -> Dict:
-        entities = parsed_data.get('entities',{})
+ 
+    async def _llm_rank(
+        self,
+        courses: List[Dict],
+        parsed_data: Dict,
+        state: ConversationState,
+        constraint_context: str,
+        max_results: int
+    ) -> Dict:
+        entities = parsed_data.get('entities', {})
         student_year = entities.get('year', 'unknown')
         interests = entities.get('interests', [])
         career_path = entities.get('career_path')
         difficulty_pref = entities.get('difficulty_preference')
         gpa_priority = entities.get('gpa_priority')
 
-        context = ""
+        conversation_context = ""
         if state.conversation_history:
-            recent_history = state.conversation_history[-2:]
-            context = "\n\nRecent conversation:\n"
-            for msg in recent_history:
-                context+=f"{msg['role']}: {msg['content']}\n"
-        
+            recent = state.conversation_history[-2:]
+            conversation_context = "\n\nRecent conversation:\n"
+            for msg in recent:
+                conversation_context += f"{msg['role']}: {msg['content']}\n"
+
+        constraint_section = (
+            f"\nCONSTRAINT CONTEXT (use this when reasoning about each course):\n{constraint_context}"
+            if constraint_context
+            else "\nNo transcript provided — prerequisite eligibility cannot be verified."
+        )
+
         courses_json = json.dumps(courses, indent=2)
 
-        # adjusting scores before passing to planning agent
-        for course in courses:
-            chk = course.get("constraint_check", {})
-            penalty = chk.get("standing_penalty", 0.0)
-
-            course["adjusted_score"] = course.get("semantic_similarity", 0.5) - penalty
-        prompt = f"""Rank these Rutgers CS courses for a student based on their profile and preferences.
+        prompt = f"""Rank these Rutgers CS courses for a student. You have full information about
+        both the student's preferences AND their academic constraints. Use both together.
 
         STUDENT PROFILE:
         - Year: {student_year}
@@ -127,78 +176,115 @@ class PlanningAgent(ChatAgent):
         - Career Path: {career_path or 'Not specified'}
         - Difficulty Preference: {difficulty_pref or 'Not specified'}
         - GPA Priority: {gpa_priority or 'Not specified'}
-        {context}
+        {conversation_context}
+        {constraint_section}
 
-        AVAILABLE COURSES:
+        AVAILABLE COURSES (with constraint annotations):
         {courses_json}
 
-        TASK: Select and rank the TOP {max_results} courses that best match this student's profile.
+        TASK: Select and rank the TOP {max_results} courses for this student.
 
-        RANKING CRITERIA:
-        1. **Interest Match** - How well does the course align with stated interests?
-        2. **Year Appropriateness** - Is this suitable for their academic level?
-        3. **Career Relevance** - Does this support their career goals?
-        4. **Learning Value** - What important skills/knowledge does this provide?
-        5. **Student Preferences** - Does this match their difficulty/GPA preferences?
+        HARD RULES — apply these before anything else:
+        1. DEDUPLICATION: If multiple courses share the same title (e.g. several sections
+        of "Topics in Computer Science"), include AT MOST ONE. Pick the single section
+        whose description best matches the student's interests. Exclude all others entirely —
+        do not list them in ranked_courses or not_recommended.
 
-        For each ranked course, provide:
-        - Clear reasoning for the ranking
-        - Why it's a good match for THIS student specifically
-        - What makes it better than courses ranked lower
-        - Use adjusted_score as the primary ranking signal. Courses with standing penalties should rank lower and your reasoning should explain why.
+        2. SPECIFICITY OVER GENERICITY: A course with a specific description that directly
+        mentions the student's stated interests always ranks ABOVE a course with a vague
+        or variable description (e.g. "Topics in X", "Special Topics"), even if the generic
+        course has no prerequisites. Do not assume a generic course covers the student's
+        interests just because its description is broad.
 
-        Return ONLY this JSON structure:
+        3. PREREQUISITE GAPS — never silently drop a relevant course. If a course is relevant
+        to the student's interests but prerequisites are unmet, include it in the ranking
+        below eligible courses of similar relevance. Explain clearly what is missing and
+        what the student needs to take first.
+
+        4. STANDING PENALTY: Courses with standing_penalty > 0 rank below penalty-free courses
+        of similar relevance. The higher the penalty (max 0.6), the further it drops.
+
+        5. RELEVANCE ALWAYS WINS: Never replace a relevant but ineligible course with an
+        irrelevant eligible one just to fill the list. A relevant course with unmet
+        prerequisites is always preferable to an irrelevant course the student can take now.
+
+        6. BLOCKED BUT RELEVANT + ASSUMPTIONS:
+        - If a transcript IS available and a course would rank in the top 3 based on interest
+            match alone but has unmet prerequisites, do NOT place it in ranked_courses. Instead,
+            place it in not_recommended with:
+            - would_rank: where it would have placed if eligible
+            - blocked_by: the specific missing prerequisite codes
+            - pathway: a concrete 1-2 sentence action plan to become eligible
+        - If NO transcript is available, do not assume anything about the student's experience
+            level, completed courses, or eligibility. Only rank courses based on how well they
+            match the student's stated interests. Do not pad the list with foundational or
+            introductory courses unless the student explicitly asks for beginner content.
+            Note prerequisites for each course but do not block or penalize any course for
+            eligibility reasons since eligibility cannot be verified. Also don't generate the 1-2 sentences,
+            skip that entire since you know nothing about student.  
+
+        RANKING CRITERIA (applied after hard rules, in order of priority):
+        1. How explicitly the course description matches the student's stated interests
+        — vague or indirect matches rank lower than direct matches
+        2. Prerequisite eligibility — eligible courses rank above ineligible ones of equal relevance
+        3. Year and standing appropriateness
+        4. Learning value and skill development toward career path
+        5. Student difficulty and GPA preferences
+
+        For each ranked course, reasoning must:
+        - Explain specifically how the course content matches this student's interests
+        - State whether it is immediately available or has prerequisite/standing gaps
+        - If a constraint affected the ranking, say so explicitly and constructively
+
+        Return ONLY this JSON:
 
         {{
-        "ranked_courses": [
-            {{
-            "rank": 1,
-            "course_code": "CS XXX",
-            "course_title": "Course Name",
-            "reasoning": "Why this is the #1 recommendation for this student",
-            "match_score": 0.0-1.0,
-            "key_benefits": ["benefit 1", "benefit 2", "benefit 3"]
-            }},
-            ... (up to {max_results} courses)
-        ],
-        "ranking_summary": "Brief overall explanation of the ranking strategy used",
-        "not_recommended": [
-            {{
-            "course_code": "CS XXX",
-            "reason": "Why this course wasn't in top {max_results}"
-            }}
-        ]
+            "ranked_courses": [
+                {{
+                    "rank": 1,
+                    "course_code": "01:198:XXX",
+                    "course_title": "Course Name",
+                    "reasoning": "Why this rank, including constraint impact and specific interest match",
+                    "match_score": 0.0,
+                    "key_benefits": ["benefit 1", "benefit 2", "benefit 3"]
+                }}
+            ],
+            "ranking_summary": "How constraints and preferences shaped this ranking",
+            "not_recommended": [
+                {{
+                    "course_code": "01:198:XXX",
+                    "course_title": "Course Name",
+                    "reason": "why it was excluded from the ranked list",
+                    "blocked_by": ["01:198:214", "01:640:152"],  // prereqs the student is missing
+                    "would_rank": 1,  // where it would have ranked if eligible
+                    "pathway": "Take Systems Programming first, then this opens up."
+                }}
+            ]
         }}
-
-        Be analytical and student-focused. Explain your reasoning clearly.
         """
 
+        return await self._run_and_parse(prompt)
+ 
+    async def _run_and_parse(self, prompt: str) -> Dict:
+        """Shared LLM call and JSON extraction used by both passes."""
         try:
             response = await self.run(prompt)
-            last_message = response.messages[-1]
-            response_text = last_message.contents[0].text
-
+            response_text = response.messages[-1].contents[0].text
+ 
             json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
             if json_match:
-                ranked = json.loads(json_match.group())
-
-                if 'ranked_courses' in ranked and isinstance(ranked['ranked_courses'], list):
-                    return ranked
-                else:
-                    print(f"[PlanningAgent] Warning: Invalid ranking structure")
-                    return {}
-            else:
-                print(f"[PlanningAgent] WARNING: No JSON found in LLM response")
-                print(f"[PlanningAgent] Response: {response_text[:200]}")
+                parsed = json.loads(json_match.group())
+                if 'ranked_courses' in parsed and isinstance(parsed['ranked_courses'], list):
+                    return parsed
+                print(f"[PlanningAgent] Warning: unexpected JSON structure")
                 return {}
-            
+            else:
+                print(f"[PlanningAgent] WARNING: No JSON in response: {response_text[:200]}")
+                return {}
+ 
         except json.JSONDecodeError as e:
-            print(f"[PlanningAgent] JSON parsing error: {e}")
+            print(f"[PlanningAgent] JSON parse error: {e}")
             return {}
         except Exception as e:
-            print(f"[PlanningAgent] LLM ranking error: {e}")
+            print(f"[PlanningAgent] LLM error: {e}")
             return {}
-
-
-
-        

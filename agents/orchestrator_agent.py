@@ -51,23 +51,22 @@ class OrchestratorAgent():
     #     Prioritize precision, helpfulness, and success of the student. 
     #     """
     ORCHESTRATOR_INSTRUCTIONS = """ 
-        You are an experienced advisor who has much experience in assisting Computer Science students at Rutgers University.
+       You are an experienced advisor who has much experience in assisting Computer Science students at Rutgers University.
 
         You currently work with:
         - Parser Agent: Validates queries and extracts intent/entities
         - Data Agent: Retrieves relevant courses from the course catalog
-        - Planning Agent: Ranks courses based on student preferences and needs
+        - Constraint Agent: Validates prerequisites and credit standing
+        - Planning Agent: Ranks courses based on student preferences, needs, and constraints
 
         Your role is to:
         1. Use the Parser Agent to understand student queries
         2. Use the Data Agent to find courses matching their interests
-        3. Use the Planning Agent to rank the top 5 courses for the student
-        4. Present the ranked recommendations in a clear, conversational way
-        5. Explain WHY each course was ranked where it was based on student profile
-        6. Handle the conversation flow with students
-
-        NOTE: The Constraint Agent (prerequisites validation) is not yet available.
-        You provide ranked recommendations but cannot yet verify prerequisites.
+        3. Use the Constraint Agent to validate eligibility across the full course pool
+        4. Use the Planning Agent to rank the top 5 courses with full constraint context
+        5. Present the ranked recommendations in a clear, conversational way
+        6. Explain WHY each course was ranked where it was based on student profile
+        7. Handle the conversation flow with students
 
         Be helpful, clear, and encouraging. Prioritize student success.
         """
@@ -299,6 +298,11 @@ class OrchestratorAgent():
         transcript_context = ""
         if state.transcript_data:
             transcript_context = self.transcript_agent.summarize_for_prompt(state.transcript_data)
+        else:
+            transcript_context = """No transcript has been uploaded yet. 
+            Do not make any claims about what the student has or hasn't completed.
+            Simply list what the prerequisites are and tell the student to upload 
+            their transcript for a personalized eligibility check."""
 
         # Build constraint context
         constraint_context = ""
@@ -480,97 +484,137 @@ class OrchestratorAgent():
                     parsed_data=parsed_data,
                     state=state
                 )
-
+                
                 if not data_response.success:
                     return f"I couldn't retrieve course data: {', '.join(data_response.errors)}", agents_invoked
                 
                 courses = data_response.data.get('courses', [])
-                print(f"[Data Agent] Found {len(courses)} relevant courses")
-
-                # course ranking logic in orchestrator 
-
+                print(f"[DataAgent] Found {len(courses)} candidate courses")
+                
                 if len(courses) == 0:
                     return "I couldn't find any courses matching your criteria. Could you try rephrasing your interests or being more specific?", agents_invoked
                 
-                print("\n[Orchestrator] Invoking Planning Agent...")
+                # Run before planning so the LLM reasons about eligibility from the start,
+                # not as a post-processing filter.
+                constraint_context = ""
+                
+                if self.constraint_agent is not None:
+                    if state.transcript_data is not None:  # only run if transcript exists
+                        agents_invoked.append("ConstraintAgent")
+                        print("\n[Orchestrator] Invoking Constraint Agent on full course pool...")
+                        
+                        constraint_response = await self.constraint_agent.validate_courses(
+                            courses=courses,
+                            state=state
+                        )
+                        
+                        if constraint_response.success:
+                            constraint_context = self.constraint_agent.summarize_for_prompt(
+                                constraint_response.data
+                            )
+                    else:
+                        print("[Orchestrator] No transcript, skipping constraint validation")
+                        constraint_context = """No transcript uploaded. Cannot verify prerequisite eligibility.
+                        List what prerequisites each course requires based on course data, and encourage
+                        the student to upload their transcript for a personalized eligibility check."""
+                else:
+                    print("[Orchestrator] Constraint Agent unavailable — Planning Agent will proceed without constraints")
+
+                courses_to_rank = [
+                    {k: v for k, v in c.items() if k != "constraint_check"}
+                    for c in courses[:10]
+]                
+                # Planning Agent receives the annotated course pool and the full constraint
+                # summary so it can reason about eligibility and standing from the start.
+                print("\n[Orchestrator] Invoking Planning Agent (constraint-aware ranking)...")
                 agents_invoked.append("PlanningAgent")
+                
                 planning_response = await self.planning_agent.rank_courses(
-                    courses=courses,
+                    courses=courses_to_rank,
                     parsed_data=parsed_data,
                     state=state,
+                    constraint_context=constraint_context,
                     max_results=5
                 )
-
+                
                 if not planning_response.success:
                     return f"I had trouble ranking the courses: {', '.join(planning_response.errors)}", agents_invoked
                 
                 ranked_data = planning_response.data
                 ranked_courses = ranked_data.get('ranked_courses', [])
                 ranking_summary = ranked_data.get('ranking_summary', '')
-
-                # Newly implemented constraint check via constraint agent. 
-                constraint_context = ""
-                if self.constraint_agent is not None:
-                    agents_invoked.append("ConstraintAgent")
-                    constraint_response = await self.constraint_agent.validate_courses(
-                        courses=ranked_courses,
-                        state=state
-                    )
-                    if constraint_response.success:
-                        constraint_context = self.constraint_agent.summarize_for_prompt(
-                            constraint_response.data
-                        )
-                        # Replace ranked_courses with only eligible ones, preserving order
-                        eligible_codes = {
-                            c.get("code") for c in constraint_response.data.get("eligible_courses", [])
-                        }
-                        ranked_courses = [c for c in ranked_courses if c.get("course_code") in eligible_codes]
-
-                print(f"[PlanningAgent] Ranked {len(ranked_courses)} courses")
-                print("\n[Orchestrator] Generating final response...")
-
+                self_check_note = ranked_data.get('self_check_note', '')
+                
+                print(f"[Orchestrator] Planning complete — {len(ranked_courses)} courses ranked")
+                if self_check_note:
+                    print(f"[Orchestrator] Self-check: {self_check_note}")
+                
                 transcript_context = ""
                 if state.transcript_data:
                     transcript_context = self.transcript_agent.summarize_for_prompt(state.transcript_data)
+                
+                if not state.transcript_data:
+                    ranked_data['not_recommended'] = []
 
+                not_recommended_section = ""
+
+                if state.transcript_data and ranked_data.get('not_recommended'):
+                    not_recommended_section = f"""
+                    COURSES WORTH WORKING TOWARD (blocked by prerequisites):
+                    {json.dumps(ranked_data.get('not_recommended', []), indent=2)}
+                    
+                    If any courses appear here with a would_rank field, add a short
+                    "Worth working toward" section — mention where each would have ranked,
+                    what's blocking it, and the concrete pathway to unlock it.
+                    """
+                
                 context = f"""
                 {self._format_history(state)}
                 Student Query: {user_query}
-
+                
                 Student Profile:
                 - Year: {parsed_data.get('entities', {}).get('year')}
                 - Interests: {parsed_data.get('entities', {}).get('interests')}
                 - Career Path: {parsed_data.get('entities', {}).get('career_path')}
                 - Difficulty Preference: {parsed_data.get('entities', {}).get('difficulty_preference')}
                 - GPA Priority: {parsed_data.get('entities', {}).get('gpa_priority')}
-
+                
                 {transcript_context}
+                
+                {constraint_context}
 
-
+                {not_recommended_section}
+                
                 Ranking Summary: {ranking_summary}
-
-                TOP 5 RECOMMENDED COURSES:
+                
+                TOP RECOMMENDED COURSES:
                 {json.dumps(ranked_courses, indent=2)}
-
+                
+                COURSES WORTH WORKING TOWARD (blocked by prerequisites):
+                {json.dumps(ranked_data.get('not_recommended', []), indent=2)}
+                
                 Based on this information, provide a warm, conversational response to the student.
-
+                
                 Present the ranked recommendations clearly. For each course:
-                1. State the rank and course (e.g., "#1 - CS 434: Machine Learning")
-                2. Explain the reasoning in your own words (don't just copy the reasoning verbatim)
-                3. Highlight key benefits for THIS student
-
+                1. State the rank and course (e.g., "#1 - CS 314: Principles of Programming Languages")
+                2. Explain the reasoning in your own words
+                3. Highlight key benefits for THIS student specifically
+                4. If a course was affected by prerequisites or credit standing, mention it honestly
+                but constructively.
+                
+                Then, if any courses appear in the blocked list with a would_rank field, add a short
+                "Worth working toward" section — mention where each would have ranked, what's blocking
+                it, and the concrete pathway to unlock it.
+                
                 Use a friendly, advisor-like tone. Make it feel personal and encouraging.
-                Remember: Prerequisites are not yet validated, so mention this if relevant.
                 If transcript data is available, acknowledge what the student has already completed
-                and avoid recommending courses they've taken or are currently enrolled in.
-
-                Keep your response conversational and helpful.
+                and avoid recommending courses they have taken or are currently enrolled in.
                 """
-
+                
                 response = await self.agent.run(context)
                 final_response = response.messages[-1].contents[0].text
                 return final_response, agents_invoked
-                    
+            
             except Exception as e:
                 print(f"[Orchestrator] Error in pipeline: {e}")
                 import traceback
@@ -581,7 +625,6 @@ class OrchestratorAgent():
                 fallback_context = f"{self._format_history(state)}Student Query: {user_query}"
                 response = await self.agent.run(fallback_context)
                 return response.messages[-1].contents[0].text, agents_invoked
-        
 """
 Notes on code:
 - Now includes Planning Agent for course ranking
