@@ -134,7 +134,8 @@
         "eligible for",
         "do I need",
         "am I eligible"
-      ]
+      ],
+      "notes": "When a specific course name is mentioned (e.g. 'Compilers', 'Operating Systems'), extract it into target_course, NOT interests. Do not populate interests for this intent."
     },
     
     "schedule_planning": {
@@ -501,8 +502,9 @@
       }
     },
     "course_info": {
-      "minimum_confidence": 0.7,
+      "minimum_confidence": 0.6,
       "required_entity_combinations": [
+         ["target_course"],
         ["specific_courses"]
       ],
       "validation_messages": {

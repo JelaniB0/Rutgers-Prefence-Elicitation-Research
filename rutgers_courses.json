@@ -15,7 +15,7 @@
     "prerequisites": [
       "01:198:111"
     ],
-    "description": "Study of data abstraction and organization: lists, stacks, queues, trees, sorting/searching, and complexity analysis.",
+    "description": "Prerequisites: 01:198:111. Study of data abstraction and organization: lists, stacks, queues, trees, sorting/searching, and complexity analysis.",
     "item_id": "required_112",
     "course_type": "required"
   },
@@ -26,7 +26,7 @@
     "prerequisites": [
       "01:198:111"
     ],
-    "description": "Introduction to discrete mathematical structures for computer science, including logic, sets, and proof techniques.",
+    "description": "Prerequisites: 01:198:111. Introduction to discrete mathematical structures for computer science, including logic, sets, and proof techniques.",
     "item_id": "required_205",
     "course_type": "required"
   },
@@ -37,7 +37,7 @@
     "prerequisites": [
       "01:198:205"
     ],
-    "description": "Continuation of discrete mathematics: counting, relations, graph theory, and recurrence relations.",
+    "description": "Prequisites: 01:198:205. Continuation of discrete mathematics: counting, relations, graph theory, and recurrence relations.",
     "item_id": "required_206",
     "course_type": "required"
   },
@@ -48,7 +48,7 @@
     "prerequisites": [
       "01:198:112"
     ],
-    "description": "Introduction to computer systems, C programming, memory, and the software/hardware interface.",
+    "description": "Prequisites: 01:198:112. Introduction to computer systems, C programming, memory, and the software/hardware interface.",
     "item_id": "required_211",
     "course_type": "required"
   },
@@ -61,7 +61,7 @@
       "01:198:205",
       "01:198:206"
     ],
-    "description": "Algorithm design paradigms (greedy, dynamic programming, divide and conquer) and rigorous analysis of correctness and efficiency.",
+    "description": "Prerequistes: 01:198:112, 01:198:205, 01:198:206. Algorithm design paradigms (greedy, dynamic programming, divide and conquer) and rigorous analysis of correctness and efficiency.",
     "item_id": "required_344",
     "course_type": "required"
   },

@@ -1,645 +1,392 @@
-"""
-Orchestrator agent code
-"""
-
-import os
 import json
-from enum import Enum
+from dataclasses import dataclass, field
+from typing import Optional
+
 from agent_framework.openai import OpenAIChatClient
-from agent_framework import WorkflowEvent, WorkflowBuilder, WorkflowOutputEvent
-from dotenv import load_dotenv
-from agent_framework import ChatAgent
-from typing import Dict, List, Any
+from agent_framework import Executor, WorkflowContext, handler
+
+from agents.shared_types import ConversationState
+
+# Message Type
+class UserQuery:
+    def __init__(self, user_query: str, conversation_state: ConversationState):
+        self.user_query = user_query
+        self.conversation_state = conversation_state
 
 
-from .shared_types import AgentResponse, ConversationState
-from .parser_agent import ParserAgent # Done, needs to be adjusted
-from .data_agent import DataAgent # Done, needs to be adjusted
-from .planning_agent import PlanningAgent # Done, needs to be adjusted
-from .transcript_agent import TranscriptAgent # Done. 
+class OrchestratorRequest:
+    def __init__(self, user_query: str, parsed_data: dict, conversation_state: ConversationState):
+        self.user_query = user_query
+        self.parsed_data = parsed_data
+        self.conversation_state = conversation_state
 
 
-try:
-    from .constraint_agent import ConstraintAgent # Done
-    ALL_AGENTS_AVAILABLE=True
-except ImportError as e:
-    print(f"Not all agents imported yet. ")
-    ALL_AGENTS_AVAILABLE = False
-    ConstraintAgent = None
+class AgentResult:
+    def __init__(self, user_query: str, parsed_data: dict, agent_name: str,
+                 data: dict, conversation_state: ConversationState):
+        self.user_query = user_query
+        self.parsed_data = parsed_data
+        self.agent_name = agent_name
+        self.data = data
+        self.conversation_state = conversation_state
 
-load_dotenv()
+# Agents 
 
-class OrchestratorAgent():
+AGENT_REGISTRY = {
+    "transcript": {
+        "description": (
+            "Parses and stores the student's uploaded transcript. "
+            "Must be called first if the intent is transcript_upload. "
+            "Enables constraint agents to verify eligibility."
+        ),
+        "terminal": True,
+    },
+    "data_fetch": {
+        "description": (
+            "Fetches a list of courses matching filters in parsed_data (subject, level, credits, etc.). "
+            "Call this first for recommendation requests. Returns a course list."
+        ),
+        "terminal": False,
+    },
+    "data_lookup": {
+        "description": (
+            "Looks up detailed info for a specific course by ID or name. "
+            "Call for course_info intent. Returns structured course details."
+        ),
+        "terminal": False,
+    },
+    "data_prereq": {
+        "description": (
+            "Retrieves prerequisite requirements for a specific course. "
+            "Call for prerequisite_check intent. Returns prerequisite course list."
+        ),
+        "terminal": False,
+    },
+    "constraint_full": {
+        "description": (
+            "Validates a fetched course list against the student's transcript "
+            "(completed courses, credits, GPA). Requires data_fetch result AND transcript. "
+            "Do NOT call without both. Returns filtered/annotated course list."
+        ),
+        "terminal": False,
+    },
+    "constraint_prereq": {
+        "description": (
+            "Checks whether the student meets prerequisites for a specific course. "
+            "Requires data_prereq result AND transcript. "
+            "Do NOT call without both. Returns eligibility verdict."
+        ),
+        "terminal": False,
+    },
+    "planning": {
+        "description": (
+            "Ranks and selects top course recommendations from a course list. "
+            "MUST be called for all course_recommendation intents. "
+            "Requires data_fetch result. Call after constraint_full if transcript is available. "
+            "Returns ranked list with reasoning."
+        ),
+        "terminal": False,
+    },
+}
 
-    ORCHESTRATOR_NAME = "Orchestrator"
-    # ORCHESTRATOR_INSTRUCTIONS = """
-    #     You are an experienced advisor who has much experience in assisting Computer Science students at Rutgers University, providing the best support when it comes to 
-    #     helping the students look into potential courses they may want to take. Your job is to utilize a few other different agents in order to ensure you can return the best
-    #     recommended courses for a student. The agents you will be using are:
-    #     - Parser Agent: Validates queries and extracts intent/entities
-    #     - Data Agent: Retrieves course data and student records
-    #     - Constraint Agent: Validates prerequisites and requirements
-    #     - Planning Agent: Generates ranked course recommendations
+AGENT_REGISTRY_SUMMARY = "\n".join(
+    f"- {name}: {meta['description']}"
+    for name, meta in AGENT_REGISTRY.items()
+)
 
-    #     In general, Your role is to:
-    #     1. Coordinate multiple specialized agents to help students find the best courses
-    #     2. Decide when to invoke each agent and in what order
-    #     3. Handle the overall conversation flow with students
-    #     4. Ensure recommendations meet all requirements
-    #     5. Format final responses in a clear, helpful manner
+# Orchestrator Routing context
 
-    #     Prioritize precision, helpfulness, and success of the student. 
-    #     """
-    ORCHESTRATOR_INSTRUCTIONS = """ 
-       You are an experienced advisor who has much experience in assisting Computer Science students at Rutgers University.
+@dataclass
+class RoutingContext:
+    user_query: str
+    parsed_data: dict
+    has_transcript: bool
+    conversation_history: list[dict]
+    accumulated_results: dict[str, dict] = field(default_factory=dict)
+    agents_call_order: list[str] = field(default_factory=list)  # helps log dynamic agent calls by orchestrator. 
 
-        You currently work with:
-        - Parser Agent: Validates queries and extracts intent/entities
-        - Data Agent: Retrieves relevant courses from the course catalog
-        - Constraint Agent: Validates prerequisites and credit standing
-        - Planning Agent: Ranks courses based on student preferences, needs, and constraints
-
-        Your role is to:
-        1. Use the Parser Agent to understand student queries
-        2. Use the Data Agent to find courses matching their interests
-        3. Use the Constraint Agent to validate eligibility across the full course pool
-        4. Use the Planning Agent to rank the top 5 courses with full constraint context
-        5. Present the ranked recommendations in a clear, conversational way
-        6. Explain WHY each course was ranked where it was based on student profile
-        7. Handle the conversation flow with students
-
-        Be helpful, clear, and encouraging. Prioritize student success.
-        """
-    
-    # ABOVE TEMPORARY INSTRUCTIONS B.C. FULL NOT AVAILABLE YET. 
-
-    
-    
-    def __init__(
-        self, 
-        base_url: str | None = None,
-        api_key: str | None = None,
-        model_id: str | None = None
-    ):
-        
-        self.base_url = base_url or os.environ.get("GITHUB_ENDPOINT")
-        self.api_key = api_key or os.environ.get("GITHUB_TOKEN")
-        self.model_id = model_id or os.environ.get("GITHUB_MODEL_ID")
-        
-        self.chat_client = OpenAIChatClient(
-            base_url=self.base_url,
-            api_key=self.api_key,
-            model_id=self.model_id
-        )
-
-        self.agent = None
-        self.parser_agent = None
-    
-    def create_orchestrator(self):
-        """
-        Creates orchestrator agent using ChatAgent
-        """
-        self.agent = ChatAgent(
-            chat_client=self.chat_client,
-            model=self.model_id,
-            instructions = self.ORCHESTRATOR_INSTRUCTIONS
-        )
-        return self.agent
-
-    def initialize_agents(self):
-        self.create_orchestrator()
-
-        try:
-            print("Initialize parser agent...")
-            self.parser_agent = ParserAgent(
-                client=self.chat_client,
-                model="gpt-4o-mini",
-                schema_path="agents/query_schema.json"
-            )
-        except Exception as e:
-            print(f"Failed to initialize ParserAgent: {e}")
-
-        try:
-            print("Initializing data agent...") # agent tools may be expanded
-            self.data_agent = DataAgent(
-                client=self.chat_client,
-                model=self.model_id,
-                courses_file="rutgers_courses.json" 
-            )
-        except Exception as e:
-            print(f"Failed to initialize DataAgent: {e}")
-
-        try:
-            print("Initializing planning agent...")
-            self.planning_agent = PlanningAgent(
-                client=self.chat_client,
-                model = self.model_id
-            )
-        except Exception as e:
-            print(f"Failed to initialize PlanningAgent: {e}")
-
-        try:
-            print("Initializing transcript agent...")
-            self.transcript_agent = TranscriptAgent(
-                client=self.chat_client,
-                model=self.model_id
-            )
-        except Exception as e:
-            print(f"Failed to initialize TranscriptAgent: {e}")
-            self.transcript_agent = None
-
-        try:
-            print("Initializing constraint agent...")
-            self.constraint_agent = ConstraintAgent(
-                client=self.chat_client,
-                model=self.model_id
-            )
-        except Exception as e:
-            print(f"Failed to initialize ConstraintAgent: {e}")
-            self.constraint_agent = None
-
-    def _format_history(self, state: ConversationState) -> str:
-        """Helper to format conversation history for LLM input"""
-        if not state.conversation_history:
-            return ""
-        
-        history_str = "Previous conversation:\n"
-        for msg in state.conversation_history:
-            role = "Student" if msg['role'] == 'user' else "Advisor"
-            history_str += f"{role}: {msg['content']}\n"
-        return history_str + "\n"
-    
-    async def _handle_course_info(self, parsed_data: Dict, state: ConversationState) -> str:
-        """
-        Handle course information lookup requests
-
-        Args:
-            parsed_data: Output from parser agent with intent/entities
-            state: Current conversation state
-        """
-        entities = parsed_data.get('entities', {})
-        specific_course = entities.get('specific_courses', [])
-
-        if not specific_course:
-            return "Could you specify which course you're interested in? For example, you can ask about 'CS 101' or 'Introduction to Computer Science'."
-        
-        course_query = specific_course[0]  # Assuming we take the first mentioned course for simplicity
-        print(f"[Orchestrator] Handling course info request for: {course_query}")
-
-        lookup_response = await self.data_agent.lookup_course(course_query, state)
-
-        if not lookup_response.success:
-            error_msg = lookup_response.errors[0] if lookup_response.errors else "Unknown error"
-
-            if "not found" in error_msg.lower():
-                return f"I couldn't find a course called '{course_query}' in the Rutgers CS catalog. Could you double-check the course code or name? You can also try asking 'what courses are available in [topic]' to browse related courses."
+    def _slim_results(self) -> dict:
+        slim = {}
+        for key, val in self.accumulated_results.items():
+            if isinstance(val, dict) and "courses" in val:
+                slim[key] = {**val, "courses": [
+                    {k: v for k, v in c.items() if k in ("code", "title", "credits")}
+                    for c in val["courses"][:10]
+                ]}
             else:
-                return f"I had trouble looking up that course: {error_msg}"
-            
-        data = lookup_response.data
-    
-        # Handle multiple matches - need disambiguation
-        if data.get('needs_disambiguation'):
-            courses = data.get('courses', [])
-            response = f"I found {len(courses)} courses matching '{course_query}':\n\n"
-            for course in courses:
-                response += f"• **{course.get('code')}** - {course.get('title')}\n"
-            response += "\nWhich one would you like to know more about? Just tell me the course code."
-            return response
+                slim[key] = val
+        return slim
+
+    def to_prompt(self) -> str:
+        return f"""\
+    ## Student Query
+    {self.user_query}
+
+    ## Parsed Intent & Entities
+    {json.dumps(self.parsed_data, indent=2)}
+
+    ## Context
+    - Transcript on file: {self.has_transcript}
+
+    ## Agents Available
+    {AGENT_REGISTRY_SUMMARY}
+
+    ## Results Collected So Far
+    {json.dumps(self._slim_results(), indent=2) if self.accumulated_results else "None yet."}
+
+    ## Agents Already Called (do NOT call these again)
+    {list(self.accumulated_results.keys()) if self.accumulated_results else "None"}
+
+    ## Conversation History (last 6 turns)
+    {json.dumps(self.conversation_history[-6:], indent=2)}
+    """
+
+# Routing decision
+
+@dataclass
+class RoutingDecision:
+    reasoning: str
+    mode: str                   # "route" | "clarify" | "respond"
+    next_agents: list[str]
+    response: Optional[str]
+
+    @classmethod
+    def from_llm_output(cls, raw: str) -> "RoutingDecision":
+        raw = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+        parsed = json.loads(raw)
+
+        raw_agents = parsed.get("next_agents", [])
+        # flatten in case LLM returns nested lists or dicts
+        next_agents = []
+        for a in raw_agents:
+            if isinstance(a, str):
+                next_agents.append(a)
+            elif isinstance(a, dict):
+                # handle both {"name": "..."} and {"agent": "..."}
+                name = a.get("name") or a.get("agent", "")
+                next_agents.append(name)
+            elif isinstance(a, list):
+                next_agents.extend(x for x in a if isinstance(x, str))
         
-        # Single course found - format detailed response
-        course = data.get('course')
-        
-        # Use the orchestrator LLM to format a nice response
-        context = f"""
-        {self._format_history(state)}
-        
-        Student Query: {state.user_query}
-        
-        COURSE INFORMATION:
-        {json.dumps(course, indent=2)}
-        
-        Provide a helpful, conversational response about this course.
-        
-        Structure your response with:
-        1. Course code and title (bold the course code)
-        2. Brief, engaging description of what the course covers
-        3. Prerequisites (if any) - mention them clearly
-        4. Credit hours
-        5. Key topics/skills covered (2-4 bullet points)
-        6. Who this course is good for (e.g., "Great if you're interested in X" or "Recommended for Y students")
-        
-        Be friendly, informative, and conversational. Don't just list information - make it engaging.
-        If the course seems relevant to common career paths or builds important skills, mention that.
-        
-        End with an offer to help: "Would you like recommendations for related courses?" or 
-        "Let me know if you'd like to know more about prerequisites or related topics!"
-        """
-        
-        response = await self.agent.run(context)
-        return response.messages[-1].contents[0].text
-    
-    async def _handle_prereq_check(self, parsed_data: Dict, state: ConversationState) -> str:
-        """
-        Handle prerequisite check requests.
-
-        Looks up the course(s) mentioned, runs constraint validation,
-        and returns a direct conversational answer about what the student
-        needs before they can enroll.
-
-        Args:
-            parsed_data: Output from ParserAgent with intent/entities
-            state: Current conversation state
-
-        Returns:
-            Formatted string response to present to the student
-        """
-        entities = parsed_data.get("entities", {})
-        
-        target_course = entities.get("target_course")
-        related_courses = entities.get("related_courses", [])
-
-        # If no target course, fallback
-        if not target_course:
-            specific_courses = entities.get("specific_courses", [])
-            if specific_courses:
-                target_course = specific_courses[0]
-                related_courses = specific_courses[1:]
-
-        # Look up target course only
-        print(f"[Orchestrator] Checking prerequisites for: {target_course}")
-        lookup_response = await self.data_agent.lookup_course(target_course, state)
-
-        if not lookup_response.success:
-            return (
-                f"I couldn't find a course called '{target_course}' in the Rutgers CS catalog. "
-                f"Could you double-check the course code or name?"
-            )
-
-        data = lookup_response.data
-        if data.get("needs_disambiguation"):
-            courses = data.get("courses", [])
-            msg = f"I found {len(courses)} courses matching '{target_course}':\n\n"
-            for c in courses:
-                msg += f"• **{c.get('code')}** - {c.get('title')}\n"
-            msg += "\nWhich one did you mean? Just give me the course code."
-            return msg
-
-        course = data.get("course")
-
-        # Run constraints only for target course
-        constraint_data = None
-        if self.constraint_agent:
-            constraint_response = await self.constraint_agent.check_single_course(course=course, state=state)
-            if constraint_response.success:
-                constraint_data = constraint_response.data
-
-        # Build transcript context if available
-        transcript_context = ""
-        if state.transcript_data:
-            transcript_context = self.transcript_agent.summarize_for_prompt(state.transcript_data)
-        else:
-            transcript_context = """No transcript has been uploaded yet. 
-            Do not make any claims about what the student has or hasn't completed.
-            Simply list what the prerequisites are and tell the student to upload 
-            their transcript for a personalized eligibility check."""
-
-        # Build constraint context
-        constraint_context = ""
-        if constraint_data:
-            constraint_context = f"""
-            PREREQUISITE CHECK RESULT:
-            - Student is eligible: {constraint_data.get('eligible')}
-            - Met prerequisites: {constraint_data.get('met_prerequisites', [])}
-            - Unmet prerequisites: {constraint_data.get('unmet_prerequisites', [])}
-            - Reasoning: {constraint_data.get('reasoning')}
-            - Pathway suggestion: {constraint_data.get('pathway_suggestion')}
-            - Credit standing appropriate: {constraint_data.get('standing_eligible')}
-            - Standing note: {constraint_data.get('standing_note', '')}
-            """
-
-        related_note = ""
-
-        if related_courses:
-            related_note += f"\nAlso, the user mentioned {', '.join(related_courses)}. Include notes about how these relate to {target_course} if relevant."
-        else:
-            related_note = ""
-
-        context = f"""
-        {self._format_history(state)}
-        
-        Student Query: {state.user_query}
-        
-        COURSE INFORMATION:
-        {json.dumps(course, indent=2)}
-        
-        {transcript_context}
-        {constraint_context}
-        {related_note}
-        
-        The student is asking about prerequisites for this course.
-        Provide a clear, conversational answer that:
-        1. States the course name and code
-        2. Lists what prerequisites are required
-        3. Checks student transcript if available and explains eligibility
-        4. Suggests pathway if prerequisites not met
-        5. Mentions credit standing if relevant
-        """
-
-        response = await self.agent.run(context)
-        return response.messages[-1].contents[0].text
-            
-        #  # If we checked multiple courses, join the responses
-        # return "\n\n---\n\n".join(responses)
-    
-    async def load_transcript(self, pdf_path: str, state: ConversationState) -> str:
-        """
-        Call this before process_query() when a student uploads a transcript.
-        Parses it and stores data in state so all agents can access it.
-        """
-        if self.transcript_agent is None:
-            return "Transcript reading is not available right now."
-
-        print(f"[Orchestrator] Loading transcript from: {pdf_path}")
-        response = await self.transcript_agent.parse_transcript(pdf_path, state)
-
-        if not response.success:
-            return f"I couldn't read that transcript: {', '.join(response.errors)}"
-
-        data = response.data
-
-        completed_cs = [
-            c for c in data.get("completed_courses", []) if ":198:" in c.get("code", "")
-        ]
-        in_progress_cs = [
-            c for c in data.get("in_progress_courses", []) if ":198:" in c.get("code", "")
-        ]
-
-        completed_str = "\n".join(
-            f"  - {c['code']}: {c['title']} ({c.get('grade', 'P')})"
-            for c in completed_cs
-        ) or "  - None found"
-
-        in_progress_str = "\n".join(
-            f"  - {c['code']}: {c['title']}"
-            for c in in_progress_cs
-        ) or "  - None found"
-
-        return (
-            f"Got it! I've read your transcript. Here's what I found:\n\n"
-            f"**Year:** {data.get('year_standing')}\n"
-            f"**GPA:** {data.get('cumulative_gpa')}\n"
-            f"**Credits Completed:** {data.get('total_degree_credits')}\n\n"
-            f"**CS Courses Completed:**\n{completed_str}\n\n"
-            f"**CS Courses In Progress:**\n{in_progress_str}\n\n"
-            f"I'll factor all of this in when making recommendations."
+        return cls(
+            reasoning=parsed.get("reasoning", ""),
+            mode=parsed.get("mode", "respond"),
+            next_agents=next_agents,
+            response=parsed.get("response"),
         )
 
-    async def process_query(self, user_query: str, state: ConversationState) -> tuple[str, list]:
-        """
-        Processes user query
-        """
-        agents_invoked = []
+# Orchestrator
 
-        if getattr(state, 'awaiting_transcript_path', False):
-            state.awaiting_transcript_path = False
-            if not os.path.exists(user_query.strip()):
-                return f"I couldn't find a file at '{user_query.strip()}'. Could you double-check the path?", agents_invoked
-            agents_invoked.append("TranscriptAgent") 
-            response = await self.load_transcript(user_query.strip(), state)
-            return response, agents_invoked
+ORCHESTRATOR_SYSTEM_PROMPT = """\
+You are an academic advisor agent manager for Rutgers CS students.
+You coordinate specialist agents and respond directly to students.
+Be warm, clear, and encouraging.
 
-        if self.parser_agent is not None:
-            try:
-                state.user_query = user_query
-                print("\n[Orchestrator] Invoking Parser Agent...")
-                agents_invoked.append("ParserAgent")
+Each turn you receive a context snapshot and must output a JSON decision.
 
-                parser_response = await self.parser_agent.parse(user_query, state)
-                print(f"[Parser Agent] success: {parser_response.success}")
+Modes:
+- "route"   — you need more data; list which agents to call next in next_agents.
+              You may call multiple agents in parallel if they have no dependency on each other.
+              Read each agent's description carefully — never call an agent before
+              its required inputs have been collected.
+- "clarify" — the query is completely off-topic or unrelated to course advising entirely;
+              write a short redirect in "response". Do NOT clarify just because a subject
+              or course name could be more specific — act on it directly.
+- "respond" — you have enough data to give a complete, helpful answer;
+              write the full advisor-style response in "response", explaining
+              WHY each recommendation suits the student where relevant.
 
-                if not parser_response.success:
-                    return f"I had trouble understanding your request: {', '.join(parser_response.errors)}", agents_invoked
-                
-                parsed_data = parser_response.data
+Rules:
+- A student mentioning any subject, topic, or course name is sufficient to route immediately.
+  Never ask for clarification in these cases.
+- If the student asks for general information on a topic, treat it as course_info and call data_lookup.
+- If you already have sufficient data in "Results Collected So Far", set mode="respond" immediately.
+  Do NOT re-call agents or route unnecessarily.
+- next_agents must contain only plain agent name strings e.g. ["data_lookup"], never dicts or nested lists.
+- If next_agents would be empty or no agents are left to call, set mode="respond".
+- When responding, only reference courses and completed prerequisites that are explicitly present in the collected data. 
+  Never infer or assume the student has completed a course unless it appears in their transcript data. If unsure, omit the claim.
 
-                if not parsed_data.get('is_course_related', False):
-                    return "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?", agents_invoked
-                
-                if parsed_data.get('intent') == 'off_topic':
-                    return "I specialize in helping Rutgers CS students find courses. Could you ask me something about course selection?", agents_invoked
-                
-                if parsed_data.get('intent') == 'course_info':
-                    print("[Orchestrator] Routing to course information handler")
-                    agents_invoked.append("DataAgent")
-                    response = await self._handle_course_info(parsed_data, state)
-                    return response, agents_invoked
-                
-                if parsed_data.get('intent') == 'transcript_upload':
-                    file_path = parsed_data.get('entities', {}).get('file_path')
-                    
-                    if file_path:
-                        # user gave us the path directly in their message
-                        if not os.path.exists(file_path):
-                            return f"I couldn't find a file at '{file_path}'. Could you double-check the path?", agents_invoked
-                        
-                        agents_invoked.append("TranscriptAgent")
-                        response = await self.load_transcript(file_path, state)
-                        return response, agents_invoked
-                
-                    else:
-                        # user asked naturally but didn't provide a path yet
-                        state.awaiting_transcript_path = True
-                        return "Sure! Go ahead and drop the path to your transcript PDF.", agents_invoked
-                
-                if parsed_data.get('intent') == 'prerequisite_check':
-                    print("[Orchestrator] Routing to prerequisite check handler")
-                    agents_invoked.append("DataAgent")
-                    if self.constraint_agent is not None:
-                        agents_invoked.append("ConstraintAgent")
-                    response = await self._handle_prereq_check(parsed_data, state)
-                    return response, agents_invoked
-                    
-                if parsed_data.get('needs_clarification', False):
-                    suggestions = parsed_data.get('suggested_clarifications', [])
-                    if suggestions:
-                        # Uses LLM reasoning to learn missing info LLM needs and asks user for it. 
-                        print(f"[Orchestrator] Optional clarifications noted: {suggestions}")
+Output format (JSON only, no markdown fences):
+{
+  "reasoning": "<1-2 sentences explaining your choice>",
+  "mode": "route" | "clarify" | "respond",
+  "next_agents": [],
+  "response": null
+}
 
-                        entities = parsed_data.get('entities', {})
-                        interests = entities.get('interests', [])
-        
-                        # Force clarification for overly generic queries
-                        if not interests or interests == ['Computer Science'] or interests == ['CS']: # kinda hardcoded for now. 
-                            return f"I'd love to help you find courses! To give you the best recommendations, could you tell me:\n" + "\n".join(f"- {s}" for s in suggestions), agents_invoked
-                
-                print(f"[Parser Agent] Intent: {parsed_data.get('intent')}")
-                print(f"[Parser Agent] Entities: {parsed_data.get('entities')}")
-
-                if self.data_agent is None:
-                        return "the data retrieval system is not available yet. ", agents_invoked
-                   
-                agents_invoked.append("DataAgent")
-                data_response = await self.data_agent.fetch_courses(
-                    parsed_data=parsed_data,
-                    state=state
-                )
-                
-                if not data_response.success:
-                    return f"I couldn't retrieve course data: {', '.join(data_response.errors)}", agents_invoked
-                
-                courses = data_response.data.get('courses', [])
-                print(f"[DataAgent] Found {len(courses)} candidate courses")
-                
-                if len(courses) == 0:
-                    return "I couldn't find any courses matching your criteria. Could you try rephrasing your interests or being more specific?", agents_invoked
-                
-                # Run before planning so the LLM reasons about eligibility from the start,
-                # not as a post-processing filter.
-                constraint_context = ""
-                
-                if self.constraint_agent is not None:
-                    if state.transcript_data is not None:  # only run if transcript exists
-                        agents_invoked.append("ConstraintAgent")
-                        print("\n[Orchestrator] Invoking Constraint Agent on full course pool...")
-                        
-                        constraint_response = await self.constraint_agent.validate_courses(
-                            courses=courses,
-                            state=state
-                        )
-                        
-                        if constraint_response.success:
-                            constraint_context = self.constraint_agent.summarize_for_prompt(
-                                constraint_response.data
-                            )
-                    else:
-                        print("[Orchestrator] No transcript, skipping constraint validation")
-                        constraint_context = """No transcript uploaded. Cannot verify prerequisite eligibility.
-                        List what prerequisites each course requires based on course data, and encourage
-                        the student to upload their transcript for a personalized eligibility check."""
-                else:
-                    print("[Orchestrator] Constraint Agent unavailable — Planning Agent will proceed without constraints")
-
-                courses_to_rank = [
-                    {k: v for k, v in c.items() if k != "constraint_check"}
-                    for c in courses[:10]
-]                
-                # Planning Agent receives the annotated course pool and the full constraint
-                # summary so it can reason about eligibility and standing from the start.
-                print("\n[Orchestrator] Invoking Planning Agent (constraint-aware ranking)...")
-                agents_invoked.append("PlanningAgent")
-                
-                planning_response = await self.planning_agent.rank_courses(
-                    courses=courses_to_rank,
-                    parsed_data=parsed_data,
-                    state=state,
-                    constraint_context=constraint_context,
-                    max_results=5
-                )
-                
-                if not planning_response.success:
-                    return f"I had trouble ranking the courses: {', '.join(planning_response.errors)}", agents_invoked
-                
-                ranked_data = planning_response.data
-                ranked_courses = ranked_data.get('ranked_courses', [])
-                ranking_summary = ranked_data.get('ranking_summary', '')
-                self_check_note = ranked_data.get('self_check_note', '')
-                
-                print(f"[Orchestrator] Planning complete — {len(ranked_courses)} courses ranked")
-                if self_check_note:
-                    print(f"[Orchestrator] Self-check: {self_check_note}")
-                
-                transcript_context = ""
-                if state.transcript_data:
-                    transcript_context = self.transcript_agent.summarize_for_prompt(state.transcript_data)
-                
-                if not state.transcript_data:
-                    ranked_data['not_recommended'] = []
-
-                not_recommended_section = ""
-
-                if state.transcript_data and ranked_data.get('not_recommended'):
-                    not_recommended_section = f"""
-                    COURSES WORTH WORKING TOWARD (blocked by prerequisites):
-                    {json.dumps(ranked_data.get('not_recommended', []), indent=2)}
-                    
-                    If any courses appear here with a would_rank field, add a short
-                    "Worth working toward" section — mention where each would have ranked,
-                    what's blocking it, and the concrete pathway to unlock it.
-                    """
-                
-                context = f"""
-                {self._format_history(state)}
-                Student Query: {user_query}
-                
-                Student Profile:
-                - Year: {parsed_data.get('entities', {}).get('year')}
-                - Interests: {parsed_data.get('entities', {}).get('interests')}
-                - Career Path: {parsed_data.get('entities', {}).get('career_path')}
-                - Difficulty Preference: {parsed_data.get('entities', {}).get('difficulty_preference')}
-                - GPA Priority: {parsed_data.get('entities', {}).get('gpa_priority')}
-                
-                {transcript_context}
-                
-                {constraint_context}
-
-                {not_recommended_section}
-                
-                Ranking Summary: {ranking_summary}
-                
-                TOP RECOMMENDED COURSES:
-                {json.dumps(ranked_courses, indent=2)}
-                
-                COURSES WORTH WORKING TOWARD (blocked by prerequisites):
-                {json.dumps(ranked_data.get('not_recommended', []), indent=2)}
-                
-                Based on this information, provide a warm, conversational response to the student.
-                
-                Present the ranked recommendations clearly. For each course:
-                1. State the rank and course (e.g., "#1 - CS 314: Principles of Programming Languages")
-                2. Explain the reasoning in your own words
-                3. Highlight key benefits for THIS student specifically
-                4. If a course was affected by prerequisites or credit standing, mention it honestly
-                but constructively.
-                
-                Then, if any courses appear in the blocked list with a would_rank field, add a short
-                "Worth working toward" section — mention where each would have ranked, what's blocking
-                it, and the concrete pathway to unlock it.
-                
-                Use a friendly, advisor-like tone. Make it feel personal and encouraging.
-                If transcript data is available, acknowledge what the student has already completed
-                and avoid recommending courses they have taken or are currently enrolled in.
-                """
-                
-                response = await self.agent.run(context)
-                final_response = response.messages[-1].contents[0].text
-                return final_response, agents_invoked
-            
-            except Exception as e:
-                print(f"[Orchestrator] Error in pipeline: {e}")
-                import traceback
-                traceback.print_exc()
-                
-                # Fallback to basic response
-                print("\n[Orchestrator] Falling back to basic response...")
-                fallback_context = f"{self._format_history(state)}Student Query: {user_query}"
-                response = await self.agent.run(fallback_context)
-                return response.messages[-1].contents[0].text, agents_invoked
-"""
-Notes on code:
-- Now includes Planning Agent for course ranking
-- Pipeline: Orchestrator -> Parser → Data → Planning → Orchestrator Final Response
-- Still no conversation memory (future improvement) -> slightly improved with conversation history formatting, but not true memory yet
-- Still no prerequisite validation (waiting for ConstraintAgent)
-- No safeguards against agent hallucination yet
-- Not capable of holding a full back and forth conversation right now
-- Ranking is flawed 
-- Need to adjust code so that it only redirects user to ask CS course related questions. 
+When mode is "route", populate next_agents and leave response null.
+When mode is "clarify" or "respond", next_agents must be [] and response must be a non-null string.
 """
 
-# initialize agents expands later. 
+class OrchestratorExecutor(Executor):
+    """
+    Hub orchestrator with a single LLM agent that routes, clarifies, and responds.
 
-# general note for this week, follow tutorial very closely. 
+    Flow:
+      handle_request — entry point; runs the routing loop
+      handle_result  — collects spoke results; re-enters the routing loop
+    """
 
-# may want to utilize mem0 (maybe azure ai search functions?)
-#  consider scratchpad plugin.
+    MAX_ITERATIONS = 6
+
+    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+        super().__init__(id="orchestrator")
+        self.agent = chat_client.as_agent(
+            instructions=ORCHESTRATOR_SYSTEM_PROMPT,
+            name="Orchestrator",
+        )
+
+    # Entry point
+
+    @handler
+    async def handle_request(self, message: OrchestratorRequest, ctx: WorkflowContext) -> None:
+        print(f"[Orchestrator] parsed_data: {message.parsed_data}")
+        intent = message.parsed_data.get("intent")
+        has_transcript = bool(message.conversation_state.transcript_data)
+        print(f"[Orchestrator] intent='{intent}', has_transcript={has_transcript}")
+
+        # Constraint rule: transcript upload bypasses LLM routing entirely
+        if intent == "transcript_upload":
+            print("[Orchestrator] Hard rule → transcript agent")
+            await ctx.send_message(AgentResult(
+                message.user_query, message.parsed_data,
+                agent_name="transcript", data={},
+                conversation_state=message.conversation_state,
+            ))
+            return
+
+        routing_ctx = RoutingContext(
+            user_query=message.user_query,
+            parsed_data=message.parsed_data,
+            has_transcript=has_transcript,
+            conversation_history=message.conversation_state.conversation_history or [],
+        )
+
+        await self._routing_loop(routing_ctx, message, ctx, iteration=0)
+
+    # Spoke result collector
+
+    @handler
+    async def handle_result(self, message: AgentResult, ctx: WorkflowContext) -> None:
+        # Transcript spoke handles its own output — nothing to do
+        if message.agent_name == "transcript":
+            return
+
+        print(f"[Orchestrator] Result from '{message.agent_name}'")
+
+        routing_ctx: RoutingContext = message.conversation_state.routing_ctx  # type: ignore[attr-defined]
+        routing_ctx.accumulated_results[message.agent_name] = message.data
+        routing_ctx.has_transcript = bool(message.conversation_state.transcript_data)
+
+        iteration: int = message.conversation_state.routing_iteration  # type: ignore[attr-defined]
+        await self._routing_loop(routing_ctx, message, ctx, iteration=iteration)
+
+    # Core routing loop
+
+    async def _routing_loop(
+        self,
+        routing_ctx: RoutingContext,
+        message,
+        ctx: WorkflowContext,
+        iteration: int,
+    ) -> None:
+        if iteration >= self.MAX_ITERATIONS:
+            print("[Orchestrator] Max iterations reached — forcing respond mode")
+            await self._force_respond(routing_ctx, ctx)
+            return
+
+        print(f"[Orchestrator] Routing iteration {iteration + 1}")
+        raw = await self.agent.run(routing_ctx.to_prompt())
+        raw_text = raw.content if hasattr(raw, "content") else str(raw)
+
+        try:
+            decision = RoutingDecision.from_llm_output(raw_text)
+        except (json.JSONDecodeError, KeyError) as e:
+            print(f"[Orchestrator] Bad routing output: {e} — forcing respond mode")
+            await self._force_respond(routing_ctx, ctx)
+            return
+
+        print(f"[Orchestrator] mode={decision.mode}, reasoning: {decision.reasoning}")
+
+        # Clarify or respond — yield output and stop
+        if decision.mode in ("clarify", "respond"):
+            if not decision.response:
+                print("[Orchestrator] Empty response in terminal mode — forcing respond")
+                await self._force_respond(routing_ctx, ctx)
+                return
+            await ctx.yield_output(decision.response)
+            return
+
+        # Route — validate and dispatch
+        print(f"[Orchestrator] Raw next_agents from LLM: {decision.next_agents}")
+        valid_agents = [a.strip() for a in decision.next_agents if a.strip() and a.strip() in AGENT_REGISTRY]
+        # in _routing_loop, after getting valid_agents, add:
+        already_called = set(routing_ctx.accumulated_results.keys())
+        duplicate_agents = [a for a in valid_agents if a in already_called]
+        if duplicate_agents:
+            print(f"[Orchestrator] LLM tried to re-call already completed agents: {duplicate_agents} — forcing respond")
+            await self._force_respond(routing_ctx, ctx)
+            return
+        valid_agents = [a for a in valid_agents if a not in already_called]
+        print(f"[Orchestrator] Valid agents: {valid_agents}")
+
+        NEVER_ROUTE = {"transcript"} # never route transcript, only do it at request of user. 
+        valid_agents = [a for a in valid_agents if a not in NEVER_ROUTE]
+
+        valid_agents = valid_agents[:1]  # enforce sequential — one agent at a time
+
+        if not valid_agents:
+            print("[Orchestrator] No valid agents in route decision — forcing respond")
+            await self._force_respond(routing_ctx, ctx)
+            return
+
+        # Stash routing context onto conversation state so handle_result can retrieve it
+        message.conversation_state.routing_ctx = routing_ctx         
+        message.conversation_state.routing_iteration = iteration + 1  
+
+        print(f"[Orchestrator] Dispatching → {valid_agents}")
+        for agent_name in valid_agents:
+            routing_ctx.agents_call_order.append(agent_name)
+
+            # Pass only what each agent needs
+            if agent_name == "constraint_full":
+                spoke_data = dict(routing_ctx.accumulated_results.get("data_fetch", {}))
+            elif agent_name == "planning":
+                spoke_data = {
+                    "courses": routing_ctx.accumulated_results.get("constraint_full", {}).get("courses")
+                            or routing_ctx.accumulated_results.get("data_fetch", {}).get("courses", []),
+                    "constraint_data": routing_ctx.accumulated_results.get("constraint_full", {}).get("constraint_data", {}),
+                }
+            else:
+                spoke_data = dict(routing_ctx.accumulated_results)
+
+            await ctx.send_message(AgentResult(
+                routing_ctx.user_query,
+                routing_ctx.parsed_data,
+                agent_name=agent_name,
+                data=spoke_data,
+                conversation_state=message.conversation_state,
+            ))
+
+    # Fallback response when something goes wrong -> dump all data context and formulate best response. 
+
+    async def _force_respond(self, routing_ctx: RoutingContext, ctx: WorkflowContext) -> None:
+        prompt = (
+            f"{routing_ctx.to_prompt()}\n\n"
+            f"Full collected data:\n{json.dumps(routing_ctx.accumulated_results, indent=2)}\n\n"
+            f"You must now respond directly to the student based on whatever data is available."
+        )
+        raw = await self.agent.run(prompt)
+        raw_text = raw.content if hasattr(raw, "content") else str(raw)
+
+        try:
+            decision = RoutingDecision.from_llm_output(raw_text)
+            if decision.mode in ("clarify", "respond") and decision.response:
+                text = decision.response
+            else:
+                text = raw_text
+        except (json.JSONDecodeError, KeyError):
+            text = raw_text
+
+        await ctx.yield_output(text)

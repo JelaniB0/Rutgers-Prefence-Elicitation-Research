@@ -2334,6 +2334,84 @@
           "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
         }
       ]
+    },
+    {
+      "session_id": "2026-03-25 01:00:38",
+      "started_at": "2026-03-25T01:00:38.641296",
+      "turns": [
+        {
+          "timestamp": "2026-03-25T01:00:41.851732",
+          "user_query": "What's the best dining hall on campus?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:01:02.013912",
+          "user_query": "Can you help me write my essay for English class?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:03:42.531995",
+          "user_query": "What's the weather like in New Brunswick?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:04:36.930025",
+          "user_query": "Who won the game last night?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:05:36.902467",
+          "user_query": "What are some tips for dealing with stress?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:05:56.778299",
+          "user_query": "How do I apply for financial aid?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:06:14.137992",
+          "user_query": "What's a good recipe for pasta?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:06:21.908575",
+          "user_query": "Help me plan a trip to Europe",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        },
+        {
+          "timestamp": "2026-03-25T01:06:29.520097",
+          "user_query": "What's the history of Rutgers University?",
+          "agents_invoked": [
+            "ParserAgent"
+          ],
+          "response": "I'm here to help with course recommendations at Rutgers CS. Your question seems to be about something else. Can you ask me about courses, prerequisites, or class planning?"
+        }
+      ]
     }
   ]
 }

@@ -160,15 +160,21 @@ class DataAgent(ChatAgent):
             with open(self.courses_file, 'r') as f:
                 data = json.load(f)
                 if isinstance(data, list):
-                    return data
+                    courses = data
                 elif isinstance(data, dict) and 'courses' in data:
-                    return data['courses']
-                return []
+                    courses = data['courses']
+                else:
+                    courses = []
+                # Build lookup map once at load time
+                self.code_to_title = {c["code"]: c["title"] for c in courses}
+                return courses
         except FileNotFoundError:
             print(f"[DataAgent] Error: {self.courses_file} not found")
+            self.code_to_title = {}
             return []
         except json.JSONDecodeError as e:
             print(f"[DataAgent] Error: Invalid JSON: {e}")
+            self.code_to_title = {}
             return []
     
     async def fetch_courses(self, parsed_data: Dict, state: ConversationState) -> AgentResponse:
@@ -254,7 +260,7 @@ class DataAgent(ChatAgent):
                 course_copy = course.copy()
                 # semantic similarity score for planninn agent
                 course_copy['semantic_similarity'] = 1 - retrieved_distances[i]
-                retrieved_courses.append(course_copy)
+                retrieved_courses.append(self._enrich_course(course_copy))
 
         print(f"[DataAgent] Retrieved {len(retrieved_courses)} courses")
 
@@ -308,7 +314,7 @@ class DataAgent(ChatAgent):
                     print(f"[DataAgent] Found semantic match: {codes[0]} (distance: {distances[0]:.3f})")
                     return AgentResponse(
                         success=True,
-                        data={'course': course, 'lookup_method': 'semantic_match'},
+                        data={'course': self._enrich_course(course), 'lookup_method': 'semantic_match'},
                         metadata={'search_query': course_identifier, 'model_used': self.model}
                     )
 
@@ -361,3 +367,27 @@ class DataAgent(ChatAgent):
             query_parts.append(f"{entities['difficulty_preference']} level")
         
         return " ".join(query_parts) if query_parts else "computer science courses"
+    
+    # Course Data Preprocessing
+
+    def _extract_prereqs(self, description: str) -> tuple[str, str]:
+        """Split prereq sentence from the rest of the description."""
+        match = re.match(r'(Prerequisites?:.*?\.)\s*(.*)', description, re.DOTALL | re.IGNORECASE)
+        if match:
+            return match.group(1).strip(), match.group(2).strip()
+        return "", description
+
+    def _resolve_codes(self, prereq_text: str) -> str:
+        """Replace bare course codes with 'CODE (Title)' using the loaded map."""
+        for code, title in self.code_to_title.items():
+            if code in prereq_text:
+                prereq_text = prereq_text.replace(code, f"{code} ({title})")
+        return prereq_text
+
+    def _enrich_course(self, course: dict) -> dict:
+        """Extract and resolve prerequisites, clean up description."""
+        course = course.copy()
+        prereq_text, clean_desc = self._extract_prereqs(course.get("description", ""))
+        course["prerequisites"] = self._resolve_codes(prereq_text)
+        course["description"] = clean_desc
+        return course

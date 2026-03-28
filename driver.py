@@ -1,125 +1,379 @@
-"""
-Driver for agent framework
-"""
-
-from agents.orchestrator_agent import OrchestratorAgent
-from agents.shared_types import ConversationState
-import asyncio
-import json
 import os
+import asyncio
 from datetime import datetime
-from query_logger import log_query  
+from dotenv import load_dotenv
 
-"""
-added convesation_log json file functionality to log conversations for later analysis.
-The log file stores conversations(user queries and agent responses), agents invoked, and timestamps for each turn in a conversation session. 
-"""
-log_file = "conversation_log.json"
+from agent_framework.openai import OpenAIChatClient
+from agent_framework import WorkflowBuilder, WorkflowOutputEvent, Executor, WorkflowContext, handler
+from query_logger import log_query
 
-def load_log() -> dict:
-    if os.path.exists(log_file):
-        with open(log_file, "r") as f:
-            return json.load(f)
-    return {"sessions": []}
+from agents.parser_agent import ParserAgent
+from agents.data_agent import DataAgent
+from agents.planning_agent import PlanningAgent
+from agents.transcript_agent import TranscriptAgent
+from agents.constraint_agent import ConstraintAgent
+from agents.shared_types import ConversationState
+from agents.orchestrator_agent import (
+    UserQuery,
+    OrchestratorRequest,
+    AgentResult,
+    OrchestratorExecutor,
+)
 
-def save_log(log_data: dict):
-    with open(log_file, "w") as f:
-        json.dump(log_data, f, indent=2)
+load_dotenv()
 
-AGENT_SOURCES: dict[str, list[str]] = {
-    "ParserAgent":   ["LLM", "query_schema.json"],
-    "DataAgent":     ["rutgers_courses.json"],
-    "PlanningAgent": ["LLM"],
-    "TranscriptAgent": ["LLM", "transcript_pdf"],
-    "ConstraintAgent": ["LLM"],  
-}
+
+# Spoke Executors — each does one job, sends AgentResult back to orchestrator
+
+class ParserExecutor(Executor):
+
+    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+        super().__init__(id="parser")
+        self.parser = ParserAgent(
+            client=chat_client,
+            model="gpt-4.1-mini",
+            schema_path="agents/query_schema.json"
+        )
+
+    @handler
+    async def handle(self, message: UserQuery, ctx: WorkflowContext) -> None:
+        print("[ParserExecutor] Parsing query...")
+        response = await self.parser.parse(message.user_query, message.conversation_state)
+        if not response.success:
+            await ctx.yield_output("I encountered an error parsing your query. Please try again.")
+            return
+        message.conversation_state.user_query = message.user_query
+        message.conversation_state.last_intent = response.data.get("intent")
+        await ctx.send_message(
+            OrchestratorRequest(message.user_query, response.data, message.conversation_state)
+        )
+
+
+class DataExecutor(Executor):
+
+    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+        super().__init__(id="data")
+        self.data_agent = DataAgent(
+            client=chat_client, model=model_id, courses_file="rutgers_courses.json"
+        )
+
+    @handler
+    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+        if message.agent_name not in ("data_fetch", "data_lookup", "data_prereq"):
+            return
+
+        entities = message.parsed_data.get("entities", {})
+
+        if message.agent_name == "data_fetch":
+            print("[DataExecutor] Fetching courses...")
+            response = await self.data_agent.fetch_courses(
+                parsed_data=message.parsed_data, state=message.conversation_state
+            )
+            if not response.success:
+                await ctx.yield_output("I had trouble fetching courses. Please try again.")
+                return
+            courses = response.data.get("courses", [])
+            print(f"[DataExecutor] Retrieved {len(courses)} courses")
+            await ctx.send_message(AgentResult(
+                message.user_query, message.parsed_data,
+                agent_name="data_fetch", data={"courses": courses},
+                conversation_state=message.conversation_state
+            ))
+
+        elif message.agent_name == "data_lookup":
+            print("[DataExecutor] Looking up course...")
+            specific_courses = entities.get("specific_courses", [])
+            if not specific_courses:
+                specific_courses = entities.get("interests", [])
+
+            if not specific_courses:
+                await ctx.yield_output("I couldn't find a course name in your query. Could you be more specific?")
+                return
+            response = await self.data_agent.lookup_course(specific_courses[0], message.conversation_state)
+            if not response.success:
+                await ctx.yield_output("I couldn't find that course. Please check the course name and try again.")
+                return
+            await ctx.send_message(AgentResult(
+                message.user_query, message.parsed_data,
+                agent_name="data_lookup", data=response.data,
+                conversation_state=message.conversation_state
+            ))
+
+        elif message.agent_name == "data_prereq":
+            print("[DataExecutor] Looking up course for prereq check...")
+            target = entities.get("target_course") or (entities.get("specific_courses", [None])[0])
+            if not target:
+                await ctx.yield_output("I couldn't find a course name in your query. Could you be more specific?")
+                return
+            response = await self.data_agent.lookup_course(target, message.conversation_state)
+            if not response.success:
+                await ctx.yield_output("I couldn't find that course. Please check the course name and try again.")
+                return
+            await ctx.send_message(AgentResult(
+                message.user_query, message.parsed_data,
+                agent_name="data_prereq", data=response.data,
+                conversation_state=message.conversation_state
+            ))
+
+
+class ConstraintExecutor(Executor):
+
+    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+        super().__init__(id="constraint")
+        self.constraint_agent = ConstraintAgent(client=chat_client, model=model_id)
+
+    @handler
+    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+        if message.agent_name not in ("constraint_full", "constraint_prereq"):
+            return
+
+        if message.agent_name == "constraint_full":
+            print("[ConstraintExecutor] Validating constraints...")
+            courses = message.data.get("courses") or message.data.get("data_fetch", {}).get("courses", [])
+            constraint_data = {}
+            if message.conversation_state.transcript_data:
+                response = await self.constraint_agent.validate_courses(
+                    courses=courses, state=message.conversation_state
+                )
+                if response.success:
+                    constraint_data = response.data
+            await ctx.send_message(AgentResult(
+                message.user_query, message.parsed_data,
+                agent_name="constraint_full",
+                data={"courses": courses, "constraint_data": constraint_data},
+                conversation_state=message.conversation_state
+            ))
+
+        elif message.agent_name == "constraint_prereq":
+            print("[ConstraintExecutor] Checking prereq eligibility...")
+            course_data = message.data
+            course = course_data.get("course") if not course_data.get("needs_disambiguation") else None
+            constraint_data = {}
+            if course:
+                response = await self.constraint_agent.check_single_course(
+                    course=course, state=message.conversation_state
+                )
+                if response.success:
+                    constraint_data = response.data
+            await ctx.send_message(AgentResult(
+                message.user_query, message.parsed_data,
+                agent_name="constraint_prereq",
+                data={"course_data": course_data, "constraint_data": constraint_data},
+                conversation_state=message.conversation_state
+            ))
+
+
+class PlanningExecutor(Executor):
+
+    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+        super().__init__(id="planning")
+        self.planning_agent = PlanningAgent(client=chat_client, model=model_id)
+
+    @handler
+    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+        if message.agent_name != "planning":
+            return
+
+        print("[PlanningExecutor] Ranking courses...")
+        courses = message.data.get("courses", [])
+        constraint_data = message.data.get("constraint_data", {})
+
+        constraint_context = ""
+        if constraint_data:
+            from agents.constraint_agent import ConstraintAgent as CA
+            constraint_context = CA.summarize_for_prompt(None, constraint_data)
+
+        RANKING_FIELDS = {"code", "title", "description", "prerequisites", "credits", "topics", "constraint_check"}
+        courses_to_rank = [
+            {k: v for k, v in c.items() if k in RANKING_FIELDS}
+            for c in courses[:7]
+        ]
+
+        response = await self.planning_agent.rank_courses(
+            courses=courses_to_rank,
+            parsed_data=message.parsed_data,
+            state=message.conversation_state,
+            constraint_context=constraint_context,
+            max_results=5
+        )
+
+        await ctx.send_message(AgentResult(
+            message.user_query, message.parsed_data,
+            agent_name="planning",
+            data=response.data if response.success else {},
+            conversation_state=message.conversation_state
+        ))
+
+
+class TranscriptExecutor(Executor):
+
+    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+        super().__init__(id="transcript")
+        self.transcript_agent = TranscriptAgent(client=chat_client, model=model_id)
+
+    @handler
+    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+        if message.agent_name != "transcript":
+            return
+
+        print("[TranscriptExecutor] Parsing transcript...")
+        file_path = message.parsed_data.get("entities", {}).get("file_path")
+
+        if not file_path or not os.path.exists(file_path):
+            await ctx.yield_output("Sure! Go ahead and drop the path to your transcript PDF.")
+            return
+
+        response = await self.transcript_agent.parse_transcript(file_path, message.conversation_state)
+
+        if not response.success:
+            await ctx.yield_output(f"I couldn't read that transcript: {', '.join(response.errors)}")
+            return
+
+        data = response.data
+        print(f"[TranscriptExecutor] All completed courses: {data.get('completed_courses', [])}")
+        completed_cs   = [c for c in data.get("completed_courses", [])   if ":198:" in c.get("code", "")]
+        in_progress_cs = [c for c in data.get("in_progress_courses", []) if ":198:" in c.get("code", "")]
+
+        completed_str   = "\n".join(f"  - {c['code']}: {c['title']} ({c.get('grade','P')})" for c in completed_cs)  or "  - None found"
+        in_progress_str = "\n".join(f"  - {c['code']}: {c['title']}"                        for c in in_progress_cs) or "  - None found"
+
+        await ctx.yield_output(
+            f"Got it! I've read your transcript. Here's what I found:\n\n"
+            f"**Year:** {data.get('year_standing')}\n"
+            f"**GPA:** {data.get('cumulative_gpa')}\n"
+            f"**Credits Completed:** {data.get('total_degree_credits')}\n\n"
+            f"**CS Courses Completed:**\n{completed_str}\n\n"
+            f"**CS Courses In Progress:**\n{in_progress_str}\n\n"
+            f"I'll factor all of this in when making recommendations."
+        )
+
+
+# Workflow assembly — hub and spoke approach where orchestrator acts as hub and takes all necessary inputs/outputs from other agents. 
+
+def build_workflow(chat_client: OpenAIChatClient, model_id: str):
+    parser       = ParserExecutor(chat_client, model_id)
+    orchestrator = OrchestratorExecutor(chat_client, model_id)
+    data         = DataExecutor(chat_client, model_id)
+    constraint   = ConstraintExecutor(chat_client, model_id)
+    planning     = PlanningExecutor(chat_client, model_id)
+    transcript   = TranscriptExecutor(chat_client, model_id)
+    # workflow graph building, builds edges to and from orchestrator agent for every agent. 
+    workflow = (
+        WorkflowBuilder()
+        .set_start_executor(parser)
+
+        .add_edge(parser,       orchestrator)
+
+        # Orchestrator → Spokes (dispatch via AgentResult)
+        .add_edge(orchestrator, data)
+        .add_edge(orchestrator, constraint)
+        .add_edge(orchestrator, planning)
+        .add_edge(orchestrator, transcript)
+
+        # Spokes → Orchestrator (results back via AgentResult)
+        .add_edge(data,         orchestrator)
+        .add_edge(constraint,   orchestrator)
+        .add_edge(planning,     orchestrator)
+        # transcript is terminal — yields output directly
+
+        .build()
+    )
+
+    return workflow, orchestrator
+
+# Main
 
 async def main():
-    """
-    Function to run Orchestrator code
-    """
+    print("Rutgers CS Course Advisor - Hub & Spoke Multi-Agent Workflow")
 
-    print("Rutgers CS Course Advisor - Orchestrator Agent")
-
-    try:
-        orchestrator = OrchestratorAgent()
-        orchestrator.initialize_agents()
-
-    except Exception as e:
-        print(f"Failed to initialize orchestrator: {e}")
+    chat_client = OpenAIChatClient(
+        base_url=os.environ.get("GITHUB_ENDPOINT"),
+        api_key=os.environ.get("GITHUB_TOKEN"),
+        model_id=os.environ.get("GITHUB_MODEL_ID")
+    )
+    model_id = os.environ.get("GITHUB_MODEL_ID")
+    workflow, _ = build_workflow(chat_client, model_id)
 
     print("Hello! I'm your Rutgers CS course advisor.")
-    print("I am here to assist with course rankings and recommendations, please ask me about course recommendations.")
-    print("Feel free to share your transcript at any time and I'll factor in any information I can extract from it to give you better recommendations. ")  
+    print("Ask me about course recommendations, prerequisites, or upload your transcript.")
     print("Type 'quit' to exit.\n")
 
-    state = ConversationState()
+    conversation_state = ConversationState()
+    session_id = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    session_id = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # stable session id for entire run. 
+    agent_sources = {
+        "parser":       ["LLM", "query_schema.json"],
+        "data":         ["rutgers_courses.json"],
+        "planning":     ["LLM"],
+        "transcript":   ["LLM", "transcript_pdf"],
+        "constraint":   ["LLM"],
+        "orchestrator": ["LLM"],
+    }
 
-    log = load_log()
-    session = {
-        "session_id": session_id,
-        "started_at": datetime.now().isoformat(),
-        "turns": []
+    step_to_agent = {
+        "transcript":        "transcript",
+        "data_fetch":        "data",
+        "data_lookup":       "data",
+        "data_prereq":       "data",
+        "constraint_full":   "constraint",
+        "constraint_prereq": "constraint",
+        "planning":          "planning",
+        "respond":           "orchestrator",
     }
 
     while True:
         try:
             user_input = input("You: ").strip()
-        except(KeyboardInterrupt, EOFError):
-            print("\n\nInterrupted. Exiting. ")
+        except (KeyboardInterrupt, EOFError):
+            print("\nExiting.")
             break
 
-        if user_input.lower() in ['quit', 'exit', 'q']:
-            print("\nThank you for using the Rutgers CS Course Advisor. Good luck with your courses!")
+        if user_input.lower() in ["quit", "exit", "q"]:
+            print("Thank you for using the Rutgers CS Course Advisor. Good luck!")
             break
 
         if not user_input:
             continue
 
         try:
-            turn_start = datetime.now().isoformat()
-            response, agents_invoked = await orchestrator.process_query(user_input, state)
-            print(f"\nAgent Service: {response}\n")
- 
-            # Update conversation state
-            state.add_message("user", user_input)
-            state.add_message("assistant", response)
- 
-            # CSV log — one row per query
-            # Build a per-turn agent_sources dict that only includes agents that were actually invoked this turn (subset of AGENT_SOURCES).
+            response_text = ""
 
-            turn_sources = {
-                agent: AGENT_SOURCES.get(agent, ["LLM"])
-                for agent in agents_invoked
-            }
+            async for event in workflow.run_stream(UserQuery(user_input, conversation_state)):
+                if isinstance(event, WorkflowOutputEvent):
+                    response_text = event.data
+                    print(f"\nAdvisor: {response_text}\n")
+                    conversation_state.add_message("user", user_input)
+                    conversation_state.add_message("assistant", response_text)
+
+            routing_ctx = getattr(conversation_state, "routing_ctx", None)
+            last_intent = getattr(conversation_state, "last_intent", None)
+
+            agents_invoked = ["parser", "orchestrator"]
+            if last_intent == "transcript_upload":
+                agents_invoked.append("transcript")
+            elif routing_ctx:
+                for raw in routing_ctx.agents_call_order:
+                    agent = step_to_agent.get(raw)
+                    if agent and agent not in agents_invoked:
+                        agents_invoked.append(agent)
+
+            plan_steps = " → ".join(routing_ctx.agents_call_order) if routing_ctx else ""
+            turn_sources = {a: agent_sources.get(a, ["LLM"]) for a in agents_invoked}
+
             log_query(
                 session_id=session_id,
                 query=user_input,
-                response=response,
+                response=response_text,
                 agents_invoked=agents_invoked,
                 agent_sources=turn_sources,
+                plan_steps=plan_steps,
             )
- 
-            # JSON logging for conversation reconstruction and analysis — one entry per turn in a structured format
 
-            turn = {
-                "timestamp":      turn_start,
-                "user_query":     user_input,
-                "agents_invoked": agents_invoked,
-                "response":       response,
-            }
-            session["turns"].append(turn)
-            log_to_save = {"sessions": log["sessions"] + [session]}
-            save_log(log_to_save)
- 
         except Exception as e:
-            print(f"Error: An error occurred while processing request: {str(e)}")
- 
-    session["ended_at"] = datetime.now().isoformat()
-    log["sessions"].append(session)
-    save_log(log)
+            print(f"[Workflow] Error: {e}")
+            import traceback
+            traceback.print_exc()
+
 
 if __name__ == "__main__":
     asyncio.run(main())

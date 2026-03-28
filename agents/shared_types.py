@@ -47,6 +47,7 @@ class ConversationState:
         self.clarification_needed = clarification_needed or []
         self.session_id = session_id
         self.transcript_data = transcript_data
+        self.last_intent = ""
 
     
     def add_message(self, role: str, content: str):
