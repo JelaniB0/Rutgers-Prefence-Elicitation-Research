@@ -5389,3 +5389,242 @@ Feel free to ask about specific electives, research opportunities, or career-tai
 2026-03-27 22:01:43,2026-03-27 10:05:47 PM,what are the prequisites for computer architecture? And also just some info on the course in general?,"Computer Architecture (01:198:411) is a 4-credit course covering modern computer characteristics such as pipelining, instruction-level parallelism, memory hierarchy, input-output, and multiprocessors. The prerequisites are: 01:198:205 (Discrete Structures I) and either 01:198:211 (Computer Architecture) or 332:331 (Computer Organization) — all with grades of C or better.
 
 You have already completed 01:198:205 and 01:198:211, meeting the required prerequisites. This course will give you a deep dive into designing and analyzing complex hardware systems, which complements your strong foundation in algorithms, artificial intelligence, and data science. It's particularly valuable if you're interested in systems, hardware, or performance optimization careers. If you want more details or advice about workload or instructor style, let me know!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json"
+2026-03-30 01:01:16,2026-03-30 01:59:17 AM,can i give you my transcript,Sure! Go ahead and drop the path to your transcript PDF.,,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 01:01:16,2026-03-30 01:59:38 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: DSGN & Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:01:00,2026-03-30 02:01:16 AM,can you look at my transcriot,Sure! Go ahead and drop the path to your transcript PDF.,,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:01:41,2026-03-30 02:01:52 AM,can i give you my transcript,Sure! Go ahead and drop the path to your transcript PDF.,,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:01:41,2026-03-30 02:02:10 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn & Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:01:41,2026-03-30 02:03:32 AM,what courses should I take if I want to work at NVIDIA?,"Given your strong background in core CS, AI, machine learning, and data science—and your specific goal of working at NVIDIA (a leader in graphics, AI, robotics, and systems engineering)—the following courses are top picks:
+
+1. Introduction to Computer Graphics (01:198:428): This course is highly aligned with NVIDIA's leading graphics technology. You'll gain skills in rendering, animation, and GPU programming, all of which are central to NVIDIA's work.
+
+2. Introduction to Computational Robotics (01:198:460): Robotics and computational modeling are highly relevant in NVIDIA's applications for AI, hardware, and advanced systems. This course offers hands-on industry-standard software exposure.
+
+3. Brain-inspired Computing (01:198:425): This addresses emerging AI techniques like neuromorphic networks—an innovative area closely connected to NVIDIA's research in AI hardware and architectures.
+
+4. Systems Programming (01:198:214): This foundational course is important for systems-level development and operating systems, directly matching your interest and helping you build the practical skills that NVIDIA values.
+
+All of these courses fit your transcript profile and academic trajectory. Focusing on graphics, robotics, and systems will prepare you not only for NVIDIA's technical challenges but also make you a competitive candidate for internships and full-time roles. If you’re interested in specialty topics, consider advanced or topics-based electives, especially if they offer NVIDIA-relevant content. Let me know if you want to narrow your choices by role or specialization, or review prerequisites in detail!",data_fetch → planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM"
+2026-03-30 02:11:11,2026-03-30 02:11:21 AM,can i give u my transcript,Sure! Go ahead and drop the path to your transcript PDF.,,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:11:11,2026-03-30 02:11:43 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn & Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:11:11,2026-03-30 02:12:06 AM,Which courses would teach me SQL?,"Based on your interest in SQL and databases, here are Rutgers CS courses that are especially relevant:
+
+- **01:198:336 Principles of Information and Data Management:** This is typically the primary course covering SQL, relational databases, and data management fundamentals. You'll learn both theory and practical skills, including hands-on SQL labs.
+- **01:198:210 Data Management for Data Science:** This course introduces SQL as part of managing and querying data for data science applications. It's a good choice if you want practical SQL experience tied to analytics.
+- **01:198:437 Database Systems Implementation:** This is an advanced course, focusing on the internals of database systems. It assumes deeper prior database knowledge. SQL is covered in the context of database architectures and implementation.
+
+Of these, 01:198:336 is usually the recommended starting point for learning SQL from the ground up. The other courses expand on database concepts with more specialized or technical focus. Let me know if you'd like more details or guidance on which course fits your goals best!",data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json"
+2026-03-30 02:11:11,2026-03-30 02:13:00 AM,What are the prerequisites for principles of info? Can I take it now?,"You're interested in 01:198:336 Principles of Information and Data Management, which is an excellent choice for learning SQL and core database concepts! Based on the prerequisites for this course and your transcript, you have already completed the required foundational CS courses, including Data Structures, Discrete Structures, and Computer Architecture. This makes you eligible to enroll in 01:198:336 without any additional prerequisites. As a senior with a strong academic background, you should be well prepared for both the theoretical and practical aspects of this course. If you want to explore databases and SQL in depth, this is the ideal course to take next.",data_prereq → constraint_prereq,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM"
+2026-03-30 02:11:11,2026-03-30 02:13:49 AM,will taking the course also be beneficial for me if I want to work at companies like nvidia or google?,"Taking 01:198:336 Principles of Information and Data Management will absolutely be beneficial if you're aiming to work at companies like Nvidia or Google. This course teaches core concepts in data management and databases, including SQL, schema design, and information integration. Companies such as Nvidia and Google rely heavily on managing and querying large datasets, whether for software engineering, data science, or developing scalable systems. Having strong foundational skills in databases and information systems will make you a more competitive candidate and prepare you for roles where handling, analyzing, or architecting data is essential. Given your preparation in prerequisite courses and your interest in working at leading tech companies, this course aligns well with those career aspirations. If you have a specific area you'd like to focus on (such as AI, cloud, or infrastructure), let me know and I can recommend additional relevant courses.",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json"
+2026-03-30 02:11:11,2026-03-30 02:15:04 AM,"Yeah, any courses I can take that may get me more involved into cloud or infra?","Great question! To get more involved with cloud computing or infrastructure, here are some Rutgers CS courses that are strongly aligned with your interests:
+
+1. **Distributed Systems: Concepts and Design (01:198:417)** — This course is directly related to cloud computing, covering distributed architecture, scalability, and concepts foundational for modern DevOps and cloud-based systems.
+2. **Operating Systems Design (01:198:416)** — Understanding operating systems is crucial for both cloud infrastructure and DevOps roles. You'll learn about process management, system synchronization, and deployment essentials.
+3. **Systems Programming (01:198:214)** — This course builds skills in automation, scripting, and system architecture, all important for cloud roles and developing DevOps tools.
+4. **Topics in Computer Science (01:198:443)** — While more flexible, this course sometimes offers sections focused on relevant topics. Its suitability depends on the specific semester's offerings.
+5. **Software Methodology (01:198:213)** — Although less directly tied to cloud, this course covers software engineering practices and collaboration—key components in DevOps-oriented teams.
+
+These courses were selected based on their explicit relevance to cloud and infrastructure, as well as contributions to DevOps skillsets. Let me know if you'd like more details about prerequisites, or if you want guidance tailored to your academic standing or goals (such as beginner versus advanced course selection).",data_fetch → planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM"
+2026-03-30 02:11:11,2026-03-30 02:17:20 AM,what are the prereqs for systems programming? Am i eligible?,"Systems Programming (01:198:214) is a valuable course for learning about C programming, system-level architecture, and scripting that is highly relevant for cloud and infrastructure roles. Its prerequisites are Data Structures (01:198:112) and Calculus II (01:640:152), with Computer Architecture (01:198:211) as a corequisite. Based on your transcript and prior coursework, you are eligible to enroll in this course. This makes it a strong next step if you're interested in building skills crucial for modern cloud, DevOps, or systems-level positions. If you'd like guidance on course pacing or strategies to succeed, please let me know!",data_prereq → constraint_prereq,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM"
+2026-03-30 02:19:47,2026-03-30 02:20:00 AM,can you look at my transcript,Sure! Go ahead and drop the path to your transcript PDF.,,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:19:47,2026-03-30 02:20:16 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Struct I (A)
+  - 01:198:206: Intr Discret Struct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn & Analy Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:19:47,2026-03-30 02:20:44 AM,"Hm okay, I wanna work at anthropic or openAI, can you recommend me courses I can take where I am better prepared to work at those companies? Mainly in there AI research labs obviously.","Based on your interest in AI research and the courses you've completed and are currently taking, I recommend the following advanced courses:
+
+1. **01:198:442 - Topics in Computer Science (NB)** and **01:198:443 - Topics in Computer Science (NB):** These courses cover specialized subjects within computer science. Depending on the semester, the topics may include advanced AI, reinforcement learning, or computational linguistics. Make sure to check the specific topic being offered and choose one aligned with your AI research interests.
+
+2. **01:198:425 - Brain-Inspired Computing (NB):** This course explores computational paradigms inspired by the human brain. It's a fantastic fit if you're interested in cutting-edge research areas often explored at organizations like Anthropic or OpenAI.
+
+3. **01:198:210 - Data Management for Data Science (NB):** While not directly AI-focused, this course would deepen your knowledge of data handling and processing — an essential skill for large-scale AI research.
+
+You are already taking critical AI foundation courses like Machine Learning Principles (01:198:461) and Deep Learning (01:198:462), which will provide a strong base. To excel in research roles, consider focusing on projects related to natural language processing, reinforcement learning, or other core AI tasks within these classes.
+
+I also encourage you to look for research opportunities with Rutgers professors who focus on AI, ML, or related domains. Many faculty members are involved in cutting-edge research and could offer invaluable mentorship and experience.
+
+If you'd like help with exploring potential research advisors or planning your schedule for the next semester, let me know!",data_fetch → constraint_full,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM"
+2026-03-30 02:19:47,2026-03-30 02:22:00 AM,Which courses could I take that would strengthen my experience in research anyways?,"Given your goal to work at AI-focused companies like Anthropic or OpenAI, and your strong foundation in core CS and AI courses, here are some advanced courses you should consider to enhance your research skills:
+
+1. **01:198:442 / 01:198:443 / 01:198:444 - Topics in Computer Science (NB):** These variable-topic courses can provide specialized knowledge in advanced areas. Stay updated on the topics offered each semester, as they might include reinforcement learning, natural language processing, or advanced neural networks—key subjects for AI research.
+
+2. **01:198:425 - Brain-Inspired Computing (NB):** This course dives into computational models derived from neuroscience. It's an excellent fit, considering the overlap between brain-inspired systems and contemporary AI techniques.
+
+3. **01:960:486 - Applied Statistical Learning (NB):** This statistics course complements machine learning by providing advanced statistical tools and models, which are foundational for research in AI.
+
+You might also want to explore research assistant positions in Rutgers’ AI labs or pursue independent research under faculty mentorship. Many research groups focus on areas like reinforcement learning, ethical AI, and deep learning applications—topics directly relevant to roles at companies like Anthropic or OpenAI.
+
+Continue leveraging your current courses (like Deep Learning and Machine Learning Principles) by working on significant projects that align with your career aspirations. If you’re interested in discussing a detailed study plan or identifying specific professors for research, feel free to reach out again!",data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json"
+2026-03-30 02:19:47,2026-03-30 02:22:58 AM,"Okay, can you recommend me courses to take next semester","Based on your strong foundation in computer science and AI, as well as your ambition to work in AI research labs at organizations like Anthropic or OpenAI, here are my recommendations for courses that would strengthen your research experience:
+
+1. **01:198:425 - Brain-Inspired Computing (NB):** This course aligns closely with cutting-edge AI research that often draws inspiration from neuroscience. You'll gain exposure to computational paradigms that simulate how the brain processes information—an area of interest for advanced AI research labs.
+
+2. **01:198:443 - Topics in Computer Science (NB):** While the topics vary each semester, this course often explores advanced and emerging areas in computer science, many of which are directly applicable to AI research like reinforcement learning or advanced computational models. Be sure to check the topic offered in the next semester.
+
+3. **01:960:486 - Applied Statistical Learning (NB):** Statistical understanding is a cornerstone of machine learning and AI research. This course complements your current deep learning and machine learning coursework, providing additional depth in the statistical tools and techniques used in the field.
+
+4. **01:198:345 - Algorithms in Society (NB):** This course could enhance your knowledge of ethical considerations, fairness, and societal impacts of algorithms, which are crucial concerns in responsible AI research and align with the values of companies like Anthropic.
+
+Beyond coursework, I strongly recommend exploring opportunities for undergraduate research. Many Rutgers faculty members are engaged in cutting-edge AI and machine learning projects and could provide valuable mentorship. Consider reaching out to professors whose work aligns with your interests in reinforcement learning, natural language processing, or ethical AI. Demonstrating hands-on research experience will significantly strengthen your resume for positions in AI-focused research labs.
+
+If you'd like assistance narrowing down your choices or exploring research opportunities in the department, feel free to reach out!",data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json"
+2026-03-30 02:25:42,2026-03-30 02:26:00 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: Principles of CS (A)
+  - 01:198:111: Intro Computer Sci (A)
+  - 01:198:112: Data Structures (A)
+  - 01:198:205: Intr Discret Strct I (A)
+  - 01:198:206: Intr Discrt Strct II (A)
+  - 01:198:211: Computer Architectur (B+)
+  - 01:198:344: Dsgn & Anal Comp Algor (B+)
+  - 01:198:440: Intro Artific Intell (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: Intro Data Science
+  - 01:198:461: ML Principles
+  - 01:198:462: Deep Learning
+
+I'll factor all of this in when making recommendations.",,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:25:42,2026-03-30 02:26:27 AM,can you recommend me good courses for a senior to take?,"Based on your strong academic background, completed prerequisites, and stated interests in AI, Machine Learning, and Data Science, here are some recommendations for your senior year:
+
+1. **01:960:486 - Applied Statistical Learning (NB):** This course complements your interests in Data Science and Machine Learning, as it focuses on statistical methods essential for data analysis and prediction, areas fundamental to AI and Data Science.
+
+2. **01:198:210 - Data Management for Data Science (NB):** This course enhances your ability to handle large-scale datasets efficiently, a key skill for both Machine Learning and real-world data analysis tasks.
+
+3. **01:198:443/01:198:444/01:198:442 - Topics in Computer Science (NB):** These advanced topics courses often cover cutting-edge trends and specialized areas within Computer Science. Ensure that you select sections that align with your interests (e.g., advanced AI, Machine Learning techniques, or specific problems in Data Science).
+
+These courses align closely with your interests, GPA priorities, and your senior status. If you have further considerations like career-specific goals, please let me know so I can refine these suggestions further!",data_fetch → constraint_full,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM"
+2026-03-30 02:27:47,2026-03-30 02:28:04 AM,transcriptone.pdf,"Got it! I've read your transcript. Here's what I found:
+
+**Year:** Senior
+**GPA:** 3.743
+**Credits Completed:** 91.0
+
+**CS Courses Completed:**
+  - 01:198:110: PRINCIPLES OF CS (A)
+  - 01:198:111: INTRO COMPUTER SCI (A)
+  - 01:198:112: DATA STRUCTURES (A)
+  - 01:198:205: INTR DISCRET STRCT I (A)
+  - 01:198:206: INTR DISCRT STRCT II (A)
+  - 01:198:211: COMPUTER ARCHITECTUR (B+)
+  - 01:198:344: DSGN&ANAL COMP ALGOR (B+)
+  - 01:198:440: INTRO ARTIFIC INTELL (B)
+
+**CS Courses In Progress:**
+  - 01:198:439: INTRO DATA SCIENCE
+  - 01:198:461: ML PRINCIPLES
+  - 01:198:462: DEEP LEARNING
+
+I'll factor all of this in when making recommendations.",,parser|orchestrator|transcript,"parser:LLM,query_schema.json|orchestrator:LLM|transcript:LLM,transcript_pdf"
+2026-03-30 02:27:47,2026-03-30 02:28:19 AM,Can you recommend good courses for me to take as a senior?,"Could you share your specific areas of interest within computer science (e.g., AI, Data Science, software development, cybersecurity)? Additionally, are you aiming for a specific career path or goal, and do you have any preferences for course difficulty or scheduling constraints? This will help me provide more personalized recommendations for you.",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM"
+2026-03-30 02:27:47,2026-03-30 02:30:27 AM,No preferences really. I just want to be recommended some good high-level courses as a senior.,"Based on your transcript and academic progress, here are my top course recommendations for your senior year. I've prioritized advanced, challenging courses accessible based on your completed prerequisites and aligned them with your experience:
+
+1. **01:198:214 - Systems Programming (NB)**
+   - This course focuses on building a strong foundation in low-level programming and systems architecture. It aligns well with your experience in Data Structures and Computer Architecture, and it's a great choice for students looking to deepen skills required for roles in operating systems, embedded systems, or performance-critical software.
+
+2. **01:198:443 - Topics in Computer Science (NB)**
+   - This course offers a selection of advanced topics in computer science, tailored to current trends and faculty specialties. It's a perfect fit for students who want to explore diverse areas within CS. I recommend checking the specific topics offered this semester to find one that intrigues you.
+
+3. **01:198:442 - Database Design (NB)**
+   - This practical course delves into designing and managing databases, equipping you with essential skills for careers in software engineering, data analysis, and systems management. With your data science coursework in progress, this could complement your current learning.
+
+4. **01:198:314 - Principles of Programming Languages (NB)**
+   - This course covers the syntax, design, and semantics of modern programming languages. As a senior looking for challenging courses, this class provides foundational insights and strengthens the understanding of how programming languages are constructed and evaluated.
+
+5. **01:960:384 - Intermediate Statistical Analysis (NB)**
+   - While you haven't mentioned data science explicitly, this course offers foundational statistical methods and insights highly relevant for machine learning and AI work, which aligns with your current coursework like Deep Learning and ML Principles.
+
+**Future Planning to Unlock Additional Options:**
+ - Consider taking **01:198:314 - Principles of Programming Languages**, which will make **01:198:415 - Compilers** accessible to you. Compilers is a classic senior-level CS course, great for delving into programming language theory or compiler construction, essential for advanced software development careers.
+ - If you are interested in cybersecurity, you will need to complete additional prerequisites such as **Discrete Structures I (01:198:205)** (which you already have), **Operating Systems Design (01:198:416)** or **Internet Technology (01:198:352)** to qualify for impactful courses like **01:198:419 - Computer Security**.
+
+These suggestions are aimed at aligning your academic progress with challenging, high-value courses suitable for a senior planning their final year in Computer Science. If you'd like to refine the recommendations based on specific areas of interest, career goals, or time constraints, feel free to let me know!",data_fetch → constraint_full → planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM"
+2026-03-30 02:27:47,2026-03-30 02:31:26 AM,"Okay, and what is principles of programming languages really about?","The course **01:198:314 - Principles of Programming Languages** delves into various fundamental aspects of programming languages, including their syntax (how they are written and structured), design (the principles behind their construction, such as information hiding, modularity, and abstraction), and underlying concepts (like compilers, interpreters, name binding, memory allocation, pointers, and data types). Additionally, it introduces students to the major programming paradigms such as functional, imperative, object-oriented, logic, and parallel programming.
+
+This advanced course (4 credits) provides a strong theoretical foundation for understanding the reasoning behind the construction and functionality of programming languages, which in turn helps improve your overall programming expertise. It’s particularly beneficial if you're planning to explore areas like software development, language design, compiler construction, or advanced application development. Since it builds on concepts from prerequisite courses such as **Discrete Structures I (01:198:205)** and **Computer Architecture (01:198:211)**, you already have a solid preparation for this class. With your preference for challenging courses and your current coursework in advanced topics like Machine Learning and Deep Learning, this course should be an excellent complement to your skills and interests.",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json"

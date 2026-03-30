@@ -34,57 +34,31 @@ class AgentResult:
 
 AGENT_REGISTRY = {
     "transcript": {
-        "description": (
-            "Parses and stores the student's uploaded transcript. "
-            "Must be called first if the intent is transcript_upload. "
-            "Enables constraint agents to verify eligibility."
-        ),
+        "description": "Parses uploaded transcript. Call only on transcript_upload intent. Terminal.",
         "terminal": True,
     },
     "data_fetch": {
-        "description": (
-            "Fetches a list of courses matching filters in parsed_data (subject, level, credits, etc.). "
-            "Call this first for recommendation requests. Returns a course list."
-        ),
+        "description": "Fetches courses matching filters. Call first for recommendations.",
         "terminal": False,
     },
     "data_lookup": {
-        "description": (
-            "Looks up detailed info for a specific course by ID or name. "
-            "Call for course_info intent. Returns structured course details."
-        ),
+        "description": "Looks up a specific course by name/ID. Use for course_info intent.",
         "terminal": False,
     },
     "data_prereq": {
-        "description": (
-            "Retrieves prerequisite requirements for a specific course. "
-            "Call for prerequisite_check intent. Returns prerequisite course list."
-        ),
+        "description": "Gets prerequisites for a specific course. Use for prerequisite_check intent.",
         "terminal": False,
     },
     "constraint_full": {
-        "description": (
-            "Validates a fetched course list against the student's transcript "
-            "(completed courses, credits, GPA). Requires data_fetch result AND transcript. "
-            "Do NOT call without both. Returns filtered/annotated course list."
-        ),
+        "description": "Validates course list against transcript. Requires data_fetch + transcript.",
         "terminal": False,
     },
     "constraint_prereq": {
-        "description": (
-            "Checks whether the student meets prerequisites for a specific course. "
-            "Requires data_prereq result AND transcript. "
-            "Do NOT call without both. Returns eligibility verdict."
-        ),
+        "description": "Checks if student meets prereqs for one course. Requires data_prereq + transcript.",
         "terminal": False,
     },
     "planning": {
-        "description": (
-            "Ranks and selects top course recommendations from a course list. "
-            "MUST be called for all course_recommendation intents. "
-            "Requires data_fetch result. Call after constraint_full if transcript is available. "
-            "Returns ranked list with reasoning."
-        ),
+        "description": "REQUIRED for all course_recommendation intents. Ranks courses. Call after constraint_full if transcript available, else after data_fetch.",
         "terminal": False,
     },
 }
@@ -109,10 +83,13 @@ class RoutingContext:
         slim = {}
         for key, val in self.accumulated_results.items():
             if isinstance(val, dict) and "courses" in val:
-                slim[key] = {**val, "courses": [
-                    {k: v for k, v in c.items() if k in ("code", "title", "credits")}
-                    for c in val["courses"][:10]
+                slim[key] = {"courses": [
+                    {k: v for k, v in c.items() if k in ("code", "title")}
+                    for c in val["courses"][:5]  # cut to 5, only code+title, saves on tokens. 
                 ]}
+            elif key == "constraint_data":
+                # just summarize
+                slim[key] = {"summary": "constraint check complete"}
             else:
                 slim[key] = val
         return slim
