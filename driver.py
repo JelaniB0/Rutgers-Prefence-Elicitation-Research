@@ -22,7 +22,7 @@ from agents.orchestrator_agent import (
 
 load_dotenv()
 
-# Spoke Executors — each does one job, sends AgentResult back to orchestrator
+# Spoke Executors, each does one job, sends AgentResult back to orchestrator
 
 class ParserExecutor(Executor):
 
@@ -88,29 +88,50 @@ class DataExecutor(Executor):
             if not specific_courses:
                 await ctx.yield_output("I couldn't find a course name in your query. Could you be more specific?")
                 return
-            response = await self.data_agent.lookup_course(specific_courses[0], message.conversation_state)
-            if not response.success:
+
+            results = []
+            for course_name in specific_courses:
+                response = await self.data_agent.lookup_course(course_name, message.conversation_state)
+                if response.success:
+                    results.append(response.data)
+
+            if not results:
                 await ctx.yield_output("I couldn't find that course. Please check the course name and try again.")
                 return
+
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
-                agent_name="data_lookup", data=response.data,
+                agent_name="data_lookup",
+                data={"courses": results},
                 conversation_state=message.conversation_state
             ))
 
         elif message.agent_name == "data_prereq":
-            print("[DataExecutor] Looking up course for prereq check...")
-            target = entities.get("target_course") or (entities.get("specific_courses", [None])[0])
-            if not target:
+            print("[DataExecutor] Looking up courses for prereq check...")
+            
+            targets = entities.get("specific_courses", [])
+            if entities.get("target_course"):
+                targets = [entities["target_course"]] + targets
+            targets = list(dict.fromkeys(targets))  # dedupe, preserve order
+
+            if not targets:
                 await ctx.yield_output("I couldn't find a course name in your query. Could you be more specific?")
                 return
-            response = await self.data_agent.lookup_course(target, message.conversation_state)
-            if not response.success:
-                await ctx.yield_output("I couldn't find that course. Please check the course name and try again.")
+
+            results = []
+            for target in targets:
+                response = await self.data_agent.lookup_course(target, message.conversation_state)
+                if response.success:
+                    results.append(response.data)
+
+            if not results:
+                await ctx.yield_output("I couldn't find those courses. Please check the course names and try again.")
                 return
+
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
-                agent_name="data_prereq", data=response.data,
+                agent_name="data_prereq",
+                data={"courses": results},
                 conversation_state=message.conversation_state
             ))
 

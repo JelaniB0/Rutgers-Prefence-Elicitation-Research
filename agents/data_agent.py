@@ -267,6 +267,23 @@ class DataAgent(ChatAgent):
         """
 
         query = self._build_search_query(entities)
+
+        # rewrites query to be more effective for semantic search. 
+        try:
+            improved_query = await self.run(f"""
+            Rewrite this into a strong semantic search query for course retrieval.
+
+            Original query:
+            {query}
+
+            Student intent:
+            {entities}
+
+            Focus on topics, skills, and career relevance.
+            """)
+            query = improved_query.content if hasattr(improved_query, "content") else str(improved_query)
+        except Exception as e:
+            print(f"[DataAgent] Query rewrite failed, using original: {e}")
         print(f"[DataAgent] RAG query: {query}")
         
         # builds metadata filters -> look into this later
@@ -293,6 +310,49 @@ class DataAgent(ChatAgent):
                 retrieved_courses.append(self._enrich_course(course_copy))
 
         print(f"[DataAgent] Retrieved {len(retrieved_courses)} courses")
+
+        # LLM filtering to remove weakly relevant courses based on student needs and course details. 
+
+        try:
+            filter_prompt = f"""
+            From these courses, remove ones that are weakly relevant.
+
+            Student:
+            {entities}
+
+            Courses:
+            {json.dumps(retrieved_courses, indent=2)}
+
+            Return JSON ONLY in this format:
+
+            {{ "keep": ["01:198:111", "01:198:205"] }}
+            """
+
+            try:
+                response = await self.run(filter_prompt)
+                response_text = response.messages[-1].contents[0].text
+
+                # extract JSON from text using regex (robust in case LLM adds extra text)
+                json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+                
+                if json_match:
+                    parsed = json.loads(json_match.group())
+                    keep_codes = parsed.get("keep", [])
+                    
+                    # filter the original courses
+                    if keep_codes:
+                        retrieved_courses = [
+                            c for c in retrieved_courses if c.get("code") in keep_codes
+                        ]
+                        print(f"[DataAgent] Filtered to {len(retrieved_courses)} relevant courses")
+                else:
+                    print("[DataAgent] No JSON found in LLM output, keeping original list")
+
+            except Exception as e:
+                print(f"[DataAgent] LLM filtering failed, keeping original list: {e}")
+
+        except Exception as e:
+            print(f"[DataAgent] LLM filtering failed, keeping original list: {e}")
 
         return retrieved_courses
     

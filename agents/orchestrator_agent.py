@@ -83,12 +83,16 @@ class RoutingContext:
         slim = {}
         for key, val in self.accumulated_results.items():
             if isinstance(val, dict) and "courses" in val:
-                slim[key] = {"courses": [
-                    {k: v for k, v in c.items() if k in ("code", "title")}
-                    for c in val["courses"][:5]  # cut to 5, only code+title, saves on tokens. 
-                ]}
+                slim_courses = []
+                for c in val["courses"][:5]:
+                    actual = c.get("course", c)
+                    slim_courses.append({
+                        "code": actual.get("code"),
+                        "title": actual.get("title"),
+                        "prerequisites": actual.get("prerequisites") or actual.get("description", "")
+                    })
+                slim[key] = {"courses": slim_courses}
             elif key == "constraint_data":
-                # just summarize
                 slim[key] = {"summary": "constraint check complete"}
             else:
                 slim[key] = val
@@ -155,54 +159,55 @@ class RoutingDecision:
 # Orchestrator
 
 ORCHESTRATOR_SYSTEM_PROMPT = """\
-You are an academic advisor agent manager for Rutgers CS students.
-You coordinate specialist agents and respond directly to students.
-Be warm, clear, and encouraging.
+You are a warm, encouraging academic advisor for Rutgers CS students.
+You coordinate specialist agents to answer student questions.
 
-Each turn you receive a context snapshot and must output a JSON decision.
+Each turn you receive a context snapshot and must respond with a JSON decision.
 
-Modes:
-- "route"   — you need more data; list which agents to call next in next_agents.
-              You may call multiple agents in parallel if they have no dependency on each other.
-              Read each agent's description carefully — never call an agent before
-              its required inputs have been collected.
-- "clarify" — the query is completely off-topic or unrelated to course advising entirely;
-              write a short redirect in "response". Do NOT clarify just because a subject
-              or course name could be more specific — act on it directly.
-- "respond" — you have enough data to give a complete, helpful answer;
-              write the full advisor-style response in "response", explaining
-              WHY each recommendation suits the student where relevant.
+## Modes
+- "route"    — call one or more agents to gather needed data. Only call an agent after its dependencies are met.
+- "clarify"  — the query is entirely unrelated to course advising. Briefly redirect the student.
+- "respond"  — you have enough data. Write a complete, helpful advisor-style response.
 
-Rules:
-- A student mentioning any subject, topic, or course name is sufficient to route immediately.
-  Never ask for clarification in these cases.
-- If the student asks for general information on a topic, treat it as course_info and call data_lookup.
-- If you already have sufficient data in "Results Collected So Far", set mode="respond" immediately.
-  Do NOT re-call agents or route unnecessarily.
-- next_agents must contain only plain agent name strings e.g. ["data_lookup"], never dicts or nested lists.
-- If next_agents would be empty or no agents are left to call, set mode="respond".
-- When responding, only reference courses and completed prerequisites that are explicitly present in the collected data. 
-  Never infer or assume the student has completed a course unless it appears in their transcript data. If unsure, omit the claim.
-- If intent is course_recommendation AND entities have no specific interests, topics, 
-  or courses mentioned, AND there are no results collected yet, set mode="clarify" 
-  and ask the student what topics or areas they're interested in. Keep it friendly 
-  and brief — one question only.
-- If intent is course_recommendation AND entities have no specific interests, topics, 
-  or courses mentioned, AND there are no results collected yet, set mode="clarify" 
-  and ask the student what topics or areas they're interested in — even if a transcript 
-  is available. Keep it friendly and brief — one question only.
-- Only skip clarification if the student has already stated specific interests or topics.
+## Routing Rules
+- Any mention of a subject, topic, or course name → route immediately, never clarify.
+- course_info intent → call data_lookup.
+- course_recommendation with no stated interests and no data yet → ask the student what they're interested in (one friendly question, mode="clarify").
+- If results are already collected → respond immediately, never re-route.
+- Never call an agent that has already been called.
+- next_agents must be a flat list of strings e.g. ["data_lookup"]. Never dicts or nested lists.
+- Ignore missing_critical_info in parsed data when interests are already present. 
+  That field is for the parser's own confidence tracking, not a routing signal.
+- If the student has already answered a clarifying question or repeated their 
+  request, never ask for clarification again. Route with whatever information is available.
 
-Output format (JSON only, no markdown fences):
+## Response Rules
+- Only reference courses and prerequisites explicitly present in collected data. Never infer.
+- The "response" field must be plain conversational text. Never JSON, code blocks, or markdown fences.
+
+## Output Format (JSON only, no markdown fences)
 {
-  "reasoning": "<1-2 sentences explaining your choice>",
+  "reasoning": "<1-2 sentences>",
   "mode": "route" | "clarify" | "respond",
   "next_agents": [],
   "response": null
 }
 
-When mode is "route", populate next_agents and leave response null.
-When mode is "clarify" or "respond", next_agents must be [] and response must be a non-null string.
+When mode is "route": populate next_agents, set response to null.
+When mode is "clarify" or "respond": next_agents must be [], response must be a non-null string.
+
+IMPORTANT:
+For course recommendation responses, space out each course clearly using this format:
+
+1) Course Name (Course Code)
+   Brief description.
+   Prerequisites: X, Y, Z.
+
+2) Next Course (Course Code)
+   Brief description.
+   Prerequisites: A, B.
+
+Leave a blank line between each course.
 """
 
 class OrchestratorExecutor(Executor):
@@ -260,6 +265,7 @@ class OrchestratorExecutor(Executor):
             return
 
         print(f"[Orchestrator] Result from '{message.agent_name}'")
+        # print(f"[Orchestrator] Data received: {json.dumps(message.data, indent=2)}")
 
         routing_ctx: RoutingContext = message.conversation_state.routing_ctx  # type: ignore[attr-defined]
         routing_ctx.accumulated_results[message.agent_name] = message.data
@@ -293,7 +299,7 @@ class OrchestratorExecutor(Executor):
             await self._force_respond(routing_ctx, ctx)
             return
 
-        print(f"[Orchestrator] mode={decision.mode}, reasoning: {decision.reasoning}")
+        # print(f"[Orchestrator] mode={decision.mode}, reasoning: {decision.reasoning}")
 
         # Clarify or respond — yield output and stop
         if decision.mode in ("clarify", "respond"):

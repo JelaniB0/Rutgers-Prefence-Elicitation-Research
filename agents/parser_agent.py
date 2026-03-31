@@ -98,6 +98,21 @@ INTENT RECOGNITION:
   Examples: "What's the weather?", "Tell me a joke", "Who won the game last night?"
   Respond that you only assist with Rutgers CS course planning.
 
+  ENTITY EXTRACTION RULES:
+- specific_courses: Course names or informal shorthands explicitly mentioned by the student.
+  ALWAYS populate this for prerequisite_check intents — every course name mentioned goes here.
+  Examples: "Intro to AI", "Systems Programming", "OS Design", "CS 111"
+  
+- interests: Topics, fields, or areas of study — NOT course names.
+  Examples: "machine learning", "systems", "web development", "AI" (when no specific course is named)
+
+- target_course: For prerequisite_check ONLY — the course the student WANTS to take.
+  If multiple courses are mentioned in a prereq query, leave this null and put all courses in specific_courses.
+
+- For prerequisite_check intents, never put course names in interests. 
+  "What are prereqs for Intro to AI and Systems Programming?" → 
+  specific_courses: ["Intro to AI", "Systems Programming"], interests: []
+
 If the query contains typos or is ambiguous, make your best guess at the intent
 and set needs_clarification: false unless the meaning is truly unrecoverable.
 Never stall on minor spelling errors.
