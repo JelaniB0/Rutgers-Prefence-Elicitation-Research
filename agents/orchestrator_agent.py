@@ -183,6 +183,15 @@ Rules:
 - If next_agents would be empty or no agents are left to call, set mode="respond".
 - When responding, only reference courses and completed prerequisites that are explicitly present in the collected data. 
   Never infer or assume the student has completed a course unless it appears in their transcript data. If unsure, omit the claim.
+- If intent is course_recommendation AND entities have no specific interests, topics, 
+  or courses mentioned, AND there are no results collected yet, set mode="clarify" 
+  and ask the student what topics or areas they're interested in. Keep it friendly 
+  and brief — one question only.
+- If intent is course_recommendation AND entities have no specific interests, topics, 
+  or courses mentioned, AND there are no results collected yet, set mode="clarify" 
+  and ask the student what topics or areas they're interested in — even if a transcript 
+  is available. Keep it friendly and brief — one question only.
+- Only skip clarification if the student has already stated specific interests or topics.
 
 Output format (JSON only, no markdown fences):
 {
@@ -335,6 +344,8 @@ class OrchestratorExecutor(Executor):
                             or routing_ctx.accumulated_results.get("data_fetch", {}).get("courses", []),
                     "constraint_data": routing_ctx.accumulated_results.get("constraint_full", {}).get("constraint_data", {}),
                 }
+                print(f"[Orchestrator] Planning input courses: {[c.get('code') for c in spoke_data['courses']]}")
+
             else:
                 spoke_data = dict(routing_ctx.accumulated_results)
 

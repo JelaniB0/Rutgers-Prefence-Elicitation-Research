@@ -6,12 +6,15 @@ import os
 import json
 from agent_framework import ChatAgent
 from agent_framework.openai import OpenAIChatClient
-from typing import Dict, List, Any
+from typing import Dict, List
 import re
 from openai import AsyncOpenAI
 import chromadb
 from chromadb.utils import embedding_functions
 from dotenv import load_dotenv
+import httpx
+import time
+from datetime import date
 
 from .shared_types import AgentResponse, ConversationState
 
@@ -43,6 +46,11 @@ class DataAgent(ChatAgent):
 
         self.vector_db= self._initialize_vector_db()
         self._index_courses()
+
+        # request and cache management for SOC for further course filtering based on offered and non-offered courses. 
+        self.soc_cache = {} # term year as key
+        self.RUTGERS_SOC_API = "https://classes.rutgers.edu/soc/api/courses.json"
+        self.CACHE_NEXT = 60 * 60 * 12 # recache course data every 
 
         print(f"[DataAgent] Initialized with model: {model}")
         print(f"[DataAgent] Loaded {len(self.courses_data)} courses")
@@ -203,13 +211,35 @@ class DataAgent(ChatAgent):
                 matched_courses = [c for c in matched_courses if c.get("code") not in exclude]
                 print(f"[DataAgent] Filtered {before - len(matched_courses)} already-taken courses, {len(matched_courses)} remaining")
 
+            # filter out courses not offered in upcoming semester based on live SOC data. 
+            if state.resolved_semester:
+                semester = state.resolved_semester
+            else:
+                semester = self.resolve_semester(state.user_query or "")
+                # only store if query had explicit semester mention
+                if any(k in (state.user_query or "").lower() for k in ["next", "spring", "fall", "summer", "winter", "this sem"]):
+                    state.resolved_semester = semester
+                    
+            offered = await self._fetch_soc_courses(semester)
+            if offered is not None and len(offered) > 0:
+                before = len(matched_courses)
+                matched_courses = [
+                    c for c in matched_courses
+                    if c.get("code", "").split(":")[-1].strip() in offered
+                ]
+                print(f"[DataAgent] Filtered {before - len(matched_courses)} unoffered courses, {len(matched_courses)} remaining")
+            elif offered is not None and len(offered) == 0:
+                print(f"[DataAgent] SOC returned no courses for {semester} — schedule may not be posted yet, using fallback")
+            else:
+                print(f"[DataAgent] SOC API unavailable — using full course list as fallback")
 
             return AgentResponse(
                 success=True,
                 data={ # data dictionary
                     'courses': matched_courses,
                     'total_found': len(matched_courses),
-                    'search_method': 'semantic'
+                    'search_method': 'semantic',
+                    'semester': semester
                 },
                 metadata={ # metadata dictionary
                     'search_criteria': entities,
@@ -391,3 +421,84 @@ class DataAgent(ChatAgent):
         course["prerequisites"] = self._resolve_codes(prereq_text)
         course["description"] = clean_desc
         return course
+    
+    async def _fetch_soc_courses(self, semester: dict) -> set[str]:
+        """
+        Fetcjes live offered CS course numbers from Rutgers SOC API for given semester. Caches results to avoid excessive requests and slower runtime due to collecting offered course data.
+        Each run. 
+        """
+        now = time.time()
+        cache_key = f"{semester['term']}_{semester['year']}"  # e.g. "9_2026"
+
+        # cache hit — same semester and not stale
+        cached = self.soc_cache.get(cache_key)
+        if cached and (now - cached["fetched_at"]) < self.CACHE_NEXT:
+            print(f"[DataAgent] Using cached SOC data for {cache_key}")
+            return cached["courses"]
+
+        print("[DataAgent] Fetching live SOC data from Rutgers API...")
+        try:
+            async with httpx.AsyncClient(timeout=15) as client:
+                resp = await client.get(self.RUTGERS_SOC_API, params = {
+                    "year": semester.get("year"),
+                    "term":semester["term"],
+                    "campus": "NB", # keep to rutgers nb only for now.
+                })
+                resp.raise_for_status()
+                all_courses = resp.json()
+
+                offered = {
+                    str(c["courseNumber"]) for c in all_courses if str(c.get("subject", "")) == "198" and c.get("level") == "U"
+                }
+
+                self.soc_cache[cache_key] = {"courses": offered, "fetched_at": now}
+                print(f"[DataAgent] Cached {len(offered)} offered CS courses for {cache_key}")
+                return offered
+
+        except Exception as e:
+            print(f"[DataAgent] SOC API unavailable: {e} — falling back to full course list")
+            return None  # signals caller to skip the filter
+
+    TERM_MAP = {
+        "spring": 1,
+        "summer": 7,
+        "fall": 9,
+        "autumn": 9,
+        "winter": 0,
+    }
+
+    def resolve_semester(self, user_query: str) -> dict:
+        query = user_query.lower()
+        today = date.today()
+        month, year = today.month, today.year
+
+        import re
+        year_match = re.search(r"20\d{2}", query)
+        explicit_year = int(year_match.group()) if year_match else None
+
+        if "spring" in query:
+            term, y = 1, explicit_year or (year + 1 if month >= 9 else year)
+        elif "summer" in query:
+            term, y = 7, explicit_year or year
+        elif "winter" in query:
+            term, y = 0, explicit_year or (year + 1 if month >= 9 else year)
+        elif "fall" in query or "autumn" in query:
+            term, y = 9, explicit_year or (year + 1 if month >= 9 else year)
+        elif "next semester" in query or "next sem" in query:
+            if month <= 5:   term, y = 9, year       # spring → Fall
+            elif month <= 8: term, y = 9, year       # summer → Fall
+            elif month <= 11: term, y = 1, year + 1  # fall → Spring
+            else:            term, y = 1, year + 1   # winter → Spring
+        elif "this semester" in query or "current" in query:
+            if month <= 1:   term, y = 0, year       # January → Winter
+            elif month <= 5: term, y = 1, year       # Feb–May → Spring
+            elif month <= 8: term, y = 7, year       # Jun–Aug → Summer
+            else:            term, y = 9, year       # Sep–Dec → Fall
+        else:
+            # default to current semester
+            if month <= 1:   term, y = 0, year
+            elif month <= 5: term, y = 1, year
+            elif month <= 8: term, y = 7, year
+            else:            term, y = 9, year
+
+        return {"term": term, "year": y}

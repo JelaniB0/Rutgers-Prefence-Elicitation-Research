@@ -48,6 +48,7 @@ class ConversationState:
         self.session_id = session_id
         self.transcript_data = transcript_data
         self.last_intent = ""
+        self.resolved_semester = None
 
     
     def add_message(self, role: str, content: str):
