@@ -33,11 +33,20 @@ class ParserExecutor(Executor):
             model="gpt-4.1-mini",
             schema_path="agents/query_schema.json"
         )
+        self.thread = self.parser.get_new_thread() 
 
     @handler
     async def handle(self, message: UserQuery, ctx: WorkflowContext) -> None:
         print("[ParserExecutor] Parsing query...")
-        response = await self.parser.parse(message.user_query, message.conversation_state)
+        enriched_query = message.user_query
+        if message.conversation_state.resolved_courses:
+            course_titles = [v["title"] for v in message.conversation_state.resolved_courses.values()]
+            enriched_query = (
+                f"{message.user_query}\n\n"
+                f"[Session context — courses discussed so far: {', '.join(course_titles)}]"
+            )
+
+        response = await self.parser.parse(enriched_query, message.conversation_state, thread=self.thread)
         if not response.success:
             await ctx.yield_output("I encountered an error parsing your query. Please try again.")
             return
@@ -188,6 +197,7 @@ class PlanningExecutor(Executor):
     def __init__(self, chat_client: OpenAIChatClient, model_id: str):
         super().__init__(id="planning")
         self.planning_agent = PlanningAgent(client=chat_client, model=model_id)
+        self.thread = self.planning_agent.get_new_thread()
 
     @handler
     async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
@@ -214,7 +224,8 @@ class PlanningExecutor(Executor):
             parsed_data=message.parsed_data,
             state=message.conversation_state,
             constraint_context=constraint_context,
-            max_results=5
+            max_results=5,
+            thread=self.thread
         )
 
         await ctx.send_message(AgentResult(
@@ -284,17 +295,17 @@ def build_workflow(chat_client: OpenAIChatClient, model_id: str):
 
         .add_edge(parser,       orchestrator)
 
-        # Orchestrator → Spokes (dispatch via AgentResult)
+        # Orchestrator -> Spokes (dispatch via AgentResult)
         .add_edge(orchestrator, data)
         .add_edge(orchestrator, constraint)
         .add_edge(orchestrator, planning)
         .add_edge(orchestrator, transcript)
 
-        # Spokes → Orchestrator (results back via AgentResult)
+        # Spokes -> Orchestrator (results back via AgentResult)
         .add_edge(data,         orchestrator)
         .add_edge(constraint,   orchestrator)
         .add_edge(planning,     orchestrator)
-        # transcript is terminal — yields output directly
+        # transcript is terminal, yields output directly
 
         .build()
     )
@@ -358,11 +369,12 @@ async def main():
         try:
             response_text = ""
 
+            conversation_state.add_message("user", user_input)
+
             async for event in workflow.run_stream(UserQuery(user_input, conversation_state)):
                 if isinstance(event, WorkflowOutputEvent):
                     response_text = event.data
                     print(f"\nAdvisor: {response_text}\n")
-                    conversation_state.add_message("user", user_input)
                     conversation_state.add_message("assistant", response_text)
 
             routing_ctx = getattr(conversation_state, "routing_ctx", None)
@@ -377,7 +389,7 @@ async def main():
                     if agent and agent not in agents_invoked:
                         agents_invoked.append(agent)
 
-            plan_steps = " → ".join(routing_ctx.agents_call_order) if routing_ctx else ""
+            plan_steps = " -> ".join(routing_ctx.agents_call_order) if routing_ctx else ""
             turn_sources = {a: agent_sources.get(a, ["LLM"]) for a in agents_invoked}
 
             log_query(
@@ -397,3 +409,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+# token usage, time, full conversation turn, input/output token (# of tokens can tell you how costly conversation can be)

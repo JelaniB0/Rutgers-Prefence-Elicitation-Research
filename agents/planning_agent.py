@@ -7,7 +7,7 @@ Currently uses LLM directly, will replace LLM logic with direct algorithmic logi
 import json
 import re
 from typing import Dict, List
-from agent_framework import ChatAgent
+from agent_framework import ChatAgent, AgentThread
 from agent_framework.openai import OpenAIChatClient
  
 from .shared_types import AgentResponse, ConversationState
@@ -55,7 +55,8 @@ class PlanningAgent(ChatAgent):
         parsed_data: Dict,
         state: ConversationState,
         constraint_context: str = "",
-        max_results: int = 5
+        max_results: int = 5,
+        thread=None
     ) -> AgentResponse:
         """
         Rank courses with full constraint context provided upfront.
@@ -97,9 +98,7 @@ class PlanningAgent(ChatAgent):
             ]
  
             # Main ranking pass — constraints baked in from the start
-            ranked_data = await self._llm_rank(
-                courses_to_rank, parsed_data, state, constraint_context, num_to_rank
-            )
+            ranked_data = await self._llm_rank(courses, parsed_data, state, constraint_context, max_results, thread)
  
             if not ranked_data:
                 return AgentResponse(
@@ -143,7 +142,8 @@ class PlanningAgent(ChatAgent):
         parsed_data: Dict,
         state: ConversationState,
         constraint_context: str,
-        max_results: int
+        max_results: int,
+        thread=None
     ) -> Dict:
         entities = parsed_data.get('entities', {})
         student_year = entities.get('year', 'unknown')
@@ -151,13 +151,6 @@ class PlanningAgent(ChatAgent):
         career_path = entities.get('career_path')
         difficulty_pref = entities.get('difficulty_preference')
         gpa_priority = entities.get('gpa_priority')
-
-        conversation_context = ""
-        if state.conversation_history:
-            recent = state.conversation_history[-2:]
-            conversation_context = "\n\nRecent conversation:\n"
-            for msg in recent:
-                conversation_context += f"{msg['role']}: {msg['content']}\n"
 
         constraint_section = (
             f"\nCONSTRAINT CONTEXT (use this when reasoning about each course):\n{constraint_context}"
@@ -176,7 +169,6 @@ class PlanningAgent(ChatAgent):
         - Career Path: {career_path or 'Not specified'}
         - Difficulty Preference: {difficulty_pref or 'Not specified'}
         - GPA Priority: {gpa_priority or 'Not specified'}
-        {conversation_context}
         {constraint_section}
 
         AVAILABLE COURSES (with constraint annotations):
@@ -263,12 +255,12 @@ class PlanningAgent(ChatAgent):
         }}
         """
 
-        return await self._run_and_parse(prompt)
+        return await self._run_and_parse(prompt, thread)
  
-    async def _run_and_parse(self, prompt: str) -> Dict:
+    async def _run_and_parse(self, prompt: str, thread: AgentThread = None) -> Dict:
         """Shared LLM call and JSON extraction used by both passes."""
         try:
-            response = await self.run(prompt)
+            response = await self.run(prompt, thread=thread)
             response_text = response.messages[-1].contents[0].text
  
             json_match = re.search(r'\{.*\}', response_text, re.DOTALL)

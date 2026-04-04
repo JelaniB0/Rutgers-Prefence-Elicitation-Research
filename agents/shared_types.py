@@ -30,25 +30,17 @@ class ConversationState:
         self,
         user_query: str = "",
         conversation_history: Optional[List[Dict[str, str]]] = None,
-        extracted_entities: Optional[Dict[str, Any]] = None,
-        current_intent: str = "unknown",
-        user_profile: Optional[Dict[str, Any]] = None,
-        recommendations: Optional[List[Dict[str, Any]]] = None,
-        clarification_needed: Optional[List[str]] = None,
         session_id: Optional[str] = None,
         transcript_data: Optional[Dict[str, Any]] = None
     ):
         self.user_query = user_query
         self.conversation_history = conversation_history or []
-        self.extracted_entities = extracted_entities or {}
-        self.current_intent = current_intent
-        self.user_profile = user_profile or {}
-        self.recommendations = recommendations or []
-        self.clarification_needed = clarification_needed or []
         self.session_id = session_id
         self.transcript_data = transcript_data
         self.last_intent = ""
         self.resolved_semester = None
+        self.resolved_courses: Dict[str, Dict] = {}
+        self.MAX_HISTORY = 6
 
     
     def add_message(self, role: str, content: str):
@@ -57,24 +49,38 @@ class ConversationState:
             "role": role,
             "content": content
         })
+        # Keep only last N messages to avoid token overflow
+        if len(self.conversation_history) > self.MAX_HISTORY:
+            self.conversation_history = self.conversation_history[-self.MAX_HISTORY:]
     
     def update_entities(self, new_entities: Dict[str, Any]):
-        """Update extracted entities with new information"""
-        self.extracted_entities.update(new_entities)
+        """Update extracted entities with new values, only if they are not None/empty"""
+        for key, value in new_entities.items():
+            if value is not None and value != [] and value != "":
+                self.extracted_entities[key] = value
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
         return {
             "user_query": self.user_query,
             "conversation_history": self.conversation_history,
-            "extracted_entities": self.extracted_entities,
-            "current_intent": self.current_intent,
-            "user_profile": self.user_profile,
-            "recommendations": self.recommendations,
-            "clarification_needed": self.clarification_needed,
             "session_id": self.session_id,
             "transcript_data": self.transcript_data
         }
+    
+    def resolve_course(self, code: str, title: str, offered: bool, semester: str):
+        """Cache a resolved course — minimal data only to save tokens"""
+        self.resolved_courses[code] = {
+            "title": title,
+            "offered": offered,
+            "semester": semester
+        }
+
+    def get_resolved_course(self, code: str) -> Optional[Dict]:
+        return self.resolved_courses.get(code)
+
+    def is_course_resolved(self, code: str) -> bool:
+        return code in self.resolved_courses
 
 
 @dataclass

@@ -75,9 +75,10 @@ class RoutingContext:
     user_query: str
     parsed_data: dict
     has_transcript: bool
-    conversation_history: list[dict]
+    resolved_courses: dict = field(default_factory=dict)
     accumulated_results: dict[str, dict] = field(default_factory=dict)
     agents_call_order: list[str] = field(default_factory=list)  # helps log dynamic agent calls by orchestrator. 
+    resolved_semester: dict = field(default_factory=dict)
 
     def _slim_results(self) -> dict:
         slim = {}
@@ -99,6 +100,20 @@ class RoutingContext:
         return slim
 
     def to_prompt(self) -> str:
+        resolved_section = ""
+        if self.resolved_courses:
+            term_map = {1: "Spring", 7: "Summer", 9: "Fall", 0: "Winter"}
+            if isinstance(self.resolved_semester, dict):
+                semester_label = f"{term_map.get(self.resolved_semester.get('term', ''), 'Unknown')} {self.resolved_semester.get('year', '')}"
+            else:
+                semester_label = "current semester"
+
+            lines = "\n".join(
+                f"- {v['title']} ({code}): {'Offered' if v['offered'] == True else 'Not offered' if v['offered'] == False else 'Availability unverified — must check'} for {semester_label}"
+                for code, v in self.resolved_courses.items()
+            )
+            resolved_section = f"## Courses Already Resolved This Session\n{lines}\n"
+
         return f"""\
     ## Student Query
     {self.user_query}
@@ -109,6 +124,7 @@ class RoutingContext:
     ## Context
     - Transcript on file: {self.has_transcript}
 
+    {resolved_section}
     ## Agents Available
     {AGENT_REGISTRY_SUMMARY}
 
@@ -117,9 +133,6 @@ class RoutingContext:
 
     ## Agents Already Called (do NOT call these again)
     {list(self.accumulated_results.keys()) if self.accumulated_results else "None"}
-
-    ## Conversation History (last 6 turns)
-    {json.dumps(self.conversation_history[-6:], indent=2)}
     """
 
 # Routing decision
@@ -170,17 +183,21 @@ Each turn you receive a context snapshot and must respond with a JSON decision.
 - "respond"  — you have enough data. Write a complete, helpful advisor-style response.
 
 ## Routing Rules
-- Any mention of a subject, topic, or course name → route immediately, never clarify.
-- course_info intent → call data_lookup.
-- course_recommendation with no stated interests and no data yet → ask the student what they're interested in (one friendly question, mode="clarify").
-- If results are already collected → respond immediately, never re-route.
+- Any mention of a subject, topic, or course name -> route immediately, never clarify.
+- course_info intent -> call data_lookup.
+- course_recommendation with no stated interests and no data yet -> ask the student what they're interested in (one friendly question, mode="clarify").
+- If results are already collected -> respond immediately, never re-route.
 - Never call an agent that has already been called.
 - next_agents must be a flat list of strings e.g. ["data_lookup"]. Never dicts or nested lists.
 - Ignore missing_critical_info in parsed data when interests are already present. 
   That field is for the parser's own confidence tracking, not a routing signal.
 - If the student has already answered a clarifying question or repeated their 
   request, never ask for clarification again. Route with whatever information is available.
-
+- If the student asks about course availability and courses are already present in "Courses Already Resolved This Session" with their offered status, 
+  respond directly from that data. Do NOT call any agents.
+- When responding about availability, always mention the specific semester (e.g. "Spring 2026") not just "this semester" or "next semester".
+- course_recommendation intent MUST call planning after data_fetch completes. Never respond directly after data_fetch for recommendations — always route to planning first.
+- If a course has unknown or unverified availability (offered status is null/None), you MUST call data_lookup to verify — never assume not offered.
 ## Response Rules
 - Only reference courses and prerequisites explicitly present in collected data. Never infer.
 - The "response" field must be plain conversational text. Never JSON, code blocks, or markdown fences.
@@ -192,6 +209,8 @@ Each turn you receive a context snapshot and must respond with a JSON decision.
   "next_agents": [],
   "response": null
 }
+
+IMPORTANT: Your response must be valid JSON. Do not include literal newlines inside string values. Use \n for line breaks within strings.
 
 When mode is "route": populate next_agents, set response to null.
 When mode is "clarify" or "respond": next_agents must be [], response must be a non-null string.
@@ -208,6 +227,8 @@ For course recommendation responses, space out each course clearly using this fo
    Prerequisites: A, B.
 
 Leave a blank line between each course.
+
+Last thing: If you have a course code included in a response but can't match course code back to a name, don't assume the name of the course code, just use the code itself. 
 """
 
 class OrchestratorExecutor(Executor):
@@ -227,19 +248,21 @@ class OrchestratorExecutor(Executor):
             instructions=ORCHESTRATOR_SYSTEM_PROMPT,
             name="Orchestrator",
         )
+        self.thread = self.agent.get_new_thread()
 
     # Entry point
 
     @handler
     async def handle_request(self, message: OrchestratorRequest, ctx: WorkflowContext) -> None:
+        await self._maybe_reset_thread(message.conversation_state)
+
         print(f"[Orchestrator] parsed_data: {message.parsed_data}")
         intent = message.parsed_data.get("intent")
         has_transcript = bool(message.conversation_state.transcript_data)
         print(f"[Orchestrator] intent='{intent}', has_transcript={has_transcript}")
 
-        # Constraint rule: transcript upload bypasses LLM routing entirely
         if intent == "transcript_upload":
-            print("[Orchestrator] Hard rule → transcript agent")
+            print("[Orchestrator] Hard rule -> transcript agent")
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
                 agent_name="transcript", data={},
@@ -247,11 +270,41 @@ class OrchestratorExecutor(Executor):
             ))
             return
 
+        # Re-resolve semester if user mentions one in follow-up
+        from agents.data_agent import DataAgent as DA
+        if any(k in message.user_query.lower() for k in ["next", "spring", "fall", "summer", "winter"]):
+            new_semester = DA.resolve_semester(None, message.user_query)
+            if new_semester != message.conversation_state.resolved_semester:
+                message.conversation_state.resolved_semester = new_semester
+                # Save titles before clearing, so referential resolution still works
+                saved_courses = {
+                    code: v for code, v in message.conversation_state.resolved_courses.items()
+                }
+                message.conversation_state.resolved_courses = {}
+                # Re-add with new semester but mark as unverified for re-lookup
+                for code, v in saved_courses.items():
+                    message.conversation_state.resolved_courses[code] = {**v, "offered": None}
+
+        # Resolve referential courses
+        entities = message.parsed_data.get("entities", {})
+        if (not entities.get("specific_courses") and
+            message.conversation_state.resolved_courses and
+            any(ref in message.user_query.lower() for ref in ["those", "both", "all three", "these", "them", "they"])):
+            entities["specific_courses"] = [
+                v["title"] for v in message.conversation_state.resolved_courses.values()
+            ]
+        
+        if intent == "clarification" and message.conversation_state.resolved_courses:
+            entities["specific_courses"] = [
+                v["title"] for v in message.conversation_state.resolved_courses.values()
+            ]
+        
         routing_ctx = RoutingContext(
             user_query=message.user_query,
             parsed_data=message.parsed_data,
             has_transcript=has_transcript,
-            conversation_history=message.conversation_state.conversation_history or [],
+            resolved_courses=message.conversation_state.resolved_courses,
+            resolved_semester=message.conversation_state.resolved_semester or {},
         )
 
         await self._routing_loop(routing_ctx, message, ctx, iteration=0)
@@ -260,18 +313,42 @@ class OrchestratorExecutor(Executor):
 
     @handler
     async def handle_result(self, message: AgentResult, ctx: WorkflowContext) -> None:
-        # Transcript spoke handles its own output — nothing to do
         if message.agent_name == "transcript":
             return
 
         print(f"[Orchestrator] Result from '{message.agent_name}'")
-        # print(f"[Orchestrator] Data received: {json.dumps(message.data, indent=2)}")
 
-        routing_ctx: RoutingContext = message.conversation_state.routing_ctx  # type: ignore[attr-defined]
+        routing_ctx: RoutingContext = message.conversation_state.routing_ctx
         routing_ctx.accumulated_results[message.agent_name] = message.data
         routing_ctx.has_transcript = bool(message.conversation_state.transcript_data)
 
-        iteration: int = message.conversation_state.routing_iteration  # type: ignore[attr-defined]
+        if message.agent_name == "data_fetch":
+            semester = message.data.get("semester")
+            if semester:
+                message.conversation_state.resolved_semester = semester
+            for course in message.data.get("courses", []):
+                actual = course.get("course", course)
+                code = actual.get("code")
+                title = actual.get("title", "")
+                if code:
+                    message.conversation_state.resolve_course(
+                        code, title, True,
+                        message.conversation_state.resolved_semester or {}
+                    )
+                    print(f"[Orchestrator] Cached resolved course: {code} - {title}")
+
+        elif message.agent_name == "data_lookup":
+            for course_result in message.data.get("courses", []):
+                actual = course_result.get("course", {})
+                code = actual.get("code")
+                title = actual.get("title", "")
+                offered = course_result.get("offered")
+                semester = course_result.get("semester", message.conversation_state.resolved_semester or {})
+                if code:
+                    message.conversation_state.resolve_course(code, title, offered, semester)
+                    print(f"[Orchestrator] Cached lookup course: {code} - {title} (offered: {offered})")
+
+        iteration: int = message.conversation_state.routing_iteration
         await self._routing_loop(routing_ctx, message, ctx, iteration=iteration)
 
     # Core routing loop
@@ -289,7 +366,7 @@ class OrchestratorExecutor(Executor):
             return
 
         print(f"[Orchestrator] Routing iteration {iteration + 1}")
-        raw = await self.agent.run(routing_ctx.to_prompt())
+        raw = await self.agent.run(routing_ctx.to_prompt(), thread=self.thread)
         raw_text = raw.content if hasattr(raw, "content") else str(raw)
 
         try:
@@ -301,7 +378,7 @@ class OrchestratorExecutor(Executor):
 
         # print(f"[Orchestrator] mode={decision.mode}, reasoning: {decision.reasoning}")
 
-        # Clarify or respond — yield output and stop
+        # Clarify or respond, yield output and stop
         if decision.mode in ("clarify", "respond"):
             if not decision.response:
                 print("[Orchestrator] Empty response in terminal mode — forcing respond")
@@ -337,7 +414,7 @@ class OrchestratorExecutor(Executor):
         message.conversation_state.routing_ctx = routing_ctx         
         message.conversation_state.routing_iteration = iteration + 1  
 
-        print(f"[Orchestrator] Dispatching → {valid_agents}")
+        print(f"[Orchestrator] Dispatching -> {valid_agents}")
         for agent_name in valid_agents:
             routing_ctx.agents_call_order.append(agent_name)
 
@@ -350,6 +427,10 @@ class OrchestratorExecutor(Executor):
                             or routing_ctx.accumulated_results.get("data_fetch", {}).get("courses", []),
                     "constraint_data": routing_ctx.accumulated_results.get("constraint_full", {}).get("constraint_data", {}),
                 }
+                if agent_name == "planning" and not spoke_data.get("courses"): # cut ahead early, empty courses guard
+                    print("[Orchestrator] No courses to rank — responding directly")
+                    await self._force_respond(routing_ctx, ctx)
+                    return
                 print(f"[Orchestrator] Planning input courses: {[c.get('code') for c in spoke_data['courses']]}")
 
             else:
@@ -371,7 +452,7 @@ class OrchestratorExecutor(Executor):
             f"Full collected data:\n{json.dumps(routing_ctx.accumulated_results, indent=2)}\n\n"
             f"You must now respond directly to the student based on whatever data is available."
         )
-        raw = await self.agent.run(prompt)
+        raw = await self.agent.run(prompt, thread=self.thread)
         raw_text = raw.content if hasattr(raw, "content") else str(raw)
 
         try:
@@ -384,3 +465,15 @@ class OrchestratorExecutor(Executor):
             text = raw_text
 
         await ctx.yield_output(text)
+
+    async def _maybe_reset_thread(self, conversation_state):
+        if len(conversation_state.conversation_history) >= 4:
+            resolved = [f"{code}: {v['title']}" for code, v in conversation_state.resolved_courses.items()]
+            summary = (
+                f"New session window. Courses discussed: {resolved}. "
+                f"Transcript on file: {bool(conversation_state.transcript_data)}."
+            )
+            self.thread = self.agent.get_new_thread()
+            await self.agent.run(summary, thread=self.thread)
+            print("[Orchestrator] Thread reset with summary")
+        

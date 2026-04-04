@@ -329,7 +329,7 @@ class DataAgent(ChatAgent):
             """
 
             try:
-                response = await self.run(filter_prompt)
+                response = await self.chat_client.get_response(filter_prompt)
                 response_text = response.messages[-1].contents[0].text
 
                 # extract JSON from text using regex (robust in case LLM adds extra text)
@@ -357,88 +357,64 @@ class DataAgent(ChatAgent):
         return retrieved_courses
     
     async def lookup_course(self, course_identifier: str, state: ConversationState) -> AgentResponse:
-        """
-        Look up a specific course by code or title. 
-
-        Args:
-        course_identifier: course code (e.g. CS:101) or title keyword (e.g. "Intro to CS") or partial title
-        state: current conversation state for context
-
-        Returns: 
-        AgentResponse with course details if found, or error message if not found
-        """
         try:
             print(f"[DataAgent] Looking up course: {course_identifier}")
-
             normalized = course_identifier.strip().lower()
+            semester = state.resolved_semester or self.resolve_semester(state.user_query or "")
+            offered = await self._fetch_soc_courses(semester)
 
-            #Exact code match first 
+            def check_offered(c):
+                num = c.get("code", "").split(":")[-1].strip()
+                return num in offered if offered else None
+
+            # Exact code match
             for course in self.courses_data:
                 course_code = course.get('code', '').upper()
                 normalized_search = normalized.replace(' ', '').replace(':', '')
                 normalized_code = course_code.replace(' ', '').replace(':', '')
                 number_only = re.search(r'\d+', normalized_search)
-
                 if (normalized in course_code or normalized_search in normalized_code or
                     (number_only and number_only.group() in normalized_code.split(':')[-1])):
                     print(f"[DataAgent] Found exact match: {course_code}")
-                    return AgentResponse(
-                        success=True,
-                        data={'course': course, 'lookup_method': 'exact_code_match'},
-                        metadata={'search_query': course_identifier, 'model_used': self.model}
-                    )
+                    return AgentResponse(success=True,
+                        data={'course': self._enrich_course(course), 'lookup_method': 'exact_code_match',
+                                'offered': check_offered(course), 'semester': semester},
+                        metadata={'search_query': course_identifier, 'model_used': self.model})
 
-            # Semantic search via vector DB
-            results = self.vector_db.query(
-                query_texts=[course_identifier],
-                n_results=3
-            )
-
+            # Semantic search
+            results = self.vector_db.query(query_texts=[course_identifier], n_results=3)
             codes = results['ids'][0]
             distances = results['distances'][0]
 
-            # Strong single match
             if codes and distances[0] < 0.5:
                 course = next((c for c in self.courses_data if c.get('code') == codes[0]), None)
                 if course:
                     print(f"[DataAgent] Found semantic match: {codes[0]} (distance: {distances[0]:.3f})")
-                    return AgentResponse(
-                        success=True,
-                        data={'course': self._enrich_course(course), 'lookup_method': 'semantic_match'},
-                        metadata={'search_query': course_identifier, 'model_used': self.model}
-                    )
+                    return AgentResponse(success=True,
+                        data={'course': self._enrich_course(course), 'lookup_method': 'semantic_match',
+                                'offered': check_offered(course), 'semester': semester},
+                        metadata={'search_query': course_identifier, 'model_used': self.model})
 
-            # Multiple close matches — disambiguate choices. 
-            close_matches = [
-                next((c for c in self.courses_data if c.get('code') == code), None)
-                for code, dist in zip(codes, distances) if dist < 0.45
-            ]
+            # Multiple close matches
+            close_matches = [next((c for c in self.courses_data if c.get('code') == code), None)
+                                for code, dist in zip(codes, distances) if dist < 0.45]
             close_matches = [c for c in close_matches if c]
-
             if len(close_matches) > 1:
-                return AgentResponse(
-                    success=True,
+                return AgentResponse(success=True,
                     data={'courses': close_matches, 'needs_disambiguation': True},
-                    metadata={'search_query': course_identifier, 'model_used': self.model}
-                )
+                    metadata={'search_query': course_identifier, 'model_used': self.model})
 
             print(f"[DataAgent] No matches found for: {course_identifier}")
-            return AgentResponse(
-                success=False,
+            return AgentResponse(success=False,
                 data={'attempted_search': course_identifier},
-                errors=[f"No course found matching '{course_identifier}'"]
-            )
+                errors=[f"No course found matching '{course_identifier}'"])
 
         except Exception as e:
             print(f"[DataAgent] ERROR during course lookup: {str(e)}")
             import traceback
             traceback.print_exc()
-            return AgentResponse(
-                success=False,
-                data=None,
-                errors=[f"Course lookup error: {str(e)}"]
-            )
-              
+            return AgentResponse(success=False, data=None, errors=[f"Course lookup error: {str(e)}"])
+                    
     def _build_search_query(self, entities: Dict) -> str:
         """Builds natural language query for vector search"""
         query_parts = []
@@ -545,15 +521,15 @@ class DataAgent(ChatAgent):
         elif "fall" in query or "autumn" in query:
             term, y = 9, explicit_year or (year + 1 if month >= 9 else year)
         elif "next semester" in query or "next sem" in query:
-            if month <= 5:   term, y = 9, year       # spring → Fall
-            elif month <= 8: term, y = 9, year       # summer → Fall
-            elif month <= 11: term, y = 1, year + 1  # fall → Spring
-            else:            term, y = 1, year + 1   # winter → Spring
+            if month <= 5:   term, y = 9, year       # spring -> Fall
+            elif month <= 8: term, y = 9, year       # summer -> Fall
+            elif month <= 11: term, y = 1, year + 1  # fall -> Spring
+            else:            term, y = 1, year + 1   # winter -> Spring
         elif "this semester" in query or "current" in query:
-            if month <= 1:   term, y = 0, year       # January → Winter
-            elif month <= 5: term, y = 1, year       # Feb–May → Spring
-            elif month <= 8: term, y = 7, year       # Jun–Aug → Summer
-            else:            term, y = 9, year       # Sep–Dec → Fall
+            if month <= 1:   term, y = 0, year       # January -> Winter
+            elif month <= 5: term, y = 1, year       # Feb–May -> Spring
+            elif month <= 8: term, y = 7, year       # Jun–Aug -> Summer
+            else:            term, y = 9, year       # Sep–Dec -> Fall
         else:
             # default to current semester
             if month <= 1:   term, y = 0, year

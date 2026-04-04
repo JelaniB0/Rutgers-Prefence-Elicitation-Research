@@ -61,9 +61,9 @@ class ConstraintAgent(ChatAgent):
     - A prerequisite is MET if the course code appears in completed OR in-progress courses.
     - AND logic: ALL listed prerequisites must be met.
     - OR logic: ANY ONE of the listed prerequisites is sufficient.
-    - "Permission of instructor" or "by arrangement" → treat as met (cannot be verified automatically).
-    - No prerequisite mentioned → always eligible.
-    - Co-requisites (courses that can be taken simultaneously) → treat as met if in-progress.
+    - "Permission of instructor" or "by arrangement" -> treat as met (cannot be verified automatically).
+    - No prerequisite mentioned -> always eligible.
+    - Co-requisites (courses that can be taken simultaneously) -> treat as met if in-progress.
     
     Return ONLY a valid JSON object keyed by course code — no explanation, no markdown:
     {

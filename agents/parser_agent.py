@@ -22,7 +22,7 @@ import json
 import re
 from typing import Dict, Any
 from dotenv import load_dotenv
-from agent_framework import ChatAgent
+from agent_framework import AgentThread, ChatAgent
 from agent_framework.openai import OpenAIChatClient
 
 # Import shared data classes, parser agent uses orchestrator defined response structure, can access conversation state.
@@ -110,7 +110,7 @@ INTENT RECOGNITION:
   If multiple courses are mentioned in a prereq query, leave this null and put all courses in specific_courses.
 
 - For prerequisite_check intents, never put course names in interests. 
-  "What are prereqs for Intro to AI and Systems Programming?" → 
+  "What are prereqs for Intro to AI and Systems Programming?" ->
   specific_courses: ["Intro to AI", "Systems Programming"], interests: []
 
 If the query contains typos or is ambiguous, make your best guess at the intent
@@ -140,21 +140,22 @@ Always return valid JSON with your analysis.
             return {}
     
     # Method used to parse queries. 
-    async def parse(self, query: str, state: ConversationState) -> AgentResponse:
+    async def parse(self, query: str, state: ConversationState, thread: AgentThread = None) -> AgentResponse:
         """
         Main parsing method - validates and extracts information from query
         
         Args:
             query: User's input query
-            state: Current conversation state
-            
+            # state: Current conversation state
+            thread: Agent thread for context management
+
         Returns:
             AgentResponse with parsed data or error
         """
         print(f"[ParserAgent] Parsing query: '{query[:50]}...'")
         
         try:
-           parsed_data = await self._llm_parse(query, state)
+           parsed_data = await self._llm_parse(query, state, thread)
            print(f"[ParserAgent] Parsed - Intent: {parsed_data.get('intent')}, "
                   f"Confidence: {parsed_data.get('confidence'):.2f}")
            
@@ -194,19 +195,24 @@ Always return valid JSON with your analysis.
            
     # quick validation method to filter out obviously invalid queries, won't be as robust or strong as LLM parse. 
     
-    async def _llm_parse(self, query: str, state: ConversationState) -> Dict:
+    async def _llm_parse(self, query: str, state: ConversationState, thread: AgentThread = None) -> Dict:
         """
         Use LLM  to analyze query against the schema
         Args - query, state
-        Returns - Dictionary with compelete parsing analysis
+        Returns - Dictionary with complete parsing analysis
         """
 
-        context=""
-        if state.conversation_history:
-            recent_history = state.conversation_history[-2:]  # REDUCED from -4 to -2
-            context = "\n\nRecent conversation context:\n"
-            for msg in recent_history:
-                context += f"{msg['role']}: {msg['content']}\n"
+        resolved_context = ""
+        if state.resolved_courses:
+            course_list = "\n".join(
+                f"- {v['title']} ({code})"
+                for code, v in state.resolved_courses.items()
+            )
+            resolved_context = f"""
+    Courses discussed in this session (resolve any vague references like 'they', 
+    'those', 'these courses', 'them', 'both', 'all three' to these):
+    {course_list}
+    """
         
         # REMOVED the full schema dump - using condensed version instead
         schema_context = """
@@ -220,11 +226,12 @@ Always return valid JSON with your analysis.
 
     COURSE CODE PATTERNS: "CS 111", "01:198:112", "Data Structures" (exact course names)
     """
-        
+                
         prompt = f"""Analyze this student query for a course recommendation system.
 
-    Query: "{query}"{context}
+    Query: "{query}"
 
+    {resolved_context}
     {schema_context}
 
     TASK: Analyze this query to determine intent and extract entities.
@@ -247,8 +254,8 @@ Always return valid JSON with your analysis.
     Examples: "Tell me about CS 111", "What's Data Structures about?"
     2. course_recommendation is for topic-based requests
     Examples: "What courses teach AI?", "I want to learn web development"
-    3. If interests = only "Computer Science" or "CS" → needs_clarification=true
-    4. Non-CS subjects → intent=off_topic, is_course_related=false
+    3. If interests = only "Computer Science" or "CS" -> needs_clarification=true
+    4. Non-CS subjects -> intent=off_topic, is_course_related=false
     5. Only extract CS-related interests from the valid list above
     6. transcript_upload examples:
        "can you look at my transcript?", "upload my transcript",
@@ -260,8 +267,15 @@ Always return valid JSON with your analysis.
        "let me show you what I've taken",             
        "here are the courses I've completed",         
        "I've already taken some CS courses",          
-       A bare filename ending in .pdf → transcript_upload, NOT off_topic
+       A bare filename ending in .pdf -> transcript_upload, NOT off_topic
     7. If a user repeats a question with the same intent (e.g., asks about prerequisites again), classify it as prerequisite_check, NOT clarification — even if it's in conversation history.
+    8. CONVERSATIONAL REFERENCES — CRITICAL: 
+        If the user uses ANY pronoun or vague reference (they, them, those, these,
+        it, both, all, the courses, the ones, etc.) that refers to courses mentioned
+        earlier in the conversation, you MUST resolve those references and populate
+        specific_courses with the actual course names from the session context above.
+        Never leave specific_courses empty when courses are listed above and the user
+        is clearly referring to them. Always include full course name and code.
 
     ENTITY EXTRACTION:
     - year: freshman, sophomore, junior, senior, graduate (or null)
@@ -305,7 +319,7 @@ Always return valid JSON with your analysis.
 """
 
         try:
-            response = await self.run(prompt)
+            response = await self.run(prompt, thread=thread) 
             last_message = response.messages[-1]
             response_text = last_message.contents[0].text
 
