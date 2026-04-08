@@ -26,7 +26,7 @@ class PlanningAgent(ChatAgent):
             instructions=self._get_system_message()
         )
         self.model = model
-        print(f"[PlanningAgent] Initialized with model: {model}")
+        # print(f"[PlanningAgent] Initialized with model: {model}")
  
     def _get_system_message(self) -> str:
         return """You are an expert course planning advisor for Rutgers Computer Science students.
@@ -111,8 +111,8 @@ class PlanningAgent(ChatAgent):
             ranked_data["self_check_note"] = "Inlined into ranking pass."
 
  
-            print(f"[PlanningAgent] Ranked {len(ranked_data.get('ranked_courses', []))} courses")
-            print(f"[PlanningAgent] Self-check: {ranked_data.get('self_check_note', 'n/a')}")
+            # print(f"[PlanningAgent] Ranked {len(ranked_data.get('ranked_courses', []))} courses")
+            # print(f"[PlanningAgent] Self-check: {ranked_data.get('self_check_note', 'n/a')}")
  
             return AgentResponse(
                 success=True,
@@ -127,7 +127,7 @@ class PlanningAgent(ChatAgent):
             )
  
         except Exception as e:
-            print(f"[PlanningAgent] ERROR during ranking: {str(e)}")
+            # print(f"[PlanningAgent] ERROR during ranking: {str(e)}")
             import traceback
             traceback.print_exc()
             return AgentResponse(
@@ -158,7 +158,7 @@ class PlanningAgent(ChatAgent):
             else "\nNo transcript provided — prerequisite eligibility cannot be verified."
         )
 
-        courses_json = json.dumps(courses, indent=2)
+        courses_json = json.dumps({k: v for k, v in parsed_data.items() if v not in (None, [], {}, "")}, indent=2)
 
         prompt = f"""Rank these Rutgers CS courses for a student. You have full information about
         both the student's preferences AND their academic constraints. Use both together.
@@ -268,15 +268,15 @@ class PlanningAgent(ChatAgent):
                 parsed = json.loads(json_match.group())
                 if 'ranked_courses' in parsed and isinstance(parsed['ranked_courses'], list):
                     return parsed
-                print(f"[PlanningAgent] Warning: unexpected JSON structure")
+                # print(f"[PlanningAgent] Warning: unexpected JSON structure")
                 return {}
             else:
-                print(f"[PlanningAgent] WARNING: No JSON in response: {response_text[:200]}")
+                # print(f"[PlanningAgent] WARNING: No JSON in response: {response_text[:200]}")
                 return {}
  
         except json.JSONDecodeError as e:
-            print(f"[PlanningAgent] JSON parse error: {e}")
+            # print(f"[PlanningAgent] JSON parse error: {e}")
             return {}
         except Exception as e:
-            print(f"[PlanningAgent] LLM error: {e}")
+            # print(f"[PlanningAgent] LLM error: {e}")
             return {}

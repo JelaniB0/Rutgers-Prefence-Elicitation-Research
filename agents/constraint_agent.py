@@ -97,7 +97,7 @@ class ConstraintAgent(ChatAgent):
         )
 
         self.model = model
-        print(f"[ConstraintAgent] Initialized with model: {model}, using LLM-based constraint validation")
+        # print(f"[ConstraintAgent] Initialized with model: {model}, using LLM-based constraint validation")
 
     async def validate_courses(
             self, 
@@ -191,10 +191,10 @@ class ConstraintAgent(ChatAgent):
             # builds summary of findings. 
 
             summary = self._build_summary(eligible, ineligible, violations)
-            print(
-                f"[ConstraintAgent] Validated {len(courses)} courses — "
-                f"{len(eligible)} prereq-eligible, {len(ineligible)} ineligible"
-            )
+            # print(
+            #     f"[ConstraintAgent] Validated {len(courses)} courses — "
+            #     f"{len(eligible)} prereq-eligible, {len(ineligible)} ineligible"
+            # )
 
             return AgentResponse(
                 success=True,
@@ -216,7 +216,7 @@ class ConstraintAgent(ChatAgent):
             )
         
         except Exception as e:
-            print(f"[ConstraintAgent] ERROR during validation: {e}")
+            # print(f"[ConstraintAgent] ERROR during validation: {e}")
             traceback.print_exc()
             return AgentResponse(
                 success=False,
@@ -262,7 +262,7 @@ class ConstraintAgent(ChatAgent):
             )
         
         except Exception as e:
-            print(f"[ConstraintAgent] ERORR checking single courses: {e}")
+            # print(f"[ConstraintAgent] ERROR checking single courses: {e}")
             return AgentResponse(
                 success=False,
                 data=None,
@@ -316,7 +316,7 @@ class ConstraintAgent(ChatAgent):
  
             json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
             if not json_match:
-                print(f"[ConstraintAgent] WARNING: No valid JSON in batch response — using safe defaults")
+                # print(f"[ConstraintAgent] WARNING: No valid JSON in batch response — using safe defaults")
                 return {c.get("code", ""): self._safe_default() for c in courses}
  
             results = json.loads(json_match.group())
@@ -327,7 +327,7 @@ class ConstraintAgent(ChatAgent):
             for course in courses:
                 code = course.get("code", "")
                 if code not in results:
-                    print(f"[ConstraintAgent] WARNING: LLM omitted {code} — using safe default")
+                    # print(f"[ConstraintAgent] WARNING: LLM omitted {code} — using safe default")
                     results[code] = self._safe_default()
                 else:
                     results[code].setdefault("eligible", True)
@@ -339,7 +339,7 @@ class ConstraintAgent(ChatAgent):
             return results
  
         except (json.JSONDecodeError, Exception) as e:
-            print(f"[ConstraintAgent] Batch prereq check error: {e}")
+            # print(f"[ConstraintAgent] Batch prereq check error: {e}")
             return {c.get("code", ""): self._safe_default() for c in courses}
  
     def _safe_default(self) -> Dict:

@@ -195,118 +195,46 @@ Always return valid JSON only — no preamble, no markdown fences.
 
         resolved_context = ""
         if state.resolved_courses:
+            recent = list(state.resolved_courses.items())[-3:]
             course_list = "\n".join(
                 f"- {v['title']} ({code})"
-                for code, v in state.resolved_courses.items()
+                for code, v in recent
             )
             resolved_context = f"""
     Courses discussed in this session (resolve any vague references like 'they', 
     'those', 'these courses', 'them', 'both', 'all three' to these):
     {course_list}
     """
-        
-        # REMOVED the full schema dump - using condensed version instead
-        schema_context = """
-    VALID CS INTERESTS: AI, Machine Learning, Data Science, Web Development, Mobile Development, 
-    Cybersecurity, Databases, Algorithms, Data Structures, Systems Programming, Operating Systems,
-    Computer Networks, Theory, Software Engineering, Computer Graphics, Cloud Computing, DevOps, 
-    Game Development, HCI, Robotics, NLP, Computer Vision, Compilers
-
-    OFF-TOPIC SUBJECTS: political science, environmental science, biology, chemistry, physics, 
-    history, economics, psychology, business, finance, weather, sports, entertainment
-
-    COURSE CODE PATTERNS: "CS 111", "01:198:112", "Data Structures" (exact course names)
-    """
                 
-        prompt = f"""Analyze this student query for a course recommendation system.
+        prompt = f"""Analyze this student query.
 
-    Query: "{query}"
+        Query: "{query}"
 
-    {resolved_context}
-    {schema_context}
+        {resolved_context}
 
-    TASK: Analyze this query to determine intent and extract entities.
+        Return ONLY this JSON (no extra text):
 
-    INTENT CLASSIFICATION (choose one):
-    - course_recommendation: User wants suggestions across multiple possible courses.
-    Key signal: no specific course named, or asking for a list/suggestions.
-    - course_info: User asks about what a SPECIFIC named course covers, teaches, or contains.
-    Key signal: one specific course is named + asking about its content/topics/structure.
-    The course may be referenced by full name, partial name, or informal shorthand.
-    Examples: "What is Software Methodology about?", "What do you learn in OS Design?"
-    - prerequisite_check: User asks if they can take a course or what they need first.
-    - clarification: User is providing additional info after being asked.
-    - general_question: General question about CS program.
-    - off_topic: Clearly unrelated to Rutgers CS courses. Examples: weather, sports, jokes.
-    - transcript_upload: User wants to upload or share their transcript.
-
-    CRITICAL RULES:
-    1. course_info requires a specific course code or exact course name
-    Examples: "Tell me about CS 111", "What's Data Structures about?"
-    2. course_recommendation is for topic-based requests
-    Examples: "What courses teach AI?", "I want to learn web development"
-    3. If interests = only "Computer Science" or "CS" -> needs_clarification=true
-    4. Non-CS subjects -> intent=off_topic, is_course_related=false
-    5. Only extract CS-related interests from the valid list above
-    6. transcript_upload examples:
-       "can you look at my transcript?", "upload my transcript",
-       "here's my transcript", "I have a PDF of my transcript",
-       "wait can you check my transcript", "look at what I've taken"
-       "can I show you the courses I've taken",       
-       "want to see what I've already completed",      
-       "I can share my course history",                
-       "let me show you what I've taken",             
-       "here are the courses I've completed",         
-       "I've already taken some CS courses",          
-       A bare filename ending in .pdf -> transcript_upload, NOT off_topic
-    7. If a user repeats a question with the same intent (e.g., asks about prerequisites again), classify it as prerequisite_check, NOT clarification — even if it's in conversation history.
-    8. CONVERSATIONAL REFERENCES — CRITICAL: 
-        If the user uses ANY pronoun or vague reference (they, them, those, these,
-        it, both, all, the courses, the ones, etc.) that refers to courses mentioned
-        earlier in the conversation, you MUST resolve those references and populate
-        specific_courses with the actual course names from the session context above.
-        Never leave specific_courses empty when courses are listed above and the user
-        is clearly referring to them. Always include full course name and code.
-
-    ENTITY EXTRACTION:
-    - year: freshman, sophomore, junior, senior, graduate (or null)
-    - interests: List of CS topics from valid list (empty if none or only generic "CS")
-    - specific_courses: Course codes or exact names (only if mentioned)
-    - career_path: text description (or null)
-    - gpa_priority: high, medium, low (or null)
-    - difficulty_preference: easy, moderate, challenging (or null)
-    - credit_hours: number (or null)
-    - transcript_upload: User wants to upload, share, or have agent review their transcript
-    - time_constraints: text description (or null)
-
-    CONFIDENCE SCORING:
-    - 0.8+: Clear intent and sufficient entities
-    - 0.5-0.8: Clear intent but missing some entities
-    - <0.5: Ambiguous or very incomplete
-
-    Return ONLY this JSON structure (no extra text):
-
-    {{
-    "intent": "intent_name",
-    "is_course_related": true/false,
-    "confidence": 0.0-1.0,
-    "needs_clarification": true/false,
-    "reasoning": "brief explanation of your analysis",
-    "entities": {{
-        "year": null,
-        "interests": [],
-        "credit_hours": null,
-        "career_path": null,
-        "gpa_priority": null,
-        "specific_courses": [],
-        "prerequisites_taken": [],
-        "difficulty_preference": null,
-        "time_constraints": null
-        "file_path": null   
-    }},
-    "missing_critical_info": ["list of missing info"],
-    "suggested_clarifications": ["specific questions to ask user"]
-    }}
+        {{
+        "intent": "...",
+        "is_course_related": true/false,
+        "confidence": 0.0-1.0,
+        "needs_clarification": true/false,
+        "reasoning": "brief explanation",
+        "entities": {{
+            "year": null,
+            "interests": [],
+            "credit_hours": null,
+            "career_path": null,
+            "gpa_priority": null,
+            "specific_courses": [],
+            "prerequisites_taken": [],
+            "difficulty_preference": null,
+            "time_constraints": null,
+            "file_path": null
+        }},
+        "missing_critical_info": [],
+        "suggested_clarifications": []
+        }}
 """
 
         try:

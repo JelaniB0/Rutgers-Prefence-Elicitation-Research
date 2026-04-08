@@ -98,6 +98,12 @@ class RoutingContext:
             else:
                 slim[key] = val
         return slim
+    
+    def _slim_parsed_data(self) -> dict:
+        d = {k: v for k, v in self.parsed_data.items() if v not in (None, [], {}, "")}
+        if "entities" in d:
+            d["entities"] = {k: v for k, v in d["entities"].items() if v not in (None, [], "")}
+        return d
 
     def to_prompt(self) -> str:
         resolved_section = ""
@@ -201,6 +207,7 @@ Each turn you receive a context snapshot and must respond with a JSON decision.
 ## Response Rules
 - Only reference courses and prerequisites explicitly present in collected data. Never infer.
 - The "response" field must be plain conversational text. Never JSON, code blocks, or markdown fences.
+- For course recommmendations or planning, PLEASE use data and constraint agent to give you informed choice about course offerings and availibity. 
 
 ## Output Format (JSON only, no markdown fences)
 {
@@ -253,7 +260,7 @@ class OrchestratorExecutor(Executor):
     # Entry point
 
     @handler
-    async def handle_request(self, message: OrchestratorRequest, ctx: WorkflowContext) -> None:
+    async def handle_request(self, message: OrchestratorRequest, ctx: WorkflowContext[AgentResult]) -> None:
         await self._maybe_reset_thread(message.conversation_state)
 
         # print(f"[Orchestrator] parsed_data: {message.parsed_data}")
@@ -312,7 +319,7 @@ class OrchestratorExecutor(Executor):
     # Spoke result collector
 
     @handler
-    async def handle_result(self, message: AgentResult, ctx: WorkflowContext) -> None:
+    async def handle_result(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name == "transcript":
             return
 
@@ -457,7 +464,7 @@ class OrchestratorExecutor(Executor):
 
     # Fallback response when something goes wrong -> dump all data context and formulate best response. 
 
-    async def _force_respond(self, routing_ctx: RoutingContext, ctx: WorkflowContext) -> None:
+    async def _force_respond(self, routing_ctx: RoutingContext, ctx: WorkflowContext[AgentResult]) -> None:
         prompt = (
             f"{routing_ctx.to_prompt()}\n\n"
             f"Full collected data:\n{json.dumps(routing_ctx.accumulated_results, indent=2)}\n\n"
@@ -480,17 +487,25 @@ class OrchestratorExecutor(Executor):
     async def _maybe_reset_thread(self, conversation_state):
         if len(conversation_state.conversation_history) >= 4:
             resolved = [f"{code}: {v['title']}" for code, v in conversation_state.resolved_courses.items()]
+            
+            # pull last student message for context continuity
+            last_user_msg = next(
+                (m["content"] for m in reversed(conversation_state.conversation_history) 
+                if m["role"] == "user"), ""
+            )
+            
             summary = (
-                f"New session window. Courses discussed: {resolved}. "
-                f"Transcript on file: {bool(conversation_state.transcript_data)}."
+                f"Continuing session. Courses discussed: {resolved or 'none'}. "
+                f"Transcript on file: {bool(conversation_state.transcript_data)}. "
+                f"Last student message: '{last_user_msg}'"
             )
             self.thread = self.agent.get_new_thread()
             raw = await self.agent.run(summary, thread=self.thread)
-            
+                
             if hasattr(raw, "usage_details") and raw.usage_details:
                 conversation_state.add_usage(
                     raw.usage_details.get("input_token_count", 0) or 0,
                     raw.usage_details.get("output_token_count", 0) or 0,
                 )
-            # print("[Orchestrator] Thread reset with summary")
+        # print("[Orchestrator] Thread reset with summary")
         

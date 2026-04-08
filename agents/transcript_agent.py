@@ -81,7 +81,7 @@ class TranscriptAgent(ChatAgent):
             instructions=self.SYSTEM_PROMPT
         )
         self.model = model
-        print(f"[TranscriptAgent] Initialized with model: {model}")
+        # print(f"[TranscriptAgent] Initialized with model: {model}")
 
     async def parse_transcript(self, pdf_path: str, state: ConversationState) -> AgentResponse:
         """
@@ -98,7 +98,7 @@ class TranscriptAgent(ChatAgent):
                     errors=["Extracted text is empty. Check PDF content and extraction method."]
                 )
             
-            print(f"[TranscriptAgent] Extracted {len(raw_text)} chars from PDF, parsing...")
+            # print(f"[TranscriptAgent] Extracted {len(raw_text)} chars from PDF, parsing...")
 
             response = await self.run(raw_text)
             response_text = response.messages[-1].contents[0].text
@@ -115,10 +115,10 @@ class TranscriptAgent(ChatAgent):
             # store transcript info in conversation state for other agents to access transcript data. 
             state.transcript_data = data
 
-            print(f"[Transcript Agent] Parsed successfully: "
-                  f"{data.get('student_name')}, GPA: {data.get('cumulative_gpa')}, "
-                  f"Year: {data.get('year_standing')}, "
-                  f"Completed: {len(data.get('completed_courses', []))} courses")
+            # print(f"[Transcript Agent] Parsed successfully: "
+            #       f"{data.get('student_name')}, GPA: {data.get('cumulative_gpa')}, "
+            #       f"Year: {data.get('year_standing')}, "
+            #       f"Completed: {len(data.get('completed_courses', []))} courses")
             
             return AgentResponse(
                 success=True,

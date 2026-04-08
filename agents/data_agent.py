@@ -492,7 +492,7 @@ class DataAgent(ChatAgent):
                 return offered
 
         except Exception as e:
-            print(f"[DataAgent] SOC API unavailable: {e} — falling back to full course list")
+            # print(f"[DataAgent] SOC API unavailable: {e} — falling back to full course list")
             return None  # signals caller to skip the filter
 
     TERM_MAP = {

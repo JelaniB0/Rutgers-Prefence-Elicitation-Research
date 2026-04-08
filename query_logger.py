@@ -10,7 +10,6 @@ from datetime import datetime
 CSV_LOG_FILE = "query_log.csv"
 
 CSV_COLUMNS = [
-    "conversation_num",
     "session_id",
     "timestamp",
     "response_time_sec",
@@ -28,29 +27,26 @@ CSV_COLUMNS = [
 
 def _migrate_csv(filepath: str) -> None:
     """
-    If the CSV exists but is missing columns (e.g. plan_steps was added later),
-    rewrite it with all current columns, filling missing fields with empty strings.
+    Rewrites CSV to match current schema exactly:
+    - Adds missing columns
+    - Drops extra columns (like conversation_num)
     """
     with open(filepath, mode="r", newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        existing_columns = reader.fieldnames or []
-        missing = [col for col in CSV_COLUMNS if col not in existing_columns]
-
-        if not missing:
-            return  # Nothing to migrate
-
         rows = list(reader)
 
+    # Rebuild rows to match only current columns
+    cleaned_rows = []
     for row in rows:
-        for col in missing:
-            row[col] = ""
+        cleaned_row = {col: row.get(col, "") for col in CSV_COLUMNS}
+        cleaned_rows.append(cleaned_row)
 
     with open(filepath, mode="w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
         writer.writeheader()
-        writer.writerows(rows)
+        writer.writerows(cleaned_rows)
 
-    print(f"[query_logger] Migrated '{filepath}': added column(s) {missing}")
+    # print(f"[query_logger] Migrated '{filepath}' (dropped extra columns)")
 
 
 def _csv_exists(filepath: str = CSV_LOG_FILE) -> None:
@@ -64,7 +60,6 @@ def _csv_exists(filepath: str = CSV_LOG_FILE) -> None:
 
 
 def log_query(
-    conversation_num: int,
     session_id: str,
     query: str,
     response: str,
@@ -127,3 +122,6 @@ def log_query(
     with open(filepath, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
         writer.writerow(row)
+
+# if __name__ == "__main__":
+#     _migrate_csv(CSV_LOG_FILE)

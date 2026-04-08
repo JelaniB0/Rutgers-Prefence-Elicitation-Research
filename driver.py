@@ -37,7 +37,7 @@ class ParserExecutor(Executor):
         self.thread = self.parser.get_new_thread() 
 
     @handler
-    async def handle(self, message: UserQuery, ctx: WorkflowContext) -> None:
+    async def handle(self, message: UserQuery, ctx: WorkflowContext[AgentResult]) -> None:
         # print("[ParserExecutor] Parsing query...")
         enriched_query = message.user_query
         if message.conversation_state.resolved_courses:
@@ -77,7 +77,7 @@ class DataExecutor(Executor):
         )
 
     @handler
-    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+    async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name not in ("data_fetch", "data_lookup", "data_prereq"):
             return
 
@@ -92,7 +92,7 @@ class DataExecutor(Executor):
                 await ctx.yield_output("I had trouble fetching courses. Please try again.")
                 return
             courses = response.data.get("courses", [])
-            print(f"[DataExecutor] Retrieved {len(courses)} courses")
+            # print(f"[DataExecutor] Retrieved {len(courses)} courses")
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
                 agent_name="data_fetch", data={"courses": courses},
@@ -163,7 +163,7 @@ class ConstraintExecutor(Executor):
         self.constraint_agent = ConstraintAgent(client=chat_client, model=model_id)
 
     @handler
-    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+    async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name not in ("constraint_full", "constraint_prereq"):
             return
 
@@ -211,7 +211,7 @@ class PlanningExecutor(Executor):
         self.thread = self.planning_agent.get_new_thread()
 
     @handler
-    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+    async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name != "planning":
             return
 
@@ -254,11 +254,11 @@ class TranscriptExecutor(Executor):
         self.transcript_agent = TranscriptAgent(client=chat_client, model=model_id)
 
     @handler
-    async def handle(self, message: AgentResult, ctx: WorkflowContext) -> None:
+    async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name != "transcript":
             return
 
-        print("[TranscriptExecutor] Parsing transcript...")
+        # print("[TranscriptExecutor] Parsing transcript...")
         file_path = message.parsed_data.get("entities", {}).get("file_path")
 
         if not file_path or not os.path.exists(file_path):
@@ -277,7 +277,7 @@ class TranscriptExecutor(Executor):
             return
 
         data = response.data
-        print(f"[TranscriptExecutor] All completed courses: {data.get('completed_courses', [])}")
+        # print(f"[TranscriptExecutor] All completed courses: {data.get('completed_courses', [])}")
         completed_cs   = [c for c in data.get("completed_courses", [])   if ":198:" in c.get("code", "")]
         in_progress_cs = [c for c in data.get("in_progress_courses", []) if ":198:" in c.get("code", "")]
 
@@ -368,8 +368,6 @@ async def main():
         "respond":           "orchestrator",
     }
 
-    conversation_num = 0
-
     while True:
         try:
             user_input = input("You: ").strip()
@@ -388,7 +386,6 @@ async def main():
             response_text = ""
             conversation_state.reset_usage()  # resets token usage
 
-            conversation_num += 1
             turn_start = datetime.now()
 
             conversation_state.add_message("user", user_input)
@@ -426,8 +423,8 @@ async def main():
             )
 
             if should_log:
-                satisfied = ""
-                feedback = ""
+                satisfied = "NULL"
+                feedback = "NULL"
                 try:
                     raw = input("Were you satisfied with that response? (y/n, or press Enter to skip): ").strip().lower()
                     if raw in ("y", "yes"):
@@ -440,7 +437,6 @@ async def main():
                     pass
 
                 log_query(
-                    conversation_num=conversation_num,
                     session_id=session_id,
                     query=user_input,
                     response=response_text,
