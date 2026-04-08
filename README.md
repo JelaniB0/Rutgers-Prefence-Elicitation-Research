@@ -45,6 +45,18 @@ python driver.py
 
 3. All queries and agent responses are logged to query_log.csv. 
 
+### Capabilities of Framework
+The framework's main purpose is to serve as a tool that both Rutgers Computer Science students and Advisors can use. Thus, there are several things that the framework is capable of. 
+Some of these capabilities include giving the student real-time insights into course availibility and eligibility, and using a students transcript PDF in order to better
+assist the student with their queries. 
+
+## How to use pdf of transcript in framework
+
+1. Upload your transcript to the root of your project. 
+2. Transcript should preferably be a standard pdf of a rutgers unofficial transcript .
+3. Simply tell the framework that you would like to upload your transcript, and it will prompt you with the name of the transcript file. 
+4. Enter the full transcript file name. 
+
 
 
 

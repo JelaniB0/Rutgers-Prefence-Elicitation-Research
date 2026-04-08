@@ -41,7 +41,16 @@ class ConversationState:
         self.resolved_semester = None
         self.resolved_courses: Dict[str, Dict] = {}
         self.MAX_HISTORY = 6
+        self.input_tokens = 0
+        self.output_tokens = 0
 
+    def add_usage(self, input_tokens: int, output_tokens: int) -> None:
+        self.input_tokens += input_tokens
+        self.output_tokens += output_tokens
+
+    def reset_usage(self) -> None:
+        self.input_tokens = 0
+        self.output_tokens = 0
     
     def add_message(self, role: str, content: str):
         """Add a message to conversation history"""

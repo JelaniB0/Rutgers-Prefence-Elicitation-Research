@@ -52,9 +52,9 @@ class DataAgent(ChatAgent):
         self.RUTGERS_SOC_API = "https://classes.rutgers.edu/soc/api/courses.json"
         self.CACHE_NEXT = 60 * 60 * 12 # recache course data every 
 
-        print(f"[DataAgent] Initialized with model: {model}")
-        print(f"[DataAgent] Loaded {len(self.courses_data)} courses")
-        print(f"[DataAgent] Vector database initialized with GitHub Models embeddings")
+        # print(f"[DataAgent] Initialized with model: {model}")
+        # print(f"[DataAgent] Loaded {len(self.courses_data)} courses")
+        # print(f"[DataAgent] Vector database initialized with GitHub Models embeddings")
 
     def _initialize_vector_db(self):
         """
@@ -73,7 +73,7 @@ class DataAgent(ChatAgent):
                 name = "rutgers_courses",
                 embedding_function=github_embedfunc
             )
-            print("[DataAgent] using existing embedding collection.")
+            # print("[DataAgent] using existing embedding collection.")
         except:
             collection = client.create_collection(
                 name="rutgers_courses",
@@ -83,17 +83,17 @@ class DataAgent(ChatAgent):
                     "description": "Rutgers CS courses with semantic search"
                 }
             )
-            print("[DataAgent] Created new collection")
+            # print("[DataAgent] Created new collection")
         
         return collection
 
     def _index_courses(self):
         """Courses indexed into vector database"""
         if self.vector_db.count() > 0:
-            print(f"[DataAgent] Vector DB already contains {self.vector_db.count()} courses")
+            # print(f"[DataAgent] Vector DB already contains {self.vector_db.count()} courses")
             return
         
-        print("[DataAgent] Indexing courses into vector database...")
+        # print("[DataAgent] Indexing courses into vector database...")
         documents = []
         metadatas = []
         ids = []
@@ -118,7 +118,7 @@ class DataAgent(ChatAgent):
             ids=ids
         )
 
-        print(f"[DataAgent] Indexed {len(documents)} courses")
+        # print(f"[DataAgent] Indexed {len(documents)} courses")
     
     def _create_course_documents(self, course: Dict) -> str:
         """Create searchable text representation of course"""
@@ -177,11 +177,11 @@ class DataAgent(ChatAgent):
                 self.code_to_title = {c["code"]: c["title"] for c in courses}
                 return courses
         except FileNotFoundError:
-            print(f"[DataAgent] Error: {self.courses_file} not found")
+            # print(f"[DataAgent] Error: {self.courses_file} not found")
             self.code_to_title = {}
             return []
         except json.JSONDecodeError as e:
-            print(f"[DataAgent] Error: Invalid JSON: {e}")
+            # print(f"[DataAgent] Error: Invalid JSON: {e}")
             self.code_to_title = {}
             return []
     
@@ -196,8 +196,8 @@ class DataAgent(ChatAgent):
             entities = parsed_data.get('entities', {})
             intent = parsed_data.get('intent', 'course_recommendation')
 
-            print(f"[DataAgent] Fetching courses for intent: {intent}")
-            print(f"[DataAgent] Entities: {entities}")
+            # print(f"[DataAgent] Fetching courses for intent: {intent}")
+            # print(f"[DataAgent] Entities: {entities}")
 
             matched_courses = await self._rag_retrieve(entities, intent)
 
@@ -209,7 +209,7 @@ class DataAgent(ChatAgent):
 
                 before = len(matched_courses)
                 matched_courses = [c for c in matched_courses if c.get("code") not in exclude]
-                print(f"[DataAgent] Filtered {before - len(matched_courses)} already-taken courses, {len(matched_courses)} remaining")
+                # print(f"[DataAgent] Filtered {before - len(matched_courses)} already-taken courses, {len(matched_courses)} remaining")
 
             # filter out courses not offered in upcoming semester based on live SOC data. 
             if state.resolved_semester:
@@ -227,11 +227,11 @@ class DataAgent(ChatAgent):
                     c for c in matched_courses
                     if c.get("code", "").split(":")[-1].strip() in offered
                 ]
-                print(f"[DataAgent] Filtered {before - len(matched_courses)} unoffered courses, {len(matched_courses)} remaining")
-            elif offered is not None and len(offered) == 0:
-                print(f"[DataAgent] SOC returned no courses for {semester} — schedule may not be posted yet, using fallback")
-            else:
-                print(f"[DataAgent] SOC API unavailable — using full course list as fallback")
+                # print(f"[DataAgent] Filtered {before - len(matched_courses)} unoffered courses, {len(matched_courses)} remaining")
+            # elif offered is not None and len(offered) == 0:
+            #     print(f"[DataAgent] SOC returned no courses for {semester} — schedule may not be posted yet, using fallback")
+            # else:
+            #     print(f"[DataAgent] SOC API unavailable — using full course list as fallback")
 
             return AgentResponse(
                 success=True,
@@ -247,7 +247,7 @@ class DataAgent(ChatAgent):
                 }
             )
         except Exception as e:
-            print(f"[DataAgent] ERROR: {str(e)}")
+            # print(f"[DataAgent] ERROR: {str(e)}")
             import traceback
             traceback.print_exc()
 
@@ -284,7 +284,7 @@ class DataAgent(ChatAgent):
             query = improved_query.content if hasattr(improved_query, "content") else str(improved_query)
         except Exception as e:
             print(f"[DataAgent] Query rewrite failed, using original: {e}")
-        print(f"[DataAgent] RAG query: {query}")
+        # print(f"[DataAgent] RAG query: {query}")
         
         # builds metadata filters -> look into this later
         # where_filter = self._build_metadata_filters(entities)
@@ -309,7 +309,7 @@ class DataAgent(ChatAgent):
                 course_copy['semantic_similarity'] = 1 - retrieved_distances[i]
                 retrieved_courses.append(self._enrich_course(course_copy))
 
-        print(f"[DataAgent] Retrieved {len(retrieved_courses)} courses")
+        # print(f"[DataAgent] Retrieved {len(retrieved_courses)} courses")
 
         # LLM filtering to remove weakly relevant courses based on student needs and course details. 
 
@@ -344,9 +344,9 @@ class DataAgent(ChatAgent):
                         retrieved_courses = [
                             c for c in retrieved_courses if c.get("code") in keep_codes
                         ]
-                        print(f"[DataAgent] Filtered to {len(retrieved_courses)} relevant courses")
-                else:
-                    print("[DataAgent] No JSON found in LLM output, keeping original list")
+                        # print(f"[DataAgent] Filtered to {len(retrieved_courses)} relevant courses")
+                # else:
+                #     print("[DataAgent] No JSON found in LLM output, keeping original list")
 
             except Exception as e:
                 print(f"[DataAgent] LLM filtering failed, keeping original list: {e}")
@@ -358,7 +358,7 @@ class DataAgent(ChatAgent):
     
     async def lookup_course(self, course_identifier: str, state: ConversationState) -> AgentResponse:
         try:
-            print(f"[DataAgent] Looking up course: {course_identifier}")
+            # print(f"[DataAgent] Looking up course: {course_identifier}")
             normalized = course_identifier.strip().lower()
             semester = state.resolved_semester or self.resolve_semester(state.user_query or "")
             offered = await self._fetch_soc_courses(semester)
@@ -375,7 +375,7 @@ class DataAgent(ChatAgent):
                 number_only = re.search(r'\d+', normalized_search)
                 if (normalized in course_code or normalized_search in normalized_code or
                     (number_only and number_only.group() in normalized_code.split(':')[-1])):
-                    print(f"[DataAgent] Found exact match: {course_code}")
+                    # print(f"[DataAgent] Found exact match: {course_code}")
                     return AgentResponse(success=True,
                         data={'course': self._enrich_course(course), 'lookup_method': 'exact_code_match',
                                 'offered': check_offered(course), 'semester': semester},
@@ -389,7 +389,7 @@ class DataAgent(ChatAgent):
             if codes and distances[0] < 0.5:
                 course = next((c for c in self.courses_data if c.get('code') == codes[0]), None)
                 if course:
-                    print(f"[DataAgent] Found semantic match: {codes[0]} (distance: {distances[0]:.3f})")
+                    # print(f"[DataAgent] Found semantic match: {codes[0]} (distance: {distances[0]:.3f})")
                     return AgentResponse(success=True,
                         data={'course': self._enrich_course(course), 'lookup_method': 'semantic_match',
                                 'offered': check_offered(course), 'semester': semester},
@@ -404,13 +404,13 @@ class DataAgent(ChatAgent):
                     data={'courses': close_matches, 'needs_disambiguation': True},
                     metadata={'search_query': course_identifier, 'model_used': self.model})
 
-            print(f"[DataAgent] No matches found for: {course_identifier}")
+            # print(f"[DataAgent] No matches found for: {course_identifier}")
             return AgentResponse(success=False,
                 data={'attempted_search': course_identifier},
                 errors=[f"No course found matching '{course_identifier}'"])
 
         except Exception as e:
-            print(f"[DataAgent] ERROR during course lookup: {str(e)}")
+            # print(f"[DataAgent] ERROR during course lookup: {str(e)}")
             import traceback
             traceback.print_exc()
             return AgentResponse(success=False, data=None, errors=[f"Course lookup error: {str(e)}"])
@@ -469,10 +469,10 @@ class DataAgent(ChatAgent):
         # cache hit — same semester and not stale
         cached = self.soc_cache.get(cache_key)
         if cached and (now - cached["fetched_at"]) < self.CACHE_NEXT:
-            print(f"[DataAgent] Using cached SOC data for {cache_key}")
+            # print(f"[DataAgent] Using cached SOC data for {cache_key}")
             return cached["courses"]
 
-        print("[DataAgent] Fetching live SOC data from Rutgers API...")
+        # print("[DataAgent] Fetching live SOC data from Rutgers API...")
         try:
             async with httpx.AsyncClient(timeout=15) as client:
                 resp = await client.get(self.RUTGERS_SOC_API, params = {
@@ -488,7 +488,7 @@ class DataAgent(ChatAgent):
                 }
 
                 self.soc_cache[cache_key] = {"courses": offered, "fetched_at": now}
-                print(f"[DataAgent] Cached {len(offered)} offered CS courses for {cache_key}")
+                # print(f"[DataAgent] Cached {len(offered)} offered CS courses for {cache_key}")
                 return offered
 
         except Exception as e:

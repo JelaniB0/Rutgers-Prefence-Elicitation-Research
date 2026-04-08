@@ -18,6 +18,7 @@ from agents.orchestrator_agent import (
     OrchestratorRequest,
     AgentResult,
     OrchestratorExecutor,
+    RoutingContext
 )
 
 load_dotenv()
@@ -37,7 +38,7 @@ class ParserExecutor(Executor):
 
     @handler
     async def handle(self, message: UserQuery, ctx: WorkflowContext) -> None:
-        print("[ParserExecutor] Parsing query...")
+        # print("[ParserExecutor] Parsing query...")
         enriched_query = message.user_query
         if message.conversation_state.resolved_courses:
             course_titles = [v["title"] for v in message.conversation_state.resolved_courses.values()]
@@ -47,6 +48,16 @@ class ParserExecutor(Executor):
             )
 
         response = await self.parser.parse(enriched_query, message.conversation_state, thread=self.thread)
+
+        if hasattr(response, "metadata") and response.metadata:
+            input_tokens = response.metadata.get("input_token_count", 0) or 0
+            output_tokens = response.metadata.get("output_token_count", 0) or 0
+            message.conversation_state.add_usage(input_tokens, output_tokens)
+
+        # print(type(response))
+        # print(dir(response))
+        # print(vars(response))
+
         if not response.success:
             await ctx.yield_output("I encountered an error parsing your query. Please try again.")
             return
@@ -73,7 +84,7 @@ class DataExecutor(Executor):
         entities = message.parsed_data.get("entities", {})
 
         if message.agent_name == "data_fetch":
-            print("[DataExecutor] Fetching courses...")
+            # print("[DataExecutor] Fetching courses...")
             response = await self.data_agent.fetch_courses(
                 parsed_data=message.parsed_data, state=message.conversation_state
             )
@@ -89,7 +100,7 @@ class DataExecutor(Executor):
             ))
 
         elif message.agent_name == "data_lookup":
-            print("[DataExecutor] Looking up course...")
+            # print("[DataExecutor] Looking up course...")
             specific_courses = entities.get("specific_courses", [])
             if not specific_courses:
                 specific_courses = entities.get("interests", [])
@@ -157,7 +168,7 @@ class ConstraintExecutor(Executor):
             return
 
         if message.agent_name == "constraint_full":
-            print("[ConstraintExecutor] Validating constraints...")
+            # print("[ConstraintExecutor] Validating constraints...")
             courses = message.data.get("courses") or message.data.get("data_fetch", {}).get("courses", [])
             constraint_data = {}
             if message.conversation_state.transcript_data:
@@ -256,6 +267,11 @@ class TranscriptExecutor(Executor):
 
         response = await self.transcript_agent.parse_transcript(file_path, message.conversation_state)
 
+        if hasattr(response, "metadata") and response.metadata:
+            input_tokens = response.metadata.get("input_token_count", 0) or 0
+            output_tokens = response.metadata.get("output_token_count", 0) or 0
+            message.conversation_state.add_usage(input_tokens, output_tokens)
+
         if not response.success:
             await ctx.yield_output(f"I couldn't read that transcript: {', '.join(response.errors)}")
             return
@@ -352,6 +368,8 @@ async def main():
         "respond":           "orchestrator",
     }
 
+    conversation_num = 0
+
     while True:
         try:
             user_input = input("You: ").strip()
@@ -368,6 +386,10 @@ async def main():
 
         try:
             response_text = ""
+            conversation_state.reset_usage()  # resets token usage
+
+            conversation_num += 1
+            turn_start = datetime.now()
 
             conversation_state.add_message("user", user_input)
 
@@ -376,8 +398,14 @@ async def main():
                     response_text = event.data
                     print(f"\nAdvisor: {response_text}\n")
                     conversation_state.add_message("assistant", response_text)
+            
+            input_tokens = conversation_state.input_tokens
+            output_tokens = conversation_state.output_tokens
+            response_time_sec = (datetime.now() - turn_start).total_seconds()
 
-            routing_ctx = getattr(conversation_state, "routing_ctx", None)
+            # print(f"[Usage] Input: {input_tokens} | Output: {output_tokens} | Total: {input_tokens + output_tokens}")
+
+            routing_ctx: RoutingContext | None = getattr(conversation_state, "routing_ctx", None)
             last_intent = getattr(conversation_state, "last_intent", None)
 
             agents_invoked = ["parser", "orchestrator"]
@@ -392,14 +420,39 @@ async def main():
             plan_steps = " -> ".join(routing_ctx.agents_call_order) if routing_ctx else ""
             turn_sources = {a: agent_sources.get(a, ["LLM"]) for a in agents_invoked}
 
-            log_query(
-                session_id=session_id,
-                query=user_input,
-                response=response_text,
-                agents_invoked=agents_invoked,
-                agent_sources=turn_sources,
-                plan_steps=plan_steps,
+            should_log = (
+                response_text and
+                last_intent not in ("transcript_upload", "clarification", None)
             )
+
+            if should_log:
+                satisfied = ""
+                feedback = ""
+                try:
+                    raw = input("Were you satisfied with that response? (y/n, or press Enter to skip): ").strip().lower()
+                    if raw in ("y", "yes"):
+                        satisfied = "yes"
+                        feedback = input("Any feedback? (press Enter to skip): ").strip()
+                    elif raw in ("n", "no"):
+                        satisfied = "no"
+                        feedback = input("Any feedback? (press Enter to skip): ").strip()
+                except (KeyboardInterrupt, EOFError):
+                    pass
+
+                log_query(
+                    conversation_num=conversation_num,
+                    session_id=session_id,
+                    query=user_input,
+                    response=response_text,
+                    agents_invoked=agents_invoked,
+                    agent_sources=turn_sources,
+                    plan_steps=plan_steps,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    response_time_sec=response_time_sec,
+                    satisfied=satisfied,
+                    feedback=feedback,
+                )
 
         except Exception as e:
             print(f"[Workflow] Error: {e}")
@@ -410,4 +463,4 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 
-# token usage, time, full conversation turn, input/output token (# of tokens can tell you how costly conversation can be)
+# token usage, time, full conversation turn, input/output token (# of tokens can tell you how costly conversation can be), are you satisfied (yes/no), enter feedback if any

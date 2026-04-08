@@ -10,13 +10,19 @@ from datetime import datetime
 CSV_LOG_FILE = "query_log.csv"
 
 CSV_COLUMNS = [
+    "conversation_num",
     "session_id",
     "timestamp",
+    "response_time_sec",
     "query",
     "response",
     "plan_steps",           # pipe-separated ordered steps, e.g. "Step 1: Fetch matching courses|Step 2: Rank and select top courses"
     "agents_invoked",       # pipe-separated list of agent names, e.g. "parser|data|planning|orchestrator"
     "sources_and_tools",    # structured detail of what each agent used, e.g. "data:rutgers_courses.json|planning:LLM"
+    "input_tokens",
+    "output_tokens",
+    "satisfied",
+    "feedback",
 ]
 
 
@@ -58,12 +64,18 @@ def _csv_exists(filepath: str = CSV_LOG_FILE) -> None:
 
 
 def log_query(
+    conversation_num: int,
     session_id: str,
     query: str,
     response: str,
     agents_invoked: list[str],
     agent_sources: dict[str, list[str]] | None = None,
     plan_steps: str = "",
+    input_tokens: int = 0,
+    output_tokens: int = 0,
+    response_time_sec: float = 0.0,
+    satisfied: str = "",
+    feedback: str = "",
     filepath: str = CSV_LOG_FILE,
 ) -> None:
     """
@@ -100,11 +112,16 @@ def log_query(
     row = {
         "session_id":        session_id,
         "timestamp":         datetime.now().strftime("%Y-%m-%d %I:%M:%S %p"),
+        "response_time_sec": f"{response_time_sec:.2f}",
         "query":             query,
         "response":          response,
         "plan_steps":        plan_steps,
         "agents_invoked":    agents_str,
         "sources_and_tools": sources_str,
+        "input_tokens":      input_tokens,
+        "output_tokens":     output_tokens,
+        "satisfied":         satisfied,
+        "feedback":          feedback,
     }
 
     with open(filepath, mode="a", newline="", encoding="utf-8") as f:

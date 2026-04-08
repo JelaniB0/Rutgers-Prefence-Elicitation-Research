@@ -256,13 +256,13 @@ class OrchestratorExecutor(Executor):
     async def handle_request(self, message: OrchestratorRequest, ctx: WorkflowContext) -> None:
         await self._maybe_reset_thread(message.conversation_state)
 
-        print(f"[Orchestrator] parsed_data: {message.parsed_data}")
+        # print(f"[Orchestrator] parsed_data: {message.parsed_data}")
         intent = message.parsed_data.get("intent")
         has_transcript = bool(message.conversation_state.transcript_data)
-        print(f"[Orchestrator] intent='{intent}', has_transcript={has_transcript}")
+        # print(f"[Orchestrator] intent='{intent}', has_transcript={has_transcript}")
 
         if intent == "transcript_upload":
-            print("[Orchestrator] Hard rule -> transcript agent")
+            # print("[Orchestrator] Hard rule -> transcript agent")
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
                 agent_name="transcript", data={},
@@ -316,7 +316,7 @@ class OrchestratorExecutor(Executor):
         if message.agent_name == "transcript":
             return
 
-        print(f"[Orchestrator] Result from '{message.agent_name}'")
+        # print(f"[Orchestrator] Result from '{message.agent_name}'")
 
         routing_ctx: RoutingContext = message.conversation_state.routing_ctx
         routing_ctx.accumulated_results[message.agent_name] = message.data
@@ -335,7 +335,7 @@ class OrchestratorExecutor(Executor):
                         code, title, True,
                         message.conversation_state.resolved_semester or {}
                     )
-                    print(f"[Orchestrator] Cached resolved course: {code} - {title}")
+                    # print(f"[Orchestrator] Cached resolved course: {code} - {title}")
 
         elif message.agent_name == "data_lookup":
             for course_result in message.data.get("courses", []):
@@ -346,7 +346,7 @@ class OrchestratorExecutor(Executor):
                 semester = course_result.get("semester", message.conversation_state.resolved_semester or {})
                 if code:
                     message.conversation_state.resolve_course(code, title, offered, semester)
-                    print(f"[Orchestrator] Cached lookup course: {code} - {title} (offered: {offered})")
+                    # print(f"[Orchestrator] Cached lookup course: {code} - {title} (offered: {offered})")
 
         iteration: int = message.conversation_state.routing_iteration
         await self._routing_loop(routing_ctx, message, ctx, iteration=iteration)
@@ -361,18 +361,29 @@ class OrchestratorExecutor(Executor):
         iteration: int,
     ) -> None:
         if iteration >= self.MAX_ITERATIONS:
-            print("[Orchestrator] Max iterations reached — forcing respond mode")
+            # print("[Orchestrator] Max iterations reached — forcing respond mode")
             await self._force_respond(routing_ctx, ctx)
             return
 
-        print(f"[Orchestrator] Routing iteration {iteration + 1}")
+        # print(f"[Orchestrator] Routing iteration {iteration + 1}")
         raw = await self.agent.run(routing_ctx.to_prompt(), thread=self.thread)
+
+        # print(type(raw))
+        # print(hasattr(raw, "usage_details"))
+        # print(getattr(raw, "usage_details", None))
+
+        if hasattr(raw, "usage_details") and raw.usage_details:
+            message.conversation_state.add_usage(
+                raw.usage_details.get("input_token_count", 0) or 0,
+                raw.usage_details.get("output_token_count", 0) or 0,
+            )
+
         raw_text = raw.content if hasattr(raw, "content") else str(raw)
 
         try:
             decision = RoutingDecision.from_llm_output(raw_text)
         except (json.JSONDecodeError, KeyError) as e:
-            print(f"[Orchestrator] Bad routing output: {e} — forcing respond mode")
+            # print(f"[Orchestrator] Bad routing output: {e} — forcing respond mode")
             await self._force_respond(routing_ctx, ctx)
             return
 
@@ -381,24 +392,24 @@ class OrchestratorExecutor(Executor):
         # Clarify or respond, yield output and stop
         if decision.mode in ("clarify", "respond"):
             if not decision.response:
-                print("[Orchestrator] Empty response in terminal mode — forcing respond")
+                # print("[Orchestrator] Empty response in terminal mode — forcing respond")
                 await self._force_respond(routing_ctx, ctx)
                 return
             await ctx.yield_output(decision.response)
             return
 
         # Route — validate and dispatch
-        print(f"[Orchestrator] Raw next_agents from LLM: {decision.next_agents}")
+        # print(f"[Orchestrator] Raw next_agents from LLM: {decision.next_agents}")
         valid_agents = [a.strip() for a in decision.next_agents if a.strip() and a.strip() in AGENT_REGISTRY]
         # in _routing_loop, after getting valid_agents, add:
         already_called = set(routing_ctx.accumulated_results.keys())
         duplicate_agents = [a for a in valid_agents if a in already_called]
         if duplicate_agents:
-            print(f"[Orchestrator] LLM tried to re-call already completed agents: {duplicate_agents} — forcing respond")
+            # print(f"[Orchestrator] LLM tried to re-call already completed agents: {duplicate_agents} — forcing respond")
             await self._force_respond(routing_ctx, ctx)
             return
         valid_agents = [a for a in valid_agents if a not in already_called]
-        print(f"[Orchestrator] Valid agents: {valid_agents}")
+        # print(f"[Orchestrator] Valid agents: {valid_agents}")
 
         NEVER_ROUTE = {"transcript"} # never route transcript, only do it at request of user. 
         valid_agents = [a for a in valid_agents if a not in NEVER_ROUTE]
@@ -406,7 +417,7 @@ class OrchestratorExecutor(Executor):
         valid_agents = valid_agents[:1]  # enforce sequential — one agent at a time
 
         if not valid_agents:
-            print("[Orchestrator] No valid agents in route decision — forcing respond")
+            # print("[Orchestrator] No valid agents in route decision — forcing respond")
             await self._force_respond(routing_ctx, ctx)
             return
 
@@ -414,7 +425,7 @@ class OrchestratorExecutor(Executor):
         message.conversation_state.routing_ctx = routing_ctx         
         message.conversation_state.routing_iteration = iteration + 1  
 
-        print(f"[Orchestrator] Dispatching -> {valid_agents}")
+        # print(f"[Orchestrator] Dispatching -> {valid_agents}")
         for agent_name in valid_agents:
             routing_ctx.agents_call_order.append(agent_name)
 
@@ -428,10 +439,10 @@ class OrchestratorExecutor(Executor):
                     "constraint_data": routing_ctx.accumulated_results.get("constraint_full", {}).get("constraint_data", {}),
                 }
                 if agent_name == "planning" and not spoke_data.get("courses"): # cut ahead early, empty courses guard
-                    print("[Orchestrator] No courses to rank — responding directly")
+                    # print("[Orchestrator] No courses to rank — responding directly")
                     await self._force_respond(routing_ctx, ctx)
                     return
-                print(f"[Orchestrator] Planning input courses: {[c.get('code') for c in spoke_data['courses']]}")
+                # print(f"[Orchestrator] Planning input courses: {[c.get('code') for c in spoke_data['courses']]}")
 
             else:
                 spoke_data = dict(routing_ctx.accumulated_results)
@@ -474,6 +485,12 @@ class OrchestratorExecutor(Executor):
                 f"Transcript on file: {bool(conversation_state.transcript_data)}."
             )
             self.thread = self.agent.get_new_thread()
-            await self.agent.run(summary, thread=self.thread)
-            print("[Orchestrator] Thread reset with summary")
+            raw = await self.agent.run(summary, thread=self.thread)
+            
+            if hasattr(raw, "usage_details") and raw.usage_details:
+                conversation_state.add_usage(
+                    raw.usage_details.get("input_token_count", 0) or 0,
+                    raw.usage_details.get("output_token_count", 0) or 0,
+                )
+            # print("[Orchestrator] Thread reset with summary")
         

@@ -56,9 +56,9 @@ class ParserAgent(ChatAgent):
         self.schema_path = schema_path
         self.query_schema = self._load_schema()
         
-        print(f"[Parser Agent] Initialized with model: {model}")
-        print(f"[Parser Agent] Loaded query schema from: {schema_path}")
-        print(f"[Parser Agent] Using LLM to match queries against schema")
+        # print(f"[Parser Agent] Initialized with model: {model}")
+        # print(f"[Parser Agent] Loaded query schema from: {schema_path}")
+        # print(f"[Parser Agent] Using LLM to match queries against schema")
     
     def _get_system_message(self) -> str:
         """Define the system message for the parser agent"""
@@ -76,48 +76,35 @@ CORE PRINCIPLES:
 - For prerequisite check queries like "Do I need X before taking Y", the TARGET course (what they want to take) is Y, not X.
   X is a related/mentioned course. Never set the prerequisite itself as the target.
 
-INTENT RECOGNITION:
-- course_info: Student asks about what a SPECIFIC named course covers, teaches, or contains.
-  The course may be referenced by full name, partial name, or informal shorthand.
-  Examples: "What is Software Methodology about?", "What do you learn in OS Design?",
-  "Tell me about Algorithms", "What topics does Data Structures cover?"
-  Key signal: one specific course is named + asking about its content/topics/structure.
+INTENT CLASSIFICATION (choose one):
+- course_recommendation: topic-based suggestions, no specific course named
+- course_info: one specific named course + asking about its content
+- prerequisite_check: "can I take X" or "what do I need for X"
+- clarification: user providing follow-up info after being asked
+- general_question: general CS program question
+- off_topic: weather, sports, jokes — clearly not CS advising
+- transcript_upload: user wants to share/upload their transcript
 
-- course_recommendation: Student wants suggestions across multiple possible courses.
-  They describe interests, goals, or career paths rather than naming a specific course.
-  Examples: "What courses should I take for systems?", "Recommend me AI courses",
-  "I'm interested in machine learning, what should I take?"
-  Key signal: no specific course named, or asking for a list/suggestions.
+INTENT RECOGNITION EDGE CASES:
+- transcript_upload signals: "look at my transcript", "here's my PDF", 
+  "courses I've taken", "want to see what I've completed", bare .pdf filename
+- If a user repeats a question with same intent, classify as that intent — NOT clarification
+- Pronouns like "they", "those", "them", "both" referring to prior courses → 
+  resolve to actual course names from session context, populate specific_courses
 
-- prerequisite_check: Student asks if they can take a course or what they need first.
-  Examples: "Do I need Calc II for Systems Programming?", "Can I take OS Design?"
+- For prerequisite_check: never put course names in interests.
+  Put ALL mentioned courses in specific_courses instead.
 
-- transcript_upload: Student wants to upload or share their transcript.
+ENTITY EXTRACTION:
+- year: freshman/sophomore/junior/senior/graduate or null
+- interests: CS topics only (AI, ML, Systems, etc.) — not course names
+- specific_courses: exact course names or codes explicitly mentioned
+- target_course: for prerequisite_check only — the course they WANT to take
+- career_path, gpa_priority, difficulty_preference, credit_hours, time_constraints: null if not stated
 
-- off_topic: Clearly unrelated to Rutgers CS courses, academic planning, or prerequisites.
-  Examples: "What's the weather?", "Tell me a joke", "Who won the game last night?"
-  Respond that you only assist with Rutgers CS course planning.
+CONFIDENCE: 0.8+ clear intent+entities, 0.5-0.8 clear intent missing entities, <0.5 ambiguous
 
-  ENTITY EXTRACTION RULES:
-- specific_courses: Course names or informal shorthands explicitly mentioned by the student.
-  ALWAYS populate this for prerequisite_check intents — every course name mentioned goes here.
-  Examples: "Intro to AI", "Systems Programming", "OS Design", "CS 111"
-  
-- interests: Topics, fields, or areas of study — NOT course names.
-  Examples: "machine learning", "systems", "web development", "AI" (when no specific course is named)
-
-- target_course: For prerequisite_check ONLY — the course the student WANTS to take.
-  If multiple courses are mentioned in a prereq query, leave this null and put all courses in specific_courses.
-
-- For prerequisite_check intents, never put course names in interests. 
-  "What are prereqs for Intro to AI and Systems Programming?" ->
-  specific_courses: ["Intro to AI", "Systems Programming"], interests: []
-
-If the query contains typos or is ambiguous, make your best guess at the intent
-and set needs_clarification: false unless the meaning is truly unrecoverable.
-Never stall on minor spelling errors.
-
-Always return valid JSON with your analysis.
+Always return valid JSON only — no preamble, no markdown fences.
 """
     
     def _load_schema(self) -> Dict:
@@ -130,13 +117,13 @@ Always return valid JSON with your analysis.
         try:
             with open(self.schema_path, 'r') as f:
                 schema = json.load(f)
-            print(f"[ParserAgent] Schema loaded successfully")
+            # print(f"[ParserAgent] Schema loaded successfully")
             return schema
         except FileNotFoundError:
-            print(f"[ParserAgent] WARNING: Schema file not found at {self.schema_path}")
+            # print(f"[ParserAgent] WARNING: Schema file not found at {self.schema_path}")
             return {}
         except json.JSONDecodeError as e:
-            print(f"[ParserAgent] ERROR: Invalid JSON in schema file: {e}")
+            # print(f"[ParserAgent] ERROR: Invalid JSON in schema file: {e}")
             return {}
     
     # Method used to parse queries. 
@@ -152,12 +139,12 @@ Always return valid JSON with your analysis.
         Returns:
             AgentResponse with parsed data or error
         """
-        print(f"[ParserAgent] Parsing query: '{query[:50]}...'")
+        # print(f"[ParserAgent] Parsing query: '{query[:50]}...'")
         
         try:
            parsed_data = await self._llm_parse(query, state, thread)
-           print(f"[ParserAgent] Parsed - Intent: {parsed_data.get('intent')}, "
-                  f"Confidence: {parsed_data.get('confidence'):.2f}")
+        #    print(f"[ParserAgent] Parsed - Intent: {parsed_data.get('intent')}, "
+                #   f"Confidence: {parsed_data.get('confidence'):.2f}")
            
            entities = parsed_data.get('entities', {})
            interests = entities.get('interests', [])
@@ -173,20 +160,24 @@ Always return valid JSON with your analysis.
                     "Are you exploring for a career path or general interest?"
                 ]
        
-            print(f"[ParserAgent] Parsed - Intent: {parsed_data.get('intent')}, "
-                    f"Confidence: {parsed_data.get('confidence'):.2f}")
+            # print(f"[ParserAgent] Parsed - Intent: {parsed_data.get('intent')}, "
+            #         f"Confidence: {parsed_data.get('confidence'):.2f}")
            
+           usage = parsed_data.pop("_usage", {})
+
            return AgentResponse(
                success=True,
                data=parsed_data,
                metadata={
                    "model_used":self.model,
-                   "parsing_method":"pure_llm"
+                   "parsing_method":"pure_llm",
+                   "input_token_count": usage.get("input_token_count", 0),
+                   "output_token_count": usage.get("output_token_count", 0),
                }
            )
         
         except Exception as e:
-            print(f"[ParserAgent] Error during parsing: {str(e)}")
+            # print(f"[ParserAgent] Error during parsing: {str(e)}")
             return AgentResponse(
                 success=False,
                 data=None,
@@ -342,17 +333,25 @@ Always return valid JSON with your analysis.
                     parsed['entities']['target_course'] = target_course
                     parsed['entities']['related_courses'] = related_courses
 
+                    if hasattr(response, "usage_details") and response.usage_details:
+                        parsed["_usage"] = {
+                            "input_token_count": response.usage_details.get("input_token_count", 0) or 0,
+                            "output_token_count": response.usage_details.get("output_token_count", 0) or 0,
+                        }
+                    else:
+                        parsed["_usage"] = {"input_token_count": 0, "output_token_count": 0}
+
                     return parsed
                 else:
-                    print(f"[ParserAgent] WARNING: No JSON found in LLM response")
-                    print(f"[ParserAgent] Response: {response_text[:200]}")
+                    # print(f"[ParserAgent] WARNING: No JSON found in LLM response")
+                    # print(f"[ParserAgent] Response: {response_text[:200]}")
                     return self._get_fallback_parse(query)
                 
         except json.JSONDecodeError as e:
-            print(f"[ParserAgent] JSON parsing error: {e}")
+            # print(f"[ParserAgent] JSON parsing error: {e}")
             return self._get_fallback_parse(query)
         except Exception as e:
-            print(f"[ParserAgent] LLM parsing error: {e}")
+            # print(f"[ParserAgent] LLM parsing error: {e}")
             import traceback
             traceback.print_exc()
             return self._get_fallback_parse(query)
