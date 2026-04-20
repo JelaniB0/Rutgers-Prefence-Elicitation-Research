@@ -300,6 +300,9 @@ class DataAgent(ChatAgent):
         retrieved_course_codes = retrieval_results['ids'][0]
         retrieved_distances = retrieval_results['distances'][0]
 
+        # print(f"[DEBUG] Retrieved codes: {retrieved_course_codes}")
+        # print(f"[DEBUG] Distances: {retrieved_distances}")
+
         retrieved_courses = []
         for i, code in enumerate(retrieved_course_codes):
             course = next((c for c in self.courses_data if c.get('code') == code), None)
@@ -315,16 +318,15 @@ class DataAgent(ChatAgent):
 
         try:
             filter_prompt = f"""
-            From these courses, remove ones that are weakly relevant.
+            From these courses, keep the ones that are relevant or potentially relevant to the student's interests.
+            Be generous — keep at least 8-10 courses if available. Only remove courses that are clearly unrelated.
 
-            Student:
-            {entities}
+            Student interests: {entities.get('interests', [])}
 
             Courses:
-            {json.dumps(retrieved_courses, indent=2)}
+            {json.dumps([{"code": c.get("code"), "title": c.get("title"), "description": c.get("description", "")[:200]} for c in retrieved_courses], indent=2)}
 
             Return JSON ONLY in this format:
-
             {{ "keep": ["01:198:111", "01:198:205"] }}
             """
 
@@ -353,6 +355,8 @@ class DataAgent(ChatAgent):
 
         except Exception as e:
             print(f"[DataAgent] LLM filtering failed, keeping original list: {e}")
+
+        # print(f"[DEBUG] After LLM filter: {[c.get('code') for c in retrieved_courses]}")
 
         return retrieved_courses
     

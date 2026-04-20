@@ -48,6 +48,7 @@ class ParserExecutor(Executor):
             )
 
         response = await self.parser.parse(enriched_query, message.conversation_state, thread=self.thread)
+        # print(f"[DEBUG] parsed_data: {response.data}")
 
         if hasattr(response, "metadata") and response.metadata:
             input_tokens = response.metadata.get("input_token_count", 0) or 0

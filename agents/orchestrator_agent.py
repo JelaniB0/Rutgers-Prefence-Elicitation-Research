@@ -204,6 +204,8 @@ Each turn you receive a context snapshot and must respond with a JSON decision.
 - When responding about availability, always mention the specific semester (e.g. "Spring 2026") not just "this semester" or "next semester".
 - course_recommendation intent MUST call planning after data_fetch completes. Never respond directly after data_fetch for recommendations — always route to planning first.
 - If a course has unknown or unverified availability (offered status is null/None), you MUST call data_lookup to verify — never assume not offered.
+- course_recommendation intent MUST call data_fetch first, NEVER data_lookup. data_lookup is ONLY for course_info intent when a specific course name or code is given.
+- Never call data_lookup to verify availability of recommendation results — that is not its purpose. If availability is unknown, respond with whatever data_fetch returned and note that availability is unverified.
 ## Response Rules
 - Only reference courses and prerequisites explicitly present in collected data. Never infer.
 - The "response" field must be plain conversational text. Never JSON, code blocks, or markdown fences.
@@ -314,6 +316,7 @@ class OrchestratorExecutor(Executor):
             resolved_semester=message.conversation_state.resolved_semester or {},
         )
 
+        # print(f"[DEBUG] routing_ctx prompt:\n{routing_ctx.to_prompt()}")
         await self._routing_loop(routing_ctx, message, ctx, iteration=0)
 
     # Spoke result collector
@@ -389,6 +392,7 @@ class OrchestratorExecutor(Executor):
 
         try:
             decision = RoutingDecision.from_llm_output(raw_text)
+            # print(f"[DEBUG] Orchestrator decision: mode={decision.mode}, agents={decision.next_agents}, reasoning={decision.reasoning}")
         except (json.JSONDecodeError, KeyError) as e:
             # print(f"[Orchestrator] Bad routing output: {e} — forcing respond mode")
             await self._force_respond(routing_ctx, ctx)

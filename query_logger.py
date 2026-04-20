@@ -1,6 +1,6 @@
 """
 Creates CSV log of queries, execution plan steps, agents invoked, and sources used.
-Automatically migrates existing CSV files to include any missing columns.
+Only migrates existing CSV files when schema has actually changed.
 """
 
 import csv
@@ -15,9 +15,9 @@ CSV_COLUMNS = [
     "response_time_sec",
     "query",
     "response",
-    "plan_steps",           # pipe-separated ordered steps, e.g. "Step 1: Fetch matching courses|Step 2: Rank and select top courses"
-    "agents_invoked",       # pipe-separated list of agent names, e.g. "parser|data|planning|orchestrator"
-    "sources_and_tools",    # structured detail of what each agent used, e.g. "data:rutgers_courses.json|planning:LLM"
+    "plan_steps",
+    "agents_invoked",
+    "sources_and_tools",
     "input_tokens",
     "output_tokens",
     "satisfied",
@@ -27,35 +27,44 @@ CSV_COLUMNS = [
 
 def _migrate_csv(filepath: str) -> None:
     """
-    Rewrites CSV to match current schema exactly:
-    - Adds missing columns
-    - Drops extra columns (like conversation_num)
+    Rewrites CSV to match current schema exactly.
+    Drops blank rows during migration.
     """
     with open(filepath, mode="r", newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    # Rebuild rows to match only current columns
     cleaned_rows = []
     for row in rows:
-        cleaned_row = {col: row.get(col, "") for col in CSV_COLUMNS}
-        cleaned_rows.append(cleaned_row)
+        if any(v.strip() for v in row.values()):
+            cleaned_rows.append({col: row.get(col, "") for col in CSV_COLUMNS})
 
     with open(filepath, mode="w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
+        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, lineterminator='\n')
         writer.writeheader()
         writer.writerows(cleaned_rows)
 
-    # print(f"[query_logger] Migrated '{filepath}' (dropped extra columns)")
-
 
 def _csv_exists(filepath: str = CSV_LOG_FILE) -> None:
-    """Create the CSV file with headers if it does not exist, or migrate it if columns are missing."""
+    """
+    Creates CSV with headers if missing.
+    Only migrates if the schema has actually changed — never rewrites unnecessarily.
+    """
     if not os.path.exists(filepath):
         with open(filepath, mode="w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
+            writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, lineterminator='\n')
             writer.writeheader()
-    else:
+        return
+
+    with open(filepath, mode="r", newline="", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                existing_columns = next(csv.reader([line]))
+                break
+        else:
+            existing_columns = []
+
+    if existing_columns != CSV_COLUMNS:
         _migrate_csv(filepath)
 
 
@@ -74,26 +83,18 @@ def log_query(
     filepath: str = CSV_LOG_FILE,
 ) -> None:
     """
-    Appends a row to the CSV log with details of the query, execution plan,
-    agents invoked, and sources/tools used.
-
-    Args:
-        session_id:     Stable ID for the current conversation session.
-        query:          The raw user query string.
-        response:       The final response delivered to the user.
-        agents_invoked: Ordered list of agent IDs that ran this turn.
-        agent_sources:  Maps agent ID → list of sources/tools it used.
-        plan_steps:     Pipe-separated plan step labels from PlanningTracer.as_log_string().
-        filepath:       Path to the CSV log file.
+    Appends a row to the CSV log with details of the query,
+    execution plan, agents invoked, and sources/tools used.
     """
+    if not query or not query.strip():
+        return
+
     _csv_exists(filepath)
 
     agent_sources = agent_sources or {}
 
-    # Pipe-separated agent names
     agents_str = "|".join(agents_invoked) if agents_invoked else "orchestrator"
 
-    # Detailed sources string: "agent:source1,source2|agent2:source1"
     source_parts: list[str] = []
     for agent in agents_invoked:
         sources = agent_sources.get(agent)
@@ -120,8 +121,5 @@ def log_query(
     }
 
     with open(filepath, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
+        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, lineterminator='\n')
         writer.writerow(row)
-
-# if __name__ == "__main__":
-#     _migrate_csv(CSV_LOG_FILE)

@@ -88,14 +88,6 @@ class PlanningAgent(ChatAgent):
                 )
  
             num_to_rank = min(len(courses), max_results)
-
-            # prompt preprocessing step to speed up LLM. 
-            RANKING_FIELDS = {"code", "title", "description", "prerequisites", "credits", "topics", "constraint_check"}
-
-            courses_to_rank = [
-                {k: v for k, v in c.items() if k in RANKING_FIELDS}
-                for c in courses[:max_results + 2]  # slight buffer so dedup rule has room to work
-            ]
  
             # Main ranking pass — constraints baked in from the start
             ranked_data = await self._llm_rank(courses, parsed_data, state, constraint_context, max_results, thread)
@@ -158,7 +150,14 @@ class PlanningAgent(ChatAgent):
             else "\nNo transcript provided — prerequisite eligibility cannot be verified."
         )
 
-        courses_json = json.dumps({k: v for k, v in parsed_data.items() if v not in (None, [], {}, "")}, indent=2)
+        # courses_json = json.dumps({k: v for k, v in parsed_data.items() if v not in (None, [], {}, "")}, indent=2)
+
+        RANKING_FIELDS = {"code", "title", "description", "prerequisites", "credits", "topics", "constraint_check"}
+        courses_to_rank = [
+            {k: v for k, v in c.items() if k in RANKING_FIELDS}
+            for c in courses[:max_results + 2]
+        ]
+        courses_json = json.dumps(courses_to_rank, indent=2)
 
         prompt = f"""Rank these Rutgers CS courses for a student. You have full information about
         both the student's preferences AND their academic constraints. Use both together.
@@ -171,8 +170,12 @@ class PlanningAgent(ChatAgent):
         - GPA Priority: {gpa_priority or 'Not specified'}
         {constraint_section}
 
-        AVAILABLE COURSES (with constraint annotations):
+        AVAILABLE COURSES: you MUST only recommend courses from this exact list.
+        Do NOT invent, recall, or substitute any course not present below.
+        If a course code or title is not in this list, it does not exist for this response.
+
         {courses_json}
+
 
         TASK: Select and rank the TOP {max_results} courses for this student.
 
@@ -255,9 +258,9 @@ class PlanningAgent(ChatAgent):
         }}
         """
 
-        return await self._run_and_parse(prompt, thread)
+        return await self._run_and_parse(prompt, courses, thread)
  
-    async def _run_and_parse(self, prompt: str, thread: AgentThread = None) -> Dict:
+    async def _run_and_parse(self, prompt: str, courses: List[Dict], thread: AgentThread = None) -> Dict:
         """Shared LLM call and JSON extraction used by both passes."""
         try:
             response = await self.run(prompt, thread=thread)
@@ -266,9 +269,14 @@ class PlanningAgent(ChatAgent):
             json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
             if json_match:
                 parsed = json.loads(json_match.group())
-                if 'ranked_courses' in parsed and isinstance(parsed['ranked_courses'], list):
+                if 'ranked_courses' in parsed and isinstance(parsed['ranked_courses'], list): # CONSTRAINT CHECK -> write about. 
+                    # Validation - strip any hallucinated codes not in the original course list
+                    valid_codes = {c.get("code") for c in courses}
+                    parsed["ranked_courses"] = [
+                        r for r in parsed["ranked_courses"]
+                        if r.get("course_code") in valid_codes
+                    ]
                     return parsed
-                # print(f"[PlanningAgent] Warning: unexpected JSON structure")
                 return {}
             else:
                 # print(f"[PlanningAgent] WARNING: No JSON in response: {response_text[:200]}")
