@@ -128,7 +128,7 @@ class DataExecutor(Executor):
             ))
 
         elif message.agent_name == "data_prereq":
-            print("[DataExecutor] Looking up courses for prereq check...")
+            # print("[DataExecutor] Looking up courses for prereq check...")
             
             targets = entities.get("specific_courses", [])
             if entities.get("target_course"):
@@ -155,7 +155,6 @@ class DataExecutor(Executor):
                 data={"courses": results},
                 conversation_state=message.conversation_state
             ))
-
 
 class ConstraintExecutor(Executor):
 
@@ -209,7 +208,7 @@ class PlanningExecutor(Executor):
     def __init__(self, chat_client: OpenAIChatClient, model_id: str):
         super().__init__(id="planning")
         self.planning_agent = PlanningAgent(client=chat_client, model=model_id)
-        self.thread = self.planning_agent.get_new_thread()
+        # self.thread = self.planning_agent.get_new_thread() # stateless intent parser. 
 
     @handler
     async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
@@ -237,7 +236,7 @@ class PlanningExecutor(Executor):
             state=message.conversation_state,
             constraint_context=constraint_context,
             max_results=5,
-            thread=self.thread
+            thread=None
         )
 
         await ctx.send_message(AgentResult(
@@ -461,3 +460,5 @@ if __name__ == "__main__":
     asyncio.run(main())
 
 # token usage, time, full conversation turn, input/output token (# of tokens can tell you how costly conversation can be), are you satisfied (yes/no), enter feedback if any
+
+# made parser stateless. 
