@@ -40,7 +40,7 @@ class ConversationState:
         self.last_intent = ""
         self.resolved_semester = None
         self.resolved_courses: Dict[str, Dict] = {}
-        self.MAX_HISTORY = 6
+        self.MAX_HISTORY = 12
         self.input_tokens = 0
         self.output_tokens = 0
 

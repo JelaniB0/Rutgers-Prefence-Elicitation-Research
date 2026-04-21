@@ -374,3 +374,102 @@ Please note, I could not verify the availability of some of these courses for th
    Prerequisites: 01:198:206 (Discrete Structures II).
 
 Note: Since no transcript was available, prerequisites for these courses have not been evaluated for your specific case. Please verify that you meet the stated prerequisites or consult with an academic advisor. Let me know if you'd like further assistance!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",8925,848,yes,Good Response
+2026-04-20 16:45:09,2026-04-20 04:46:01 PM,23.25,Looking for challenging courses that will prepare me for grad school,"Here are some challenging courses that can help prepare you for graduate school. Since I don't have access to your transcript, I can't confirm your eligibility for certain prerequisites, but I've included the details for each course for your reference. Please review them carefully and ensure you meet the prerequisites before registering:
+
+1) Data Management for Data Science (NB) (01:198:210)
+   This course focuses on managing large datasets and discovering patterns in data, which aligns well with foundational skills required for data science and analytics careers. It has no prerequisites, making it accessible regardless of your background.
+   Key benefits: Builds foundational skills for data science, teaches practical data acquisition and curation, and has no prerequisites.
+
+2) Introduction to Computer Science (01:198:111)
+   A challenging foundational course that includes topics like problem decomposition, Java programming, recursive algorithms, and data structures. It's designed to lay the groundwork for further computer science studies.
+   Key benefits: Provides a strong foundational start in CS, teaches essential programming and algorithmic skills, and has no prerequisites.
+
+3) Discrete Structures II (01:198:206)
+   This course offers advanced mathematical concepts such as graph theory and recurrence relations, critical for understanding algorithms and computational theory. It requires 01:198:205 as a prerequisite.
+   Key benefits: Covers advanced discrete mathematics topics essential for CS and is critical for deeper understanding of algorithms and theoretical CS. Please note prerequisites need to be verified.
+
+4) Introduction to Data Science (NB) (01:198:439)
+   This course covers essential algorithms and tools for solving real-world data science problems. Prerequisites include 01:198:205 (Discrete Structures I) and 01:640:152 (Calculus), but these can't be verified without a transcript.
+   Key benefits: Focuses on practical data science tools and concepts with strong relevance to data-driven career paths.
+
+5) Introduction to Artificial Intelligence (NB) (01:198:440)
+   Provides a broad introduction to artificial intelligence topics, including search, natural language understanding, and computer vision. The course has prerequisites such as multiple courses in discrete math and calculus II.
+   Key benefits: Broad introduction to AI, including key subfields, and prepares students for emerging technology roles.
+
+These courses are arranged based on accessibility and relevance to your graduate preparation. Please reach out if you'd like help verifying prerequisites or planning your coursework further!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",8660,905,no,"kind of irrelevant, could be better options."
+2026-04-21 13:28:12,2026-04-21 01:30:50 PM,35.89,What courses cover web development or full stack?,"Here are some courses at Rutgers that cover web development and full stack topics, ranked by relevance to your interests:
+
+1) Software Methodology (01:198:213)
+   This course covers principles, techniques, and tools used in building modern software applications, including object-oriented design and GUIs, which are core to web and application development.
+   Prerequisites: Data Structures (01:198:112).
+
+2) Principles of Information and Data Management (01:198:336)
+   Covers structured data, schema design, and database management systems critical for backend development.
+   Prerequisites: Calculus I, Data Structures, and Discrete Structures I or equivalent.
+
+3) Introduction to Computer Science (01:198:111)
+   An introductory programming course in Java focusing on problem solving and foundational programming concepts. Good if you're just starting out.
+   Prerequisites: None.
+
+4) Computer Security (01:198:419)
+   Important for securing web applications, covering cryptography, authentication, and web security fundamentals.
+   Prerequisites: Discrete Structures and Operating Systems or Internet Technology.
+
+Some courses like Principles of Programming Languages and Systems Programming are less relevant for web/full stack focus or have more prerequisites, so they're not recommended here.
+
+Since we don't have your transcript, I can't confirm if you meet all prerequisites for these courses, so please review the requirements or consult an advisor to plan accordingly. Let me know if you'd like help with course planning or other questions!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",8087,698,yes,Could've been a possibly better response but alright for now.
+2026-04-21 13:49:14,2026-04-21 01:52:14 PM,46.09,"I'm a sophomore interested in systems programming, what do you recommend?","Based on your interest in systems programming and your sophomore standing, here are some recommended courses you might consider:  
+
+1) Systems Programming (01:198:214)  
+This course focuses on C-level programming paradigms and the underlying computing architecture, core to systems programming skills. It requires Data Structures and another course (01:640:152) as prerequisites. It will help you develop low-level programming and systems thinking skills essential for a systems programming career.  
+
+2) Computer Architecture (01:198:211)  
+This course introduces core concepts in computer systems, memory, and the software/hardware interface. It's foundational for understanding how hardware and software interact, which is crucial for systems programming. It has one prerequisite, Data Structures.  
+
+3) Distributed Systems: Concepts and Design (01:198:417)  
+This advanced course covers design and communication in distributed systems, which extends systems programming into networked environments. It requires Operating Systems Design as a prerequisite, so you would need to meet that before enrolling.  
+
+4) Compilers (01:198:415)  
+This course explores compiler design and implementation, including code generation and optimization at the system level. It builds upon both Computer Architecture and Principles of Programming Languages, so those prerequisites need to be met first.  
+
+5) Principles of Programming Languages (01:198:314)  
+This course covers fundamental concepts about programming languages including memory and pointers, which supports understanding systems programming from a theoretical angle. It requires Discrete Structures I, Computer Architecture, and 01:640:152 as prerequisites.  
+
+Since transcript information is not available, I can't confirm your eligibility for these courses, but they align well with your interests and academic level. If you need help planning which courses to take next or want to verify prerequisites based on your transcript, feel free to ask!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",10744,1363,yes,"Nope, great response"
+2026-04-21 13:49:14,2026-04-21 01:54:06 PM,40.41,"of those courses, which 2 should i take ASAP","Based on the course rankings, I recommend you take these two courses as soon as possible:
+
+1) Computer Security (01:198:419)
+   This course provides a clear and focused study of computer security, including cryptography, authentication, web security, and VM-based security. It covers foundational and contemporary security approaches that are highly valuable in many CS career paths.
+   Prerequisites: Discrete Structures I or equivalent, and Operating Systems Design or Internet Technology plus a co-requisite course.
+
+2) Systems Programming (01:198:214)
+   A practical course on low-level programming concepts involving C programming, architecture mapping, and scripting for automation. This is important for gaining strong systems programming skills.
+   Prerequisites: Data Structures and an introductory programming course.
+
+These choices balance practical skills and foundational knowledge important for many advanced areas and future courses. Keep in mind that prerequisites need to be met, so verify your eligibility before enrolling. If you want, we can also discuss a plan to work towards completing prerequisites.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",12054,1170,yes,"Some speculation as to why exactly it picked these 2, should start tracking reasoning."
+2026-04-21 13:49:14,2026-04-21 01:58:35 PM,33.99,Can you suggest courses that are good for a software engineering career path?,"Here are some courses that would be great for pursuing a career in software engineering:
+
+1) Software Engineering (01:198:431)
+   This course covers key concepts in software engineering. It requires Software Methodology and one of Principles of Programming Languages, Principles of Information and Data Management, Software Design, or Compiler courses as prerequisites.
+   Prerequisites: Software Methodology (01:198:213) and one of Principles of Programming Languages (01:198:314), 336, 352, or 416.
+
+2) Software Methodology (01:198:213)
+   This course focuses on software development methodologies and practices.
+   Prerequisites: Data Structures (01:198:112).
+
+3) Principles of Information and Data Management (01:198:336)
+   This course discusses core concepts of managing data and information systems.
+   Prerequisites: 01:640:152, Data Structures (01:198:112), and Discrete Structures I (01:198:205) or equivalent.
+
+4) Topics in Computer Science (01:198:443)
+   Advanced topics in computer science that vary yearly based on current interests, which can be valuable to expand knowledge in specialized areas.
+   Prerequisites: Introduction to Computer Science (01:198:111) or equivalent.
+
+5) Introduction to Artificial Intelligence (01:198:440)
+   Covers foundational AI topics including search, knowledge representation, and natural language understanding, useful for broadening your software engineering expertise.
+   Prerequisites: Discrete Structures I and Calculus II (or equivalents).
+
+These courses build a strong foundation and expertise relevant to software engineering. If you want, I can also help with planning your course schedule or prerequisites next!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",10945,1258,yes,
+2026-04-21 13:49:14,2026-04-21 01:59:15 PM,14.29,Is CS 431 offered next semester?,"CS 431, Software Engineering (NB), is not offered for Fall 2026. If you were planning to take this course next semester, you might need to consider other options or plan to take it in a different semester.",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",9025,525,yes,Great response
+2026-04-21 13:49:14,2026-04-21 01:59:42 PM,12.62,What is CS 440 about?,"CS 440, Introduction to Artificial Intelligence (NB), is a broad introduction to artificial intelligence. The topics covered include search, knowledge representation, natural language understanding, and computer vision. The prerequisites for this course are Introduction to Discrete Structures I (01:198:205) or equivalent discrete math courses, and Calculus II for Mathematical and Physical Sciences (01:640:152) or Honors Calculus II (01:640:192). Let me know if you'd like more details or want to explore related courses!",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",9650,601,yes,
+2026-04-21 13:49:14,2026-04-21 02:00:56 PM,14.51,Tell me about Data Structures,"Data Structures (01:198:112) is a fundamental course that covers various ways to organize and manage data efficiently in computer programs. This course is offered in Fall 2026. The prerequisite for this course is Introduction to Computer Science (01:198:111). If you're interested in strengthening your foundational programming and problem-solving skills, this course is a great choice.",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",9951,551,yes,

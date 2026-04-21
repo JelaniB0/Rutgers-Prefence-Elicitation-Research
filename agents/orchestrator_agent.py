@@ -376,7 +376,7 @@ class OrchestratorExecutor(Executor):
             return
 
         # print(f"[Orchestrator] Routing iteration {iteration + 1}")
-        raw = await self.agent.run(routing_ctx.to_prompt(), thread=self.thread)
+        raw = await self.agent.run(routing_ctx.to_prompt(), thread=None)  # keep thread for context, but don't feed prompt back in — rely on conversation history for context instead
 
         # print(type(raw))
         # print(hasattr(raw, "usage_details"))
@@ -406,7 +406,31 @@ class OrchestratorExecutor(Executor):
                 # print("[Orchestrator] Empty response in terminal mode — forcing respond")
                 await self._force_respond(routing_ctx, ctx)
                 return
-            await ctx.yield_output(decision.response)
+            
+            final_prompt = (
+                f"{routing_ctx.to_prompt()}\n\n"
+                f"Write your response to the student now. "
+                f"Mode is '{decision.mode}'. Suggested response:\n{decision.response}"
+            )
+            final_raw = await self.agent.run(final_prompt, thread=self.thread)
+            
+            if hasattr(final_raw, "usage_details") and final_raw.usage_details:
+                message.conversation_state.add_usage(
+                    final_raw.usage_details.get("input_token_count", 0) or 0,
+                    final_raw.usage_details.get("output_token_count", 0) or 0,
+                )
+            
+            final_text = final_raw.content if hasattr(final_raw, "content") else str(final_raw)
+            
+            # Strip JSON wrapper if LLM still returned one
+            try:
+                parsed = RoutingDecision.from_llm_output(final_text)
+                if parsed.response:
+                    final_text = parsed.response
+            except (json.JSONDecodeError, KeyError):
+                pass  # plain text response, use as-is
+
+            await ctx.yield_output(final_text)
             return
 
         # Route — validate and dispatch
@@ -416,7 +440,7 @@ class OrchestratorExecutor(Executor):
         already_called = set(routing_ctx.accumulated_results.keys())
         duplicate_agents = [a for a in valid_agents if a in already_called]
         if duplicate_agents:
-            # print(f"[Orchestrator] LLM tried to re-call already completed agents: {duplicate_agents} — forcing respond")
+            # print(f"[Orchestrator] LLM tried to re-call already completed agents: {duplicate_agents} 0 forcing respond")
             await self._force_respond(routing_ctx, ctx)
             return
         valid_agents = [a for a in valid_agents if a not in already_called]
@@ -425,10 +449,10 @@ class OrchestratorExecutor(Executor):
         NEVER_ROUTE = {"transcript"} # never route transcript, only do it at request of user. 
         valid_agents = [a for a in valid_agents if a not in NEVER_ROUTE]
 
-        valid_agents = valid_agents[:1]  # enforce sequential — one agent at a time
+        valid_agents = valid_agents[:1]  # enforce sequential, only one agent at a time. 
 
         if not valid_agents:
-            # print("[Orchestrator] No valid agents in route decision — forcing respond")
+            # print("[Orchestrator] No valid agents in route decision - forcing respond")
             await self._force_respond(routing_ctx, ctx)
             return
 
@@ -474,38 +498,36 @@ class OrchestratorExecutor(Executor):
             f"Full collected data:\n{json.dumps(routing_ctx.accumulated_results, indent=2)}\n\n"
             f"You must now respond directly to the student based on whatever data is available."
         )
-        raw = await self.agent.run(prompt, thread=self.thread)
+        # thread=None — force respond is a fallback, keep it lean
+        raw = await self.agent.run(prompt, thread=None)
         raw_text = raw.content if hasattr(raw, "content") else str(raw)
 
         try:
             decision = RoutingDecision.from_llm_output(raw_text)
-            if decision.mode in ("clarify", "respond") and decision.response:
-                text = decision.response
-            else:
-                text = raw_text
+            text = decision.response if decision.mode in ("clarify", "respond") and decision.response else raw_text
         except (json.JSONDecodeError, KeyError):
             text = raw_text
 
         await ctx.yield_output(text)
 
     async def _maybe_reset_thread(self, conversation_state):
-        if len(conversation_state.conversation_history) >= 4:
-            resolved = [f"{code}: {v['title']}" for code, v in conversation_state.resolved_courses.items()]
-            
-            # pull last student message for context continuity
-            last_user_msg = next(
-                (m["content"] for m in reversed(conversation_state.conversation_history) 
-                if m["role"] == "user"), ""
+        self.thread = self.agent.get_new_thread()
+    
+        history = conversation_state.conversation_history
+        if history:
+            # Grab last 2 full turns (up to 4 messages: user+assistant pairs)
+            recent = history[-4:]
+            lines = "\n".join(
+                f"{m['role'].upper()}: {m['content'][:400]}"
+                for m in recent
             )
-            
             summary = (
-                f"Continuing session. Courses discussed: {resolved or 'none'}. "
+                f"You are continuing a conversation with a Rutgers CS student.\n\n"
+                f"## Recent conversation\n{lines}\n\n"
                 f"Transcript on file: {bool(conversation_state.transcript_data)}. "
-                f"Last student message: '{last_user_msg}'"
+                f"Use this context when writing your response to the student."
             )
-            self.thread = self.agent.get_new_thread()
             raw = await self.agent.run(summary, thread=self.thread)
-                
             if hasattr(raw, "usage_details") and raw.usage_details:
                 conversation_state.add_usage(
                     raw.usage_details.get("input_token_count", 0) or 0,
