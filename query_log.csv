@@ -583,3 +583,649 @@ Since you've already completed Discrete Structures I, just make sure to check if
 2026-04-21 17:44:30,2026-04-21 06:04:27 PM,7.27,Can you recommend a good Netflix show?,"I can't help with that! If you have any questions about your coursework or need guidance on your academic path, feel free to ask!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",9882,363,yes,
 2026-04-21 17:44:30,2026-04-21 06:05:16 PM,8.18,What are some tips for dealing with stress?,I recommend reaching out to student wellness services or counseling resources at Rutgers for tips on managing stress. They can provide guidance tailored to your needs!,data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",10446,409,yes,"Same thing, good response but needs to add text telling user to stir convo back to cs related queries."
 2026-04-21 17:44:30,2026-04-21 06:06:15 PM,0.20,How do I apply for financial aid?,I encountered an error parsing your query. Please try again.,data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",0,0,NULL,NULL
+2026-04-21 18:08:25,2026-04-21 06:09:25 PM,8.73,How do I apply for financial aid?,It sounds like you have questions about applying for financial aid. I recommend visiting the Rutgers financial aid office website or contacting them directly for the most accurate information regarding the application process.,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",4134,412,yes,Same recommendation as other off topic queries.
+2026-04-21 18:08:25,2026-04-21 06:09:58 PM,8.27,"""What's a good recipe for pasta?""","It seems like you're asking for a pasta recipe, which isn't related to CS courses. If you have any questions about your courses or need academic advice, feel free to ask!",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",4572,402,yes,
+2026-04-21 18:08:25,2026-04-21 06:10:18 PM,7.63,Help me plan a trip to Europe,"It sounds like you're interested in planning a trip to Europe! While I can help with questions about courses and advising, I recommend checking travel resources or local travel agencies for the best help with your trip planning.",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",4996,419,yes,
+2026-04-21 18:08:25,2026-04-21 06:10:36 PM,8.91,What's the history of Rutgers University?,"I recommend checking the university's official website or the library for information about Rutgers University's history. If you have questions about courses or advising, feel free to ask!",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",5345,408,yes,
+2026-05-17 16:16:54,2026-05-17 04:20:48 PM,45.45,"I've taken CS 112, what courses am I now eligible for?","Based on your completion of CS 112, here are some courses you may now be eligible to take:
+
+1) Topics in Computer Science (NB) (01:198:442)
+   Advanced topics in computer science, with content varying year to year based on student and faculty interests. This course is flexible and ideal for exploration.
+   Prerequisites: 01:198:111 or 01:198:142.
+
+2) Software Methodology (NB) (01:198:213)
+   Introduces principles of software development, object-oriented programming, collaborative tools, and platforms such as GUI or mobile applications. Great for strengthening application development skills.
+   Prerequisites: 01:198:112 (Data Structures).
+
+3) Systems Programming (NB) (01:198:214)
+   Focuses on C-level programming, scripting, and interactions between programs and computer architecture. Useful for understanding low-level programming and building automation.
+   Prerequisites: 01:198:112 (Data Structures) and 01:640:152.
+
+4) Principles of Programming Languages (NB) (01:198:314)
+   Covers theories and paradigms in programming languages, such as functional and imperative approaches, parsing, and abstraction. Valuable if you're interested in language design or theory.
+   Prerequisites: 01:198:205 (Discrete Structures I), 01:198:211 (Computer Architecture), and 01:640:152.
+
+5) Computer Security (NB) (01:198:419)
+   Explores applied cryptography, security principles, authentication/authorization, and modern web security practices. Relevant for anyone curious about security or planning a career in cybersecurity.
+   Prerequisites: Not explicitly listed here.
+
+Keep in mind that each course may have prerequisites beyond CS 112, so check your transcript for completion of those as well. If there are courses here that interest you, or if you have a specific career goal, let me know—I can help you plan the next steps in your CS journey!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",11547,1374,NULL,NULL
+2026-05-17 16:50:48,2026-05-17 04:54:00 PM,11.33,What do I need to take before CS 344?,"To take CS 344 (Design and Analysis of Algorithms), you need to have completed the following courses:
+
+01:198:112: Data Structures
+01:198:205: Introduction to Discrete Structures I
+01:198:206: Introduction to Discrete Structures II
+
+Based on your transcript, you've already completed all these prerequisites. You're eligible to register for CS 344! If you have other questions or need advice about planning your courses, just let me know.",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",6668,597,yes,Good Response.
+2026-05-17 16:50:48,2026-05-17 04:55:07 PM,14.41,What are the prerequisites for Machine Learning Principles?,"The prerequisites for MACHINE LEARNING PRINCIPLES (01:198:461) are:
+
+- 01:198:112
+- 01:198:206
+- 01:640:250
+
+This course offers a systematic introduction to machine learning, addressing both theoretical and practical aspects such as linear models for classification and regression, support vector machines, regularization, model selection, and an introduction to deep learning. Application areas include computer vision, natural language processing, and information retrieval.
+
+If you'd like more details about any of the prerequisite courses or want to check your eligibility based on your transcript, just let me know!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",7358,651,yes,
+2026-05-17 16:50:48,2026-05-17 04:57:23 PM,29.83,Do I need Discrete Structures II before taking Algorithms?,"You do not need Discrete Structures II before taking Algorithms. Based on the prerequisite information for Algorithms (01:198:345 - ALGORITHMS IN SOCIETY), the required courses are Introduction to Computer Science (01:198:112) or Introduction to Data Structures (01:198:210). If you have completed either one of these, you're eligible to enroll in Algorithms. Discrete Structures II is not listed as a prerequisite.",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",8069,714,no,Hallucinated titles but got the overall question correct.
+2026-05-17 16:50:48,2026-05-17 05:00:51 PM,40.63,"I've taken CS 112, what courses am I now eligible for?","Based on your completion of CS 112, here are some courses you may be eligible for. Please review the prerequisites for each—some may require additional courses beyond CS 112 before enrolling.
+
+1) Topics in Computer Science (NB) (01:198:442)
+This course covers advanced and contemporary topics in computer science, which vary according to the interests of students and faculty. It's a flexible opportunity to explore new or emerging areas.
+Prerequisites: 01:198:111 or 01:198:142.
+
+2) Principles of Information and Data Management (NB) (01:198:336)
+This course introduces foundational database concepts, conceptual modeling, schema design, and advanced data integration and querying.
+Prerequisites: 01:640:152 and 01:198:112 (Data Structures) and (01:198:205 (Discrete Structures I) or 14:332:312).
+
+3) Software Engineering (NB) (01:198:431)
+An overview of teamwork and collaborative software development, system design, specification skills, and experience working on large-scale projects.
+Prerequisites: 01:198:213 (Software Methodology (NB)) and one of 01:198:314 (Principles of Programming Languages (NB)), 336, 352, or 416.
+
+4) Distributed Systems: Concepts and Design (NB) (01:198:417)
+This course explores distributed architectures and skills relevant to networked systems.
+Prerequisites: 01:198:416 (Operating Systems Design (NB)), with a grade of C or better.
+
+5) Software Methodology (NB) (01:198:213)
+Covers object-oriented design, implementation, and development of modern software for desktop or mobile platforms.
+Prerequisites: 01:198:112 (Data Structures).
+
+If you'd like to focus on a particular area or career path in CS, let me know and I can help refine your recommendations further!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",13788,1373,no,Not all courses have cs 112 as a pure prereq
+2026-05-17 16:50:48,2026-05-17 05:01:40 PM,19.91,What do I need before I can take Compilers?,"To take Compilers (01:198:415), you will need to complete:
+
+- 01:198:211 (Computer Architecture) with a grade of C or better (or alternatively, 14:332:331 with a grade of C or better)
+- 01:198:314 (Principles of Programming Languages (NB)) with a grade of C or better
+
+Make sure you've successfully completed these courses before registering for Compilers. If you'd like, I can check your transcript to confirm you meet the requirements or help plan your next steps!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",9330,664,yes,
+2026-05-17 17:02:35,2026-05-17 05:03:37 PM,10.44,Can a sophomore take CS 440? Is that wise?,"CS 440, Introduction to Artificial Intelligence, requires that you have completed both discrete structures (or equivalent discrete math courses) and Calculus II or honors Calculus II. As a sophomore, whether you can take it depends on if you've completed these prerequisites. If you have, it is academically reasonable to take CS 440; however, this course covers complex AI topics and may be challenging if you lack sufficient foundational coursework. If you are comfortable with math and discrete structures and eager to learn AI concepts like search algorithms, knowledge representation, and natural language processing, it can be a great choice. Otherwise, consider building up your prerequisites and foundational courses before enrolling.",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5783,684,yes,great answer
+2026-05-17 17:02:35,2026-05-17 05:05:11 PM,26.38,"If I had to choose between machine learning principles and deep learning, which one should I take?","Choosing between Machine Learning Principles and Introduction to Deep Learning depends on your goals and background. <br><br>1) INTRODUCTION TO DEEP LEARNING (01:198:462)<br>   This course is focused specifically on deep learning and neural networks, covering both foundational machine learning concepts and advanced deep learning topics. It is great if you want a specialized, up-to-date perspective on neural networks and practical deep learning applications. Prerequisites include calculus, data structures, and a programming course.<br><br>2) MACHINE LEARNING PRINCIPLES (01:198:461)<br>   This course offers a broader and systematic introduction to machine learning, including theoretical and practical aspects such as linear models, support vector machines, regularization, and an introduction to deep learning. It is ideal if you want a solid overall foundation in machine learning, with some exposure to deep learning. Prerequisites include calculus, data structures, and probability/statistics.<br><br>If you are deeply interested in neural networks and have some background in required prerequisites, Introduction to Deep Learning would be excellent. If you prefer a comprehensive understanding of machine learning concepts before specializing, Machine Learning Principles is a strong choice. Both are valuable and complementary for a machine learning career.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",12164,1021,yes,ehhh this was pretty good just has weird symbols in the response.
+2026-05-17 17:02:35,2026-05-17 05:06:44 PM,11.76,What courses unlock after completing CS 211?,"After completing CS 211 (Computer Architecture), one course that typically unlocks for you is Principles of Programming Languages (01:198:314). This course requires CS 211 along with Discrete Structures I (01:198:205) and 01:640:152 as prerequisites.\n\nPlease note that course offerings may vary, so I recommend confirming availability for the semester you plan to take it.",data_lookup -> data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",9884,706,yes,answered with one course but honestly a pretty good answer.
+2026-05-17 17:02:35,2026-05-17 05:07:44 PM,5.22,Do I need Calc 2 for any CS electives?,I couldn't find a course name in your query. Could you be more specific?,data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",4859,303,NULL,NULL
+2026-05-17 17:02:35,2026-05-17 05:08:57 PM,8.86,Do I need calculus II to take any CS electives?,I couldn't find a course name in your query. Could you be more specific?,data_fetch -> data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",7329,480,NULL,NULL
+2026-05-17 17:02:35,2026-05-17 05:13:55 PM,28.54,what courses are good for machine learning,"Here are some highly recommended courses for machine learning:
+
+1) MACHINE LEARNING PRINCIPLES (NB) (01:198:461)
+   This course provides a systematic introduction to machine learning, including theoretical and practical aspects. Topics include linear models for classification and regression, support vector machines, regularization and model selection, and an introduction to deep learning. Application examples cover areas like computer vision, natural language processing, and information retrieval.
+   Prerequisites: 01:198:112, 0:198:206, 01:640:250.
+
+2) INTRODUCTION TO DEEP LEARNING (NB) (01:198:462)
+   Focuses on deep learning theories and practices along with fundamental machine learning principles. Topics include neural networks, modern deep learning, and advanced applications.
+   Prerequisites: 01:640:250 and 01:198:112 and (01:198:206 OR 01:640:477 OR 01:960:379).
+
+3) Introduction to Artificial Intelligence (NB) (01:198:440)
+   Offers a broad introduction to AI, including search, knowledge representation, natural language understanding, and computer vision, which overlap with machine learning applications.
+   Prerequisites: (01:198:205 or equivalent) AND (01:640:152 or 01:640:192).
+
+4) Introduction to Data Science (NB) (01:198:439)
+   Covers algorithms and tools for data-science problems that support machine learning pipelines, focusing on data preparation, exploration, and analysis.
+   Prerequisites: 01:198:205 and 01:640:152.
+
+5) Data Management for Data Science (NB) (01:198:210)
+   Teaches skills for acquiring, curating, and managing large datasets, which are important for machine learning projects.
+   Prerequisites: 01:198:142 or 01:960:142 or 01:198:111.
+
+Please note that the specific semester availability for these courses is currently unknown, so I recommend checking the Rutgers course schedule or contacting the CS department for the upcoming semester offerings. If you need help planning your course schedule or verifying prerequisites, feel free to ask!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",15923,1440,yes,
+2026-05-17 17:02:35,2026-05-17 05:14:37 PM,7.57,which of those should I prioritize or take asap,Could you please tell me a bit about your interests or career goals? That way I can help you prioritize which courses would be best to take as soon as possible.,data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",9043,644,NULL,NULL
+2026-05-17 17:17:27,2026-05-17 05:18:28 PM,19.88,what are some courses I can take in machine learning,"Here are some courses you can consider for studying machine learning at Rutgers:
+
+1) MACHINE LEARNING PRINCIPLES (01:198:461)
+   This course is a systematic introduction to machine learning covering both theoretical and practical aspects of statistical methods. Topics include linear models for classification and regression, support vector machines, regularization, model selection, and an introduction to deep learning. Application examples come from areas like computer vision, natural language processing, and information retrieval.
+   Prerequisites: 01:198:112 (Data Structures), 0:198:206, and 01:640:250.
+
+2) INTRODUCTION TO DEEP LEARNING (01:198:462)
+   This course introduces the theories, principles, and practice of deep learning, including traditional neural networks and modern deep learning. Topics cover fundamentals of machine learning, neural networks, various deep learning methods, applications, and advanced topics.
+   Prerequisites: 01:640:250, 01:198:112, and one of (01:198:206 OR 01:640:477 OR 01:960:379).
+
+3) Introduction to Artificial Intelligence (01:198:440)
+   Although broader than just machine learning, this course includes foundational AI topics like search, knowledge representation, natural language processing, and computer vision which complement machine learning knowledge.
+   Prerequisites: Introductory discrete structures and calculus courses.
+
+4) Introduction to Data Science (01:198:439)
+   Data science courses support machine learning by covering data handling and analysis, important for machine learning workflows.
+   Prerequisites: Discrete Structures I and Calculus II.
+
+These courses provide a solid foundation and advanced topics in machine learning and related fields. Check with your academic plan for prerequisite fulfillment and semester offerings.",data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",7417,1249,NULL,NULL
+2026-05-17 17:17:27,2026-05-17 05:43:26 PM,13.30,which of those should I prioritize or take ASAP,"Based on the courses you mentioned, here’s how you might prioritize them:
+
+1) Introduction to Computer Science (01:198:111)
+   This course is foundational, providing an intensive introduction to computer science including programming and basic data structures. It is often a prerequisite for more advanced courses, so taking this ASAP will set a strong base.
+
+2) Data Structures (01:198:112)
+   Since you likely need a solid understanding of data structures early on, this course should be taken soon after or alongside your introduction to computer science if possible.
+
+3) Topics in Computer Science (NB) (01:198:443 or 01:198:442)
+   These are advanced topics courses that require Introduction to Computer Science or equivalent as a prerequisite. You should plan to take these after completing the intro course (01:198:111) to ensure you meet the prerequisites and are prepared for the advanced material.
+
+In summary, prioritize completing Introduction to Computer Science first, then Data Structures, and subsequently the Topics in Computer Science courses. If you want to discuss semester availability and planning for a particular semester, I’m here to help!",data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",8085,935,NULL,NULL
+2026-05-17 17:46:28,2026-05-17 05:48:30 PM,66.55,what courses are good for machine learning,"Based on your interest in machine learning, here are some course recommendations at Rutgers:
+
+1) MACHINE LEARNING PRINCIPLES (NB) (01:198:461)
+   Systematic introduction to machine learning, covering theoretical and practical aspects of using statistical methods, including topics like linear models, support vector machines, regularization, and deep learning. Application examples include computer vision, natural language processing, and information retrieval.
+   Prerequisites: 01:198:112, 01:198:206, and 01:640:250.
+
+2) INTRODUCTION TO DEEP LEARNING (NB) (01:198:462)
+   Covers theories, principles, and practices of traditional neural networks and modern deep learning, including fundamentals of machine learning, modern deep learning, applications, and advanced topics.
+   Prerequisites: 01:640:250, 01:198:112, and one of (01:198:206, 01:640:477, 01:960:379).
+
+3) Introduction to Artificial Intelligence (NB) (01:198:440)
+   A broad introduction to artificial intelligence, covering search, knowledge representation, natural language understanding, and computer vision.
+   Prerequisites: (01:198:205 or equivalent), and (01:640:152 or equivalent).
+
+4) Introduction to Data Science (NB) (01:198:439)
+   Focuses on practical data analysis and processing techniques, which is critical in data-driven fields like machine learning.
+   Prerequisites: 01:198:205 and 01:640:152.
+
+5) Data Management for Data Science (NB) (01:198:210)
+   Covers skills for acquiring, curating, exploring, and managing real-world data in databases and large datasets.
+   Prerequisites: 01:198:142, 01:960:142, or 01:198:111.
+
+Please note that I couldn't verify whether these courses are currently offered or if you meet the required prerequisites, as I do not have access to your transcript. If you'd like further assistance with prerequisites or to determine which courses are currently available next semester, feel free to let me know!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",11275,1438,yes,
+2026-05-17 17:46:28,2026-05-17 05:51:14 PM,69.25,which of those should I prioritize or take asap,"Here are the courses you should prioritize, based on their foundational relevance, ease of access, and their value for future studies:
+
+1) Data Management for Data Science (01:198:210)
+   Introduces data management concepts, including data acquisition, curation, and management of large datasets. Applicable across various fields.
+
+2) Data Structures (01:198:112)
+   A foundational course in computer science, teaching critical concepts like lists, trees, and complexity analysis that are needed for advanced topics and problem-solving.
+
+3) Principles of Information and Data Management (01:198:336)
+   Focuses on structured data, relational databases, efficient data management, and schema design. Great for careers in data science or software engineering.
+
+4) Introduction to Data Science (01:198:439)
+   Covers the basics of data science, including tools and algorithms for data preparation, analysis, and application. Broadly applicable to modern tech careers.
+
+Courses that may require you to complete specific prerequisites:
+
+- Introduction to Deep Learning (01:198:462): Focuses on theories and practices in neural networks and modern deep learning. Requires prerequisites such as linear algebra, data structures, and foundational machine learning courses.
+
+- Machine Learning Principles (01:198:461): Covers the theory and practice of machine learning, with a focus on statistical methods and applications like computer vision and natural language processing. Requires prerequisites in data structures, linear algebra, and foundational machine learning.
+
+If you have already completed any of these prerequisites, or if you'd like me to verify prerequisites for any course specifically, let me know! I'd also be happy to help prioritize further based on your interests or career goals.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",12356,1419,NULL,NULL
+2026-05-17 18:54:31,2026-05-17 06:58:24 PM,95.64,"I want to continue taking AI related courses, what else can I take?","Here are some AI-related courses you could consider for continuing your studies:
+
+1) Topics in Computer Science (NB) (01:198:443)
+   This course offers advanced topics tailored to students' and faculty's interests. Given your interest in AI, it likely covers AI-focused topics in some offerings, making it a great choice. Prerequisites include 01:198:111 or 01:198:142.
+
+2) Topics in Computer Science (NB) (01:198:442)
+   Another advanced topics course with flexible content that may include AI subjects. It has a broader credit load (4 credits) and similar prerequisites (01:198:111 or 01:198:142).
+
+3) Data Management for Data Science (NB) (01:198:210)
+   This course focuses on data acquisition, curation, and management, all valuable for AI applications that depend on large datasets. Prerequisites are 01:198:142 or 01:960:142 or 01:198:111.
+
+4) Principles of Information and Data Management (NB) (01:198:336)
+   Covers database and data modeling concepts helpful for AI data infrastructure and knowledge representation. Prerequisites are 01:640:152 and 01:198:112 and (01:198:205 or 14:332:312).
+
+Each of these offers unique skills relevant to AI, balancing advanced theory and practical data science. Let me know if you want details on any of these or help with planning your semesters!",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",13808,1212,NULL,NULL
+2026-05-17 18:54:31,2026-05-17 07:02:16 PM,24.39,Can you tell me more about brain inspired computing?,"Here are some courses that align well with your interest in brain inspired computing:
+
+1) Data Management for Data Science (01:198:210)
+   This course provides knowledge and skills needed to acquire and curate real-world data, explore data to discover patterns, and manage large datasets with databases. These are foundational skills for brain inspired computing, which often relies on large datasets and computational modeling.
+   Prerequisites: 01:198:142 or 01:960:142 or 01:198:111.
+
+2) Topics in Computer Science (01:198:443)
+   This advanced topics course varies according to student and faculty interests and may include brain inspired computing themes in some semesters. It offers exposure to diverse cutting-edge computer science areas that could complement your focus.
+   Prerequisites: 01:198:111 or 01:198:142.
+
+3) Topics in Computer Science (01:198:442)
+   Another advanced topics course with broad coverage of current research interests in computer science, offering opportunities to explore areas related to brain inspired computing.
+   Prerequisites: 01:198:111 or 01:198:142.
+
+4) Systems Programming (01:198:214)
+   While more general, this course provides low-level programming knowledge and computing architecture understanding that can indirectly benefit brain inspired computing, especially in hardware and simulation aspects.
+   Prerequisites: 01:198:112 (Data Structures) and 01:640:152.
+
+Please note that some courses have prerequisites that need to be verified for your eligibility. If you would like, I can assist you in checking which prerequisites you have completed or help plan your schedule accordingly.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",11853,1237,NULL,NULL
+2026-05-17 19:05:39,2026-05-17 07:08:15 PM,89.27,can you tell me more about brain inspired computing,"Brain-inspired Computing (NB) (01:198:425) dives into computational techniques and models inspired by the architecture and functioning of the brain. This course explores how principles from neuroscience can inform innovative approaches to computing, including neural networks and advanced machine learning strategies. Prerequisites: 01:198:206 (Discrete Structures II).
+If you're interested in learning how brain science overlaps with state-of-the-art computing, this course offers a unique interdisciplinary perspective. Let me know if you'd like more details, such as typical topics or example projects!",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5950,654,NULL,NULL
+2026-05-17 19:05:39,2026-05-17 07:10:17 PM,29.56,would the class be useful if i wanted to do work at an ai startup or large ai lab like anthropic?,"If you're interested in working at an AI startup or a large AI lab like Anthropic, Brain-inspired Computing (NB) (01:198:425) could be a very valuable course. This class covers computational models and techniques inspired by the brain—such as neural networks and learning algorithms—which lie at the heart of cutting-edge AI research and industry development. Understanding how neuroscience shapes innovative computing approaches may give you a unique edge, especially in environments where new ideas and models are being explored and deployed. The prerequisite for this course is Discrete Structures II (01:198:206), so be sure you've completed that. Please note, its current availability for upcoming semesters is unverified, so you may want to check later or consult with the department. If it becomes available, it could definitely bolster your background for AI roles in both startups and major labs.",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",6954,988,NULL,NULL
+2026-05-17 19:05:39,2026-05-17 07:12:17 PM,73.85,what other courses are similar to it?,"Here are several courses at Rutgers that are similar to 'Brain-inspired Computing (NB)' and are highly relevant to areas in artificial intelligence, machine learning, and data science. Each is listed with a brief description and its prerequisites:
+
+1) Introduction to Data Science (NB) (01:198:439)
+A hands-on, broad introduction to data science, including algorithm design, data preparation, analysis, and presentation. This course is excellent for building foundational skills in data science and algorithmic thinking.
+Prerequisites: The prerequisite details were not present in the available data.
+
+2) Introduction to Artificial Intelligence (NB) (01:198:440)
+A broad introduction to artificial intelligence, covering search, knowledge representation, natural language understanding, and computer vision.
+Prerequisites: (01:198:205 INTRODUCTION TO DISCRETE STRUCTURES I or 14:332:202 DISCRETE MATH ECE or 14:332:312 DISCRETE MATHEMATICS ECE) AND (01:640:152 CALCULUS II FOR MATHEMATICAL AND PHYSICAL SCIENCES or 01:640:192 HONORS CALCULUS II)
+
+3) Principles of Information and Data Management (NB) (01:198:336)
+This course covers structured and unstructured data management, database queries, and schema design. You will learn conceptual information modeling and advanced data topics.
+Prerequisites: Prerequisite details were not included in the available data.
+
+4) MACHINE LEARNING PRINCIPLES (NB) (01:198:461)
+A systematic introduction to machine learning, both theoretical and practical. Covers linear models for classification and regression, support vector machines, regularization, model selection, and deep learning, with application examples from diverse fields.
+Prerequisites: 01:198112, 0:198:206, 01:640:250
+
+5) INTRODUCTION TO DEEP LEARNING (NB) (01:198:462)
+This course presents theories, principles, and practices of neural networks and modern deep learning. Topics include machine learning fundamentals, neural networks, advanced deep learning, and real-world applications.
+Prerequisites: 01:640:250 and 01:198:112 and (01:198:206 OR 01:640:477 OR 01:960:379)
+
+If you'd like more specific guidance based on your interests or available semesters, feel free to let me know! I'm happy to help you explore these options in more detail.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",13070,1601,NULL,NULL
+2026-05-17 19:24:56,2026-05-17 07:26:04 PM,33.54,Can you recommend me ai related courses to take,"Here are some AI-related courses that might interest you:
+
+1) INTRODUCTION TO DEEP LEARNING (01:198:462)
+This course covers fundamental theories and modern applications of traditional neural networks and deep learning. Topics include machine learning fundamentals, neural network architectures, and advanced AI applications. Prerequisites: 01:640:250, 01:198:112, and one of 01:198:206, 01:640:477, or 01:960:379.
+
+2) MACHINE LEARNING PRINCIPLES (01:198:461)
+A systematic introduction to machine learning including theory and practical use of statistical methods. It covers linear models, support vector machines, regularization, model selection, and an introduction to deep learning, with applications in vision, NLP, and more. Prerequisites: 01:198:112, 01:198:206, 01:640:250.
+
+3) Introduction to Artificial Intelligence (01:198:440)
+Broad introduction to AI covering search algorithms, knowledge representation, natural language understanding, and computer vision. Prerequisites: (01:198:205 or 14:332:202 or 14:332:312) and (01:640:152 or 01:640:192).
+
+4) Introduction to Data Science (01:198:439)
+Covers data manipulation, analysis, and problem solving skills important for AI, focusing on data-centric methods. Prerequisites and offerings are less direct but helpful for AI contexts.
+
+5) Principles of Information and Data Management (01:198:336)
+Focuses on databases and information management, useful for handling structured and semi-structured data in AI projects. Prerequisites exist but are not confirmed.
+
+Please note that the availability of these courses for upcoming semesters is currently unknown, and you should verify prerequisites based on your completed coursework. Let me know if you'd like guidance on how to prepare for these or any other questions!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",11234,1358,NULL,NULL
+2026-05-17 19:24:56,2026-05-17 07:31:27 PM,18.36,"out of those recommended courses, which two should I take ASAP","Based on the courses you've been recommended, the two you should take ASAP are:
+
+1) Introduction to Computer Science (01:198:111)
+   This course lays the foundational programming and computational concepts needed for many advanced courses. Taking this early will prepare you for courses like Data Structures and others that require it as a prerequisite.
+   Prerequisites: None.
+
+2) Data Management for Data Science (NB) (01:198:210)
+   This course provides essential skills for handling, curating, and exploring real-world data, which is highly valuable for many career paths. It requires either Introduction to Computer Science or equivalent as a prerequisite, so these two align well.
+   Prerequisites: 01:198:142 or 01:960:142 or 01:198:111.
+
+Principles of Information and Data Management (NB) (01:198:336) has heavier prerequisites including Discrete Structures I and Data Structures, so it would be best taken after completing those foundational courses.",data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",8568,987,NULL,NULL
+2026-05-17 19:33:03,2026-05-17 07:35:52 PM,15.67,what courses should I take if i want to work at anthropic,"I'd love to help you pick the best courses for a career at Anthropic! To make sure I suggest the most relevant ones, could you please tell me your current academic year or level and any specific topics or skills related to Anthropic that you're interested in?",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",4651,560,NULL,NULL
+2026-05-18 14:59:22,2026-05-18 03:02:04 PM,38.50,What courses should I take if I'm interested in machine learning?,"Based on your interest in machine learning, here are some courses that can help you build a strong foundation and explore relevant topics:
+
+1) Data Management for Data Science (NB) (01:198:210)
+   This course provides knowledge and skills needed to acquire and curate real-world data, explore data to discover patterns and distributions, and manage large datasets with databases.
+   Prerequisites: 01:198:142 or 01:960:142 or 01:198:111.
+
+2) Principles of Information and Data Management (NB) (01:198:336)
+   Covers fundamental principles of managing and organizing information and data which are critical for machine learning projects.
+   Prerequisites: 01:640:152 and 01:198:112 (Data Structures) and (01:198:205 (Discrete Structures I) or 14:332:312).
+
+3) Topics in Computer Science (NB) (01:198:443)
+   Offers advanced topics that vary each year; could include machine learning topics according to faculty and student interests.
+   Prerequisites: 01:198:111 or 01:198:142.
+
+4) Topics in Computer Science (NB) (01:198:442)
+   Similar to the other Topics course with varying advanced CS topics including potentially machine learning.
+   Prerequisites: 01:198:111 or 01:198:142.
+
+If you want more specific courses focused specifically on machine learning algorithms or AI, let me know and I can help you find those as well!",data_fetch -> constraint_full,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM",9070,1099,yes,Need to test run without transcript uploaded
+2026-05-18 14:59:22,2026-05-18 03:03:36 PM,52.74,"I'm a junior who wants to get into backend development, any suggestions?","Here are some strong course options tailored for a junior interested in backend development, focusing on courses that build relevant skills and match your experience level:
+
+1) Software Engineering (NB) (01:198:431)
+   This course is top-ranked for backend development as it covers specification, design, and implementation of large-scale software systems, which are crucial for backend developers. It offers practical, team-based development experience and advanced software engineering concepts.
+   Prerequisites: Please confirm you meet the listed prerequisites as this course requires relevant foundational courses.
+
+2) Systems Programming (NB) (01:198:214)
+   Systems Programming provides knowledge of C-level programming and system architecture understanding. These skills are valuable for backend developers, especially for performance-critical or low-level backend operations.
+   Prerequisites: Data Structures and introductory programming courses.
+
+3) Computer Security (NB) (01:198:419)
+   Security is vital for backend development. This course covers authentication, authorization, web security, and applied cryptography, enhancing your ability to build secure backend services.
+   Prerequisites: Ensure you have completed the required introductory courses.
+
+4) Principles of Information and Data Management (NB) (01:198:336)
+   Databases and data management are fundamental for backend roles. This course teaches querying, schema design, and database management system services.
+   Prerequisites: Data Structures, Discrete Structures I, and others as specified.
+
+5) Data Management for Data Science (NB) (01:198:210)
+   This course involves data acquisition, curation, and management of large datasets, which supports backend development related to handling data effectively.
+   Prerequisites: Introductory programming and data-focused courses.
+
+Courses titled ""Topics in Computer Science"" were not recommended due to their variable content and lack of direct relevance to backend development.
+
+Please review these options and let me know if you'd like guidance on enrollment or prerequisites for any specific course!",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",16988,1391,yes,
+2026-05-18 15:11:47,2026-05-18 03:15:48 PM,112.18,Can you recommend some good electives for someone interested in cybersecurity?,"Here are some great electives to consider if you're interested in cybersecurity:
+
+1) Computer Security (01:198:419)
+   This course directly focuses on computer security topics including applied cryptography, authentication, authorization, web security, and virtual machine security. It's highly relevant to cybersecurity.
+   Prerequisites: 01:198:205 (Discrete Structures I) or 14:332:202; and one of 01:198:416 (Operating Systems Design) or 01:198:352 (Internet Technology) and 01:640:152.
+
+2) Topics in Computer Science (01:198:443)
+   This course covers advanced and varying topics in computer science which may include security-related subjects depending on the year. It offers flexibility to explore emerging topics.
+   Prerequisites: 01:198:111 or 01:198:142.
+
+3) Principles of Information and Data Management (01:198:336)
+   While focused on data management, this course includes learning about database systems and data querying, supporting knowledge important for data security.
+   Prerequisites: 01:640:152 and 01:198:112 (Data Structures) and (01:198:205 or 14:332:312).
+
+4) Systems Programming (01:198:214)
+   Teaches C-level programming and system tools useful for understanding vulnerabilities and exploit development in cybersecurity.
+   Prerequisites: 01:198:112 (Data Structures) and 01:640:152.
+
+Each of these courses will build skills and knowledge important in cybersecurity. Computer Security (01:198:419) ranks the highest and is most directly aligned with your interests. If you want to explore a broader range of topics or deeper system-level understanding, the others complement very well.",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",13882,1255,yes,
+2026-05-18 15:11:47,2026-05-18 03:16:38 PM,35.03,I want to learn more about databases and data management,ERROR: tokens_limit_reached,CRASHED,parser|orchestrator,parser:LLM|orchestrator:LLM,8268,849,no,auto-logged: token limit crash
+2026-05-18 15:26:07,2026-05-18 03:29:14 PM,71.22,I want to learn more about databases and data management,"Here are some courses at Rutgers that focus on databases and data management, ranked according to your interest:
+
+1) Principles of Information and Data Management (NB) (01:198:336)
+   This course offers a comprehensive understanding of database concepts, schema design, relational databases, and database management system services. You'll learn to query structured and unstructured data.
+   Prerequisites: 01:640:152 and 01:198:112 (Data Structures) and (01:198:205 (Discrete Structures I) or 14:332:312).
+
+2) Data Management for Data Science (NB) (01:198:210)
+   This class provides knowledge and skills needed to acquire, curate, and manage real-world data. It covers data exploration and management of large datasets, preparing you for data science roles involving databases.
+   Prerequisite: 01:198:142 or 01:960:142 or 01:198:111.
+
+3) Principles of Programming Languages (NB) (01:198:314)
+   While less directly tied to databases, this course is valuable for its coverage of programming paradigms, abstractions, and modularity—helpful for broader software development and general CS foundation.
+   Prerequisites: 01:198:205 (Discrete Structures I), 01:198:211 (Computer Architecture), and 01:640:152.
+
+4) Topics in Computer Science (NB) (01:198:443)
+   This elective covers advanced topics in CS. Content varies each year, and it sometimes includes areas relevant to data management, but the focus changes according to student and faculty interests.
+   Prerequisite: 01:198:111 or 01:198:142.
+
+If you'd like more information about any specific course or want to check eligibility based on your transcript, let me know. I can also help you plan your schedule or suggest next steps for prerequisite completion!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",10212,1268,yes,
+2026-05-18 15:26:07,2026-05-18 03:31:06 PM,78.65,What are good courses for someone who wants to work at a big tech company?,"Here are some excellent Rutgers CS courses that align well with the skills sought by big tech companies:
+
+1) Software Methodology (NB) (01:198:213)
+   This course builds the foundation for software engineering: object-oriented design, GUI and mobile development, and collaborative software construction. It's highly applicable to industry roles. Recommended prerequisites: Data Structures (01:198:112).
+
+2) Software Engineering (NB) (01:198:431)
+   Focuses on specification, design, and implementation of large software projects, including team-based development—just like in tech companies. Prerequisites: Software Methodology (01:198:213) and another intermediate CS course.
+
+3) Data Management for Data Science (NB) (01:198:210)
+   Teaches principles of acquiring, curating, and managing large datasets and working with databases. These skills are increasingly important in modern tech workplaces. Prerequisites: Introductory programming or data science background.
+
+4) Systems Programming (NB) (01:198:214)
+   Provides practical experience with C and scripting languages, and dives into low-level architecture—crucial for performance-oriented tech roles. Prerequisites: Data Structures (01:198:112) and 01:640:152 (Calculus II).
+
+5) Principles of Information and Data Management (NB) (01:198:336)
+   Covers advanced database concepts, information representation, schema design, and big data systems—all highly relevant in tech. Prerequisites: Data Structures, Discrete Math, and a math course.
+
+For all of these, it's important to verify which prerequisites you've already completed, and which courses are offered in upcoming semesters. If you'd like, I can discuss course availability and help map out your optimal schedule, based on your transcript and future plans. Let me know if you'd like more details on any course!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",14096,1258,yes,
+2026-05-18 15:26:07,2026-05-18 03:32:15 PM,55.56,"I'm interested in AI and robotics, what should I take next semester?",ERROR: tokens_limit_reached,CRASHED,parser|orchestrator,parser:LLM|orchestrator:LLM,8066,637,no,auto-logged: token limit crash
+2026-05-18 15:35:34,2026-05-18 03:39:36 PM,70.26,"I'm interested in AI and robotics, what should I take next semester?","Based on your interests in AI and robotics, here are two strongly recommended courses for Fall 2026:
+
+1) INTRODUCTION TO COMPUTATIONAL ROBOTICS (NB) (01:198:460)
+   General introduction to robotics from a computational perspective with a focus on mobile robots. You'll gain practical experience with different robotic platforms and industry-standard software.
+   Prerequisite: 01:198:206 (Discrete Structures II) or permission of instructor.
+
+2) Brain-inspired Computing (NB) (01:198:425)
+   Focuses on neuro-mimetic and neuro-inspired computing, exploring advanced AI concepts like vision and movement recognition, which can connect to robotics as well.
+   Prerequisite: 01:198:206 (Discrete Structures II).
+
+Both courses are offered for Fall 2026. If you haven't taken 01:198:206 yet, plan to complete it soon or consult the instructor for permission. Let me know if you want to discuss difficulty, workload, or other course options!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",7710,931,yes,
+2026-05-18 15:35:34,2026-05-18 03:40:36 PM,27.31,Looking for challenging courses that will prepare me for grad school,"To help recommend challenging courses that will best prepare you for grad school, could you share what areas of computer science or research you're most interested in? For example, are you drawn to AI, systems, theory, data science, or something else? This way, I can suggest options that not only match your goals but also align with your interests and previous coursework.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",5231,553,yes,
+2026-05-18 15:35:34,2026-05-18 03:44:16 PM,144.67,more like system theory,"Here are some course recommendations at Rutgers NB that are closely related to system theory, ranked by relevance and fit:
+
+1) Brain-inspired Computing (NB) (01:198:425)
+   This course explores neuro-mimetic and neuro-inspired computing — understanding and designing complex adaptive systems inspired by the brain. You'll engage with concepts like neuromorphic networks for vision and movement, which are highly relevant to system theory. Offered Fall 2026.
+   Prerequisites: 01:198:206 (Discrete Structures II).
+
+2) Systems Programming (NB) (01:198:214)
+   Focuses on low-level programming and how high-level code maps to hardware architecture, providing essential understanding for system-level behavior and optimization. Offered Fall 2026.
+   Prerequisites: 01:198:112 (Data Structures) and 01:640:152.
+
+3) INTRODUCTION TO COMPUTATIONAL ROBOTICS (NB) (01:198:460)
+   Covers the fundamentals of robotics from a computational systems perspective, emphasizing mobile robots and the integration of control, computation, and system design. Offered Fall 2026.
+   Prerequisites: 01:198:206 (Discrete Structures II) or instructor permission.
+
+4) ALGORITHMS IN SOCIETY (NB) (01:198:345)
+   Teaches how algorithms are applied to real-world societal systems and decision-making contexts, which can help develop your system-level thinking. Offered Fall 2026.
+   Prerequisites: 01:198:112 (Data Structures) or 01:198:210 (Data Management for Data Science).
+
+5) Principles of Information and Data Management (NB) (01:198:336)
+   Focuses on database systems, data modeling, and systems-level information integration. It's more about information systems but touches on system-theory concepts within complex data architecture. Offered Fall 2026.
+   Prerequisites: 01:640:152; 01:198:112 (Data Structures); and (01:198:205 (Discrete Structures I) or 14:332:312).
+
+If you need more details about any course or wish to check if you meet the prerequisites, just let me know!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",11102,1473,yes,answered but the response could be better and it took very long.
+2026-05-18 15:35:34,2026-05-18 03:46:07 PM,69.37,What courses cover web development or full stack?,"Here are the top Rutgers courses for web development or full stack, ranked by relevance to your interests:
+
+1) Software Methodology (NB) (01:198:213)
+   Focuses on principles and techniques for building modern software applications, including object-oriented design, graphical user interfaces, and collaborative software construction—foundational for full stack and web development.
+   Prerequisite: 01:198:112 (Data Structures).
+
+2) Principles of Information and Data Management (NB) (01:198:336)
+   Covers conceptual modeling, database design, and querying data with an emphasis on web context, making it very relevant for backend and data-driven web apps.
+   Prerequisites: 01:640:152 and 01:198:112 (Data Structures) and (01:198:205 (Discrete Structures I) or 14:332:312).
+
+3) Computer Security (NB) (01:198:419)
+   Addresses web security and broader security issues essential for full stack roles, including applied cryptography and authentication.
+   Prerequisite: 01:198:205 (Discrete Structures I) or 14:332:202; and one of 01:198:416 (Operating Systems Design (NB)) or 01:198:352 (Internet Technology (NB)) and 01:640:152.
+
+4) Principles of Programming Languages (NB) (01:198:314)
+   Provides a strong foundation in programming paradigms which can help when working with diverse web and full stack frameworks.
+   Prerequisites: 01:198:205 (Discrete Structures I), 01:198:211 (Computer Architecture) and 01:640:152.
+
+5) Database Systems Implementation (NB) (01:198:437)
+   Focuses on database internals and web-related database management and optimization—important for backend/full stack developers.
+   Prerequisites: 01:198:336 (Principles of Information and Data Management (NB)), 01:198:214 (Systems Programming (NB)).
+
+If you’d like more information about any of these courses or want help planning based on your transcript, I’m glad to help! Let me know if you'd like info on prerequisites or availability for a particular semester.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",12598,1407,NULL,NULL
+2026-05-18 15:35:34,2026-05-18 03:49:20 PM,127.20,Can you suggest courses that are good for a software engineering career path?,"Here are some courses at Rutgers that are especially valuable for a software engineering career path:
+
+1) Software Methodology (NB) (01:198:213)
+   Explores principles, techniques, and tools for building modern software applications, including object-oriented design and GUI development.
+   Prerequisite: 01:198:112 (Data Structures).
+
+2) Data Management for Data Science (NB) (01:198:210)
+   Provides foundations in data acquisition, curation, and management, which are valuable in many software engineering roles that deal with real-world data and databases.
+   Prerequisite: 01:198:142 or 01:960:142 or 01:198:111. (This may be more accessible depending on your completed courses.)
+
+3) Systems Programming (NB) (01:198:214)
+   Focuses on low-level programming, system automation, and architecture—skills important for software engineering especially if you're interested in performance or hardware-level development.
+   Prerequisite: 01:198:112 (Data Structures) and 01:640:152.
+
+4) Principles of Information and Data Management (NB) (01:198:336)
+   Covers database systems, schema design, and conceptual modeling—essential for software engineers dealing with structured and unstructured data.
+   Prerequisites: 01:640:152 and 01:198:112 (Data Structures) and (01:198:205 (Discrete Structures I) or 14:332:312).
+
+5) Principles of Programming Languages (NB) (01:198:314)
+   Investigates different programming paradigms, abstraction, and modular design. It also includes concepts in compiler and interpreter design useful for advanced software engineering.
+   Prerequisites: 01:198:205 (Discrete Structures I), 01:198:211 (Computer Architecture) and 01:640:152.
+
+These courses are ranked by their direct relevance to software engineering and their accessibility based on common prerequisites. If you need more guidance on planning your path or checking eligibility based on your transcript, let me know—I'm here to help!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",14310,1338,yes,
+2026-05-18 15:35:34,2026-05-18 03:52:05 PM,46.09,Am I eligible for Systems Programming?,"Based on your transcript and the prerequisites for Systems Programming (NB) (01:198:214), you are eligible to take this course for Fall 2026 if you have completed 01:198:112 (Data Structures) and 01:640:152. If you have completed these courses, you should have no problem enrolling. If you have not taken them yet, please let me know and I can help you plan your schedule around these requirements. If you have any other questions or need help choosing additional courses, I'm happy to assist!",data_prereq -> constraint_prereq,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM",14095,706,yes,"Good to note that despite what framework sees, it's not overly confident on answer and notes to user to double check to ensure they are eligible, though they should be."
+2026-05-18 15:35:34,2026-05-18 03:54:58 PM,113.85,"I'm a sophomore interested in systems programming, what do you recommend?","Based on your sophomore standing and your interest in systems programming, here are some course recommendations you can consider for Fall 2026, prioritized according to how well they fit your goals:
+
+1) Systems Programming (NB) (01:198:214)
+   This course dives deeply into C-level programming, exploring how high-level programs map to underlying computer architecture and covers scripting for automation and scaling. It is a foundational course for systems programming and prepares you for more advanced systems topics.
+   Prerequisites: 01:198:112 (Data Structures) and 01:640:152.
+
+2) Operating Systems Design (NB) (01:198:416)
+   Focuses on process and thread management, synchronization, scheduling, and memory management. This course is a direct next step after Systems Programming and will give you hands-on experience with OS internals.
+   Prerequisites: 01:198:214 (Systems Programming (NB)) or (14:332:331 and 14:332:351).
+
+3) Computer Security (NB) (01:198:419)
+   Covers security principles, cryptography, and virtual machine-based security design. While security is a systems-adjacent field, this course will help you build secure systems, complementing your programming knowledge.
+   Prerequisites: 01:198:205 (Discrete Structures I) or 14:332:202; and one of 01:198:416 (Operating Systems Design (NB)) or 01:198:352 (Internet Technology (NB)) and 01:640:152.
+
+4) Principles of Programming Languages (NB) (01:198:314)
+   Explores different programming paradigms and language design, which helps deepen your understanding of software implementation and systems behavior. This is valuable for broadening your systems skill set.
+   Prerequisites: 01:198:205 (Discrete Structures I), 01:198:211 (Computer Architecture), and 01:640:152.
+
+5) Database Systems Implementation (NB) (01:198:437)
+   While less directly related, this course examines the internals of database management systems, which can be a challenging and rewarding systems project. You'll gain practical experience building large-scale systems.
+   Prerequisites: 01:198:336 (Principles of Information and Data Management (NB)), 01:198:214 (Systems Programming (NB)).
+
+All of these courses are offered for Fall 2026. Make sure you have completed the listed prerequisites before enrolling, or let me know if you'd like help planning your coursework sequence. If you want to explore other aspects of systems, such as networking or embedded systems, please let me know and I can suggest additional courses!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",16642,1606,yes,
+2026-05-18 15:35:34,2026-05-18 03:57:21 PM,94.82,What is CS 440 about?,"CS 440 is 'Introduction to Artificial Intelligence' (01:198:440). It provides a broad introduction to artificial intelligence, covering topics such as search, knowledge representation, natural language understanding, and computer vision. Prerequisites for this course include either 01:198:205 (Introduction to Discrete Structures I) or 14:332:202/312 (Discrete Mathematics ECE), as well as either 01:640:152 (Calculus II for Mathematical and Physical Sciences) or 01:640:192 (Honors Calculus II). If you're interested in learning more about AI fundamentals and its applications, this is a great course to consider!",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",15008,639,yes,
+2026-05-18 15:35:34,2026-05-18 03:57:44 PM,12.86,Tell me about Data Structures,ERROR: tokens_limit_reached,CRASHED,parser|orchestrator,parser:LLM|orchestrator:LLM,9034,385,no,auto-logged: token limit crash
+2026-05-18 16:02:51,2026-05-18 04:03:59 PM,25.38,Tell me about Data Structures,"Data Structures (01:198:112) is a foundational course in computer science that covers how data can be organized, managed, and efficiently processed using a variety of data structures such as arrays, linked lists, stacks, queues, trees, and graphs. This course helps build your understanding of algorithms and how they interact with different structures, making it essential for more advanced CS topics. Prerequisites: 01:198:111 (Introduction to Computer Science). If you haven't completed 01:198:111 yet, you'll need to take it before enrolling in Data Structures.",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5411,635,yes,
+2026-05-18 16:35:23,2026-05-18 04:37:33 PM,46.74,What topics does Operating Systems Design cover?,"Operating Systems Design (01:198:416) is a course at Rutgers that requires Systems Programming (01:198:214) or Electrical & Computer Engineering prerequisites (14:332:331 and 14:332:351). The detailed topics covered in Operating Systems Design aren't available in the currently collected data, but it typically builds on systems programming knowledge and explores advanced concepts related to operating system structure, resource management, and system design principles. If you need a more detailed breakdown of topics, you might consider looking at the official syllabus or contacting the department for the most up-to-date information.",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5478,694,yes,
+2026-05-18 16:35:23,2026-05-18 04:40:36 PM,52.51,What's covered in 01:198:344?,"01:198:344 is Design and Analysis of Algorithms. This course covers algorithm design paradigms such as greedy algorithms, dynamic programming, and divide and conquer. It also emphasizes rigorous analysis of correctness and efficiency. The prerequisites for this course are 01:198:112, 01:198:205, and 01:198:206. If you have any questions about the course content or how it fits into your academic plans, feel free to ask!",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5367,552,yes,
+2026-05-18 16:35:23,2026-05-18 04:41:46 PM,17.22,What do I need to take before CS 344?,"To take Design and Analysis of Algorithms (01:198:344), you must complete the following prerequisites:
+
+Prerequisites: 01:198:112, 01:198:205, and 01:198:206.
+
+If you have additional questions about these prerequisites, such as what each course covers or when they're offered, please let me know!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",6078,506,yes,
+2026-05-18 16:35:23,2026-05-18 04:44:41 PM,18.22,are those courses being offered?,"Here's the latest availability information I have for the courses you mentioned:
+
+1) Operating Systems Design (NB) (01:198:416): Unfortunately, this course is currently not offered (specific semester unknown).
+
+2) Design and Analysis of Algorithms (01:198:344): This course is being offered, but the exact semester is not specified in the current data.
+
+If you need more details about a particular semester, please let me know and I can try to find the most up-to-date information for you.",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5391,515,no,"Should be taking about prereqs being offered, also specific semester or not specified semester should not be there."
+2026-05-18 16:35:23,2026-05-18 04:45:50 PM,22.71,Do I need Discrete Structures II before taking CS 344?,"Yes, you need to complete Discrete Structures II (01:198:206) before taking CS 344 (Design and Analysis of Algorithms). The prerequisites for CS 344 are 01:198:112, 01:198:205, and 01:198:206. If you haven't yet taken Discrete Structures II, make sure to complete it beforehand so you'll be eligible to enroll in CS 344. Let me know if you have questions about scheduling or preparing for these courses!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",7638,620,yes,
+2026-05-18 16:35:23,2026-05-18 04:48:35 PM,64.92,"I've taken CS 112, what courses am I now eligible for?","Based on your completion of CS 112, here are some courses you might consider next. Note that for several advanced courses, full eligibility depends on other prerequisites (like Discrete Structures or Calculus II), which you may want to verify individually.
+
+1) Introduction to Artificial Intelligence (NB) (01:198:440)
+This course provides a broad foundation in artificial intelligence concepts, including search, knowledge representation, natural language understanding, and computer vision.
+Prerequisites: Discrete Structures I (01:198:205 or equivalent), Calculus II (01:640:152 or 01:640:192).
+
+2) Computer Security (NB) (01:198:419)
+Covers computer security principles, applied cryptography, authentication, and contemporary security topics.
+Prerequisites: Not fully detailed above—please confirm in the official course database or with an advisor.
+
+3) Principles of Programming Languages (NB) (01:198:314)
+In-depth focus on syntax, semantics, and paradigms in programming languages, great for students interested in compilers or language design.
+Prerequisites: Not fully detailed above—please confirm in the official course database or with an advisor.
+
+4) Computer Architecture (01:198:211)
+Explores computer systems, C programming, memory, and the interface between software and hardware.
+Prerequisites: Data Structures (01:198:112).
+
+5) Introduction to Computer Science (01:198:111)
+If you haven't taken this yet (but since you've done CS 112, you likely have), it's an introduction to programming, basic algorithms, and Java.
+Prerequisites: None.
+
+You may be eligible for additional CS electives, such as variable-topics courses (01:198:442/443), but their subjects and prerequisites can vary each semester. For more accurate course planning, please review your completed prerequisites or reach out with a full list of taken courses, as that will ensure the best possible recommendations.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",12382,1302,no,"Pretty eh answer, answer quality could be way better."
+2026-05-18 16:35:23,2026-05-18 04:49:38 PM,7.06,Do I need Calc 2 for any CS electives?,I couldn't find a course name in your query. Could you be more specific?,data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5266,277,NULL,NULL
+2026-05-18 16:35:23,2026-05-18 04:50:18 PM,9.52,"Yeah, do I need calculus II before I take future CS electives?",I couldn't find a course name in your query. Could you be more specific?,data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",5840,272,NULL,NULL
+2026-05-18 16:35:23,2026-05-18 04:53:12 PM,90.65,"I'm interested in working for openAI, what courses are most applicable toward that goal?","Here are the most relevant Rutgers CS courses for preparing to work at OpenAI:
+
+1) INTRODUCTION TO DEEP LEARNING (NB) (01:198:462)
+Introduction to deep learning, including theories, principles, and practices of traditional neural networks and modern deep learning. Covers fundamentals of machine learning, neural networks, and advanced topics.
+Prerequisites: 01:640:250 and 01:198:112 and (01:198:206 OR 01:640:477 OR 01:960:379).
+
+2) MACHINE LEARNING PRINCIPLES (NB) (01:198:461)
+Systematic introduction to machine learning, covering theoretical and practical aspects using statistical methods, including linear models, SVMs, and an introduction to deep learning. Applications include computer vision and natural language processing.
+Prerequisites: 01:198:112, 01:198:206, 01:640:250.
+
+3) Introduction to Artificial Intelligence (NB) (01:198:440)
+Broad introduction to artificial intelligence, including search, knowledge representation, natural language understanding, and computer vision.
+Prerequisites: 01:198:205 (or equivalent), AND 01:640:152 (or equivalent).
+
+4) Introduction to Data Science (NB) (01:198:439)
+Focus on data science concepts and practice, including problem solving and algorithms relevant to working with data in AI applications.
+Prerequisites: 01:198:205 and 01:640:152.
+
+5) Data Management for Data Science (NB) (01:198:210)
+Covers data acquisition, cleaning, and management, essential skills for supporting AI workflows and handling large datasets.
+Prerequisites: Not explicitly stated.
+
+Please note: Your eligibility for these courses depends on completion of the listed prerequisites. Since I don't have your transcript, I can't confirm if you meet them yet. For the most AI-relevant preparation at OpenAI, prioritize the deep learning, machine learning, and AI survey courses. If you have questions about a particular course or want to discuss building your schedule, let me know!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",15632,1357,NULL,NULL
+2026-05-18 16:35:23,2026-05-18 04:57:26 PM,168.39,Which of those courses should I take as soon as possible? I can only take 2 more cs courses as I am a senior. Which of the ones that you recommended me should I prioritize?,"Given that you can only enroll in two more CS courses as a senior, I recommend prioritizing the following from your list based on relevance and potential impact for your academic and career trajectory:
+
+1) INTRODUCTION TO DEEP LEARNING (NB) (01:198:462)
+   This course offers an in-depth focus on deep learning methods and their applications in modern AI. You'll explore neural networks, machine learning fundamentals, and advanced deep learning topics, preparing you for roles in AI or advanced study.
+   Prerequisites: 01:640:250 and 01:198:112 and (01:198:206 OR 01:640:477 OR 01:960:379).
+
+2) MACHINE LEARNING PRINCIPLES (NB) (01:198:461)
+   A highly relevant course for seniors, it provides a systematic introduction to machine learning, theoretical foundations, and real-world ML application examples. This is ideal if you're interested in building strong, practical ML skills applicable to many CS paths.
+   Prerequisites: 01:198:112, 01:198:206, 01:640:250.
+
+If your interests lean more toward foundational AI concepts (beyond just deep learning or core ML), you might also consider Introduction to Artificial Intelligence (01:198:440) or Introduction to Data Science (01:198:439), both of which are also ranked highly. However, based on senior-level depth and career value in leading-edge fields, the first two stand out as the most beneficial for your final CS electives.
+
+Please note: I can’t verify if you meet all the prerequisites for these courses without your transcript, so double-check your completed coursework when registering. If you need confirmation on prerequisites or would like advice specific to your long-term goals, let me know!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",17287,1276,yes,Really good response but stalled for so long.
+2026-05-18 16:35:23,2026-05-18 05:00:40 PM,92.30,I love math — which CS courses will feel most natural to me?,"Based on your love for math, here are some Rutgers CS courses that would feel most natural to you, ranked by how well they align with mathematical interests:
+
+1) Discrete Structures I (01:198:205)
+   This course covers discrete mathematical structures—logic, sets, and introductory proof techniques—forming a strong theoretical foundation essential for both math and computer science.
+   Prerequisites: None explicitly listed in the latest data; often taken early in the CS sequence.
+
+2) Discrete Structures II (01:198:206)
+   A continuation of Discrete Structures I, this class focuses on counting, relations, graph theory, and recurrence relations—core topics tying CS closely to mathematical theory.
+   Prerequisites: 01:198:205 (Discrete Structures I).
+
+3) Introduction to Artificial Intelligence (NB) (01:198:440)
+   Gain insight into search, logic, and computational aspects of intelligence: areas where mathematics and CS intersect powerfully. This course involves logic, problem formalization, and algorithm design.
+   Prerequisites: 01:198:205 (Discrete Structures I) AND Calculus II (01:640:152 or 01:640:192).
+
+4) Data Structures (01:198:112)
+   While more applied, this course involves lots of logical and mathematical thinking through the study of algorithms, sorting, and analyzing computational complexity.
+   Prerequisites: 01:198:111 (Introduction to Computer Science).
+
+5) Introduction to Data Science (NB) (01:198:439)
+   Delve into analytical and statistical methods for extracting meaning from data—a math-heavy area of CS using probability, statistics, and algorithmic problem solving.
+   Prerequisites: 01:198:205 (Discrete Structures I) and 01:640:152 (Calculus II).
+
+If you have more background in math or specific CS experience, let me know! I can tailor the recommendations even more closely. And if you have questions about prerequisites or sequencing, I’m happy to help clarify next steps.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",18538,1321,NULL,NULL
+2026-05-18 16:35:23,2026-05-18 05:01:00 PM,1.09,What's the best dining hall on campus?,I encountered an error parsing your query. Please try again.,data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",0,0,NULL,NULL
+2026-05-18 17:01:09,2026-05-18 05:04:50 PM,24.10,What's the best dining hall on campus?,"That's a fun question! While I focus on academic advising for courses and degree planning, I'd be happy to help with any questions about Computer Science courses or your academic path at Rutgers. Let me know how I can assist you with your studies!",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",4033,445,yes,
+2026-05-18 17:01:09,2026-05-18 05:05:59 PM,17.30,Can you help me write my essay for English class?,"I'm here to help you with Computer Science course advising at Rutgers. For assistance with your English essay, you might consider reaching out to the Writing Center or your course instructor—they're great resources for writing support!",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",3661,356,yes,
+2026-05-18 17:01:09,2026-05-18 05:07:06 PM,18.42,What's the weather like in New Brunswick?,"I'm here to help you with questions about courses, academic planning, and your progress in the CS program at Rutgers. If you have any questions in those areas, just let me know!",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",4154,340,yes,
+2026-05-19 17:01:45,2026-05-19 05:05:34 PM,74.57,"I'm interested in AI and robotics, what should I take next semester?","Here are two strong course recommendations for your interests in AI and robotics for Fall 2026:
+
+1) INTRODUCTION TO COMPUTATIONAL ROBOTICS (NB) (01:198:460)
+General introduction to robotics from a computational perspective, focusing on mobile robots. This course provides hands-on experience with robotic platforms and industry-standard software, making it highly relevant for both AI and robotics pathways.
+Prerequisite: 01:198:206 (Discrete Structures II) or permission of instructor.
+
+2) Brain-inspired Computing (NB) (01:198:425)
+This class covers neuro-mimetic and neuro-inspired computing. You'll learn about neuromorphic networks for vision and movement, which directly supports your AI interests and gives foundational knowledge relevant to intelligent robotics.
+Prerequisite: 01:198:206 (Discrete Structures II).
+
+Before registering, please make sure you've completed the required prerequisite (01:198:206). If you have any questions about eligibility or want more suggestions, feel free to let me know!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",6216,591,NULL,NULL
+2026-05-21 17:16:00,2026-05-21 05:20:28 PM,56.77,"I'm interested in AI and robotics, what should I take next semester?","Based on your interests in AI and robotics, here are the top recommended courses for Fall 2026:
+
+1) INTRODUCTION TO COMPUTATIONAL ROBOTICS (NB) (01:198:460)
+   General introduction to robotics from a computational perspective with a focus on mobile robots. This course offers direct hands-on robotics experience and exposure to industry-standard software, which is highly relevant for robotics and AI fields.
+   Prerequisites: 01:198:206 (Discrete Structures II) or permission of instructor.
+
+2) Brain-inspired Computing (NB) (01:198:425)
+   Focuses on neuro-inspired computing and the design of neuromorphic networks for vision and movement. This course integrates AI concepts with practical applications in vision and motor control, making it relevant for both AI and robotics.
+   Prerequisites: 01:198:206 (Discrete Structures II).
+
+Both courses are offered in Fall 2026. Please check your transcript to ensure you meet the prerequisite (Discrete Structures II) for each course. If you need help planning further or want additional options, let me know!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",7430,942,no,
+2026-05-21 17:25:14,2026-05-21 05:30:10 PM,43.89,"I'm a junior who wants to get into backend development, any suggestions?","Here are some excellent Rutgers CS courses to help you strengthen your backend development skills:
+
+1) Principles of Information and Data Management (NB) (01:198:336) 
+This course covers relational databases, schema design, and information management—crucial areas for backend developers.
+Prerequisites: 01:640:152 and 01:198:112 (Data Structures) and (01:198:205 (Discrete Structures I) or 14:332:312).
+
+2) Data Management for Data Science (NB) (01:198:210) 
+Provides practical skills in acquiring and managing real-world data, as well as database use for large datasets.
+Prerequisites: 01:198:142 or 01:960:142 or 01:198:111.
+
+3) Software Methodology (NB) (01:198:213) 
+Builds strong programming and software engineering foundations, including object-oriented design and collaborative projects—key for backend application development.
+Prerequisites: Not explicitly listed here; please check to confirm eligibility.
+
+4) Systems Programming (NB) (01:198:214) 
+Gives you technical depth in low-level programming and backend system architecture, valuable for server-side development and automation.
+Prerequisites: 01:198:112 (Data Structures) and 01:640:152.
+
+5) Computer Security (NB) (01:198:419) 
+Focuses on important backend security concepts including authentication, authorization, and cryptography.
+Prerequisites: Not explicitly listed here; please check to confirm eligibility.
+
+These courses will build your backend knowledge—from databases, to programming, to security. Be sure to review your transcript and check the prerequisites to confirm your eligibility. If you need help planning a schedule or want deeper advice, feel free to ask!",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",8913,1234,NULL,NULL
+2026-05-21 17:25:14,2026-05-21 05:30:39 PM,13.33,why didn't you recommend software engineering course?,"Software Engineering (NB) (01:198:431) is an excellent course that focuses on the principles and methods involved in developing large-scale software systems. It covers areas like design, project management, and teamwork.
+
+The prerequisites for this course are Software Methodology (NB) (01:198:213) and one of the following: Principles of Programming Languages (NB) (01:198:314), 01:198:336, 01:198:352, or 01:198:416.
+
+If you have already completed these prerequisites—or need help planning when to take them—just let me know!",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",7011,616,NULL,NULL
+2026-05-21 17:25:14,2026-05-21 05:32:44 PM,18.76,well did i complete the prereqs for the course? you should know based on my transcript. Can I take it or am I not eligible?,"Based on your transcript and our prerequisite check, you have completed the necessary prerequisites for Software Engineering (NB) (01:198:431): Software Methodology (NB) (01:198:213) and at least one of Principles of Programming Languages (NB) (01:198:314), 336, 352, or 416. You are eligible to enroll in Software Engineering (NB) and it is confirmed to be offered in Spring 2026. If you have questions about any other courses or planning your schedule, please let me know!",data_prereq -> constraint_prereq,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM",8364,527,NULL,NULL
+2026-05-21 17:25:14,2026-05-21 05:35:16 PM,69.32,wait so do you currently have access to my transcript or not,"I do have access to your transcript if you've uploaded it for advising purposes during this session. This helps me make more personalized course recommendations or confirm prerequisites for you. If you have any specific course questions or need advice, feel free to let me know!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",7650,372,no,
+2026-05-21 17:25:14,2026-05-21 05:36:08 PM,13.93,Tell me the CS courses I've taken so far based on my transcript information that I gave you,"Based on your transcript information, here are the CS courses you've taken so far:
+
+Topics in Computer Science (NB) (01:198:443)
+Topics in Computer Science (NB) (01:198:442)
+Systems Programming (NB) (01:198:214)
+Principles of Information and Data Management (NB) (01:198:336)
+Data Management for Data Science (NB) (01:198:210)
+Computer Security (NB) (01:198:419)
+Software Methodology (NB) (01:198:213)
+Compilers (NB) (01:198:415)
+Principles of Programming Languages (NB) (01:198:314)
+Software Engineering (NB) (01:198:431)
+
+If you'd like details about any particular course or want help planning your next steps, just let me know!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",8470,676,no,
