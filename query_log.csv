@@ -1229,3 +1229,4 @@ Principles of Programming Languages (NB) (01:198:314)
 Software Engineering (NB) (01:198:431)
 
 If you'd like details about any particular course or want help planning your next steps, just let me know!",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",8470,676,no,
+2026-05-23 17:50:18,2026-05-23 05:50:38 PM,7.02,am i eligible to take software engineering,I couldn't find those courses. Please check the course names and try again.,data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",3055,339,NULL,NULL

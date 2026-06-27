@@ -7,22 +7,22 @@ import re
 
 from agent_framework.openai import OpenAIChatClient
 from agent_framework import WorkflowBuilder, WorkflowOutputEvent, Executor, WorkflowContext, handler
-from query_logger import log_query
+from query_logger3 import log_query                          # <-- updated import
 
-from agents.parser_agent import ParserAgent
-from agents.data_agent import DataAgent
-from agents.planning_agent import PlanningAgent
-from agents.transcript_agent import TranscriptAgent
-from agents.constraint_agent import ConstraintAgent
-from agents.shared_types import ConversationState
-from agents.orchestrator_agent import (
+from agents2.parser_agent import ParserAgent
+from agents2.data_agent import DataAgent
+from agents2.planning_agent import PlanningAgent
+from agents2.transcript_agent import TranscriptAgent
+from agents2.constraint_agent import ConstraintAgent
+from agents2.shared_types import ConversationState
+from agents2.dag_builder import build_dag
+from agents2.orchestrator_agent import (
     UserQuery,
     OrchestratorRequest,
     AgentResult,
     OrchestratorExecutor,
     RoutingContext
 )
-
 
 load_dotenv()
 
@@ -35,7 +35,7 @@ class ParserExecutor(Executor):
         self.parser = ParserAgent(
             client=chat_client,
             model="gpt-4.1-mini",
-            schema_path="agents/query_schema.json"
+            schema_path="agents2/query_schema.json"
         )
         self.thread = self.parser.get_new_thread()
 
@@ -125,7 +125,7 @@ class DataExecutor(Executor):
             targets = entities.get("specific_courses", [])
             if entities.get("target_course"):
                 targets = [entities["target_course"]] + targets
-            targets = list(dict.fromkeys(targets))  # dedupe, preserve order
+            targets = list(dict.fromkeys(targets))
 
             if not targets:
                 await ctx.yield_output("I couldn't find a course name in your query. Could you be more specific?")
@@ -177,19 +177,24 @@ class ConstraintExecutor(Executor):
             ))
 
         elif message.agent_name == "constraint_prereq":
-            course_data = message.data
-            course = course_data.get("course") if not course_data.get("needs_disambiguation") else None
+            prereq_results = message.data.get("data_prereq", {})
+            courses_list = prereq_results.get("courses", [])
+            course = None
+            if courses_list:
+                course = courses_list[0].get("course")
+
             constraint_data = {}
-            if course:
+            if course and message.conversation_state.transcript_data:
                 response = await self.constraint_agent.check_single_course(
                     course=course, state=message.conversation_state
                 )
                 if response.success:
                     constraint_data = response.data
+
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
                 agent_name="constraint_prereq",
-                data={"course_data": course_data, "constraint_data": constraint_data},
+                data={"courses": [{"course": course}] if course else [], "constraint_data": constraint_data},
                 conversation_state=message.conversation_state
             ))
 
@@ -211,8 +216,8 @@ class PlanningExecutor(Executor):
 
         constraint_context = ""
         if constraint_data:
-            from agents.constraint_agent import ConstraintAgent as CA
-            constraint_context = CA.summarize_for_prompt(None, constraint_data)
+            from agents2.constraint_agent import ConstraintAgent as CA
+            constraint_context = CA.summarize_for_prompt(constraint_data)
 
         RANKING_FIELDS = {"code", "title", "description", "prerequisites", "credits", "topics", "constraint_check"}
         courses_to_rank = [
@@ -255,13 +260,11 @@ class TranscriptExecutor(Executor):
             if match:
                 file_path = match.group().strip()
 
-        # Still no path — ask for it and set flag so next turn knows to expect it
         if not file_path or not os.path.exists(file_path):
             message.conversation_state.awaiting_transcript = True
             await ctx.yield_output("Sure! Go ahead and drop the path to your transcript PDF.")
             return
 
-        # Got a path — clear the flag
         message.conversation_state.awaiting_transcript = False
         response = await self.transcript_agent.parse_transcript(file_path, message.conversation_state)
 
@@ -295,15 +298,14 @@ class TranscriptExecutor(Executor):
 # Workflow assembly — hub and spoke approach where orchestrator acts as hub
 
 def build_workflow(chat_client: OpenAIChatClient, model_id: str):
-    # Separate client for orchestrator, needs larger context than mini
     orchestrator_client = OpenAIChatClient(
         base_url=os.environ.get("GITHUB_ENDPOINT"),
         api_key=os.environ.get("GITHUB_TOKEN"),
-        model_id="gpt-4.1"
+        model_id="gpt-4.1-mini"
     )
 
     parser       = ParserExecutor(chat_client, model_id)
-    orchestrator = OrchestratorExecutor(orchestrator_client, "gpt-4.1")  
+    orchestrator = OrchestratorExecutor(orchestrator_client, "gpt-4.1-mini")
     data         = DataExecutor(chat_client, model_id)
     constraint   = ConstraintExecutor(chat_client, model_id)
     planning     = PlanningExecutor(chat_client, model_id)
@@ -333,6 +335,57 @@ def build_workflow(chat_client: OpenAIChatClient, model_id: str):
     return workflow, orchestrator
 
 
+def _collect_feedback_and_hallucination() -> tuple[str, str, str, str, str]:
+    """
+    Prompt the user for satisfaction, hallucination, and notes.
+    Returns (satisfied, feedback, hallucinated, hallucination_type, hallucination_notes).
+    All values default to "NULL" / "" if skipped.
+    """
+    satisfied          = "NULL"
+    feedback           = "NULL"
+    hallucinated       = "NULL"
+    hallucination_type = ""
+    hallucination_notes = ""
+
+    try:
+        raw = input("Were you satisfied with that response? (y/n, or Enter to skip): ").strip().lower()
+        if raw in ("y", "yes"):
+            satisfied = "yes"
+            feedback  = input("Any feedback? (Enter to skip): ").strip() or "NULL"
+        elif raw in ("n", "no"):
+            satisfied = "no"
+            feedback  = input("Any feedback? (Enter to skip): ").strip() or "NULL"
+    except (KeyboardInterrupt, EOFError):
+        return satisfied, feedback, hallucinated, hallucination_type, hallucination_notes
+
+    try:
+        h_raw = input("Did the response hallucinate? (y/n, or Enter to skip): ").strip().lower()
+        if h_raw in ("y", "yes"):
+            hallucinated = "yes"
+            print("Hallucination type:")
+            print("  1) course_invented  — recommended a course that doesn't exist")
+            print("  2) prereq_wrong     — stated incorrect prerequisite information")
+            print("  3) code_wrong       — used a wrong course code")
+            print("  4) ranking_wrong    — ranked ineligible course as eligible or vice versa")
+            print("  5) other")
+            type_raw = input("Enter number (or Enter to skip): ").strip()
+            type_map = {
+                "1": "course_invented",
+                "2": "prereq_wrong",
+                "3": "code_wrong",
+                "4": "ranking_wrong",
+                "5": "other",
+            }
+            hallucination_type  = type_map.get(type_raw, "other") if type_raw else ""
+            hallucination_notes = input("Brief notes on the hallucination (Enter to skip): ").strip()
+        elif h_raw in ("n", "no"):
+            hallucinated = "no"
+    except (KeyboardInterrupt, EOFError):
+        pass
+
+    return satisfied, feedback, hallucinated, hallucination_type, hallucination_notes
+
+
 # Main
 
 async def main():
@@ -344,6 +397,13 @@ async def main():
         model_id=os.environ.get("GITHUB_MODEL_ID")
     )
     model_id = os.environ.get("GITHUB_MODEL_ID")
+
+    # Build DAG at startup
+    await build_dag(
+        courses_path="rutgers_courses.json",
+        output_path="agents2/prereq_dag.json"
+    )
+
     workflow, _ = build_workflow(chat_client, model_id)
 
     print("Hello! I'm your Rutgers CS course advisor.")
@@ -395,10 +455,9 @@ async def main():
 
             conversation_state.add_message("user", user_input)
 
-            # --- Transcript upload: PDF path detected in message ---
+            # Transcript upload: PDF path detected in message
             match = re.search(r'[\w./ \\-]+\.pdf', user_input, re.IGNORECASE)
             if match:
-                file_path = match.group().strip()
                 conversation_state.awaiting_transcript = False
 
                 async for event in workflow.run_stream(UserQuery(user_input, conversation_state)):
@@ -409,7 +468,7 @@ async def main():
 
                 continue
 
-            # --- Normal query flow ---
+            # Normal query flow
             async for event in workflow.run_stream(UserQuery(user_input, conversation_state)):
                 if isinstance(event, WorkflowOutputEvent):
                     response_text = event.data
@@ -441,18 +500,9 @@ async def main():
             )
 
             if should_log:
-                satisfied = "NULL"
-                feedback = "NULL"
-                try:
-                    raw = input("Were you satisfied with that response? (y/n, or press Enter to skip): ").strip().lower()
-                    if raw in ("y", "yes"):
-                        satisfied = "yes"
-                        feedback = input("Any feedback? (press Enter to skip): ").strip()
-                    elif raw in ("n", "no"):
-                        satisfied = "no"
-                        feedback = input("Any feedback? (press Enter to skip): ").strip()
-                except (KeyboardInterrupt, EOFError):
-                    pass
+                satisfied, feedback, hallucinated, hallucination_type, hallucination_notes = (
+                    _collect_feedback_and_hallucination()
+                )
 
                 log_query(
                     session_id=session_id,
@@ -466,6 +516,9 @@ async def main():
                     response_time_sec=response_time_sec,
                     satisfied=satisfied,
                     feedback=feedback,
+                    hallucinated=hallucinated,
+                    hallucination_type=hallucination_type,
+                    hallucination_notes=hallucination_notes,
                 )
 
         except Exception as e:
@@ -473,7 +526,6 @@ async def main():
             import traceback
             traceback.print_exc()
 
-            # track token crashing. 
             if "tokens_limit_reached" in str(e) or "413" in str(e):
                 response_time_sec = (datetime.now() - turn_start).total_seconds()
                 log_query(
@@ -488,6 +540,9 @@ async def main():
                     response_time_sec=response_time_sec,
                     satisfied="no",
                     feedback="auto-logged: token limit crash",
+                    hallucinated="NULL",
+                    hallucination_type="",
+                    hallucination_notes="",
                 )
 
 

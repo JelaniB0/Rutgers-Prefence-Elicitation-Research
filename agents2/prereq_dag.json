@@ -1,0 +1,499 @@
+{
+  "01:198:111": {
+    "title": "Introduction to Computer Science",
+    "and": [],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:112": {
+    "title": "Data Structures",
+    "and": [
+      "01:198:111"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:205": {
+    "title": "Discrete Structures I",
+    "and": [
+      "01:198:111"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:206": {
+    "title": "Discrete Structures II",
+    "and": [
+      "01:198:205"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:211": {
+    "title": "Computer Architecture",
+    "and": [
+      "01:198:112"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:344": {
+    "title": "Design and Analysis of Algorithms",
+    "and": [],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:210": {
+    "title": "Data Management for Data Science (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:142",
+        "01:198:111"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:213": {
+    "title": "Software Methodology (NB)",
+    "and": [
+      "01:198:112"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:214": {
+    "title": "Systems Programming (NB)",
+    "and": [
+      "01:198:112",
+      "01:640:152"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:314": {
+    "title": "Principles of Programming Languages (NB)",
+    "and": [
+      "01:198:205",
+      "01:198:211",
+      "01:640:152"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:323": {
+    "title": "Numerical Analysis and Computing (NB)",
+    "and": [
+      "01:640:152",
+      "01:640:250"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:324": {
+    "title": "Numerical Methods (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:323",
+        "01:640:373"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:334": {
+    "title": "Introduction to Imaging and Multimedia (NB)",
+    "and": [
+      "01:640:250"
+    ],
+    "or_groups": [
+      [
+        "01:198:112",
+        "14:332:351"
+      ],
+      [
+        "01:198:206",
+        "14:332:226",
+        "01:640:477"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:336": {
+    "title": "Principles of Information and Data Management (NB)",
+    "and": [
+      "01:640:152",
+      "01:198:112"
+    ],
+    "or_groups": [
+      [
+        "01:198:205",
+        "14:332:312"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:345": {
+    "title": "ALGORITHMS IN SOCIETY (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:112",
+        "01:198:210"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:352": {
+    "title": "Internet Technology (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:211",
+        "14:332:331"
+      ],
+      [
+        "01:198:206",
+        "01:640:477",
+        "14:332:321"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:411": {
+    "title": "Computer Architecture (NB)",
+    "and": [
+      "198:205"
+    ],
+    "or_groups": [
+      [
+        "198:211",
+        "332:331"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:415": {
+    "title": "Compilers (NB)",
+    "and": [
+      "14:332:331",
+      "01:198:314"
+    ],
+    "or_groups": [
+      [
+        "01:198:211"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:416": {
+    "title": "Operating Systems Design (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:214"
+      ],
+      [
+        "14:332:331",
+        "14:332:351"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:417": {
+    "title": "Distributed Systems: Concepts and Design (NB)",
+    "and": [
+      "01:198:416"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:419": {
+    "title": "Computer Security (NB)",
+    "and": [
+      "01:640:152"
+    ],
+    "or_groups": [
+      [
+        "01:198:205",
+        "14:332:202"
+      ],
+      [
+        "01:198:416",
+        "01:198:352"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:424": {
+    "title": "Modeling and Simulation of Continuous Systems (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:221",
+        "01:198:323",
+        "01:640:373"
+      ]
+    ],
+    "requires_permission": true
+  },
+  "01:198:425": {
+    "title": "Brain-inspired Computing (NB)",
+    "and": [
+      "01:198:206"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:428": {
+    "title": "Introduction to Computer Graphics (NB)",
+    "and": [
+      "01:640:152",
+      "01:640:250"
+    ],
+    "or_groups": [
+      [
+        "01:198:112",
+        "14:332:351"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:431": {
+    "title": "Software Engineering (NB)",
+    "and": [
+      "01:198:213"
+    ],
+    "or_groups": [
+      [
+        "01:198:314",
+        "01:198:336",
+        "01:198:352",
+        "01:198:416"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:437": {
+    "title": "Database Systems Implementation (NB)",
+    "and": [
+      "01:198:336",
+      "01:198:214"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:439": {
+    "title": "Introduction to Data Science (NB)",
+    "and": [
+      "01:198:205",
+      "01:640:152"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:440": {
+    "title": "Introduction to Artificial Intelligence (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:205",
+        "14:332:202",
+        "14:332:312"
+      ],
+      [
+        "01:640:152",
+        "01:640:192"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:442": {
+    "title": "Topics in Computer Science (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:111",
+        "01:198:142"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:443": {
+    "title": "Topics in Computer Science (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:111",
+        "01:198:142"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:444": {
+    "title": "Topics in Computer Science (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:111",
+        "01:198:142"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:452": {
+    "title": "Formal Languages and Automata (NB)",
+    "and": [
+      "01:198:344"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:460": {
+    "title": "INTRODUCTION TO COMPUTATIONAL ROBOTICS (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:198:206"
+      ]
+    ],
+    "requires_permission": true
+  },
+  "01:198:461": {
+    "title": "MACHINE LEARNING PRINCIPLES (NB)",
+    "and": [
+      "01:198:112",
+      "01:198:206",
+      "01:640:250"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:198:462": {
+    "title": "INTRODUCTION TO DEEP LEARNING (NB)",
+    "and": [
+      "01:640:250",
+      "01:198:112"
+    ],
+    "or_groups": [
+      [
+        "01:198:206",
+        "01:640:477",
+        "01:960:379"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:198:463": {
+    "title": "DESIGN AND ANALYSIS OF RANDOMIZED ALGORITHMS (NB)",
+    "and": [
+      "01:198:344"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:615:441": {
+    "title": "Linguistics and Cognitive Science (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:615:305",
+        "01:615:315",
+        "01:615:325",
+        "01:615:350"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:730:315": {
+    "title": "Applied Symbolic Logic (NB)",
+    "and": [
+      "01:730:201"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:730:329": {
+    "title": "Minds, Machines, and Persons (NB)",
+    "and": [
+      "01:198:205"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:730:407": {
+    "title": "Intermediate Logic I (NB)",
+    "and": [
+      "01:730:201"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:730:408": {
+    "title": "Intermediate Logic II (NB)",
+    "and": [
+      "01:730:407"
+    ],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:730:424": {
+    "title": "The Logic of Decision (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:730:201",
+        "01:730:315",
+        "01:730:407",
+        "01:730:408",
+        "01:730:422"
+      ]
+    ],
+    "requires_permission": false
+  },
+  "01:960:384": {
+    "title": "Intermediate Statistical Analysis (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:960:211",
+        "01:960:285",
+        "01:960:379",
+        "01:960:381"
+      ]
+    ],
+    "requires_permission": true
+  },
+  "01:960:463": {
+    "title": "Regression Methods (NB)",
+    "and": [],
+    "or_groups": [],
+    "requires_permission": false
+  },
+  "01:960:476": {
+    "title": "Introduction to Sampling (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:960:379",
+        "01:960:381"
+      ]
+    ],
+    "requires_permission": true
+  },
+  "01:960:486": {
+    "title": "APPLIED STATISTICAL LEARNING (NB)",
+    "and": [],
+    "or_groups": [
+      [
+        "01:960:212",
+        "01:960:291",
+        "01:960:380",
+        "01:960:384",
+        "01:960:401",
+        "01:960:484"
+      ]
+    ],
+    "requires_permission": false
+  }
+}

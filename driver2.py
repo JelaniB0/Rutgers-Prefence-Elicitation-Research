@@ -7,22 +7,22 @@ import re
 
 from agent_framework.openai import OpenAIChatClient
 from agent_framework import WorkflowBuilder, WorkflowOutputEvent, Executor, WorkflowContext, handler
-from query_logger import log_query
+from query_logger2 import log_query
 
-from agents.parser_agent import ParserAgent
-from agents.data_agent import DataAgent
-from agents.planning_agent import PlanningAgent
-from agents.transcript_agent import TranscriptAgent
-from agents.constraint_agent import ConstraintAgent
-from agents.shared_types import ConversationState
-from agents.orchestrator_agent import (
+from agents2.parser_agent import ParserAgent
+from agents2.data_agent import DataAgent
+from agents2.planning_agent import PlanningAgent
+from agents2.transcript_agent import TranscriptAgent
+from agents2.constraint_agent import ConstraintAgent
+from agents2.shared_types import ConversationState
+from agents2.dag_builder import build_dag
+from agents2.orchestrator_agent import (
     UserQuery,
     OrchestratorRequest,
     AgentResult,
     OrchestratorExecutor,
     RoutingContext
 )
-
 
 load_dotenv()
 
@@ -35,7 +35,7 @@ class ParserExecutor(Executor):
         self.parser = ParserAgent(
             client=chat_client,
             model="gpt-4.1-mini",
-            schema_path="agents/query_schema.json"
+            schema_path="agents2/query_schema.json"
         )
         self.thread = self.parser.get_new_thread()
 
@@ -50,6 +50,9 @@ class ParserExecutor(Executor):
             )
 
         response = await self.parser.parse(enriched_query, message.conversation_state, thread=self.thread)
+        # print(f"[DEBUG Parser] intent={response.data.get('intent')}")
+        # print(f"[DEBUG Parser] target_course={response.data.get('entities', {}).get('target_course')}")
+        # print(f"[DEBUG Parser] specific_courses={response.data.get('entities', {}).get('specific_courses')}")
 
         if hasattr(response, "metadata") and response.metadata:
             input_tokens = response.metadata.get("input_token_count", 0) or 0
@@ -177,19 +180,29 @@ class ConstraintExecutor(Executor):
             ))
 
         elif message.agent_name == "constraint_prereq":
-            course_data = message.data
-            course = course_data.get("course") if not course_data.get("needs_disambiguation") else None
+            prereq_results = message.data.get("data_prereq", {})
+            courses_list = prereq_results.get("courses", [])
+            course = None
+            if courses_list:
+                course = courses_list[0].get("course")
+            
+            # print(f"[DEBUG constraint_prereq] prereq_results keys: {list(prereq_results.keys())}")
+            # print(f"[DEBUG constraint_prereq] courses_list length: {len(courses_list)}")
+            # print(f"[DEBUG constraint_prereq] course found: {course.get('code') if course else None}")
+            # print(f"[DEBUG constraint_prereq] has_transcript: {bool(message.conversation_state.transcript_data)}")
+
             constraint_data = {}
-            if course:
+            if course and message.conversation_state.transcript_data:
                 response = await self.constraint_agent.check_single_course(
                     course=course, state=message.conversation_state
                 )
                 if response.success:
                     constraint_data = response.data
+
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
                 agent_name="constraint_prereq",
-                data={"course_data": course_data, "constraint_data": constraint_data},
+                data={"courses": [{"course": course}] if course else [], "constraint_data": constraint_data},
                 conversation_state=message.conversation_state
             ))
 
@@ -211,8 +224,8 @@ class PlanningExecutor(Executor):
 
         constraint_context = ""
         if constraint_data:
-            from agents.constraint_agent import ConstraintAgent as CA
-            constraint_context = CA.summarize_for_prompt(None, constraint_data)
+            from agents2.constraint_agent import ConstraintAgent as CA
+            constraint_context = CA.summarize_for_prompt(constraint_data)
 
         RANKING_FIELDS = {"code", "title", "description", "prerequisites", "credits", "topics", "constraint_check"}
         courses_to_rank = [
@@ -255,13 +268,13 @@ class TranscriptExecutor(Executor):
             if match:
                 file_path = match.group().strip()
 
-        # Still no path — ask for it and set flag so next turn knows to expect it
+        # Still no path:  ask for it and set flag so next turn knows to expect it
         if not file_path or not os.path.exists(file_path):
             message.conversation_state.awaiting_transcript = True
             await ctx.yield_output("Sure! Go ahead and drop the path to your transcript PDF.")
             return
 
-        # Got a path — clear the flag
+        # Got a path: clear the flag
         message.conversation_state.awaiting_transcript = False
         response = await self.transcript_agent.parse_transcript(file_path, message.conversation_state)
 
@@ -295,7 +308,7 @@ class TranscriptExecutor(Executor):
 # Workflow assembly — hub and spoke approach where orchestrator acts as hub
 
 def build_workflow(chat_client: OpenAIChatClient, model_id: str):
-    # Separate client for orchestrator, needs larger context than mini
+    # Better reasoning and routing from stronger model. Offload all decision-making to orchestrator, keep spokes simple and focused on their task.
     orchestrator_client = OpenAIChatClient(
         base_url=os.environ.get("GITHUB_ENDPOINT"),
         api_key=os.environ.get("GITHUB_TOKEN"),
@@ -343,7 +356,15 @@ async def main():
         api_key=os.environ.get("GITHUB_TOKEN"),
         model_id=os.environ.get("GITHUB_MODEL_ID")
     )
-    model_id = os.environ.get("GITHUB_MODEL_ID")
+    model_id = os.environ.get("GITHUB_MODEL_ID")    
+    # Build DAG at startup
+    # print("Building prerequisite DAG...")
+    await build_dag(
+        courses_path="rutgers_courses.json",
+        output_path="agents2/prereq_dag.json"
+    )
+    # print("DAG ready.")
+    
     workflow, _ = build_workflow(chat_client, model_id)
 
     print("Hello! I'm your Rutgers CS course advisor.")
@@ -395,7 +416,7 @@ async def main():
 
             conversation_state.add_message("user", user_input)
 
-            # --- Transcript upload: PDF path detected in message ---
+            # Transcript upload: PDF path detected in message 
             match = re.search(r'[\w./ \\-]+\.pdf', user_input, re.IGNORECASE)
             if match:
                 file_path = match.group().strip()
@@ -409,7 +430,7 @@ async def main():
 
                 continue
 
-            # --- Normal query flow ---
+            # Normal query flow 
             async for event in workflow.run_stream(UserQuery(user_input, conversation_state)):
                 if isinstance(event, WorkflowOutputEvent):
                     response_text = event.data

@@ -1,0 +1,89 @@
+session_id,timestamp,response_time_sec,query,response,plan_steps,agents_invoked,sources_and_tools,input_tokens,output_tokens,satisfied,feedback,hallucinated,hallucination_type,hallucination_notes
+2026-06-07 14:34:54,2026-06-07 02:41:32 PM,5.96,What are good courses for someone who wants to work at a big tech company?,"You already have a strong foundation in core CS concepts and are enriching your skills with data science and machine learning courses. For a career at a big tech company, a combination of advanced algorithms, software engineering, systems, and AI-related courses will enhance your profile. Here are my top recommendations, ranked to build on your current work and strengths:
+
+1) Software Engineering (01:198:431)  
+   This course focuses on practical software development methods and project management—skills highly valued in big tech for building scalable, maintainable software.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416.  
+   Based on your transcript, you have not yet taken 01:198:213 Software Methodology and hence do not meet prerequisites for 431 now, but it's a great next step after 213.
+
+2) Software Methodology (01:198:213)  
+   This is a critical stepping stone towards software engineering roles, covering software development lifecycles and collaborative techniques.  
+   Prerequisites: 01:198:112 (met).
+
+3) Operating Systems Design (01:198:416)  
+   Deep knowledge of OS is essential for understanding system-level programming, performance, and resource management in large scale systems.  
+   Prerequisites: 01:198:214 or (14:332:331 and 14:332:351). You have not taken 01:198:214 or the equivalents, so you don’t yet meet the prerequisites.
+
+4) Compilers (01:198:415)  
+   Understanding compilers deepens your knowledge of programming languages and execution, which is important for many systems and tooling roles in tech companies.  
+   Prerequisites: 01:198:211 and 01:198:314. You have met 211 but not 314, so prereqs not met yet.
+
+5) Distributed Systems: Concepts and Design (01:198:417)  
+   Distributed systems knowledge is crucial as many big tech companies rely on distributed architectures for scalability and reliability.  
+   Prerequisites: 01:198:416 (your transcript shows no completion of 416 yet, prereqs not met).
+
+Given you are currently enrolled in machine learning courses and have AI background, adding solid software methodology and systems knowledge will round out your profile ideally for big tech roles, especially software engineering or data-focused roles.
+
+Courses to look forward to once prerequisites are met:  
+- Software Engineering (01:198:431)  
+- Operating Systems Design (01:198:416)  
+- Compilers (01:198:415)  
+- Distributed Systems (01:198:417)
+
+In summary: Take 01:198:213 Software Methodology next, then progress to Software Engineering 431. These directly boost your employability in big tech. Meanwhile, look into prerequisites for systems courses and consider those later. Keep leveraging your strong AI and ML coursework too!
+
+I’m here if you want help planning sequences or exploring other specialty areas like security or databases. You're on a great path!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2433,634,no,recommending courses that can't be taken.,yes,ranking_wrong,recommended courses that can't be taken.
+2026-06-07 14:34:54,2026-06-07 02:43:00 PM,4.63,I'm interested in AI and robotics,"For your strong interest in AI and robotics, combined with your completed and in-progress courses, I recommend focusing on courses that deepen your AI understanding and introduce you to robotics from a computational perspective. You are already well-positioned with Intro to AI (440) and current ML and Deep Learning courses.
+
+Here are the best next courses for you:
+
+1) Introduction to Computational Robotics (01:198:460)  
+   A general introduction to robotics focused on mobile robots from a computational viewpoint—perfect for getting started in robotics.  
+   Prerequisites: 01:198:206 (met).
+
+2) Brain-inspired Computing (01:198:425)  
+   Explores computing paradigms inspired by neural systems, bridging AI and cognitive robotics concepts.  
+   Prerequisites: 01:198:206 (met).
+
+3) Design and Analysis of Randomized Algorithms (01:198:463)  
+   Strengthen your understanding of algorithmic techniques relevant in AI decision-making and stochastic processes.  
+   Prerequisites: 01:198:344 (met).
+
+4) Minds, Machines, and Persons (01:730:329)  
+   A compelling interdisciplinary course comparing human minds and complex machines—valuable for understanding AI/robotics philosophy and cognitive sciences.  
+   Prerequisites: 01:198:205 (met).
+
+5) Topics in Computer Science (01:198:442 / 443 / 444)  
+   Advanced topics courses sometimes feature AI or robotics special topics. Great to look out for current offerings related to your interests.  
+   Prerequisites: 01:198:111 (met).
+
+Your completed AI and machine learning foundation, along with these courses, will position you well for both AI research and robotics applications. If you want to go further, consider as a later step exploring operating systems or distributed systems to understand the system-side environments that support robotics and large-scale AI applications.
+
+Please let me know if you'd like help mapping these into your remaining semesters or hearing about related electives! You're doing fantastic building a specialized skill set.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5172,417,yes,NULL,no,NULL,NULL
+2026-06-07 14:34:54,2026-06-07 02:44:11 PM,4.96,Looking for challenging courses that will prepare me for grad school,"For a strong preparation for graduate school in computer science, it's wise to challenge yourself with courses that deepen your theoretical foundations, expose you to advanced algorithms, programming languages, and specialized topics that align with research areas. Considering your transcript and current courses, here are five challenging courses that fit well:
+
+1) Design and Analysis of Randomized Algorithms (01:198:463)  
+   This course tackles advanced algorithmic techniques with a theoretical focus, preparing you for research-level problem solving.  
+   Prerequisites: 01:198:344 (met).
+
+2) Formal Languages and Automata (01:198:452)  
+   A foundational theoretical CS course that explores automata theory, formal languages, and computational models — essential for grad studies in theory or programming languages.  
+   Prerequisites: 01:198:344 (met).
+
+3) Principles of Programming Languages (01:198:314)  
+   Understanding programming language design and semantics is important for advanced studies and research in programming languages and compilers.  
+   Prerequisites: 01:198:205, 01:198:211, and 01:640:152. You have not completed 01:640:152 (Calculus II), so prerequisites are not met yet.
+
+4) Topics in Computer Science (01:198:442 / 443 / 444)  
+   These advanced topic courses vary by semester and provide exposure to cutting-edge research and specialized subjects, excellent prep for grad school.  
+   Prerequisites: 01:198:111 (met).
+
+5) Brain-inspired Computing (01:198:425)  
+   A niche but intellectually stimulating course blending AI with neural and cognitive models, good prep for research in emerging AI paradigms.  
+   Prerequisites: 01:198:206 (met).
+
+If you have calculus II (01:640:152) planned or completed soon, you can then consider Principles of Programming Languages (314) and further systems or compiler courses for greater breadth.
+
+These courses balance theory, advanced concepts, and exposure to research topics to strengthen your graduate application and readiness.
+
+Feel free to ask for sequencing advice or explore other areas like logic or robotics for grad school prep as well. You're well-positioned to take on these challenges!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7699,460,no,says i did not meet 152 prereq yet so i cant take principles of programming languages (false).,yes,prereq_wrong,i did take 152

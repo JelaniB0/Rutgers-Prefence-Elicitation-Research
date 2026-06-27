@@ -1,3 +1,4 @@
+from email import message
 import json
 from dataclasses import dataclass, field
 from typing import Optional
@@ -5,7 +6,7 @@ from typing import Optional
 from agent_framework.openai import OpenAIChatClient
 from agent_framework import Executor, WorkflowContext, handler
 
-from agents.shared_types import ConversationState
+from agents2.shared_types import ConversationState
 
 # Message Type
 class UserQuery:
@@ -79,6 +80,8 @@ class RoutingContext:
     accumulated_results: dict[str, dict] = field(default_factory=dict)
     agents_call_order: list[str] = field(default_factory=list)  # helps log dynamic agent calls by orchestrator. 
     resolved_semester: dict = field(default_factory=dict)
+    transcript_summary: str = "" 
+
 
     def _slim_results(self) -> dict:
         slim = {}
@@ -93,10 +96,8 @@ class RoutingContext:
                         "prerequisites": actual.get("prerequisites") or actual.get("description", "")
                     })
                 slim[key] = {"courses": slim_courses}
-            elif key == "constraint_data":
-                slim[key] = {"summary": "constraint check complete"}
             else:
-                slim[key] = val
+                slim[key] = val  # was wiping constraint_data here before
         return slim
     
     def _slim_parsed_data(self) -> dict:
@@ -115,22 +116,47 @@ class RoutingContext:
                 semester_label = "current semester"
 
             lines = "\n".join(
-                f"- {v['title']} ({code}): {'Offered' if v['offered'] == True else 'Not offered' if v['offered'] == False else 'Availability unverified — must check'} for {semester_label}"
+                f"- {v['title']} ({code}): {'Offered' if v['offered'] == True else 'Not offered' if v['offered'] == False else 'Availability unverified'} for {semester_label}"
                 for code, v in self.resolved_courses.items()
             )
             resolved_section = f"## Courses Already Resolved This Session\n{lines}\n"
+
+        # Inject transcript summary if available
+        transcript_section = ""
+        if self.transcript_summary:
+            transcript_section = f"## Student Transcript\n{self.transcript_summary}\n"
+
+        # Inject constraint results if available
+        constraint_section = ""
+        constraint_data = (
+            self.accumulated_results.get("constraint_prereq", {}).get("constraint_data")
+            or self.accumulated_results.get("constraint_full", {}).get("constraint_data")
+        )
+        
+        if constraint_data:
+            from agents2.constraint_agent import ConstraintAgent as CA
+            constraint_section = f"## Constraint Validation Results\n{CA.summarize_for_prompt(constraint_data)}\n"
+
+        # print(f"[DEBUG to_prompt] transcript_section present: {bool(transcript_section)}")
+        # print(f"[DEBUG to_prompt] constraint_section present: {bool(constraint_section)}")
+
+        if constraint_data:
+            from agents2.constraint_agent import ConstraintAgent as CA
+            constraint_section = f"## Constraint Validation Results\n{CA.summarize_for_prompt(constraint_data)}\n"
 
         return f"""\
     ## Student Query
     {self.user_query}
 
     ## Parsed Intent & Entities
-    {json.dumps(self.parsed_data, indent=2)}
+    {json.dumps(self._slim_parsed_data(), indent=2)}
 
     ## Context
     - Transcript on file: {self.has_transcript}
+    - IMPORTANT: {'Transcript data is available below. Use it. Do not ask for it.' if self.has_transcript else 'No transcript uploaded yet.'}
 
-    {resolved_section}
+
+    {transcript_section}{resolved_section}{constraint_section}
     ## Agents Available
     {AGENT_REGISTRY_SUMMARY}
 
@@ -209,10 +235,31 @@ Each turn you receive a context snapshot and must respond with a JSON decision.
 - If a course has unknown or unverified availability (offered status is null/None), you MUST call data_lookup to verify — never assume not offered.
 - course_recommendation intent MUST call data_fetch first, NEVER data_lookup. data_lookup is ONLY for course_info intent when a specific course name or code is given.
 - Never call data_lookup to verify availability of recommendation results — that is not its purpose. If availability is unknown, respond with whatever data_fetch returned and note that availability is unverified.
+## HARD ROUTING RULES (non-negotiable, applied before any other decision)
+- If intent is course_recommendation AND has_transcript is True AND data_fetch 
+  results are available AND constraint_full has NOT been called yet:
+  ALWAYS route to constraint_full next. This is mandatory, never skip it.
+- Only route to planning AFTER constraint_full has completed when transcript is on file. Remember YOU MUST call planning after constraint. 
 ## Response Rules
 - Only reference courses and prerequisites explicitly present in collected data. Never infer.
 - The "response" field must be plain conversational text. Never JSON, code blocks, or markdown fences.
 - For course recommmendations or planning, PLEASE use data and constraint agent to give you informed choice about course offerings and availibity. 
+- If planning returned not_recommended courses, always mention them at the end of your response in a brief section like "Courses to look forward to:" — explain 
+  what's blocking them and what the student needs to do first. Be encouraging, frame it as something to work toward rather than a hard no.
+- NEVER infer that a prerequisite is met because the student has taken higher-level or more advanced courses. A missing prereq is missing, period, regardless of what else the student has completed.
+- NEVER assume a prerequisite is satisfied by courses in a similar topic area. 
+- If you're gonna tell user that they meet prerequisites for a course, please still include the actual courses that helped them meet it. Don't just say "met" or something similar. 
+- Give clear, specific advice. Also include a brief reasoning for why you are recommending something, and why you ranked options in the manner you did. Always be encouraging and supportive in your tone. 
+- When mentioning course codes in response also still give the name associated with that course code. Do this in every case when mentioning a course code. 
+- If completed prerequisites play a part into why you ranked the way you did (if you were given that data) then explicitly mention that in your reasoning as well. 
+- Last thing, if you notice any inconsistencies in what the user tells you (i.e. their a sophomore but their transcript shows senior) don't hard deny what they said but, mention that they should double check that information and what your given data tells you about them. 
+- NEVER ask the student to provide their transcript or completed courses if transcript_data 
+  is already present in the context. Never say things like "feel free to provide your 
+  transcript" or "share the courses you've already completed" when you already have that data.
+- NEVER tell the student to "verify prerequisites" — you have the constraint validation 
+  results, use them to tell the student definitively whether they meet prerequisites or not.
+- Always acknowledge the transcript data you have when responding if it's available. Reference the student's actual completed courses and standing in your response.
+
 
 ## Output Format (JSON only, no markdown fences)
 {
@@ -266,6 +313,8 @@ class OrchestratorExecutor(Executor):
 
     @handler
     async def handle_request(self, message: OrchestratorRequest, ctx: WorkflowContext[AgentResult]) -> None:
+        print(f"[DEBUG handle_request] has transcript_data: {bool(message.conversation_state.transcript_data)}")
+        print(f"[DEBUG handle_request] transcript keys: {list(message.conversation_state.transcript_data.keys()) if message.conversation_state.transcript_data else 'None'}")
         await self._maybe_reset_thread(message.conversation_state)
 
         # print(f"[Orchestrator] parsed_data: {message.parsed_data}")
@@ -283,7 +332,7 @@ class OrchestratorExecutor(Executor):
             return
 
         # Re-resolve semester if user mentions one in follow-up
-        from agents.data_agent import DataAgent as DA
+        from agents2.data_agent import DataAgent as DA
         if any(k in message.user_query.lower() for k in ["next", "spring", "fall", "summer", "winter"]):
             new_semester = DA.resolve_semester(None, message.user_query)
             if new_semester != message.conversation_state.resolved_semester:
@@ -319,7 +368,13 @@ class OrchestratorExecutor(Executor):
             resolved_semester=message.conversation_state.resolved_semester or {},
         )
 
-        # print(f"[DEBUG] routing_ctx prompt:\n{routing_ctx.to_prompt()}")
+        if message.conversation_state.transcript_data:
+            from agents2.transcript_agent import TranscriptAgent
+            routing_ctx.transcript_summary = TranscriptAgent.summarize_for_prompt(
+                message.conversation_state.transcript_data
+            )
+        print(f"[DEBUG] transcript_summary injected: {routing_ctx.transcript_summary[:100]}")
+
         await self._routing_loop(routing_ctx, message, ctx, iteration=0)
 
     # Spoke result collector
@@ -469,16 +524,22 @@ class OrchestratorExecutor(Executor):
             if agent_name == "constraint_full":
                 spoke_data = dict(routing_ctx.accumulated_results.get("data_fetch", {}))
             elif agent_name == "planning":
+                constraint_result = routing_ctx.accumulated_results.get("constraint_full", {})
+                constraint_data = constraint_result.get("constraint_data", {})
+                eligible = constraint_data.get("eligible_courses") or constraint_result.get("courses", [])
+                
+                # print(f"[DEBUG planning input] eligible count: {len(eligible)}")
+                # print(f"[DEBUG planning input] eligible codes: {[c.get('code') for c in eligible]}")
+                # print(f"[DEBUG planning input] constraint_data keys: {list(constraint_data.keys())}")
+
                 spoke_data = {
-                    "courses": routing_ctx.accumulated_results.get("constraint_full", {}).get("courses")
-                            or routing_ctx.accumulated_results.get("data_fetch", {}).get("courses", []),
-                    "constraint_data": routing_ctx.accumulated_results.get("constraint_full", {}).get("constraint_data", {}),
+                    "courses": eligible,
+                    "constraint_data": constraint_data,
                 }
-                if agent_name == "planning" and not spoke_data.get("courses"): # cut ahead early, empty courses guard
-                    # print("[Orchestrator] No courses to rank — responding directly")
+
+                if not spoke_data.get("courses"):
                     await self._force_respond(routing_ctx, ctx)
                     return
-                # print(f"[Orchestrator] Planning input courses: {[c.get('code') for c in spoke_data['courses']]}")
 
             else:
                 spoke_data = dict(routing_ctx.accumulated_results)
@@ -528,7 +589,6 @@ class OrchestratorExecutor(Executor):
                 summary = (
                     f"You are continuing a conversation with a Rutgers CS student.\n\n"
                     f"## Recent conversation\n{lines}\n\n"
-                    f"Transcript on file: {bool(conversation_state.transcript_data)}. "
                     f"Use this context when writing your response to the student."
                 )
                 raw = await self.agent.run(summary, thread=self.thread)

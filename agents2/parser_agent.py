@@ -86,6 +86,11 @@ INTENT CLASSIFICATION (choose one):
 - transcript_upload: user wants to share/upload their transcript
 
 INTENT RECOGNITION EDGE CASES:
+- For prerequisite_check: the course the student mentions (even informally, e.g. 
+  "software engineering", "data management for data science") MUST be placed in 
+  both target_course and specific_courses. Never leave both empty for a 
+  prerequisite_check intent — if the student named something, that's the target.
+  Do not require an exact or formal course title. Use whatever name they gave.
 - transcript_upload signals: "look at my transcript", "here's my PDF", 
   "courses I've taken", "want to see what I've completed", bare .pdf filename
 - If a user repeats a question with same intent, classify as that intent — NOT clarification

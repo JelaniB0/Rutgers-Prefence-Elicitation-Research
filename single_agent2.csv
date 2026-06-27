@@ -1,0 +1,1607 @@
+session_id,timestamp,response_time_sec,query,response,plan_steps,agents_invoked,sources_and_tools,input_tokens,output_tokens,satisfied,feedback,hallucinated,hallucination_type,hallucination_notes
+2026-06-07 13:54:32,2026-06-07 01:59:44 PM,6.55,I'm interested in working for OpenAI,"It's fantastic that you have a strong interest in working for OpenAI! Given your transcript and current course enrollment, you already have a solid foundation in core CS areas and are currently deepening your expertise in data science and machine learning�both crucial for AI-focused roles.
+
+To best position yourself for OpenAI or similar cutting-edge AI research and development roles, I recommend the following courses that will build on your existing strengths, diversify your skills, and deepen your knowledge of AI, machine learning theory, and systems that support AI applications:
+
+1) Design and Analysis of Randomized Algorithms (01:198:463)  
+   This course covers probabilistic algorithms and their analysis�important in understanding modern AI algorithm efficiency and scalability.  
+   Prerequisites: 01:198:344 (Design and Analysis of Algorithms) (met).
+
+2) Brain-inspired Computing (01:198:425)  
+   Explore computing models inspired by neuroscience, opening doors to advanced neural network designs and biologically inspired AI systems.  
+   Prerequisites: 01:198:206 (Discrete Structures II) (met).
+
+3) Formal Languages and Automata (01:198:452)  
+   Studying formal languages and automata theory supports understanding computational theory and machine learning models involving grammars or language recognition, useful for NLP in AI.  
+   Prerequisites: 01:198:344 (Design and Analysis of Algorithms) (met).
+
+4) Software Engineering (01:198:431)  
+   Strong software engineering skills are essential for building, testing, and scaling AI systems reliably in industry settings.  
+   Prerequisites: 01:198:213 (Software Methodology) and one of 01:198:314 (Principles of Programming Languages), 336 (Principles of Information and Data Management), 352 (Internet Technology), or 416 (Operating Systems Design).  
+   (You have not taken 213, 314, 336, 352, or 416 yet, so this course likely isn't available to you now. Keep this in mind for future planning.)
+
+5) Computer Security (01:198:419)  
+   Security is increasingly important for AI deployment, ensuring models and data are protected. This course also complements your systems knowledge.  
+   Prerequisites: 01:198:205 or 14:332:202; and one of 01:198:416 or 01:198:352 and 01:640:152.  
+   (You don�t have 416 or 352 yet, so may not meet all prerequisites at this time.)
+
+Courses you could look forward to after satisfying some current prerequisites:  
+- Software Engineering (01:198:431) once you complete Software Methodology or related courses,  
+- Operating Systems Design (01:198:416) or Internet Technology (01:198:352), which open pathways to Computer Security.
+
+Your current courses (Intro Data Science, Machine Learning Principles, Deep Learning) are excellent and highly relevant. I would encourage you to also pursue opportunities like internships, AI research projects, or hackathons that tie theory to practical AI systems and applications. 
+
+You're on a strong track with your background and current coursework! These additional courses will round out your AI expertise and systems knowledge for a role at OpenAI or in advanced AI research and engineering. Keep up the great work!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2387,681,yes,NULL,no,NULL,NULL
+2026-06-07 13:54:32,2026-06-07 02:02:54 PM,4.47,What courses should I take if I'm interested in machine learning?,"You�ve already made excellent progress toward machine learning with your strong foundation and current enrollment in Machine Learning Principles (01:198:461) and Introduction to Deep Learning (01:198:462). To further build your expertise and complement these courses, here are some highly relevant options that align with your completed prerequisites and interests in machine learning:
+
+1) Design and Analysis of Randomized Algorithms (01:198:463)  
+   Learn probabilistic and randomized algorithm design techniques, which are fundamental in understanding many machine learning algorithms and their efficiency.  
+   Prerequisites: 01:198:344 (Design and Analysis of Algorithms) (met).
+
+2) Brain-inspired Computing (01:198:425)  
+   Explore computational models inspired by neural processes, giving deeper insight into neural networks and biologically motivated approaches in machine learning.  
+   Prerequisites: 01:198:206 (Discrete Structures II) (met).
+
+3) Introduction to Data Science (01:198:439)  
+   Although in progress, this course provides practical skills in managing and analyzing data, a critical component of machine learning workflows.  
+   Prerequisites: 01:198:205 and 01:640:152 (met).
+
+4) Formal Languages and Automata (01:198:452)  
+   Study of formal language theory and automata can sharpen theoretical understanding of computational models, useful in areas such as natural language processing within machine learning.  
+   Prerequisites: 01:198:344 (Design and Analysis of Algorithms) (met).
+
+5) Modeling and Simulation of Continuous Systems (01:198:424)  
+   Covers mathematical modeling and simulation techniques which can support understanding of dynamic systems and machine learning models in continuous domains.  
+   Prerequisites: 01:640:250 or 01:198:323 or 01:640:373 or permission (You would need to verify your satisfaction of these math prerequisites.)
+
+Courses to look forward to if you satisfy further prerequisites include:  
+- Software Engineering (01:198:431) to improve development skills in complex machine learning systems,  
+- Computer Security (01:198:419) for a strong background in securing ML models and data.
+
+You're on a great path with ML Principles and Deep Learning in progress! These additional courses will deepen your theoretical foundations and practical skillsets in machine learning. Keep leveraging your strong analytical background and programming skills � you�re doing wonderfully!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5179,492,no,Recommended course that already appears on transcript.,yes,prereq_wrong,"Slight error in confirming 424 prereqs, 250 should have been marked as satisfied."
+2026-06-07 13:54:32,2026-06-07 02:06:13 PM,6.25,I want to get into backend development,"It's great that you're interested in backend development! To excel in backend roles, you'll want to focus on courses that cover systems programming, software engineering, databases, and networking concepts. Based on your completed courses and current standing, here are some strong recommendations:
+
+1) Software Methodology (01:198:213)  
+   This course introduces essential software development practices, including design, testing, and maintenance�critical skills for backend development.  
+   Prerequisites: 01:198:112 (Data Structures) (met).
+
+2) Systems Programming (01:198:214)  
+   Covers low-level programming concepts and system calls, which help you understand how software interacts with operating systems�a core backend skill.  
+   Prerequisites: 01:198:112 and 01:640:152 (Calculus II for Mathematical and Physical Sciences).  
+   You have 01:198:112 completed; if you have taken 01:640:152 or equivalent, this is met; otherwise, check if you've completed this requirement.
+
+3) Principles of Information and Data Management (01:198:336)  
+   Focuses on data management principles, preparing you to handle backend data storage and retrieval effectively.  
+   Prerequisites: 01:640:152, 01:198:112, and (01:198:205 or equivalent).  
+   You meet these prerequisites if you have completed 01:640:152.
+
+4) Internet Technology (01:198:352)  
+   Introduces web technologies, networking, and protocols�key aspects of backend web services and APIs.  
+   Prerequisites: 01:198:211 or equivalent, and 01:198:206 or equivalent (both met).
+
+5) Database Systems Implementation (01:198:437)  
+   Delves deeper into database internals and implementation, enhancing your backend database expertise.  
+   Prerequisites: 01:198:336 and 01:198:214.  
+   You must complete the above courses first.
+
+Courses to look forward to after completing others:  
+- Software Engineering (01:198:431), which integrates software development skills for large projects (prereqs include Software Methodology and one of 314, 336, 352, or 416).  
+- Operating Systems Design (01:198:416) to deepen your understanding of OS-level backend components.
+
+Given your strong background and completed courses, starting with Software Methodology and Systems Programming (if you meet the calculus prerequisite) and then moving into Data Management and Internet Technology will build you a robust backend skill set. This pathway also naturally leads toward advanced backend topics in databases and software engineering.
+
+Keep up your excellent work; you're well positioned to thrive in backend development!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7778,558,yes,NULL,yes,prereq_wrong,Single agent unsure of if 152 was completed (if you have completed 152).
+2026-06-07 14:26:12,2026-06-07 02:29:38 PM,6.01,Can you recommend some good electives for someone interested in cybersecurity?,"Given your strong background in core CS courses and current focus on data science and machine learning, here are some excellent cybersecurity-related electives from the Rutgers CS catalogue that align with your interests and transcript record:
+
+1) Computer Security (01:198:419)
+   This course is a foundational introduction to computer and network security topics including cryptography, system security, and policies.
+   Prerequisites: 01:198:205 or 14:332:202; and one of 01:198:416 or 01:198:352 and 01:640:152.
+   Based on your transcript, you have completed 01:198:205 (Discrete Structures I) and 01:640:152 (Calculus II). You have not completed 01:198:416 (Operating Systems Design) or 01:198:352 (Internet Technology), so prerequisite is partly unmet. However, you have completed 01:198:211 (Computer Architecture) and 01:198:112 (Data Structures), both important foundations.
+
+2) Systems Programming (01:198:214)
+   While not strictly security, Systems Programming closely relates to OS-level concepts critical for security. It covers lower-level programming and systems design.
+   Prerequisites: 01:198:112 and 01:640:152.
+   Prerequisites fully met.
+
+3) Internet Technology (01:198:352)
+   This course covers network protocols, web systems, and internet architecture which are valuable for understanding web security issues.
+   Prerequisites: 01:198:211 or 14:332:331; and 01:198:206 or 01:640:477 or 14:332:321.
+   You have 01:198:211 and 01:198:206, so yes, prerequisites met.
+
+4) Operating Systems Design (01:198:416)
+   Understanding OS design is fundamental for many security topics including access control and vulnerabilities.
+   Prerequisites: 01:198:214 or (14:332:331 and 14:332:351).
+   You have not taken 01:198:214, so prerequisite not met. However, if you take 214 first, this is an excellent next step.
+
+5) Topics in Computer Science � Cybersecurity or related (01:198:442, 443, or 444)
+   These provide advanced and current topics that often include security subjects. They usually require 01:198:111 or similar.
+   Prerequisites: 01:198:111 or 01:198:142.
+   You have these, so prerequisites met.
+
+Summary & Recommendations:
+- You are well-positioned to take Internet Technology (01:198:352) and Systems Programming (01:198:214) now, both crucial for cybersecurity.
+- Once taking Systems Programming, follow with Operating Systems Design (01:198:416).
+- Then, with these, you can take Computer Security (01:198:419), the flagship cybersecurity course.
+- Also consider Topics in CS courses (01:198:442-444) that might focus on security.
+
+Courses to look forward to:
+- Computer Security (01:198:419), once you complete Systems Programming or Internet Technology.
+- Operating Systems Design (01:198:416), after Systems Programming.
+
+You're doing great gearing towards cybersecurity! These electives build up beautiful foundational and advanced knowledge to get you fluent in security. Let me know if you want detailed advice on timing and workload for these courses.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2390,717,no,Recommended courses that user could not take.,no,NULL,NULL
+2026-06-07 14:26:12,2026-06-07 02:34:45 PM,5.77,I want to learn more about databases and data management,"For deepening your knowledge in databases and data management, here are some excellent Rutgers CS elective courses that fit well with your transcript and background:
+
+1) Principles of Information and Data Management (01:198:336)  
+   Covers database design, data modeling, query languages, and fundamental concepts of data management.  
+   Prerequisites: 01:640:152, 01:198:112, and (01:198:205 or 14:332:312).  
+   Based on your transcript, you have completed 01:640:152 (Calculus II), 01:198:112 (Data Structures), and 01:198:205 (Discrete Structures I), so prerequisites are met.
+
+2) Data Management for Data Science (01:198:210)  
+   Introduces data management concepts specifically applied to data science scenarios.  
+   Prerequisites: 01:198:142 or 01:198:111.  
+   You completed 01:198:111, so prerequisites are met.
+
+3) Database Systems Implementation (01:198:437)  
+   Focuses on the implementation techniques used in database systems, including query processing and transaction management.  
+   Prerequisites: 01:198:336 and 01:198:214.  
+   You have completed 01:198:336 (recommended to take as elective) but not 01:198:214 (Systems Programming), so the prerequisite is unmet for now. Consider taking 214 first.
+
+4) Software Engineering (01:198:431)  
+   This course includes software development methodologies that are essential for building and managing large data-centric applications.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416.  
+   You have not taken 01:198:213 (Software Methodology) or these electives yet, so prerequisites not met. This could be a future target.
+
+5) Topics in Computer Science (01:198:442, 443, 444)  
+   These courses often include advanced and specialized topics, including databases or data management innovations.  
+   Prerequisites: 01:198:111 or 01:198:142.  
+   You have met these prerequisites; check with the department for topics offered focusing on databases.
+
+Summary & Recommendations:  
+- Start with Principles of Information and Data Management (01:198:336) and Data Management for Data Science (01:198:210) � both are accessible now and foundational.  
+- Consider Systems Programming (01:198:214) next to unlock access to Database Systems Implementation (01:198:437).  
+- Keep an eye on Topics in CS courses for specialized database themes.  
+- Software Engineering (01:198:431) is also valuable but requires prior course completions.
+
+You're on a strong path to build in-depth expertise in databases and data management. Let me know if you want guidance on sequencing these courses or integrating them with your machine learning studies!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5216,620,yes,NULL,NULL,NULL,NULL
+2026-06-07 14:26:12,2026-06-07 02:29:38 PM,6.01,What are good courses for someone who wants to work at a big tech company?,"You already have a strong foundation in core CS concepts and are enriching your skills with data science and machine learning courses. For a career at a big tech company, a combination of advanced algorithms, software engineering, systems, and AI-related courses will enhance your profile. Here are my top recommendations, ranked to build on your current work and strengths:
+
+1) Software Engineering (01:198:431)
+   This course focuses on practical software development methods and project management—skills highly valued in big tech for building scalable, maintainable software.
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416.
+   Based on your transcript, you have not yet taken 01:198:213 Software Methodology and hence do not meet prerequisites for 431 now, but it's a great next step after 213.
+
+2) Software Methodology (01:198:213)
+   This is a critical stepping stone towards software engineering roles, covering software development lifecycles and collaborative techniques.
+   Prerequisites: 01:198:112 (met).
+
+3) Operating Systems Design (01:198:416)
+   Deep knowledge of OS is essential for understanding system-level programming, performance, and resource management in large scale systems.
+   Prerequisites: 01:198:214 or (14:332:331 and 14:332:351). You have not taken 01:198:214 or the equivalents, so you don't yet meet the prerequisites.
+
+4) Compilers (01:198:415)
+   Understanding compilers deepens your knowledge of programming languages and execution, which is important for many systems and tooling roles in tech companies.
+   Prerequisites: 01:198:211 and 01:198:314. You have met 211 but not 314, so prereqs not met yet.
+
+5) Distributed Systems: Concepts and Design (01:198:417)
+   Distributed systems knowledge is crucial as many big tech companies rely on distributed architectures for scalability and reliability.
+   Prerequisites: 01:198:416 (your transcript shows no completion of 416 yet, prereqs not met).
+
+Given you are currently enrolled in machine learning courses and have AI background, adding solid software methodology and systems knowledge will round out your profile ideally for big tech roles, especially software engineering or data-focused roles.
+
+Courses to look forward to once prerequisites are met:
+- Software Engineering (01:198:431)
+- Operating Systems Design (01:198:416)
+- Compilers (01:198:415)
+- Distributed Systems (01:198:417)
+
+In summary: Take 01:198:213 Software Methodology next, then progress to Software Engineering 431. These directly boost your employability in big tech. Meanwhile, look into prerequisites for systems courses and consider those later. Keep leveraging your strong AI and ML coursework too!
+
+I'm here if you want help planning sequences or exploring other specialty areas like security or databases. You're on a great path!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2400,600,no,recommending courses that can't be taken.,yes,ranking_wrong,recommended courses that can't be taken.
+2026-06-07 14:26:12,2026-06-07 02:34:45 PM,4.47,I'm interested in AI and robotics,"For your strong interest in AI and robotics, combined with your completed and in-progress courses, I recommend focusing on courses that deepen your AI understanding and introduce you to robotics from a computational perspective. You are already well-positioned with Intro to AI (440) and current ML and Deep Learning courses.
+
+Here are the best next courses for you:
+
+1) Introduction to Computational Robotics (01:198:460)
+   A general introduction to robotics focused on mobile robots from a computational viewpoint—perfect for getting started in robotics.
+   Prerequisites: 01:198:206 (met).
+
+2) Brain-inspired Computing (01:198:425)
+   Explores computing paradigms inspired by neural systems, bridging AI and cognitive robotics concepts.
+   Prerequisites: 01:198:206 (met).
+
+3) Design and Analysis of Randomized Algorithms (01:198:463)
+   Strengthen your understanding of algorithmic techniques relevant in AI decision-making and stochastic processes.
+   Prerequisites: 01:198:344 (met).
+
+4) Minds, Machines, and Persons (01:730:329)
+   A compelling interdisciplinary course comparing human minds and complex machines—valuable for understanding AI/robotics philosophy and cognitive sciences.
+   Prerequisites: 01:198:205 (met).
+
+5) Topics in Computer Science (01:198:442 / 443 / 444)
+   Advanced topics courses sometimes feature AI or robotics special topics. Great to look out for current offerings related to your interests.
+   Prerequisites: 01:198:111 (met).
+
+Your completed AI and machine learning foundation, along with these courses, will position you well for both AI research and robotics applications. If you want to go further, consider as a later step exploring operating systems or distributed systems to understand the system-side environments that support robotics and large-scale AI applications.
+
+Please let me know if you'd like help mapping these into your remaining semesters or hearing about related electives! You're doing fantastic building a specialized skill set.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,3200,500,yes,NULL,no,NULL,NULL
+2026-06-07 14:26:12,2026-06-07 02:38:52 PM,6.25,Looking for challenging courses that will prepare me for grad school,"For a strong preparation for graduate school in computer science, it's wise to challenge yourself with courses that deepen your theoretical foundations, expose you to advanced algorithms, programming languages, and specialized topics that align with research areas. Considering your transcript and current courses, here are five challenging courses that fit well:
+
+1) Design and Analysis of Randomized Algorithms (01:198:463)
+   This course tackles advanced algorithmic techniques with a theoretical focus, preparing you for research-level problem solving.
+   Prerequisites: 01:198:344 (met).
+
+2) Formal Languages and Automata (01:198:452)
+   A foundational theoretical CS course that explores automata theory, formal languages, and computational models — essential for grad studies in theory or programming languages.
+   Prerequisites: 01:198:344 (met).
+
+3) Principles of Programming Languages (01:198:314)
+   Understanding programming language design and semantics is important for advanced studies and research in programming languages and compilers.
+   Prerequisites: 01:198:205, 01:198:211, and 01:640:152. You have not completed 01:640:152 (Calculus II), so prerequisites are not met yet.
+
+4) Topics in Computer Science (01:198:442 / 443 / 444)
+   These advanced topic courses vary by semester and provide exposure to cutting-edge research and specialized subjects, excellent prep for grad school.
+   Prerequisites: 01:198:111 (met).
+
+5) Brain-inspired Computing (01:198:425)
+   A niche but intellectually stimulating course blending AI with neural and cognitive models, good prep for research in emerging AI paradigms.
+   Prerequisites: 01:198:206 (met).
+
+If you have calculus II (01:640:152) planned or completed soon, you can then consider Principles of Programming Languages (314) and further systems or compiler courses for greater breadth.
+
+These courses balance theory, advanced concepts, and exposure to research topics to strengthen your graduate application and readiness.
+
+Feel free to ask for sequencing advice or explore other areas like logic or robotics for grad school prep as well. You're well-positioned to take on these challenges!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,3900,500,no,says i did not meet 152 prereq yet so i cant take principles of programming languages (false).,yes,prereq_wrong,i did take 152
+2026-06-07 14:50:54,2026-06-07 02:53:58 PM,6.21,What courses cover web development or full stack?,"You are well prepared with solid foundational courses and have completed key prerequisites that open up options in web development and full stack studies. Here are the top recommendations aligned to your interest:
+
+1) Internet Technology (01:198:352)  
+   Covers fundamental concepts of internet-based applications, protocols, and technologies critical to web development and full-stack engineering.  
+   Prerequisites: 01:198:211 or 14:332:331; and 01:198:206 or 01:640:477 or 14:332:321  
+   Based on your transcript: You have completed 01:198:211 and 01:198:206, so prerequisites are met.
+
+2) Software Methodology (01:198:213)  
+   Focuses on software development processes, best practices, design, and implementation�skills central to building full-stack applications.  
+   Prerequisites: 01:198:112  
+   You have completed 01:198:112, so prerequisites are met.
+
+3) Principles of Information and Data Management (01:198:336)  
+   Covers database and data management principles, very relevant for backend development in full stack.  
+   Prerequisites: 01:640:152 and 01:198:112 and (01:198:205 or 14:332:312)  
+   You have completed 01:198:112 and 01:198:205, but I don't see 01:640:152 on your transcript, so prerequisites are not met.
+
+4) Software Engineering (01:198:431)  
+   A deeper dive into software project life cycle and methodologies, which is important for full-stack development projects.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416  
+   You have completed 01:198:213, and based on your courses, you meet the prerequisites via 01:198:352 (which you can take concurrently or prior). So once you take 01:198:352, you become eligible for this.
+
+4) Database Systems Implementation (01:198:437)  
+   Advanced course on database architecture and implementation, relevant for backend infrastructure in full stack apps.  
+   Prerequisites: 01:198:336, 01:198:214  
+   You have not completed either 01:198:336 or 01:198:214, so prerequisites are not met.
+
+---
+
+**Summary and ranking rationale:**  
+Start with Internet Technology (01:198:352) as it directly targets web/internet app concepts and you meet all prereqs. Software Methodology (01:198:213) complements this by focusing on software development practices. After that, Software Engineering (01:198:431) is a great follow-up, enhancing your project-based development skills once you complete 01:198:352. Principles of Information and Data Management (01:198:336) is very relevant but blocked by missing 01:640:152. Database Systems Implementation (01:198:437) is excellent but requires the previous course.
+
+**Courses to look forward to:**  
+- Principles of Information and Data Management (01:198:336) � missing 01:640:152  
+- Database Systems Implementation (01:198:437) � requires 01:198:336 and 01:198:214  
+- Software Engineering (01:198:431) � requires 01:198:336 or 352 or 314 or 416  
+
+Please let me know if you'd like guidance on fulfilling missing prerequisites or project opportunities in these areas! You're very close to having a solid full stack skill set here.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2414,759,no,Completely hallucinated,yes,ranking_wrong,Also hallucinated courses and got codes wrong.
+2026-06-07 14:50:54,2026-06-07 02:55:21 PM,5.49,Can you suggest courses that are good for a software engineering career path?,"For a strong software engineering career path, it's key to build depth in software development methodology, system-level programming, design, and project management. Given your completed courses and current progress, here are five highly recommended courses that align well with these goals:
+
+1) Software Methodology (01:198:213)  
+   Focuses on software development processes, design principles, testing, and project management�a fundamental course for software engineers.  
+   Prerequisites: 01:198:112 (met).
+
+2) Software Engineering (01:198:431)  
+   Covers advanced topics in software project life cycle, team collaboration, and engineering practices�building on methodology and specialized topics.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416  
+   You have completed 01:198:213. Currently, you have not completed any of 314, 336, 352, or 416, but based on your background, you could take Internet Technology (01:198:352) next (prereqs met), which unlocks 431.
+
+3) Systems Programming (01:198:214)  
+   Teaches low-level software development skills like memory management and concurrency, crucial for understanding system fundamentals.  
+   Prerequisites: 01:198:112 and 01:640:152  
+   You have 01:198:112 but 01:640:152 is not on your transcript, so prerequisites are not met.
+
+4) Internet Technology (01:198:352)  
+   Provides a foundation in internet protocols and technologies, useful for modern software engineering especially in web and distributed systems.  
+   Prerequisites: 01:198:211 or 14:332:331; and 01:198:206 or 01:640:477 or 14:332:321  
+   You have completed 01:198:211 and 01:198:206, so prerequisites are met.
+
+5) Operating Systems Design (01:198:416)  
+   Explores operating system concepts and their design, helpful for understanding complex software systems and scalability.  
+   Prerequisites: 01:198:214 or (14:332:331 and 14:332:351)  
+   You do not have 01:198:214 or the other courses, so prerequisites are not met.
+
+---
+
+**Ranking rationale:**  
+Start with Software Methodology (213) to ground yourself in software development practices. Pair that with Internet Technology (352) to gain practical systems knowledge relevant to software engineering. Once you've taken 352, you become eligible for Software Engineering (431), which deepens your engineering skills. I also recommend pursuing Systems Programming (214) if you can fulfill the missing prerequisite 01:640:152, as it gives critical systems-level insights.
+
+**Courses to look forward to:**  
+- Systems Programming (01:198:214) � missing 01:640:152  
+- Operating Systems Design (01:198:416) � prereqs unmet  
+- Software Engineering (01:198:431) � pending completion of one of 314, 336, 352, or 416 (352 is accessible)
+
+You�re well positioned to build expertise in software engineering with these courses! Please reach out if you want advice on fulfilling specific prerequisites or mapping your path through advanced coursework.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5273,695,no,recommended course that user can't take yet,yes,prereq_wrong,"Also 4, ranking wrong."
+2026-06-07 14:50:54,2026-06-07 02:57:00 PM,6.60,I'm interested in systems programming,"You're already well grounded in foundational CS courses, which sets a strong base for exploring systems programming. Here are the best courses focused on systems programming and related areas for which you meet prerequisites or are close to meeting them:
+
+1) Systems Programming (01:198:214)  
+   Covers essential low-level programming concepts like memory management, concurrency, and system calls that are core to systems programming.  
+   Prerequisites: 01:198:112 and 01:640:152  
+   Based on your transcript: You have completed 01:198:112 but do not have 01:640:152, so prerequisites are not met.
+
+2) Operating Systems Design (01:198:416)  
+   Explores operating system concepts and design, a natural next step after systems programming.  
+   Prerequisites: 01:198:214 or (14:332:331 and 14:332:351)  
+   Since you do not have 01:198:214 completed yet, prerequisites are not met.
+
+3) Compilers (01:198:415)  
+   Studies the theory and implementation of compilers, which often involves systems-level programming skills.  
+   Prerequisites: 01:198:211 and 01:198:314 (with both requiring 01:640:152)  
+   You have 01:198:211 but not 01:640:152 nor 01:198:314, so prerequisites are not met.
+
+4) Software Engineering (01:198:431)  
+   While broader than systems programming, this course includes topics in software design and can overlap with systems concepts.  
+   Prerequisites: 01:198:213 and one of 314, 336, 352, or 416  
+   You have completed 01:198:213, but not 314, 336, 352, or 416�so prereqs currently unmet.
+
+5) Internet Technology (01:198:352)  
+   Provides useful knowledge about internet protocols and technologies relevant to modern systems and networking.  
+   Prerequisites: 01:198:211 or equivalent and 01:198:206 or equivalent  
+   You meet these prerequisites.
+
+---
+
+**Summary & Recommendations:**  
+Your main barrier to taking Systems Programming (214) is missing 01:640:152 (Calculus II for Mathematical and Physical Sciences or equivalent). Securing that prerequisite should be your priority to access core systems programming courses and subsequent advanced topics like Operating Systems Design (416) and Compilers (415). Meanwhile, taking Internet Technology (352) can broaden your systems-related knowledge in networking, and also unlock Software Engineering (431).
+
+**Courses to look forward to:**  
+- Systems Programming (01:198:214) � missing 01:640:152  
+- Operating Systems Design (01:198:416) � requires Systems Programming or equivalent  
+- Compilers (01:198:415) � requires 01:640:152 and Principles of Programming Languages (314)  
+- Software Engineering (01:198:431) � requires advanced course 314, 336, 352, or 416  
+
+You�re very close to diving deep into systems programming! Let me know if you'd like help planning how to fulfill that crucial prerequisite or exploring related electives.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,8060,674,no,ranked courses i cant take,yes,ranking_wrong,
+2026-06-07 15:00:04,2026-06-07 03:03:13 PM,5.29,What courses should I take if I want to work in data science?,"You are well-prepared and currently enrolled in some excellent data science foundational and advanced courses like Introduction to Data Science, Machine Learning Principles, and Deep Learning. Based on your transcript and interests in data science, here are five course recommendations that will deepen your expertise in data management, numerical methods, and software tools relevant for data science:
+
+1) Data Management for Data Science (01:198:210)  
+   This course focuses on data organization, storage, retrieval, and management�critical skills for any data scientist.  
+   Prerequisites: 01:198:142 or 01:198:111 (met)
+
+2) Principles of Information and Data Management (01:198:336)  
+   Explores database theory and practice, essential for handling and organizing large datasets.  
+   Prerequisites: 01:640:152 (Calculus II), 01:198:112 (Data Structures), and 01:198:205 (Discrete Structures I) (all met)
+
+3) Numerical Analysis and Computing (01:198:323)  
+   Covers numerical methods important for data analysis, simulations, and modeling in data science.  
+   Prerequisites: 01:640:152 (Calculus II) and 01:640:250 (Linear Algebra) (both met)
+
+4) Design and Analysis of Algorithms (01:198:344)  
+   Strengthen your algorithmic skills which underpin efficient data processing and machine learning implementations.  
+   Prerequisites: 01:198:112 (Data Structures), 01:198:205 and 01:198:206 (both Discrete Structures I & II) (met)
+
+5) Software Methodology (01:198:213)  
+   Learning systematic software development approaches will help you build scalable and maintainable data science applications.  
+   Prerequisites: 01:198:112 (Data Structures) (met)
+
+---
+
+Courses to look forward to (prerequisites not yet met or you may have completed already):  
+- Database Systems Implementation (01:198:437) requires Principles of Information and Data Management and Systems Programming.  
+- Numerical Methods (01:198:324) requires Numerical Analysis and Computing.  
+- Advanced topics such as Formal Languages and Automata, Compilers, or Operating Systems are more specialized and less directly aimed at data science.
+
+---
+
+You are taking excellent steps with your current courses in data science and machine learning. The recommended courses will solidify your foundation in data handling and computational methods, which are pillars of data science careers. Keep up the strong work! If you want advice on data science internships or project ideas, feel free to ask.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2509,539,no,recommended design and analysis of algorithms.,yes,ranking_wrong,
+2026-06-07 15:00:04,2026-06-07 03:05:18 PM,5.72,I want to learn about computer vision,"You have a strong foundational background and are currently taking Machine Learning Principles and Deep Learning, both of which are very relevant to computer vision. To deepen your knowledge specifically in computer vision, I recommend the following courses:
+
+1) Introduction to Imaging and Multimedia (01:198:334)  
+   This course covers fundamentals related to image processing, multimedia, and could serve as a stepping stone to computer vision topics.  
+   Prerequisites: 01:198:112 (Data Structures), 01:198:206 (Discrete Structures II), and 01:640:250 (Linear Algebra) � all met.
+
+2) Introduction to Artificial Intelligence (01:198:440)  
+   This course includes a broad introduction to AI with components on computer vision, knowledge representation, and other AI areas.  
+   Prerequisites: 01:198:205 (Discrete Structures I) and 01:640:152 (Calculus II) � both met; you completed this course with a B.
+
+3) Introduction to Deep Learning (01:198:462)  
+   Since you are currently enrolled, this course extensively supports advanced techniques used in computer vision involving neural networks and deep architectures.  
+   Prerequisites: 01:640:250 (Linear Algebra), 01:198:112 (Data Structures), and 01:198:206 (Discrete Structures II) � all met.
+
+4) Design and Analysis of Algorithms (01:198:344)  
+   Recommended to understand the underlying algorithmic concepts that enhance efficient computer vision implementations.  
+   Prerequisites: 01:198:112, 01:198:205, 01:198:206 � all met.
+
+5) Brain-inspired Computing (01:198:425)  
+   This course explores computing paradigms inspired by neural systems and could complement your understanding of biologically motivated aspects of vision and AI.  
+   Prerequisites: 01:198:206 (Discrete Structures II) � met.
+
+---
+
+Courses to look forward to:  
+- Introduction to Computer Graphics (01:198:428) involves image generation and processing and requires 01:640:152, 01:640:250, and 01:198:112 � prerequisites met, but consider after your current load.  
+- More specialized or advanced courses like Topics in Computer Science (01:198:442, 443, 444) may occasionally touch on computer vision depending on the offering.
+
+---
+
+You're building an excellent blend of theoretical and practical skills for computer vision with your current and recommended courses. Keep leveraging your machine learning and deep learning classes, as they are central to modern computer vision approaches. If you'd like, I can also suggest project ideas or research opportunities in computer vision to complement your coursework!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5232,559,no,recommends courses user has already taken,yes,ranking_wrong,
+2026-06-07 15:00:04,2026-06-07 03:07:57 PM,5.82,What are the best courses for someone going into fintech?,"Given your strong mathematical background and completed foundational CS courses, here are some excellent course choices tailored towards a career in fintech, emphasizing algorithms, data management, numerical methods, and machine learning:
+
+1) Numerical Analysis and Computing (01:198:323)  
+   Focuses on numerical techniques essential for financial modeling and quantitative analysis.  
+   Prerequisites: 01:640:152 (Calculus II) and 01:640:250 (Linear Algebra) (met).
+
+2) Design and Analysis of Algorithms (01:198:344)  
+   Important for understanding complex algorithmic solutions used in trading, risk analysis, and large-scale data processing.  
+   Prerequisites: 01:198:112 (Data Structures), 01:198:205 and 01:198:206 (Discrete Structures I & II) (met).
+
+3) Principles of Information and Data Management (01:198:336)  
+   Covers databases and data management systems crucial for handling large financial datasets and transaction data.  
+   Prerequisites: 01:640:152, 01:198:112, and 01:198:205 (all met).
+
+4) Introduction to Artificial Intelligence (01:198:440)  
+   Since AI techniques are increasingly used in fintech (e.g., fraud detection, automated trading), this course provides a broad AI introduction.  
+   Prerequisites: 01:198:205 and 01:640:152 (met).
+
+5) Machine Learning Principles (01:198:461)  
+   Currently in progress, this course is extremely relevant as machine learning models play a key role in financial forecasting and decision processes.  
+   Prerequisites: 01:198:112, 01:198:206, and 01:640:250 (all met).
+
+---
+
+Courses to look forward to:  
+- Numerical Methods (01:198:324) builds on Numerical Analysis and Computing and is great for more advanced numerical techniques once you finish 323.  
+- Database Systems Implementation (01:198:437) requires Principles of Information and Data Management and Systems Programming, ideal for mastering backend data systems in fintech.
+
+---
+
+Your current coursework already aligns well with fintech. Focusing on these courses will strengthen your quantitative, algorithmic, and data handling skills, making you highly competitive in the fintech field. Let me know if you'd like internships or project advice in fintech!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7978,488,no,Recommended already taken or currently taken courses.,yes,ranking_wrong,
+2026-06-07 15:08:20,2026-06-07 03:11:53 PM,4.36,I'm curious about natural language processing,"It's wonderful to see your interest in natural language processing (NLP)! Given your strong foundation in computer science, discrete math, linear algebra, and your current enrollment in machine learning and deep learning, you are well-prepared for advanced study in NLP-related fields.
+
+Here are the top 5 courses I recommend that touch upon or relate strongly to natural language processing, each building on your current knowledge and prerequisites met:
+
+1) Introduction to Artificial Intelligence (01:198:440)  
+   This course includes a broad introduction to AI topics, such as search, knowledge representation, natural language understanding, and computer vision. It directly covers aspects of NLP and will give you a solid conceptual foundation.  
+   Prerequisites: Discrete Structures I and Calculus II (both met)
+
+2) Machine Learning Principles (01:198:461) [In progress]  
+   This course covers crucial ML fundamentals that are essential for modern NLP techniques. Since you are already taking this, its content will be very relevant to your interests.
+
+3) Introduction to Deep Learning (01:198:462) [In progress]  
+   Deep learning is currently a cornerstone method in NLP, especially for processing and generating language with neural networks. This course complements your NLP focus perfectly.
+
+4) Principles of Information and Data Management (01:198:336)  
+   While this course centers on data management concepts, understanding data management principles can be important in handling large text corpora and datasets commonly found in NLP tasks.  
+   Prerequisites: Calculus II, Data Structures, and Discrete Structures I (all met)
+
+5) Topics in Computer Science (01:198:442 or 443 or 444)  
+   These are advanced, special-topic courses that often include contemporary NLP research, depending on the semester�s theme. You might find a dedicated NLP topics class here, so keep an eye on these when offered.  
+   Prerequisites: Introduction to CS (met)
+
+Courses to look forward to:  
+- Formal Languages and Automata (01:198:452) requires Design and Analysis of Algorithms (01:198:344), which you've completed. This course deepens theoretical understanding of language and automata which underpin many NLP models.  
+- Brain-inspired Computing (01:198:425) requires Discrete Structures II, which you have. This may relate tangentially to cognitive models in NLP.
+
+Your current and completed coursework puts you in an excellent position to delve deep into NLP either through AI, machine learning, deep learning, or specialized topics courses. Keep up the great work, and feel free to explore projects or research in NLP alongside these classes to maximize your experience!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2502,537,no,recommends already taken or currently taken courses,yes,ranking_wrong,
+2026-06-07 15:08:20,2026-06-07 03:14:51 PM,4.45,What courses would help me get into a machine learning engineering role?,"Your strong foundational coursework plus your current study of Machine Learning Principles and Deep Learning position you well for a machine learning engineering role. To round out your expertise and practical skills relevant to ML engineering, I recommend these courses:
+
+1) Principles of Information and Data Management (01:198:336)  
+   Understanding data management is crucial for machine learning engineers who work with large datasets and databases in production environments.  
+   Prerequisites: Calculus II, Data Structures, and Discrete Structures I (all met)
+
+2) Software Methodology (01:198:213)  
+   This course covers software engineering principles and best practices, which will help you develop scalable, maintainable machine learning software.  
+   Prerequisites: Data Structures (met)
+
+3) Systems Programming (01:198:214)  
+   Machine learning engineers benefit from systems-level understanding for optimizing ML pipelines and deployment. This course explores programming close to the hardware.  
+   Prerequisites: Data Structures and Calculus II (both met)
+
+4) Database Systems Implementation (01:198:437)  
+   Since you've taken or are taking Principles of Information and Data Management and Systems Programming, this course will further deepen your understanding of how data systems work, which is important for handling ML production systems.  
+   Prerequisites: Principles of Information and Data Management and Systems Programming (not yet completed; 336 completed, 214 completed)
+
+5) Topics in Computer Science (01:198:442 / 443 / 444)  
+   These variable-topic courses often cover emerging or specialized areas including advanced machine learning, data science, or AI systems engineering depending on the semester�s theme.  
+   Prerequisites: Introduction to Computer Science (met)
+
+Courses to look forward to:  
+- Design and Analysis of Randomized Algorithms (01:198:463) requires Design and Analysis of Algorithms (01:198:344), which you have completed. This course can deepen your theoretical understanding of algorithmic techniques underlying many ML methods.  
+- Modeling and Simulation of Continuous Systems (01:198:424) requires Numerical Analysis or permission; solid math skills here bolster ML model understanding and simulation.
+
+Your current enrollment in Introduction to Data Science, Machine Learning Principles, and Deep Learning is excellent, and coupling them with strong software engineering and data management knowledge will prepare you well for ML engineering roles. Focus on gaining practical project experience alongside these courses to enhance your portfolio!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5228,488,no,"recommended courses i haven't completed yet, says i completed uncompleted prereqs for 437.",yes,ranking_wrong,prereq wrong as well.
+2026-06-07 15:08:20,2026-06-07 03:16:33 PM,4.14,I want to understand how operating systems work,"To gain a strong understanding of how operating systems work, these courses from the Rutgers catalog will be highly valuable for you:
+
+1) Systems Programming (01:198:214)  
+   This course explores programming close to the system hardware and is a crucial foundation for understanding operating system internals, such as memory management and process control.  
+   Prerequisites: Data Structures and Calculus II (both met)
+
+2) Operating Systems Design (01:198:416)  
+   This course focuses directly on the design and implementation of operating systems, covering essential concepts like scheduling, synchronization, and resource management.  
+   Prerequisites: Systems Programming (01:198:214) or the combination of Internet Technology (14:332:331) and Introduction to Imaging and Multimedia (14:332:351)  
+   (You have completed 01:198:214, so you meet the prerequisite.)
+
+3) Distributed Systems: Concepts and Design (01:198:417)  
+   After Operating Systems Design, this course explores distributed systems, which often build on operating system concepts, helping you understand how OS principles scale in networks.  
+   Prerequisites: Operating Systems Design (01:198:416) (not yet taken)
+
+4) Computer Architecture (01:198:211)  
+   Since you have already completed this course, it gives you a necessary background on hardware architecture vital for understanding operating system interactions with the computer hardware.
+
+5) Software Methodology (01:198:213)  
+   This course teaches software development best practices which underpin quality OS development and maintenance.  
+   Prerequisites: Data Structures (met)
+
+Courses to look forward to:  
+- Compilers (01:198:415) after Principles of Programming Languages (01:198:314) which you haven�t taken yet. Understanding compilers complements OS knowledge by explaining how programs translate into executable instructions.  
+- Computer Security (01:198:419), which requires Operating Systems Design or Internet Technology as a prerequisite, will deepen your knowledge of OS-level security.
+
+Given your coursework so far, I suggest taking Systems Programming (214) next if you haven�t, then moving on to Operating Systems Design (416). This sequence will give you a comprehensive education on operating systems from low-level programming through to design and implementation. You�re on a great path�keep up the excellent work!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7901,477,no,"hallucinated, recommended course ive already taken, messed up prereqs",yes,ranking_wrong,2 as well.
+2026-06-07 15:16:39,2026-06-07 03:19:38 PM,6.86,What should I take if I'm interested in cloud computing?,"You have a strong foundation in CS fundamentals and relevant math, and you've completed key prerequisites such as Computer Architecture (01:198:211) and Systems-level courses. This sets you up well to focus on cloud computing-related topics.
+
+Here are my top recommended courses for your interest in cloud computing, ranked by how directly they relate to cloud technologies and the prerequisite fit with your transcript:
+
+1) Operating Systems Design (01:198:416)  
+   This course covers the design and implementation of operating systems, which are foundational for understanding how cloud infrastructure manages resources and processes.  
+   Prerequisites: 01:198:214 or (14:332:331 and 14:332:351) � You have not taken Systems Programming (01:198:214), so prerequisite not met.
+
+2) Distributed Systems: Concepts and Design (01:198:417)  
+   A very direct match to cloud computing since distributed systems are core to cloud architectures, covering concepts such as coordination, fault tolerance, and scalability.  
+   Prerequisites: 01:198:416 � prerequisite not met since you lack Operating Systems Design.
+
+3) Internet Technology (01:198:352)  
+   This course deals with networking technology and web protocols, essential for understanding cloud-based service delivery and communication.  
+   Prerequisites: 01:198:211 or 14:332:331; and 01:198:206 or 01:640:477 or 14:332:321  
+   You have 01:198:211 and 01:198:206, so prerequisites are met.
+
+4) Software Engineering (01:198:431)  
+   Learning software engineering practices will help in building scalable and maintainable cloud applications. This course also requires prior familiarity with systems-level or data management courses.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416  
+   You have not taken Software Methodology (01:198:213), so prerequisite not met.
+
+5) Database Systems Implementation (01:198:437)  
+   Cloud computing often involves managing distributed data storage and databases; this course dives deeply into building database systems.  
+   Prerequisites: 01:198:336, 01:198:214  
+   You are missing both 01:198:336 (Principles of Information and Data Management) and 01:198:214 (Systems Programming), so prerequisites not met.
+
+---
+
+Summary of eligible courses you can register for now given your transcript and prerequisites:  
+
+**Internet Technology (01:198:352)**  
+Highly relevant for cloud computing; directly builds understanding of internet protocols and infrastructure, which is key for cloud systems.
+
+Courses to look forward to once you complete the necessary prerequisites:  
+- Operating Systems Design (01:198:416)  
+- Distributed Systems: Concepts and Design (01:198:417)  
+- Software Engineering (01:198:431)  
+- Database Systems Implementation (01:198:437)  
+
+Since you are currently a senior with a strong GPA and solid foundational and AI/ML courses underway, I encourage you to consider taking Internet Technology this semester if your schedule allows to build that networking and systems knowledge. Then, next steps would be to take Systems Programming (01:198:214) to unlock the higher-level systems and distributed systems courses so you can dive deeper into cloud computing design and management.
+
+You're on a great trajectory�cloud computing is a complex field that builds on solid systems knowledge, and your current coursework gives you a great base. Keep going strong! Let me know if you'd like more personalized sequencing or information on electives related to cloud environments.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2507,755,no,recommends courses im not eligible for.,yes,ranking_wrong,
+2026-06-07 15:16:39,2026-06-07 03:21:09 PM,6.45,I want to build mobile apps,"For building mobile apps, a solid foundation in software development, user interfaces, and multimedia is very helpful. You have completed strong foundational courses, including Data Structures, Algorithms, and Computer Architecture, which is great. Here are recommendations tailored to mobile app development, ranked by relevance and your prerequisites:
+
+1) Introduction to Imaging and Multimedia (01:198:334)  
+   This course covers multimedia fundamentals, which are central to UI/UX design, graphics, and interactive media often used in mobile apps. Your prerequisites 01:198:112 and 01:198:206 are met, as well as 01:640:250.  
+   Prerequisites: 01:198:112 or 14:332:351; 01:198:206 or 14:332:226 or 01:640:477; 01:640:250 � met.
+
+2) Software Methodology (01:198:213)  
+   Learning modern software development methodologies helps in building complex applications including mobile apps, emphasizing good practices and teamwork.  
+   Prerequisites: 01:198:112 � met.
+
+3) Internet Technology (01:198:352)  
+   Mobile apps often interact with web services and internet protocols, so this course is useful for understanding backend and networking aspects.  
+   Prerequisites: 01:198:211 and 01:198:206 � met.
+
+4) Software Engineering (01:198:431)  
+   This course advances understanding of software design and project management, beneficial for developing scalable mobile apps. It requires Software Methodology and one of several other courses. You have not taken 01:198:213 yet, so you could take that first.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416 � not met yet, but see 01:198:213 and 01:198:334 and 352 above.
+
+5) Introduction to Computer Graphics (01:198:428)  
+   Relevant if you want to incorporate sophisticated graphics or animations in apps.  
+   Prerequisites: 01:640:152, 01:640:250, and 01:198:112 � all met.
+
+---
+
+Summary of best next steps for you:  
+- Consider taking **Introduction to Imaging and Multimedia (01:198:334)** for multimedia/graphics foundations.  
+- Take **Software Methodology (01:198:213)** to gain strong development practices.  
+- Then pursue **Internet Technology (01:198:352)** to understand networking and web interactions.  
+- Afterwards, you can aim for **Software Engineering (01:198:431)** to lead larger development projects.  
+- **Introduction to Computer Graphics (01:198:428)** is excellent if you want to focus on visual and UI elements.
+
+All these courses fit within your current standing and prerequisites, and they will build skills directly useful for mobile app development, from UI to backend. If you want to specialize further or focus on mobile OS or hardware-level programming, feel free to ask!
+
+You're doing great with the fundamentals, and these courses will prepare you well to design, build, and deploy compelling mobile applications. Keep up the great work!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5446,667,no,recommends courses that im not eligible for.,yes,ranking_wrong,
+2026-06-07 15:16:39,2026-06-07 03:22:13 PM,5.18,What are good courses for someone interested in game development?,"For your strong background and interest in game development, consider courses that combine programming, graphics, multimedia, AI, and systems-level understanding. Games require solid grasp of graphics, algorithms, real-time interaction, and often AI.
+
+Here are my top 5 course recommendations ranked by their direct relevance and your eligibility:
+
+1) Introduction to Imaging and Multimedia (01:198:334)  
+   Covers essential multimedia topics such as image and video processing, which are crucial for game graphics and user interaction. You meet all prerequisites.  
+   Prerequisites: 01:198:112 or 14:332:351; 01:198:206 or 14:332:226 or 01:640:477; 01:640:250 � met.
+
+2) Introduction to Computer Graphics (01:198:428)  
+   Directly focused on graphics programming, rendering, and visual computing, key in game development. You meet all prerequisites.  
+   Prerequisites: 01:640:152 and 01:640:250; and 01:198:112 or 14:332:351 � met.
+
+3) Introduction to Artificial Intelligence (01:198:440)  
+   AI is heavily applied in modern games for NPC behavior, pathfinding, and decision-making. You�ve already completed this, so it's a strong foundation.
+
+4) Software Methodology (01:198:213)  
+   Learning robust software engineering practices is important for managing complex game development projects.  
+   Prerequisites: 01:198:112 � met.
+
+5) Software Engineering (01:198:431)  
+   Builds on methodology and other courses to teach software design and project management�valuable when working on game development teams or bigger projects.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416 � not yet met (you lack 01:198:213).
+
+---
+
+Courses to look forward to after meeting prerequisites:
+
+- Operating Systems Design (01:198:416), relevant for low-level performance optimization and understanding hardware/software interaction in gaming.  
+- Distributed Systems: Concepts and Design (01:198:417), useful if interested in multiplayer or cloud-based gaming.  
+- Compilers (01:198:415), if interested in language tools or game scripting languages.  
+
+Your strong math and CS foundation plus ongoing AI/ML courses complement these choices well. I recommend starting with Introduction to Imaging and Multimedia and Computer Graphics to build solid visual foundations, then progressing into Software Methodology and Engineering for development practice.
+
+You're very well positioned to dive deep into game development � these courses will build key skills across graphics, AI, and software design. Feel free to ask if you want advice on specific electives or capstone projects related to gaming!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,8301,574,no,recommends repeat courses. also recommends courses im not eligible for.,yes,ranking_wrong,
+2026-06-07 15:22:36,2026-06-07 03:25:52 PM,6.09,I'm looking for courses that cover algorithms and competitive programming,"Given your interest in algorithms and competitive programming, and considering your strong background with completed courses like Data Structures (01:198:112), Discrete Structures I & II (01:198:205, 206), and especially Design and Analysis of Algorithms (01:198:344), here are recommended courses that deepen algorithmic understanding and problem-solving skills relevant to competitive programming:
+
+1) Design and Analysis of Randomized Algorithms (01:198:463)  
+   This course explores advanced algorithmic techniques involving randomness, which are key in many efficient algorithms and problem-solving strategies in competitive programming.  
+   Prerequisites: 01:198:344 (met).
+
+2) Algorithms in Society (01:198:345)  
+   This course examines algorithms in broader societal contexts; while less focused on competitive programming, it offers interesting advanced algorithmic thinking and real-world applications.  
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+3) Formal Languages and Automata (01:198:452)  
+   Studying computability and formal languages can enhance your theoretical understanding of what problems are solvable and how, which is useful when tackling complex algorithmic problems.  
+   Prerequisites: 01:198:344 (met).
+
+4) Topics in Computer Science (Algorithms or related topics - 01:198:442/443/444)  
+   These advanced topic courses vary by semester but often include specialized algorithmic content and recent research areas in CS. Check the current offerings to see if the topic aligns with algorithms or competitive programming.  
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Introduction to Data Science (01:198:439) - In Progress  
+   While not purely algorithmic, this course can broaden applied algorithm knowledge, particularly in data handling and processing, which are sometimes relevant in contests with data-driven problems.
+
+---
+
+**Courses to look forward to:**  
+- None of the higher-level CS courses explicitly focused on operating systems, compilers, or graphics fit the direct algorithm or competitive programming focus and might not be prerequisites met or top priority now.
+
+Your solid foundation and current senior standing position you well to tackle these advanced algorithms courses, especially 01:198:463, which will deepen your algorithmic toolkit significantly for competitive programming challenges. Keep up the great work!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2507,485,no,recommended courses already taken.,yes,ranking_wrong,
+2026-06-07 15:22:36,2026-06-07 03:27:56 PM,5.20,What should I take if I want to work in quantitative finance or trading?,"For a career in quantitative finance or trading, strong foundations in algorithms, mathematics, numerical methods, and data analysis are essential. Given your excellent background and current courses, here are some well-suited courses to deepen your skills relevant to this field:
+
+1) Numerical Analysis and Computing (01:198:323)  
+   This course covers numerical methods critical in modeling and solving mathematical problems in finance, such as optimization and simulations.  
+   Prerequisites: 01:640:152 and 01:640:250 (both met).
+
+2) Numerical Methods (01:198:324)  
+   A follow-up to Numerical Analysis, this course extends techniques useful for quantitative modeling, including iterative methods and numerical optimization.  
+   Prerequisites: 01:198:323 with a grade of C or better (prerequisite met if you complete 323 successfully).
+
+3) Introduction to Data Science (01:198:439) � currently in progress  
+   Your exposure to this course will help you acquire essential data manipulation and analysis skills used in quantitative finance.
+
+4) Design and Analysis of Randomized Algorithms (01:198:463)  
+   Randomized algorithms and stochastic processes are key in finance for simulations and probabilistic modeling. This course will deepen your understanding of these tools.  
+   Prerequisites: 01:198:344 (met).
+
+5) Modeling and Simulation of Continuous Systems (01:198:424)  
+   Focused on modeling dynamical and continuous systems, this course ties in nicely with financial systems modeling.  
+   Prerequisites: 01:198:323 with a grade of C or better or permission of instructor (not yet met); alternative prerequisite 01:640:373 is not on your transcript.
+
+---
+
+**Courses to look forward to:**  
+- Numerical Methods (01:198:324) depends on completion of 323.  
+- Software Engineering (01:198:431) if you want to enhance your programming for robust large systems.  
+- Advanced Topics in CS (01:198:442/443/444) may occasionally cover finance-related topics�check current offerings.
+
+Your strong math and algorithm background combined with data science and numerical courses will position you well for quantitative finance and trading roles. Keep building both your theoretical and applied skill sets!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5184,465,no,recommended already taken or taking courses and courses im not eligible for.,yes,ranking_wrong,
+2026-06-07 15:22:36,2026-06-07 03:29:00 PM,5.43,I'm interested in distributed systems and scalability,"Given your interest in distributed systems and scalability and your strong CS foundation, here are some well-aligned course recommendations that build on your completed courses and will deepen your understanding in this exciting area:
+
+1) Operating Systems Design (01:198:416)  
+   This course covers key OS concepts like process synchronization and resource management, foundational for distributed systems design.  
+   Prerequisites: 01:198:214 or (14:332:331 and 14:332:351). You have completed none of these prerequisites, so this course is not yet available.
+
+2) Distributed Systems: Concepts and Design (01:198:417)  
+   A focused distributed systems course covering architecture, communication, and scalable system design. This is the natural next step after Operating Systems Design.  
+   Prerequisites: 01:198:416 (not met yet).
+
+3) Internet Technology (01:198:352)  
+   This course covers networked systems and web technologies, which are crucial for understanding distributed system communication and scalability.  
+   Prerequisites: 01:198:211 (met) and 01:198:206 (met).
+
+4) Systems Programming (01:198:214)  
+   Hands-on systems programming skills essential for low-level programming and understanding system behavior.  
+   Prerequisites: 01:198:112 and 01:640:152 (both met).
+
+5) Software Engineering (01:198:431)  
+   Focus on developing large software systems, which is key to building scalable distributed applications.  
+   Prerequisites: 01:198:213 and one of 01:198:314, 336, 352, or 416. You have neither completed 01:198:213 nor the others yet, so this course is currently unavailable.
+
+---
+
+**Courses to look forward to:**  
+- Operating Systems Design (01:198:416), followed by Distributed Systems (01:198:417), once you complete Systems Programming (01:198:214).  
+- Software Engineering (01:198:431) after its prerequisites are met.
+
+---
+
+To align with your interest in distributed systems and scalability, I recommend you take **Systems Programming (01:198:214)** next. It will unlock advanced courses like Operating Systems and Distributed Systems, and together these will give you a robust understanding of scalable, reliable system design. Additionally, **Internet Technology (01:198:352)** is immediately available and offers valuable networking knowledge critical to distributed platforms.
+
+You're well situated to dive into the systems pathway�keep up the excellent work this senior year!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7834,528,no,recommended courses im not eligible for in the main ranking.,yes,ranking_wrong,
+2026-06-07 15:29:20,2026-06-07 03:31:16 PM,6.61,What courses would help me prepare for a software engineering internship at Google?,"You have an excellent foundation�strong grades in core CS courses like Data Structures, Discrete Structures I & II, Computer Architecture, and Design & Analysis of Algorithms. Given your senior standing and the courses already taken or in progress, I recommend the following courses to best prepare you for a software engineering internship at Google, focusing on practical software development, systems programming, and software engineering practices:
+
+1) Software Methodology (01:198:213)  
+   This course will give you a solid understanding of professional software development practices, team collaboration, version control, testing, and software design�all crucial skills for a software engineering internship.  
+   Prerequisites: 01:198:112 (met).
+
+2) Systems Programming (01:198:214)  
+   Learning low-level programming, memory management, and working close to the OS kernel will enhance your understanding of how software interacts with hardware. Google's internships often value systems knowledge.  
+   Prerequisites: 01:198:112 and 01:640:152 (both met).
+
+3) Software Engineering (01:198:431)  
+   A capstone software engineering course that builds on methodology and other intermediate topics, focusing on software design, project management, and large scale software development projects. This is a direct preparation for working in real-world software engineering environments.  
+   Prerequisites: 01:198:213 (recommended to take first) and one of (01:198:314, 01:198:336, 01:198:352, or 01:198:416). You have not taken 314, 336, 352, or 416 yet, so currently you do not meet all prerequisites. Take 213 first to unlock this.
+
+4) Principles of Programming Languages (01:198:314)  
+   Understanding different programming paradigms and language designs deepens your programming skills and adaptability�both valuable for Google.  
+   Prerequisites: 01:198:205, 01:198:211, and 01:640:152 (all met).
+
+5) Operating Systems Design (01:198:416)  
+   A strong grasp of operating systems concepts is often useful for internship interviews and practical work, particularly in understanding resource management, concurrency, and system calls.  
+   Prerequisites: 01:198:214 (Systems Programming) or (14:332:331 AND 14:332:351). Since you haven't taken 14:332:331 and 14:332:351, you must complete 214 first.
+
+---
+
+**Courses to look forward to:**  
+- Software Engineering (01:198:431) � once you complete Software Methodology and one of the other prerequisite courses listed.  
+- Distributed Systems: Concepts and Design (01:198:417) � after Operating Systems Design.  
+- Computer Security (01:198:419) � after Discrete Structures I and either Operating Systems or Internet Technology.  
+- Compilers (01:198:415) � after Computer Architecture and Principles of Programming Languages.
+
+---
+
+This recommended progression balances practical software engineering skills with systems knowledge, aligning well with what Google looks for in summer interns. Starting with Software Methodology and Systems Programming will make a big impact, then layering in more advanced software engineering and systems topics. You're in great shape to apply your strong theoretical background to real-world software projects!
+
+Please let me know if you'd like suggestions tailored more toward specific Google teams or roles. Keep up the great work!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2509,708,no,recommended courses im not eligible for.,yes,ranking_wrong,quit
+2026-06-07 15:31:27,2026-06-07 03:32:43 PM,7.41,I want to learn about cryptography and network security,"Based on your strong academic background and your interest in cryptography and network security, here are the best courses for you at this stage:
+
+1) Internet Technology (01:198:352)  
+Covers fundamental networking concepts, protocols, and architectures�key groundwork for understanding network security. You�ll explore how connectivity works and be primed for advanced security courses later.  
+Prerequisites: 01:198:211, 01:198:206 (met).
+
+2) Topics in Computer Science (01:198:442, 443, or 444)  
+These flexible courses often spotlight specialized subjects like cryptography, cybersecurity, or emerging network issues. If the current or upcoming semester includes cryptography or network security topics, you�re eligible.  
+Prerequisites: 01:198:111 (met).
+
+3) Minds, Machines, and Persons (01:730:329)  
+A philosophical exploration of the nature of computation, intelligence, and security issues. This course can provide ethical and foundational perspectives relevant to security and privacy.  
+Prerequisites: 01:198:205 (met).
+
+If you�re interested in broadening your scope, consider these as well:
+
+4) Design and Analysis of Randomized Algorithms (01:198:463)  
+Randomization techniques are foundational in modern cryptography. This course will deepen your understanding of algorithmic strategies essential to both cryptography and security.  
+Prerequisites: 01:198:344 (met).
+
+5) Formal Languages and Automata (01:198:452)  
+Explores computational models and the theoretical underpinnings of secure system design (like authentication protocols). Provides background valuable for advanced cryptographic reasoning.  
+Prerequisites: 01:198:344 (met).
+
+---
+
+**Ranking rationale:**  
+Courses are ranked by immediate relevance�starting with Internet Technology for practical network foundation, followed by flexible Topics courses. Minds, Machines, and Persons adds ethical depth. Design and Analysis of Randomized Algorithms and Formal Languages and Automata round out your list with theoretical tools.
+
+---
+
+**Courses to look forward to:**  
+- Computer Security (01:198:419): You'll be eligible after completing either Operating Systems Design (01:198:416) or Internet Technology (01:198:352). This course is a direct immersion into network and cryptographic security.  
+- Operating Systems Design (01:198:416): Prerequisite is Systems Programming (01:198:214), which requires Calculus II (01:640:152, not yet completed). Completing this chain opens doors to Computer Security and Distributed Systems.  
+- Distributed Systems: Concepts and Design (01:198:417): Requires Operating Systems Design (01:198:416).
+
+If you�d like to discuss schedule planning, how to approach the Calculus II and Systems Programming path, or how to maximize your exposure to cryptography even sooner, just let me know. You�re well-positioned to specialize in this field!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2468,596,yes,NULL,no,NULL,NULL
+2026-06-07 15:31:27,2026-06-07 03:34:22 PM,7.86,What are the best electives for someone who wants to go into product management?,"Here are the top electives for aspiring product managers, tailored to your transcript and focusing on broadening your technical awareness, consumer/business impact, and collaborative skills�key competencies in product management:
+
+1) Algorithms in Society (01:198:345)  
+Explores the societal implications, ethical considerations, and real-world impact of algorithms. Great for product managers who need to understand how technology influences users and society at large.  
+Prerequisites: 01:198:112 (met).
+
+2) Topics in Computer Science (01:198:442, 443, 444)  
+Flexible courses that often cover industry-relevant areas, from design thinking and user experience to emerging tech trends. Excellent for product managers seeking exposure to cutting-edge topics.  
+Prerequisites: 01:198:111 (met).
+
+3) Minds, Machines, and Persons (01:730:329)  
+Investigates the relationship between people and technology�helpful in understanding user psychology, which is crucial for managing products that resonate with customers.  
+Prerequisites: 01:198:205 (met).
+
+4) Introduction to Imaging and Multimedia (01:198:334)  
+Covers multimedia systems and imaging, giving insight into user interfaces and experience�valuable for product managers focusing on consumer software, digital products, or media.  
+Prerequisites: 01:198:112, 01:198:206, 01:640:250 (met).
+
+5) Internet Technology (01:198:352)  
+Provides fundamental knowledge of networked systems. Understanding connectivity and infrastructure is essential for product managers overseeing web services, cloud platforms, or digital products.  
+Prerequisites: 01:198:211, 01:198:206 (met).
+
+---
+
+**Ranking rationale:**  
+These courses are prioritized for relevance to product management: societal and ethical impact, flexibility for trend topics, user understanding, multimedia/interface design, and technical infrastructure. As a senior with a strong CS foundation, these electives will strategically broaden your practical and conceptual toolkit.
+
+---
+
+**Courses to look forward to:**  
+- Software Engineering (01:198:431): This course teaches collaboration, project management, and engineering practices central to product management, but requires Software Methodology (01:198:213) and one of Principles of Programming Languages (01:198:314), Principles of Information and Data Management (01:198:336), Internet Technology (01:198:352), or Operating Systems Design (01:198:416).  
+- Principles of Information and Data Management (01:198:336): Not eligible yet (requires Calculus II, which is not completed), but excellent for learning data handling and business logic.
+
+If you�d like advice on strengthening your schedule, bolstering soft skills, or connecting with relevant clubs and industry mentors, I�m here for you. Product management is a multifaceted role�these courses will give you the breadth and impact you need to thrive!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5217,593,no,says im not eligible for principles of information and data management but i am.,yes,prereq_wrong,prereq wrong for 336.
+2026-06-07 15:31:27,2026-06-07 03:35:50 PM,8.28,I'm interested in augmented reality and graphics,"For your interests in augmented reality and graphics�areas rich with visual computing, multimedia, and innovative technology�here are the best electives you qualify for, based on your completed coursework:
+
+1) Introduction to Imaging and Multimedia (01:198:334)  
+Delve into digital imaging, multimedia systems, and foundational graphics concepts. This course is a superb fit, covering elements directly applicable to augmented reality, such as image processing and visual media.  
+Prerequisites: 01:198:112, 01:198:206, 01:640:250 (met).
+
+2) Topics in Computer Science (01:198:442, 443, 444)  
+Rotating topics sometimes include special subjects in AR, graphics, or visual computing. These flexible courses can be a valuable opportunity to focus on the latest trends if offered in an upcoming semester.  
+Prerequisites: 01:198:111 (met).
+
+3) Minds, Machines, and Persons (01:730:329)  
+Offers a philosophical perspective on the relationship between humans and technology, including cognition and perception�essential for designing compelling AR interfaces.  
+Prerequisites: 01:198:205 (met).
+
+4) Algorithms in Society (01:198:345)  
+Examines the real-world impact of algorithms, including those used in graphics and augmented reality. Understanding these societal implications is important for building responsible, influential technology.  
+Prerequisites: 01:198:112 (met).
+
+5) Introduction to Computational Robotics (01:198:460)  
+Robotics often shares computational approaches with AR, such as sensor integration and spatial computation. If you're interested in immersive, interactive systems, this course provides useful context.  
+Prerequisites: 01:198:206 (met).
+
+---
+
+**Ranking rationale:**  
+Priority goes to courses that offer technical depth in visual media/graphics and potential hands-on AR applications (01:198:334). Flexibility and evolving coverage of specialty topics (01:198:442, 443, 444) are excellent for AR. Philosophy is included for user-centered design, and societal/algorithmic impact to ensure responsible technologies. Robotics is relevant for spatial and interactive computing in AR.
+
+---
+
+**Courses to look forward to:**  
+- **Introduction to Computer Graphics (01:198:428):** You are missing Calculus II (01:640:152), which is a required prerequisite. Once completed, this course will directly immerse you in fundamental and advanced graphics techniques highly relevant to AR.
+- **Software Engineering (01:198:431):** Strongly recommended for working in interdisciplinary teams, but needs Software Methodology (01:198:213) and one course from 314, 336, 352, or 416.
+
+If you�d like insights on preparing for 01:198:428, or ideas for getting hands-on AR experience (research, clubs, hackathons), let me know. Your strong academic background gives you a great start for moving into this exciting field!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7956,606,no,got prereq wrong for computer graphics.,yes,prereq_wrong,ive taken calc.
+2026-06-07 15:36:13,2026-06-07 03:37:23 PM,7.50,What courses cover ethical AI or responsible computing?,"Here�s a ranked list of Rutgers CS courses that directly address ethical AI or responsible computing, based on your transcript and catalogue. I�ve prioritized courses that focus on societal impacts, ethics, and related theory, and where your completed coursework meets all prerequisites.
+
+1) ALGORITHMS IN SOCIETY (01:198:345)
+   Explores sociotechnical impacts of algorithms: bias, fairness, accountability, and ethical issues in real-world systems. Excellent for understanding responsible computing and the societal context of AI.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+2) Minds, Machines, and Persons (01:730:329)
+   Philosophical perspective on AI, the nature of the human mind vs. complex machines, and ethical implications of intelligent systems. This bridges your CS and AI interest with broader ethical considerations.
+   Prerequisites: 01:198:205 (met).
+
+3) Topics in Computer Science (01:198:442)
+   Advanced course that may include themes like ethical computing or AI responsibility depending on instructor/topic. Check semester offerings for a section focused on ethics or responsible computing.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Topics in Computer Science (01:198:443)
+   Another flexible, advanced topics course that occasionally covers ethical and social aspects of computing and AI. If offered in a relevant theme, it�s a great way to engage deeply.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Topics in Computer Science (01:198:444)
+   Similar to 442/443, this course may cover responsible or ethical computing topics when available. Look for themed offerings.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+
+Courses to look forward to:
+- Computer Security (01:198:419): Covers responsible computing, privacy, and ethical use of systems, but requires completion of Operating Systems Design (01:198:416), which you haven�t taken yet.
+- If specialized ethics-of-AI or responsible computing sections arise in Topics courses, watch for those announcements.
+
+You�re well-positioned to explore the intersections of ethical issues and AI! I recommend starting with ALGORITHMS IN SOCIETY and Minds, Machines, and Persons for structured coverage, and then checking upcoming Topics courses for offerings tailored to responsible computing or ethical AI. Let me know if you want details on other electives, or help planning for future prerequisites!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2466,524,yes,NULL,no,NULL,NULL
+2026-06-07 15:36:13,2026-06-07 03:38:33 PM,6.98,I want to get into DevOps and infrastructure,"Based on your transcript and your interest in DevOps and infrastructure, here�s a tailored list of recommended courses. I�ve selected those that develop knowledge in programming, system management, networking, and security�skills core to DevOps. All recommendations are based on prerequisites you�ve already satisfied.
+
+1) Internet Technology (01:198:352)
+   Covers networking, internet architecture, protocols, and technologies essential to understanding and building modern distributed systems�key foundations for DevOps roles.
+   Prerequisites: 01:198:211 and 01:198:206 (met).
+
+2) Software Methodology (01:198:213)
+   Focuses on software design, modularity, testing, and collaboration practices. These concepts are critical in DevOps workflows for reliable and maintainable code and continuous integration.
+   Prerequisites: 01:198:112 (met).
+
+3) Topics in Computer Science (01:198:442)
+   Flexible advanced course; look for sections on cloud computing, infrastructure, or DevOps tools. Course offerings vary, so check for relevant topics each semester.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Topics in Computer Science (01:198:443)
+   Another advanced topics course�sometimes features subjects in system administration, automation, or infrastructure-as-code. Explore the topics offered when registering.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Topics in Computer Science (01:198:444)
+   Similar to 442/443; this course rotates content and may be relevant when focusing on infrastructure or DevOps-related subjects. Check the course schedule each term.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+
+Courses to look forward to:
+- Operating Systems Design (01:198:416): This is highly relevant to DevOps, covering OS internals and system management, but it requires Systems Programming (01:198:214), which you have not completed.
+- Distributed Systems: Concepts and Design (01:198:417): Excellent for learning about scalable infrastructure and cloud architectures, but needs 01:198:416.
+- Computer Security (01:198:419): Important for secure infrastructure, but also requires 01:198:416 or 01:198:352, and 01:640:152.
+
+You�re well-positioned to build DevOps expertise! Start with Internet Technology for networking fundamentals and Software Methodology for best coding practices. Keep an eye out for relevant Topics courses each semester. If you�d like more guidance on sequence or building toward Operating Systems, let me know!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5138,550,no,ranking could've been better,no,NULL,NULL
+2026-06-07 15:36:13,2026-06-07 03:39:49 PM,7.32,What should I take if I'm interested in bioinformatics or computational biology?,"Great question! Rutgers offers a few courses that provide excellent foundations or analytical tools for bioinformatics and computational biology�mainly in algorithmics, data science, and machine learning. Here's a ranked list with a focus on your prerequisites and transcript.
+
+1) Introduction to Imaging and Multimedia (01:198:334)
+   Covers computational methods for analyzing and processing images and multimedia data, which is relevant to computational biology (e.g., medical imaging, microscopy analysis). Emphasizes linear algebra and algorithms.
+   Prerequisites: 01:198:112, 01:198:206, 01:640:250 (met).
+
+2) Numerical Analysis and Computing (01:198:323)
+   Teaches mathematical and computational techniques for solving problems with continuous data�a core skill for simulation, modeling, and statistical methods in computational biology.
+   Prerequisites: 01:640:152 and 01:640:250, both with grades of C or better. You completed 01:640:250 with B+, but do NOT have 01:640:152 (not met).
+
+3) Topics in Computer Science (01:198:442)
+   This flexible course sometimes offers sections specifically focused on bioinformatics, computational biology, or related topics. Always check for specialty offerings that match your interest.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Topics in Computer Science (01:198:443)
+   Similar to 442�look for themed sections in bioinformatics or computational biology.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Topics in Computer Science (01:198:444)
+   Like 442 and 443, if a bioinformatics-focused section is offered, this is an excellent opportunity to engage directly in that area.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+
+Courses to look forward to:
+- Numerical Analysis and Computing (01:198:323): Once you complete 01:640:152 (Calc II), this course becomes available and is highly relevant for the mathematical modeling and algorithmic side of computational biology.
+- Numerical Methods (01:198:324): Requires 01:198:323 or 01:640:373, so this is another course to consider after completing prerequisite math.
+- Modeling and Simulation of Continuous Systems (01:198:424): Can be useful for simulating biological processes, but requires additional math or permission.
+
+You're ready to dive into data-driven and algorithmic approaches central to bioinformatics! To get deeper, consider supplementing your CS courses with relevant biology or statistics electives. Also, keep an eye on special Topics sections each semester�they often address hot areas like bioinformatics. If you want help mapping out a path to complete the key math prerequisites, just ask!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7840,588,no,"prereqs wrong, ranking could be better. For example, missed brain-inspired computing.",yes,prereq_wrong,and 4 kind of as well.
+2026-06-07 15:40:18,2026-06-07 03:41:24 PM,8.77,I'm looking for courses that focus on software testing and reliability,"Here are the most relevant courses in the Rutgers CS catalogue for software testing and reliability, considering your completed coursework and current standing. Courses are ranked for direct relevance and your eligibility:
+
+1) Software Methodology (01:198:213)
+   Focuses on principles of software development, emphasizing modularity, testing, documentation, and reliability. Covers practical approaches for building robust software with systematic testing techniques.
+   Prerequisites: 01:198:112 (met).
+
+2) Topics in Computer Science (01:198:442)
+   Advanced topics vary, but the course is often used to explore specialized areas such as software reliability, system testing, or related themes. Check current offerings for sections specifically focused on testing or reliability.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+3) Topics in Computer Science (01:198:443)
+   Similar to 442, with variations in topical focus. This course provides opportunity to dive into subfields including testing and reliability if the topic is offered in a given term.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Topics in Computer Science (01:198:444)
+   A third �topics� course variant, often tailored to niche areas. Investigating its semester theme may reveal offerings in testing methodologies or software assurance.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Compilers (01:198:415)
+   While mainly focused on compiler construction, this course exposes you to testing and correctness for language-processing software�valuable for understanding systematic testing approaches for complex systems.
+   Prerequisites: 01:198:211 (met) and 01:198:314 (not met).
+
+**Note:** You have not yet completed 01:198:314 (Principles of Programming Languages), so you do not currently meet all prerequisites for Compilers; this course would move to the �look forward to� section.
+
+---
+
+**Courses to look forward to:**
+
+- Software Engineering (01:198:431): Strong focus on team-based software design, testing methodologies, and maintaining reliability throughout the development lifecycle. Requires 01:198:213 (which you�re eligible for), and one of 01:198:314, 336, 352, or 416 (you have not met these yet).
+- Compilers (01:198:415): For when you have completed 01:198:314.
+
+---
+
+**Rationale:**  
+Software Methodology is your best foundational course for testing and reliability. The Topics in Computer Science (442/443/444) are excellent options�watch for when a professor selects a testing or reliability theme. Once you complete 01:198:213 and an eligible systems or theory course, Software Engineering would become your top choice for building on this foundation. 
+
+You're in a strong academic position�completing 213 and reviewing Topics offerings will give you the practical background you seek, and will open doors to advanced courses as your senior year progresses. Please let me know if you have questions about upcoming offering details, or want advice on course scheduling!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2469,650,no,recommended course im not eligible to take.,yes,ranking_wrong,
+2026-06-07 15:40:18,2026-06-07 03:42:50 PM,8.04,What are good upper-level courses for a senior looking to fill out their schedule?,"Given your senior standing, strong academic record, and advanced coursework, here are excellent upper-level CS courses you�re eligible for that will both enrich your schedule and broaden your skills. These are ranked for their mix of depth, relevance to current trends, and interesting challenge for a capstone year:
+
+1) Topics in Computer Science (01:198:442)
+   Advanced topics in computer science, often tailored towards cutting-edge or specialized areas such as security, reliability, or new technologies. Offers the flexibility to choose a section that interests you most.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+2) Topics in Computer Science (01:198:443)
+   Similar to 442, this course provides in-depth exploration of special topics, which change each semester. A great way to evolve with the curriculum and gain exposure to contemporary fields.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+3) Topics in Computer Science (01:198:444)
+   Another variant of the �topics� series, often focusing on emerging areas, research themes, or interdisciplinary subjects within computer science.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Algorithms in Society (01:198:345)
+   Examines the impact of algorithms in modern society and addresses ethical, social, and practical concerns. Broadens your perspective on CS beyond technical aspects.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+5) Minds, Machines, and Persons (01:730:329)
+   An interdisciplinary exploration of the similarities and differences between human cognition and machine intelligence, ideal for students interested in both theoretical and practical aspects of AI.
+   Prerequisites: 01:198:205 (met).
+
+---
+
+**Courses to look forward to:**
+
+- Formal Languages and Automata (01:198:452): Requires 01:198:344 with a grade of C or better (met).
+- Introduction to Computational Robotics (01:198:460): Requires 01:198:206 (met).
+- Design and Analysis of Randomized Algorithms (01:198:463): Requires 01:198:344 (met).
+- Compilers (01:198:415): Requires 01:198:211 (met) and 01:198:314 (not yet completed).
+- Software Engineering (01:198:431): Requires completion of 01:198:213 and one of 314, 336, 352, or 416.
+
+---
+
+**Rationale:**  
+""Topics"" courses (442, 443, 444) provide advanced, relevant learning as they can address the newest areas in CS. Algorithms in Society and Minds, Machines, and Persons offer both technical and interdisciplinary enrichment, expanding skills in ethics and cognition. This mix keeps your schedule stimulating and well-rounded, ideal for senior year.
+
+You're in a wonderful position to make the most of your last semesters�let me know if you'd like more detail about the topics offered next term, or advice on balancing your interests and requirements!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5273,645,no,ranking could've been better.,no,NULL,NULL
+2026-06-07 15:40:18,2026-06-07 03:44:10 PM,8.43,I want to do research in reinforcement learning,"You're in a fantastic position for research in reinforcement learning! Given your strong background in AI, algorithms, and your current courses in machine learning and deep learning, here are the most relevant upper-level courses to further bolster your preparation and open up new perspectives:
+
+1) Topics in Computer Science (01:198:442)
+   This course frequently includes advanced or specialized topics, potentially covering reinforcement learning or related research areas if offered. It�s a flexible way to engage deeply if a section aligns with RL.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+2) Topics in Computer Science (01:198:443)
+   Similar to 442, this course can provide exposure to emerging or highly specialized areas, making it valuable for reinforcement learning and AI interests. Always check the semester�s topic list!
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+3) Topics in Computer Science (01:198:444)
+   Yet another �topics� option. You can look for sections focusing on RL, stochastic processes, or advanced ML themes.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Design and Analysis of Randomized Algorithms (01:198:463)
+   Provides deep understanding of probabilistic algorithms, a foundation for theoretical RL and exploration strategies. The rigorous treatment will be directly useful for RL research.
+   Prerequisites: 01:198:344 (met).
+
+5) Introduction to Computational Robotics (01:198:460)
+   RL methods are often applied in robotics for autonomous decision-making and learning. This course gives practical experience, connecting foundational theory to real-world challenges.
+   Prerequisites: 01:198:206 (met).
+
+---
+
+**Courses to look forward to:**
+
+- Software Engineering (01:198:431): After completing 01:198:213 and one of 314, 336, 352, or 416, you�ll gain valuable team and project experience�great for RL research projects.
+- Compilers (01:198:415): Offers insight into programming language theory, helpful if you�re interested in RL systems implementation, but requires 314.
+
+---
+
+**Rationale:**  
+The �Topics in Computer Science� courses are your best bet for direct reinforcement learning material, as they adapt to current research. Randomized Algorithms and Computational Robotics both bolster essential RL skills: the former in the theory behind learning and exploration, the latter in practical applications. This is a well-rounded, research-oriented group well suited for a motivated senior heading into RL work.
+
+Keep an eye out for RL-specific research seminars, special projects, or honors opportunities�they complement formal coursework beautifully. If you'd like tips on finding a research advisor or more about ongoing RL-focused projects at Rutgers, I'm here to help!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,8065,580,no,could've done better on course rankings.,no,NULL,NULL
+2026-06-07 15:44:25,2026-06-07 03:47:08 PM,8.33,What courses should I take if I'm double majoring in math and CS?,"Based on your strong background in both math and CS, and considering the courses you�ve completed and are currently taking, here�s a ranked list tailored to deepen your computational and mathematical skills while broadening your applied knowledge. Since you�re a senior and double majoring, I�m recommending options that synergize both fields � focusing on advanced topics, interdisciplinary intersections, and practical skill development.
+
+1) Algorithms in Society (01:198:345)
+   Examines the impact of algorithms on society, ethical issues, and real-world consequences. This course will connect your CS and math perspectives, offering context around how algorithms shape our world.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+2) Minds, Machines, and Persons (01:730:329)
+   Explores the similarities and differences between human minds and complex machines, a fascinating interdisciplinary offering at the interface of philosophy, math, and CS. Great for broadening your conceptual thinking.
+   Prerequisites: 01:198:205 (met).
+
+3) Introduction to Imaging and Multimedia (01:198:334)
+   Covers principles of multimedia, imaging algorithms, and representation. With your background in linear algebra and discrete math, this course builds on your math expertise in a computational context.
+   Prerequisites: 01:198:112 or 14:332:351 (met); 01:198:206 or 14:332:226 or 01:640:477 (met); 01:640:250 (met).
+
+4) Formal Languages and Automata (01:198:452)
+   A mathematical approach to computer science, focusing on automata theory and formal languages � perfect for bridging math and CS.
+   Prerequisites: 01:198:344 with a grade of C or better (met; you earned a B+).
+
+5) Introduction to Computational Robotics (01:198:460)
+   Introduces computational robotics with a focus on algorithmic aspects and mobile robots � a practical and applied intersection between mathematics and computer science.
+   Prerequisites: 01:198:206 (met).
+
+Courses to look forward to:
+- Numerical Analysis and Computing (01:198:323): Requires Calc II (01:640:152), which isn�t on your transcript. This is a key bridge between applied mathematics and computational science, so consider completing Calc II to unlock this and further advanced math/CS electives.
+- Operating Systems Design (01:198:416), Computer Security (01:198:419), Database Systems Implementation (01:198:437), Compilers (01:198:415): All require additional prerequisites, like Systems Programming (01:198:214) or Programming Languages (01:198:314), which you haven�t taken yet.
+- Advanced CS and Math options like Modeling and Simulation of Continuous Systems (01:198:424) and Introduction to Computer Graphics (01:198:428): These require Calc II as well.
+
+You�re in an excellent position to engage in interdisciplinary and advanced CS courses. The recommended list focuses on leveraging your current strengths in both math and computer science, helping you build a well-rounded skillset and preparing you for graduate work or industry roles where both fields intersect. If you have room in your schedule, consider finishing Calc II � it unlocks many exciting quantitative courses. Let me know if you want a deeper focus in a particular CS area, or help combining your math major requirements with CS electives!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2472,706,no,should be finding calc 2.,yes,prereq_wrong,missing calc 2 prereq
+2026-06-07 15:44:25,2026-06-07 03:49:13 PM,7.31,I'm interested in robotics and autonomous systems,"With your excellent foundation in CS and math, plus your interest in robotics and autonomous systems, I�m happy to recommend courses that directly align with your goals, emphasize hands-on and theoretical aspects, and leverage your transcript strengths. Here are the top options:
+
+1) Introduction to Computational Robotics (01:198:460)
+   A core course covering computational approaches to robotics, with an emphasis on mobile robots and autonomy. Perfect for your stated interests and builds from your strong discrete math background.
+   Prerequisites: 01:198:206 (met).
+
+2) Brain-inspired Computing (01:198:425)
+   Delves into computational models inspired by neuroscience, a timely addition for understanding intelligent autonomous systems and bridging AI with robotics.
+   Prerequisites: 01:198:206 (met).
+
+3) Formal Languages and Automata (01:198:452)
+   Offers rigorous foundations for system behavior and control logic, critical for understanding the underpinnings of autonomous system design.
+   Prerequisites: 01:198:344 with a grade of C or better (met; earned B+).
+
+4) Introduction to Imaging and Multimedia (01:198:334)
+   Explores computational imaging and multimedia, relevant for autonomous systems� perception and sensor data processing (e.g., image recognition for robotics).
+   Prerequisites: 01:198:112 or 14:332:351 (met); 01:198:206 or 14:332:226 or 01:640:477 (met); 01:640:250 (met).
+
+5) Minds, Machines, and Persons (01:730:329)
+   Provides philosophical and computational discourse on artificial minds, complex machines, and intelligence�a great big-picture complement to technical studies.
+   Prerequisites: 01:198:205 (met).
+
+Courses to look forward to:
+- Operating Systems Design (01:198:416): Prerequisite is Systems Programming (01:198:214), which requires Calc II (01:640:152). Completing Calc II would unlock this critical robotics-adjacent course.
+- Computer Graphics (01:198:428): Also requires Calc II. Relevant for robotics and visualization.
+- Distributed Systems: Concepts and Design (01:198:417): Requires Operating Systems.
+- Modeling and Simulation of Continuous Systems (01:198:424): Requires Numerical Analysis or similar.
+- Numerical Analysis and Computing (01:198:323): Requires Calc II.
+
+You�re in a terrific position to deepen your robotics and autonomous systems knowledge�a mix of theoretical and applied options will prepare you for both industry and research. If you�re able, consider finishing Calc II soon; it opens doors to even more advanced robotics and quantitative courses. Let me know if you want advice on integrating math/cs electives or research experience in robotics!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5324,571,no,calc 2 prereq missed.,yes,prereq_wrong,
+2026-06-07 15:50:25,2026-06-07 03:57:27 PM,8.71,What do you recommend for someone interested in human-computer interaction or UX?,"Based on your strong academic record, senior standing, and completion of core CS courses, here are my top recommendations for expanding your human-computer interaction (HCI) and user experience (UX) skillset at Rutgers. I've prioritized courses that give you both technical and design-oriented perspectives, along with those that support broader interdisciplinary thinking in this space.
+
+1) Introduction to Imaging and Multimedia (01:198:334)
+   Explores principles of imaging, multimedia systems, and technologies relevant to visual interface design and interactive applications. Great for hands-on experience with digital media, which is central to many HCI/UX roles.
+   Prerequisites: 01:198:112, 01:198:206, 01:640:250 (met).
+
+2) Algorithms in Society (01:198:345)
+   Examines the interaction between algorithms and human society, with a focus on social, ethical, and usability aspects. Very applicable for those considering UX design with an awareness of technological impact.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+3) Minds, Machines, and Persons (01:730:329)
+   Considers the nature of the human mind versus artificial systems. This course will deepen your understanding of cognition and perception, both fundamental to effective HCI design.
+   Prerequisites: 01:198:205 (met).
+
+4) Internet Technology (01:198:352)
+   Covers the technical underpinnings of web systems, a key domain for UX and HCI work. Knowing how the internet operates from a software perspective can help you create more user-friendly applications.
+   Prerequisites: 01:198:211, 01:198:206 (met).
+
+5) Topics in Computer Science (01:198:442/443/444)
+   Flexible, often includes rotating subjects�sometimes HCI-related. Given your background, you�re eligible, and it�s worth checking which specific topic might be offered to match your interests.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+Courses to look forward to:
+- Software Engineering (01:198:431): This is an ideal follow-up, covering practical aspects of user-centered software design and team processes. You�ll be eligible once you complete 01:198:213 and one of 314, 336, 352, or 416.
+- Database Systems Implementation (01:198:437): For those interested in back-end user data and information architecture, pending prerequisites.
+- Principles of Information and Data Management (01:198:336): Useful for understanding how information organization affects UX, pending 01:640:152.
+
+You are well-prepared for advanced interdisciplinary perspectives�consider pairing technical courses with those offering cognitive or societal insight. Your background gives you an excellent foundation for both practical and theoretical exploration. If you want more hands-on UI/UX, look for design projects or research opportunities�your transcript provides a strong basis to pursue these!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2469,615,yes,NULL,no,NULL,NULL
+2026-06-07 15:50:25,2026-06-07 03:58:26 PM,6.98,I want to get better at low-level programming,"Given your senior standing, excellent academic performance, and completed courses, you�re well prepared to dive deeper into low-level programming. I�ve prioritized courses that provide strong exposure to systems, architecture, and languages, while making sure prerequisites are met.
+
+1) Internet Technology (01:198:352)
+   Explores web protocols, network programming, and systems fundamentals�all very much relevant for understanding low-level mechanisms and how software interacts with underlying hardware/network layers.
+   Prerequisites: 01:198:211, 01:198:206 (met).
+
+2) Topics in Computer Science (01:198:442/443/444)
+   These courses rotate subjects; some offerings focus on low-level programming, embedded systems, or advanced C/C++. Worth checking the current topic! Eligible based on your coursework.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+3) Introduction to Imaging and Multimedia (01:198:334)
+   While a bit more applied, this course often involves low-level manipulation of images and multimedia data, which is great for understanding memory management and performance on a practical level.
+   Prerequisites: 01:198:112, 01:198:206, 01:640:250 (met).
+
+4) Algorithms in Society (01:198:345)
+   Includes a technical look at algorithm implementation, and may offer perspectives on algorithmic efficiency relevant to low-level work.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+5) Minds, Machines, and Persons (01:730:329)
+   Not strictly low-level, but provides a conceptual framework for how machines operate internally, which informs deeper systems understanding.
+   Prerequisites: 01:198:205 (met).
+
+Courses to look forward to:
+- Systems Programming (01:198:214): Direct C/C++ programming, memory management, and OS interfaces. You�re only missing 01:640:152 (Calc II) as a prerequisite.
+- Operating Systems Design (01:198:416): The classic low-level course�threads, synchronization, file systems, OS internals. Requires Systems Programming (214).
+- Principles of Programming Languages (01:198:314): Focuses on how languages are designed and implemented, including low-level language concepts. Needs 01:640:152.
+- Compilers (01:198:415): For the ultimate in low-level programming�writing code that generates machine code! Needs 314 and 211 with a C or better.
+
+Your foundation is strong; by targeting these courses and following up with the �look forward to� options, you�ll acquire essential low-level skills for both academic and professional pursuits. Keep up the great work, and consider supplementing with project-based learning or research for even deeper experience!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5229,578,no,have calc 2.,yes,prereq_wrong,
+2026-06-07 15:50:25,2026-06-07 03:59:31 PM,7.13,What courses would help me transition into a data engineering role?,"Great question! You already have a solid foundation with data structures, algorithms, and introductory machine learning/data science. For transitioning into a data engineering role�which often involves data management, large-scale systems, databases, and efficient data processing�here�s what would be most valuable from your current eligibility:
+
+1) Internet Technology (01:198:352)
+   Focuses on how data travels and is managed in networked systems. Covers protocols, web technologies, and distributed architectures, making it highly relevant for large-scale data engineering.
+   Prerequisites: 01:198:211, 01:198:206 (met).
+
+2) Algorithms in Society (01:198:345)
+   Provides insight into the implementation and impact of algorithms on data-centric applications. Useful for understanding not just how to engineer data pipelines, but how algorithms affect society and large systems.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+3) Introduction to Imaging and Multimedia (01:198:334)
+   Offers hands-on experience with processing large, complex data types (images, multimedia). Also includes fundamentals of data transformation and storage for these kinds of assets.
+   Prerequisites: 01:198:112, 01:198:206, 01:640:250 (met).
+
+4) Topics in Computer Science (01:198:442/443/444)
+   Advanced offerings sometimes include big data, data engineering, or database topics. Check which topic is offered, as these can be directly relevant to pipelines, ETL, or large data management.
+   Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Minds, Machines, and Persons (01:730:329)
+   While more theoretical, understanding cognition and the relationship between people and information systems may help you design meaningful and efficient data platforms.
+   Prerequisites: 01:198:205 (met).
+
+Courses to look forward to:
+- Principles of Information and Data Management (01:198:336): Excellent for database/ETL concepts and information architecture. You�ll need 01:640:152 to enroll.
+- Database Systems Implementation (01:198:437): For deep, practical experience building database backends. Pre-reqs: 336 and 214.
+- Software Engineering (01:198:431): Useful for best practices in team-based development of complex, large-scale systems. Needs 213 and one of 314, 336, 352, or 416.
+
+You are already on your way, especially with 439 (Intro Data Science) and 461/462 (ML and Deep Learning) underway. If possible, complement coursework with hands-on projects like building data pipelines, working with cloud platforms, or joining a research group with a data engineering focus�the foundation you�ve built is both broad and deep, and these courses will help you further specialize!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7954,594,no,calc 2,yes,prereq_wrong,
+2026-06-07 15:59:49,2026-06-07 04:01:58 PM,8.09,I'm a sophomore looking for courses that set me up well for junior year,"Absolutely! You're in a fantastic position to structure your junior year, building on both foundational and advanced coursework. Your solid GPA and transcript show strong mastery of core CS concepts. Below, I've ranked courses that will open more advanced doors and expand your skills across software, systems, and applications�setting you up for a highly flexible and impactful junior year.
+
+1) Software Methodology (01:198:213)
+   Focuses on object-oriented principles, team-based software design, and engineering techniques�key preparation for software engineering and industry internships.
+   Prerequisites: 01:198:112 (met)
+
+2) ALGORITHMS IN SOCIETY (01:198:345)
+   Explores how algorithmic decisions impact society, introduces ethical and broader applications of CS. Great for students interested in the intersection of technology and social issues.
+   Prerequisites: 01:198:112 or 01:198:210 (met)
+
+3) Minds, Machines, and Persons (01:730:329)
+   Delves into philosophy of mind and computation, examining what distinguishes human minds from artificial ones�complementary for those interested in AI or cognitive science.
+   Prerequisites: 01:198:205 (met)
+
+4) Introduction to Imaging and Multimedia (01:198:334)
+   Covers computational techniques for imaging, multimedia systems, and applications, grounding you in data representation and multimedia programming.
+   Prerequisites: 01:198:112 or 14:332:351; 01:198:206 or equivalent; 01:640:250 (all met)
+
+5) INTRODUCTION TO COMPUTATIONAL ROBOTICS (01:198:460)
+   Provides a hands-on introduction to robotics, focusing on algorithms for mobile robots�great for expanding into physical systems and robotics applications.
+   Prerequisites: 01:198:206 or permission (met)
+
+Courses to look forward to:
+- Operating Systems Design (01:198:416): Requires Systems Programming (01:198:214), which you have not yet completed. This is a pivotal systems course for any CS major.
+- Database Systems Implementation (01:198:437): Unlock with Principles of Information and Data Management (01:198:336) and Systems Programming (01:198:214).
+- Software Engineering (01:198:431): Requires Software Methodology (01:198:213) and one upper-level systems/theory course.
+- Compilers (01:198:415): Requires Principles of Programming Languages (01:198:314).
+- Formal Languages and Automata (01:198:452): For those interested in theory, unlock by earning a C or better in Design and Analysis of Algorithms (already done).
+
+You�re ready for advanced exploration! The recommended courses build technical depth and breadth to meet future prerequisites and open specialized junior/senior electives. If you want advice tailored for a specific career path or research interest, let me know�I'm excited for your next steps.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2472,605,yes,NULL,NULL,NULL,NULL
+2026-06-07 15:59:49,2026-06-07 04:02:52 PM,7.83,What are the most useful electives for someone who wants to start their own startup?,"What an exciting goal! As someone soon to graduate, you�re in a great position to pick electives that give you concrete skills for tech entrepreneurship�especially those that help you build, scale, and understand software products, manage data, and navigate tech�s broader impacts. Here�s a ranked list based on practical impact for startups�engineering, product, data, and social-technical awareness are all key:
+
+1) Software Methodology (01:198:213)
+   Essential for building scalable and maintainable products. Covers object-oriented design, teamwork, and real-world programming practices�skills any founder will rely on.
+   Prerequisites: 01:198:112 (met)
+
+2) Internet Technology (01:198:352)
+   Provides foundational knowledge about internet systems, protocols, and networking. Crucial for web or app development startups and understanding deployment/infrastructure.
+   Prerequisites: 01:198:211, 01:198:206 (both met)
+
+3) Principles of Information and Data Management (01:198:336)
+   Teaches how to manage and structure data�fundamental for any data-driven startup, from analytics to customer platforms.
+   Prerequisites: 01:640:152, 01:198:112, and (01:198:205 or equivalent). (All met except 01:640:152, which is not on transcript; please check if you took this outside CS.)
+
+4) Introduction to Imaging and Multimedia (01:198:334)
+   Useful if you plan to build apps with visual or multimedia components. Will broaden technical horizons for consumer-facing or creative startups.
+   Prerequisites: 01:198:112 or equivalent; 01:198:206 or equivalent; 01:640:250 (all met)
+
+5) ALGORITHMS IN SOCIETY (01:198:345)
+   Focuses on the ethical and societal impacts of algorithms. Critical for founders to consider responsible tech design and effects on users/customers.
+   Prerequisites: 01:198:112 or 01:198:210 (met)
+
+Courses to look forward to:
+- Software Engineering (01:198:431): Unlocks after you complete Software Methodology and one advanced course in programming languages, info management, or systems. This is highly practical for entrepreneurs, covering development lifecycle, project management, and product deployment.
+- Database Systems Implementation (01:198:437): Requires Principles of Information and Data Management and Systems Programming. Advanced data management�ideal for scalable platforms.
+- Operating Systems Design (01:198:416): Requires Systems Programming. Good for tech stack founders but requires a bit more background.
+- Distributed Systems: Concepts and Design (01:198:417): Requires Operating Systems Design�key for large-scale, cloud-based products.
+
+I chose these electives for their direct, practical value in startup environments: building real products, understanding data, making ethical design choices, and managing technical teams. You�re well-prepared; these classes will sharpen your founder skills and help you build things that matter. If you want a path focused on a specific startup idea (e.g., web, AI, mobile, hardware), let me know for deeper tailoring!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5231,651,yes,NULL,yes,prereq_wrong,slight hallucination
+2026-06-07 15:59:49,2026-06-07 04:03:53 PM,9.63,I want to understand compilers and programming languages more deeply,"If you're eager to dive more deeply into compilers and programming languages, Rutgers offers several electives that build technical understanding and practical skills in these areas. Here�s a ranked list focusing on courses that will give you both foundational theory and applied knowledge:
+
+1) Formal Languages and Automata (01:198:452)
+   Explores the mathematical underpinnings of programming languages and computation, including automata, grammars, and language recognition. This is essential theory for understanding how compilers parse and process languages.
+   Prerequisites: 01:198:344 with a grade of C or better (met)
+
+2) Software Methodology (01:198:213)
+   Develops your skills in different programming paradigms, object-oriented approaches, and software design. Helpful for learning language features and design patterns, which is foundational for studying how languages are constructed and used.
+   Prerequisites: 01:198:112 (met)
+
+3) ALGORITHMS IN SOCIETY (01:198:345)
+   While its main focus is ethical applications and societal impacts, this course often addresses algorithmic decisions within language processing and compiler contexts. Useful for broadening your understanding of how algorithms and automation fit into the bigger picture.
+   Prerequisites: 01:198:112 or 01:198:210 (met)
+
+4) Topics in Computer Science (01:198:442 / 443 / 444)
+   These courses often include advanced topics relating to programming languages and compilers (check semester offerings!). Taking a �Topics� course can expose you to modern language trends, compiler extensions, or even domain-specific languages.
+   Prerequisites: 01:198:111 or 01:198:142 (met)
+
+5) Minds, Machines, and Persons (01:730:329)
+   Provides philosophical context for computation and the nature of languages (both natural and artificial), helping you think critically about machine intelligence and how programming language semantics relate to cognition.
+   Prerequisites: 01:198:205 (met)
+
+Courses to look forward to:
+- Principles of Programming Languages (01:198:314): To take this, you'll need 01:640:152. This is the central course for programming language theory, structures, and paradigms.
+- Compilers (01:198:415): Requires Principles of Programming Languages (01:198:314). This is where you'll learn how real compilers are built�lexing, parsing, code generation, optimization.
+- Software Engineering (01:198:431): Requires Software Methodology and one advanced course. Once you complete these prerequisites, this course is ideal for advanced design and large-scale language applications.
+
+Your choices above are ranked for both theoretical depth and practical exposure. As you progress, completing Calculus II (01:640:152), if you haven�t already, will unlock the formal programming languages and compiler sequence. With your transcript�s strong foundation, you�re well positioned to excel and go deep into these key areas of computer science. If you want ideas for supplementing with outside reading or research, just let me know�excited for your next steps!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,8032,635,yes,NULL,yes,prereq_wrong,slightly wrong on calc II.
+2026-06-07 16:30:39,2026-06-07 04:31:56 PM,6.88,What courses are good for someone interested in quantum computing?,"Based on your strong background in theoretical and applied computer science, and your clear interest in quantum computing, here are my top recommendations. Quantum computing is deeply connected to discrete mathematics, algorithms, information theory, and logic, so I've prioritized courses that will strengthen your knowledge in these areas and expose you to advanced concepts relevant to quantum computing.
+
+1) Formal Languages and Automata (01:198:452)  
+Understanding automata, formal languages, and computational theory is fundamental for quantum computation, which relies on abstract models of computation.  
+Prerequisites: 01:198:344 (met).
+
+2) Design and Analysis of Randomized Algorithms (01:198:463)  
+Quantum computing often employs probabilistic and randomized techniques. This course will deepen your algorithmic intuition, especially for quantum-inspired methods.  
+Prerequisites: 01:198:344 (met).
+
+3) Minds, Machines, and Persons (01:730:329)  
+Examines the nature of mind and intelligent machines; valuable for grounding quantum computation in philosophical and cognitive science contexts.  
+Prerequisites: 01:198:205 (met).
+
+4) Brain-inspired Computing (01:198:425)  
+Quantum computation takes inspiration from how information is processed in novel ways; this course draws parallels between neural and quantum models.  
+Prerequisites: 01:198:206 (met).
+
+5) INTRODUCTION TO COMPUTATIONAL ROBOTICS (01:198:460)  
+Quantum algorithms may have future relevance in robotics; this course will broaden your computational horizons and introduce complex system interactions.  
+Prerequisites: 01:198:206 (met).
+
+Courses to look forward to:
+- Principles of Programming Languages (01:198:314): Not eligible due to missing prerequisite 01:640:152.
+- Numerical Analysis and Computing (01:198:323): Not eligible due to missing prerequisite 01:640:152.
+- Operating Systems Design (01:198:416): Not eligible due to missing prerequisite 01:198:214.
+- Database Systems Implementation (01:198:437): Not eligible due to missing prerequisites 01:198:336, 01:198:214.
+
+If you're seeking more direct quantum content, keep an eye on ""Topics in Computer Science"" courses (01:198:442/443/444), which sometimes focus on quantum computing; you meet the prerequisites for all of these.
+
+Your coursework, especially in discrete structures and algorithms, truly sets you up to understand quantum computing's theoretical foundations. Any course you take from this list will deepen your expertise and prime you for graduate opportunities or research in quantum computation. Let me know if you'd like advice on research or directed readings in this area as well�Rutgers has faculty with active interests here!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2468,556,yes,NULL,yes,prereq_wrong,"says calc 2 missing, it's not."
+2026-06-07 16:30:39,2026-06-07 04:33:14 PM,7.04,I'm looking for project-heavy courses where I can build something substantial,"Here are your best options for project-heavy courses where you�ll get hands-on experience building substantial systems or applications. I�ve prioritized courses based on their reputation for robust project work, your completed prerequisites, and the potential for impactful portfolio material:
+
+1) Topics in Computer Science (01:198:442, 01:198:443, 01:198:444)  
+These advanced topics courses often include extensive projects, sometimes focused on system implementation, software engineering, or even quantum computing, depending on the current topic. You are eligible for each, and the topics vary�check the latest offerings for project-based content.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+2) Brain-inspired Computing (01:198:425)  
+This course typically involves implementing computational models inspired by neuroscience, culminating in a substantive project such as designing or simulating neural networks or brain-inspired algorithms.  
+Prerequisites: 01:198:206 (met).
+
+3) INTRODUCTION TO COMPUTATIONAL ROBOTICS (01:198:460)  
+Strong emphasis on building and programming robotic systems and algorithms for real-world tasks. It�s known for substantial code and simulation projects, offering practical experience in autonomous systems.  
+Prerequisites: 01:198:206 (met).
+
+4) Design and Analysis of Randomized Algorithms (01:198:463)  
+You�ll design, implement, and empirically test algorithms with randomness; many projects involve coding and analyzing algorithmic performance, suitable for research or practical portfolios.  
+Prerequisites: 01:198:344 (met).
+
+5) Minds, Machines, and Persons (01:730:329)  
+While philosophical, this course often asks students to build conceptual models or prototypes relating to artificial intelligence and cognition, allowing for unique, interdisciplinary projects.  
+Prerequisites: 01:198:205 (met).
+
+Courses to look forward to:
+- Software Engineering (01:198:431): Not eligible due to missing 01:198:213 (not completed).
+- Systems Programming (01:198:214): Not eligible due to missing 01:640:152 (not completed).
+- Principles of Programming Languages (01:198:314): Not eligible due to missing 01:640:152 (not completed).
+- Introduction to Imaging and Multimedia (01:198:334): Not eligible due to missing 01:640:250 (met), but also requires 01:640:477 or equivalent (not completed).
+
+Your diverse coursework and advanced standing open many opportunities for substantial project work. If you want to focus on a specific domain, such as robotics, machine learning, or neuroscience-inspired computing, choose accordingly. Topics courses (01:198:442/443/444) are especially flexible�check their descriptions for this semester, as they often deliver the most engaging, build-focused experiences. Excited to see what you construct next!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5175,590,yes,NULL,yes,prereq_wrong,"same issue, calculus."
+2026-06-07 16:30:39,2026-06-07 04:34:31 PM,7.60,What should I take if I want to work in embedded systems or IoT?,"If you want to pursue embedded systems or IoT, you�ll want courses that explore hardware/software integration, networking, and distributed systems, as well as robotics and real-time systems. Here�s a ranked list of courses from the Rutgers CS catalogue that closely align with those interests and for which you meet all prerequisites:
+
+1) INTRODUCTION TO COMPUTATIONAL ROBOTICS (01:198:460)  
+This course offers hands-on experience with robotics, focusing on algorithms for mobile robots�relevant to embedded systems and IoT, as robotics often requires tight integration of hardware and software. Expect project work with sensors, actuators, and programming embedded devices.  
+Prerequisites: 01:198:206 (met).
+
+2) Internet Technology (01:198:352)  
+Deep exploration of how internet protocols, systems, and networking work. Many IoT applications depend on networked communication, and this course will give you practical and theoretical knowledge of designing for distributed, connected devices.  
+Prerequisites: 01:198:211 and 01:198:206 (both met).
+
+3) Brain-inspired Computing (01:198:425)  
+While not exclusively about embedded systems, this course often involves building computational models and systems that simulate neural architectures. Embedded systems sometimes draw inspiration from these models, especially in sensor-based and adaptive devices.  
+Prerequisites: 01:198:206 (met).
+
+4) Topics in Computer Science (01:198:442, 01:198:443, 01:198:444)  
+The �Topics� courses can include sections on hardware-centric computing, IoT platforms, sensor networks, or other closely related areas. Review current offerings to find project-oriented IoT or embedded systems topics.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Minds, Machines, and Persons (01:730:329)  
+This course touches on intelligent machines and may provide theoretical context for smart embedded systems, especially related to AI in IoT.  
+Prerequisites: 01:198:205 (met).
+
+Courses to look forward to:
+- Systems Programming (01:198:214): Not eligible due to missing prerequisite 01:640:152.
+- Operating Systems Design (01:198:416): Not eligible due to missing prerequisite 01:198:214.
+- Computer Security (01:198:419): Not eligible due to missing prerequisite 01:198:416 or 01:198:352 and 01:640:152.
+- Software Engineering (01:198:431): Not eligible due to missing prerequisite 01:198:213.
+
+You�re well prepared to move into embedded systems and IoT with these courses, especially if you can target project-based offerings through robotics or �Topics� courses. If you�re interested in building low-level systems or working with distributed devices, Internet Technology and Computational Robotics are excellent choices. Let me know if you�d like tips on finding research or extracurricular IoT projects at Rutgers, too!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7919,613,no,ranking could've been better.,yes,prereq_wrong,calc prereq issue.
+2026-06-07 16:34:55,2026-06-07 04:36:53 PM,7.24,I'm interested in formal verification and program correctness,"Based on your strong background in discrete mathematics, programming, and algorithms, and your interest in formal verification and program correctness, here are the top course recommendations from the Rutgers CS catalogue that align closest with your goals. I ranked these for their relevance to foundational theory, models of computation, and formal reasoning about programs.
+
+---
+
+1) Formal Languages and Automata (01:198:452)  
+An exploration of grammars, automata, computability, and complexity�essential for understanding program correctness, specification, and verification theories.  
+Prerequisites: 01:198:344 with a grade of C or better (met).
+
+2) Minds, Machines, and Persons (01:730:329)  
+A philosophical and theoretical comparison of the nature of the human mind and that of complex machines, often including logic and reasoning�great context for formal systems and verification.  
+Prerequisites: 01:198:205 (met).
+
+3) Topics in Computer Science (01:198:442)  
+Variable topics�often includes advanced theory and formal methods. It�s a flexible course that could have content relevant to your interests depending on the semester.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Topics in Computer Science (01:198:443)  
+Similar to 442, this course (with different credits) covers advanced topics, sometimes focusing on theory, verification, or correctness.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+5) Topics in Computer Science (01:198:444)  
+Another section with different credits; depending on offering, can include formal reasoning and advanced programming theory.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+---
+
+**Courses to look forward to:**
+
+- Principles of Programming Languages (01:198:314): Requires 01:640:152, which you have not taken. This course deeply explores semantics, formal specification, and verification methods in programming languages�a perfect fit once prerequisites are met.
+- Compilers (01:198:415): Also blocked by 01:198:314. Compilers is a practical, rigorous course where program correctness and formal method connect directly to code transformation and analysis.
+- Software Engineering (01:198:431): Requires 01:198:213 and one of 314/336/352/416; currently blocked, but relevance for program correctness and rigorous development is high.
+
+---
+
+You're well-positioned for courses on formal methods and theory! If you're considering a related minor, philosophy and logic courses (like Applied Symbolic Logic or Intermediate Logic I) might further your foundation for formal reasoning, provided you meet their prerequisites. Keep pursuing these rigorous theoretical avenues�they�re excellent for a career in verification, academic research, or foundational computer science. Let me know if you�d like personalized advice about research or independent study options.",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2466,594,no,"recommended all 3 topics courses at once, degrades recommendation quality. Also, calc 2 is literally on transcript so uh...",yes,prereq_wrong,can consider 4 as well.
+2026-06-07 16:34:55,2026-06-07 04:38:01 PM,7.70,What courses focus on parallel or high-performance computing?,"Great question! Parallel and high-performance computing are central topics in modern CS, and with your solid background in algorithms, architecture, and discrete mathematics, you�re well-prepared for foundational and applied courses in this area. Below are the most relevant offerings from the Rutgers CS catalogue, ranked by their direct connection to parallelism, distributed systems, and computational performance.
+
+---
+
+1) Topics in Computer Science (01:198:442)  
+This course often features advanced, specialized topics�sometimes including parallel programming, distributed systems, or high-performance computing. Check the current semester�s offerings, as content varies.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+2) Topics in Computer Science (01:198:443)  
+Similar to 442, this 3-credit course occasionally focuses on parallelism or performance engineering if offered in that rotation. Be sure to review the schedule for specific topics.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+3) Topics in Computer Science (01:198:444)  
+Another flexible topics course, potentially covering parallel algorithms or systems, depending on the instructor and semester.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Computer Architecture (01:198:411)  
+Delves deeply into modern processor design, pipelining, and memory hierarchies�the hardware foundation that enables parallel and high-performance computing.  
+Prerequisites: 01:198:205 and either 01:198:211 or 14:332:331, all with grades of C or better (met).
+
+5) Design and Analysis of Randomized Algorithms (01:198:463)  
+While not strictly parallel, this advanced algorithms course often covers scalable, efficient algorithmic frameworks, which are crucial for high-performance computing.  
+Prerequisites: 01:198:344 (met).
+
+---
+
+**Courses to look forward to:**
+
+- Distributed Systems: Concepts and Design (01:198:417): Focuses directly on distributed (often parallel) computing architectures and algorithms, but requires Operating Systems Design (01:198:416), for which you lack the prerequisites (01:198:214 or equivalent).
+- Operating Systems Design (01:198:416): Vital for understanding concurrency, synchronization, and resource management�core to parallel computing�but blocked due to the need for 01:198:214 (Systems Programming), which requires 01:640:152.
+- Numerical Analysis and Computing (01:198:323): Explores computational techniques for scientific problems, including approaches used in high-performance computing, but is blocked by 01:640:152.
+
+---
+
+You're in an excellent position to pursue advanced theory- and systems-related topics, especially through architecture and flexible ""Topics"" courses. For more hands-on parallel programming, keep an eye on special Topics sections or consider interdisciplinary electives. If you�re interested in research, faculty working in distributed systems and high-performance computing can offer independent study or project opportunities.
+
+Let me know if you�d like details on preparing for those advanced distributed/OS/Numerical courses once prerequisites are met!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5208,642,no,"same issue, overusing topics of cs, calc 2 shows as not a course.",yes,prereq_wrong,can be 4 as well.
+2026-06-07 16:34:55,2026-06-07 04:40:43 PM,67.40,I want to improve my understanding of probability and statistics for ML,"You're taking a very thoughtful approach by seeking deeper understanding in probability and statistics for machine learning! Your transcript shows strong math fundamentals (precalculus, calculus, linear algebra), and you're currently enrolled in multiple data science and ML courses. Here are courses from the Rutgers CS catalogue that can help build on your background and further prepare you for statistical reasoning and probabilistic thinking in ML contexts.
+
+---
+
+1) Topics in Computer Science (01:198:442)  
+This advanced topics course sometimes covers statistics, probability, or mathematical foundations for machine learning, depending on semester offerings. Check current or upcoming schedules for relevant sections.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+2) Topics in Computer Science (01:198:443)  
+Similar to 442; as a 3-credit offering, its topics can include statistical learning theory or probability in computing, depending on the instructor.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+3) Topics in Computer Science (01:198:444)  
+Another flexible section for advanced topics, which may occasionally include probability/statistical computation or applied mathematical theory.  
+Prerequisites: 01:198:111 or 01:198:142 (met).
+
+4) Design and Analysis of Randomized Algorithms (01:198:463)  
+This course explores probabilistic algorithms and introduces randomized processes and their analysis�excellent for gaining intuition about probability in computation.  
+Prerequisites: 01:198:344 (met).
+
+5) Introduction to Imaging and Multimedia (01:198:334)  
+While primarily oriented toward digital imaging, this course sometimes includes statistical and probabilistic modeling relevant to media and ML fields.  
+Prerequisites: 01:198:112, 01:198:206, 01:640:250 (all met).
+
+---
+
+**Courses to look forward to:**
+
+- Numerical Analysis and Computing (01:198:323): Offers mathematical tools (including probability and statistics in context) valuable for ML, but requires 01:640:152.
+- Introduction to Probability/Statistics (outside CS): Not listed in this catalogue, but math department courses (like 01:640:477 or 01:960:379) are superb for foundational probability and statistics.
+
+---
+
+Among CS offerings, randomized algorithms and ""Topics"" courses give you the best chance to deepen your theoretical and practical grasp of probability/statistics. If you�re interested in a formal math/statistics course, consider investigating cross-departmental electives. Keep up your excellent momentum in ML, and let me know if you'd like guidance in enrolling for these or preparing for more mathematical theory!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,8001,544,no,"mentions intro to probability, completely hallucinated a new course.",yes,course_invented,"made up intro to probability/stats, especially when it isn't listed in course data."
+2026-06-07 16:40:59,2026-06-07 04:42:36 PM,8.14,What are good courses for someone aiming for a PhD in systems or architecture?,"Given your strong transcript and focus on systems and architecture with a PhD goal, I�ve prioritized advanced theory, architecture, and systems courses that offer rigorous preparation and depth. Courses are ranked for their relevance to foundational and cutting-edge work in computer systems and architecture, research preparedness, and opportunity for technical engagement.
+
+**Recommended Courses:**
+
+1) Computer Architecture (01:198:411)
+   Delves deeply into computer organization, performance, instruction sets, pipelining, and memory hierarchy. Excellent for PhD prep in the hardware/software interface and system optimization.
+   Prerequisites: 01:198:205 and either 01:198:211 or 14:332:331, all with grades of C or better (met).
+
+2) Design and Analysis of Randomized Algorithms (01:198:463)
+   Covers probabilistic approaches to algorithm design, often crucial in modern systems and architecture research (e.g., load balancing, distributed systems). Stretches your theory and problem-solving skills.
+   Prerequisites: 01:198:344 (met).
+
+3) Internet Technology (01:198:352)
+   Explores networking systems, protocols, and infrastructure�core knowledge for distributed system architecture and research.
+   Prerequisites: 01:198:211 and 01:198:206 (met).
+
+4) Minds, Machines, and Persons (01:730:329)
+   Investigates philosophical implications of complex machines and the nature of computation�valuable for theoretical rigor and interdisciplinary perspective, useful for graduate research.
+   Prerequisites: 01:198:205 (met).
+
+5) Introduction to Computational Robotics (01:198:460)
+   Robotics intersects architecture, real-time systems, and distributed computing�very relevant to systems research, plus it expands your portfolio and shows versatility.
+   Prerequisites: 01:198:206 (met).
+
+---
+
+**Courses to look forward to:**  
+Operating Systems Design (01:198:416): Prerequisite unmet�requires Systems Programming (01:198:214). Central for any systems PhD; consider fulfilling its prerequisite if possible.
+
+Distributed Systems: Concepts and Design (01:198:417) and Computer Security (01:198:419): Both offer high-impact systems depth but require Operating Systems Design (01:198:416). Aim to unlock them by completing prerequisites.
+
+Compilers (01:198:415): Requires Principles of Programming Languages (01:198:314), which you are currently blocked from due to missing Calc II (01:640:152). Compilers are fundamental in systems, so if possible, pursue Calc II to open up this sequence.
+
+Numerical Analysis and Computing (01:198:323) and Database Systems Implementation (01:198:437): Blocked by missing Calc II or Data Management prerequisites but useful for systems/architecture research.
+
+---
+
+You�re building an impressive profile. For direct systems and architecture research impact, try to take Computer Architecture, Randomized Algorithms, and Internet Technology soon. Whenever possible, look into completing Calc II and Systems Programming�these will unlock major systems courses and strengthen your graduate school preparation. If you want to strategize about unlocking blocked courses or electives, let me know!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,2473,650,yes,alright response,yes,prereq_wrong,says calc II wasn't taken.
+2026-06-07 16:40:59,2026-06-07 04:43:36 PM,7.05,I'm interested in social networks and graph algorithms,"Wonderful focus! For social networks and graph algorithms, your background in data structures, discrete math, and algorithms sets you up for several advanced, relevant courses. I�ve selected and ranked courses that give deep theoretical and applied experience with algorithms, networks, and related computational structures that are central to both fields.
+
+**Recommended Courses:**
+
+1) Design and Analysis of Randomized Algorithms (01:198:463)
+   Explores probabilistic algorithms, including those for graphs and networks�essential for analyzing large, complex social networks. Excellent for deepening your understanding of algorithmic approaches in network science.
+   Prerequisites: 01:198:344 (met).
+
+2) Internet Technology (01:198:352)
+   Covers internet protocols, network structures, and distributed systems. Provides practical context for social network infrastructure, as well as opportunities to study graph-theoretic concepts in real-world networks.
+   Prerequisites: 01:198:211 and 01:198:206 (met).
+
+3) ALGORITHMS IN SOCIETY (01:198:345)
+   Investigates the societal impact of algorithms�including those used in social networks. Ideal for students interested in how graph algorithms shape online communities, information diffusion, and fairness.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+4) Minds, Machines, and Persons (01:730:329)
+   Explores philosophical foundations of computation and complex systems�offers an interdisciplinary look at networks and collective intelligence.
+   Prerequisites: 01:198:205 (met).
+
+5) Introduction to Computational Robotics (01:198:460)
+   Robotics often involves graphs (for navigation, mapping). This course provides applied uses of graph algorithms and expands your computational toolkit.
+   Prerequisites: 01:198:206 (met).
+
+---
+
+**Courses to look forward to:**  
+Formal Languages and Automata (01:198:452): Great for theoretical foundations underlying graph algorithms, requires 01:198:344 with a grade of C or better (your grade is B+, so you�re eligible).
+
+Principles of Information and Data Management (01:198:336): Useful for graph-based data models and analysis, but currently blocked by missing Calculus II (01:640:152).
+
+Database Systems Implementation (01:198:437): Advances your understanding of storing and manipulating social network data, but also requires Data Management and Systems Programming courses.
+
+If you�re interested in the theoretical side, consider unlocking courses like Compilers and Distributed Systems as well. But your current eligibility opens doors for powerful and impactful learning this semester. Let me know if you�d like strategies for opening even more options!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,5270,545,yes,NULL,no,NULL,NULL
+2026-06-07 16:40:59,2026-06-07 04:57:45 PM,8.52,What courses should I take to round out my CS degree before graduating?,"You�ve done a wonderful job covering foundational CS theory, algorithms, machine learning, and architecture. To round out your degree and broaden your skill set, I recommend courses that expand your exposure to applied, societal, and advanced theoretical topics, as well as those that showcase the breadth of CS. Here are the top options based on your completed and in-progress coursework:
+
+1) Design and Analysis of Randomized Algorithms (01:198:463)  
+   Advanced study of randomized techniques for algorithms, which are crucial in large-scale computing, graph algorithms, and modern applications like social networks and optimization. Adds depth to your theoretical and applied algorithmic knowledge.
+   Prerequisites: 01:198:344 (met).
+
+2) Internet Technology (01:198:352)  
+   Comprehensive coverage of networking concepts, internet systems, and distributed protocols. Excellent for understanding the infrastructure that underlies web, social, and cloud technologies and gaining hands-on experience with real-world systems.
+   Prerequisites: 01:198:211 and 01:198:206 (met).
+
+3) ALGORITHMS IN SOCIETY (01:198:345)  
+   Explores the impact and ethics of algorithms, including fairness, bias, and societal effects�essential for any CS graduate wanting to understand the broader context of computational technology.
+   Prerequisites: 01:198:112 or 01:198:210 (met).
+
+4) Introduction to Computational Robotics (01:198:460)  
+   Robotics is an exciting applied field that introduces you to algorithmic motion planning, graph-based navigation, and interdisciplinary principles. It�s a great way to see CS skills at work in physical systems.
+   Prerequisites: 01:198:206 (met).
+
+5) Minds, Machines, and Persons (01:730:329)  
+   A thought-provoking course combining CS and philosophy, exploring what makes machines intelligent and addressing questions at the interface of human and artificial minds. Enriches your critical thinking and interdisciplinary awareness.
+   Prerequisites: 01:198:205 (met).
+
+---
+
+**Courses to look forward to:**  
+- Formal Languages and Automata (01:198:452): For advanced theory, requires 01:198:344 with a grade of C or better (your B+ is acceptable, so you can enroll).
+- Systems Programming (01:198:214), Principles of Programming Languages (01:198:314), Database Systems Implementation (01:198:437), and Operating Systems Design (01:198:416): These are blocked due to missing Calculus II (01:640:152). If you have time, consider completing Calc II as it unlocks many valuable systems and programming courses.
+- Compilers (01:198:415), Distributed Systems (01:198:417), Computer Security (01:198:419): Require courses you don�t yet have, but are excellent for further skills in systems.
+
+---
+
+Each recommended course complements your transcript and gives you an additional perspective�whether in theory, impact, applied tech, or the intersection between CS and society. Let me know if you want to focus your electives even further, or if you�d like advice on unlocking new categories!",single_agent,single_agent,single_agent:LLM,rutgers_courses.json,7967,652,yes,NULL,yes,prereq_wrong,missed calc 2
