@@ -6,7 +6,7 @@ import json
 import pdfplumber
 from typing import Dict, List, Optional
 from agent_framework import ChatAgent
-from agent_framework.openai import OpenAIChatClient
+from agent_framework.openai import OpenAIResponsesClient
 from typing import Dict, List, Optional
 import re
 
@@ -74,10 +74,10 @@ class TranscriptAgent(ChatAgent):
         """
     
     # initialize with system prompt and model. 
-    def __init__(self, client: OpenAIChatClient, model: str):
+    def __init__(self, client: OpenAIResponsesClient, model: str):
         super().__init__(
             chat_client=client, 
-            model=model,
+            default_options={"model_id": model},
             instructions=self.SYSTEM_PROMPT
         )
         self.model = model

@@ -1,0 +1,35 @@
+{
+  "version": "2026-09-07",
+  "deployments": {
+    "gpt-5": {
+      "model": "gpt-5",
+      "deployment_type": "Global Standard",
+      "input_per_million": 1.25,
+      "output_per_million": 10.0,
+      "cached_input_per_million": 0.13,
+      "currency": "USD",
+      "source": "Azure Global Standard pricing reviewed 2026-09-07",
+      "version": "2026-09-07"
+    },
+    "gpt-5-mini": {
+      "model": "gpt-5-mini",
+      "deployment_type": "Global Standard",
+      "input_per_million": 0.25,
+      "output_per_million": 2.0,
+      "cached_input_per_million": 0.03,
+      "currency": "USD",
+      "source": "Azure Global Standard pricing reviewed 2026-09-07",
+      "version": "2026-09-07"
+    },
+    "text-embedding-3-small": {
+      "model": "text-embedding-3-small",
+      "deployment_type": "Global Standard",
+      "input_per_million": 0.02,
+      "output_per_million": 0.0,
+      "cached_input_per_million": null,
+      "currency": "USD",
+      "source": "Verified embedding pricing reviewed 2026-09-07",
+      "version": "2026-09-07"
+    }
+  }
+}

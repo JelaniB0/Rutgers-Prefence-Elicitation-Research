@@ -10,6 +10,11 @@ query_log3.csv — Comprehensive Analysis & Visualization (v3)
 """
 
 import pandas as pd
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+FIGURES_DIR = PROJECT_ROOT / "analysis" / "figures"
+FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -45,7 +50,7 @@ plt.rcParams.update({
 })
 
 # ── Load & clean ───────────────────────────────────────────────────────────────
-df = pd.read_csv("query_log3.csv")
+df = pd.read_csv(PROJECT_ROOT / "query_log3.csv")
 
 # satisfied: NULL/NaN/empty → yes
 def parse_satisfied(val):
@@ -106,7 +111,7 @@ make_pie(axes[1],
          "Hallucinated vs. Non-Hallucinated Responses", n)
 
 plt.tight_layout()
-fig1.savefig("fig1_satisfaction_hallucination_pies.png", dpi=150, bbox_inches="tight")
+fig1.savefig(FIGURES_DIR / "fig1_satisfaction_hallucination_pies.png", dpi=150, bbox_inches="tight")
 print("Saved fig1_satisfaction_hallucination_pies.png")
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -149,7 +154,7 @@ ax2.legend(handles=patches2, fontsize=10, loc="lower center",
            bbox_to_anchor=(0.5, -0.08), framealpha=0.9, edgecolor="#ccc")
 
 plt.tight_layout()
-fig2.savefig("fig2_hallucination_types.png", dpi=150, bbox_inches="tight")
+fig2.savefig(FIGURES_DIR / "fig2_hallucination_types.png", dpi=150, bbox_inches="tight")
 print("Saved fig2_hallucination_types.png")
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -198,7 +203,7 @@ patches3 = [mpatches.Patch(color=c, label=l)
 ax3.legend(handles=patches3, fontsize=9, loc="lower right")
 
 plt.tight_layout()
-fig3.savefig("fig3_token_bars.png", dpi=150, bbox_inches="tight")
+fig3.savefig(FIGURES_DIR / "fig3_token_bars.png", dpi=150, bbox_inches="tight")
 print("Saved fig3_token_bars.png")
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -250,7 +255,7 @@ ax5.legend(handles=[
 ], fontsize=8, loc="upper left")
 
 plt.tight_layout()
-fig5.savefig("fig5_response_time_boxplot.png", dpi=150, bbox_inches="tight")
+fig5.savefig(FIGURES_DIR / "fig5_response_time_boxplot.png", dpi=150, bbox_inches="tight")
 print("Saved fig5_response_time_boxplot.png")
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -361,7 +366,7 @@ for bar, val in zip(bars6, course_freq_df["Frequency"]):
 ax6.set_xlim(0, course_freq_df["Frequency"].max() + 7)
 
 plt.tight_layout()
-fig6.savefig("fig6_course_convergence.png", dpi=150, bbox_inches="tight")
+fig6.savefig(FIGURES_DIR / "fig6_course_convergence.png", dpi=150, bbox_inches="tight")
 print("Saved fig6_course_convergence.png")
 
 # ══════════════════════════════════════════════════════════════════════════════

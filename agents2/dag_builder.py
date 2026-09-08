@@ -5,12 +5,17 @@ import asyncio
 import os
 from typing import Dict, List
 from openai import AsyncOpenAI
-from dotenv import load_dotenv
 import networkx as nx
 import matplotlib.pyplot as plt
 
-
-load_dotenv()
+if __package__:
+    from .inference_metrics import record_response
+    from .azure_openai import create_async_openai_client, get_azure_openai_settings
+    from .paths import COURSES_FILE, DAG_FILE, GRAPH_FILE
+else:  # Support `python agents2/dag_builder.py` from the repo root.
+    from inference_metrics import record_response
+    from azure_openai import create_async_openai_client, get_azure_openai_settings
+    from paths import COURSES_FILE, DAG_FILE, GRAPH_FILE
 
 DAG_SYSTEM_PROMPT = """You are a prerequisite parser for Rutgers University CS courses.
 
@@ -61,21 +66,30 @@ Output: {
 Return ONLY valid JSON, no explanation.
 """
 
-async def parse_prereqs_with_llm(client: AsyncOpenAI, prereq_text: str) -> Dict:
+async def parse_prereqs_with_llm(
+    client: AsyncOpenAI,
+    prereq_text: str,
+    model_id: str = "gpt-5",
+) -> Dict:
     if not prereq_text.strip():
         return {"and": [], "or_groups": [], "requires_permission": False}
 
     try:
-        response = await client.chat.completions.create(
-            model="gpt-4.1-mini",
-            messages=[
-                {"role": "system", "content": DAG_SYSTEM_PROMPT},
-                {"role": "user", "content": f"Parse this prerequisite text:\n{prereq_text}"}
-            ],
-            temperature=0,
-            max_tokens=300
+        response = await client.responses.create(
+            model=model_id,
+            instructions=DAG_SYSTEM_PROMPT,
+            input=f"Parse this prerequisite text:\n{prereq_text}",
+            max_output_tokens=1000,
+            reasoning={"effort": "minimal"},
         )
-        text = response.choices[0].message.content.strip()
+        record_response(response, model_id)
+        if getattr(response, "status", None) == "incomplete":
+            raise ValueError(f"Incomplete model response: {response.incomplete_details}")
+
+        text = response.output_text.strip()
+        if not text:
+            raise ValueError("Model response did not contain output text")
+
         text = re.sub(r'^```json|^```|```$', '', text, flags=re.MULTILINE).strip()
         return json.loads(text)
     except Exception as e:
@@ -85,7 +99,7 @@ async def parse_prereqs_with_llm(client: AsyncOpenAI, prereq_text: str) -> Dict:
         return {"and": codes, "or_groups": [], "requires_permission": False}
 
 
-async def build_dag(courses_path: str = "rutgers_courses.json", output_path: str = "agents2/prereq_dag.json"):
+async def build_dag(courses_path: str = str(COURSES_FILE), output_path: str = str(DAG_FILE)):
 
     if os.path.exists(output_path):
         # print(f"[DAGBuilder] DAG already exists at {output_path}, skipping build.")
@@ -94,38 +108,40 @@ async def build_dag(courses_path: str = "rutgers_courses.json", output_path: str
         visualize_dag(dag)
         return dag
 
-    client = AsyncOpenAI(
-        api_key=os.environ["GITHUB_TOKEN"],
-        base_url="https://models.inference.ai.azure.com/"
-    )
+    settings = get_azure_openai_settings()
 
     with open(courses_path) as f:
         courses = json.load(f)
 
     dag = {}
-    for course in courses:
-        code = course.get("code", "")
-        if not code:
-            continue
+    async with create_async_openai_client(settings) as client:
+        for course in courses:
+            code = course.get("code", "")
+            if not code:
+                continue
 
-        # Extract prereq text from description
-        description = course.get("description", "")
-        prereq_match = re.search(
-            r'(?:Pre(?:re)?quisites?|Prereq)\s*:(.+?)(?:\.\s+[A-Z]|\.\s*$|\Z)',
-            description, re.IGNORECASE | re.DOTALL
-        )
-        prereq_text = prereq_match.group(1).strip() if prereq_match else ""
+            # Extract prereq text from description
+            description = course.get("description", "")
+            prereq_match = re.search(
+                r'(?:Pre(?:re)?quisites?|Prereq)\s*:(.+?)(?:\.\s+[A-Z]|\.\s*$|\Z)',
+                description, re.IGNORECASE | re.DOTALL
+            )
+            prereq_text = prereq_match.group(1).strip() if prereq_match else ""
 
-        parsed = await parse_prereqs_with_llm(client, prereq_text)
+            parsed = await parse_prereqs_with_llm(
+                client,
+                prereq_text,
+                model_id=settings.models.parser,
+            )
 
-        dag[code] = {
-            "title": course.get("title", ""),
-            "and": parsed.get("and", []),
-            "or_groups": parsed.get("or_groups", []),
-            "requires_permission": parsed.get("requires_permission", False)
-        }
+            dag[code] = {
+                "title": course.get("title", ""),
+                "and": parsed.get("and", []),
+                "or_groups": parsed.get("or_groups", []),
+                "requires_permission": parsed.get("requires_permission", False)
+            }
 
-        print(f"[DAGBuilder] {code}: and={dag[code]['and']} or_groups={dag[code]['or_groups']}")
+            print(f"[DAGBuilder] {code}: and={dag[code]['and']} or_groups={dag[code]['or_groups']}")
 
     with open(output_path, 'w') as f:
         json.dump(dag, f, indent=2)
@@ -139,10 +155,11 @@ def check_eligibility(course_code: str, dag: Dict, completed: set, in_progress: 
 
     if course_code not in dag:
         return {
-            "eligible": True,
+            "eligible": False,
+            "eligibility_status": "unknown",
             "met_prerequisites": [],
-            "unmet_prerequisites": [],
-            "pathway_suggestion": None
+            "unmet_prerequisites": ["Prerequisite data is unavailable"],
+            "pathway_suggestion": "Obtain prerequisite information before confirming eligibility."
         }
 
     node = dag[course_code]
@@ -150,15 +167,7 @@ def check_eligibility(course_code: str, dag: Dict, completed: set, in_progress: 
     or_groups = node.get("or_groups", [])
     requires_permission = node.get("requires_permission", False)
 
-    if requires_permission and not and_reqs and not or_groups:
-        return {
-            "eligible": True,
-            "met_prerequisites": [],
-            "unmet_prerequisites": [],
-            "pathway_suggestion": None
-        }
-
-    unmet = []
+    unmet = ["Instructor permission (not verified)"] if requires_permission else []
     met = []
 
     for req in and_reqs:
@@ -176,6 +185,9 @@ def check_eligibility(course_code: str, dag: Dict, completed: set, in_progress: 
 
     return {
         "eligible": len(unmet) == 0,
+        "eligibility_status": "conditional_on_in_progress" if not unmet and any(
+            code in in_progress and code not in completed for code in met
+        ) else "eligible" if not unmet else "unmet_requirements",
         "met_prerequisites": met,
         "unmet_prerequisites": unmet,
         "pathway_suggestion": (
@@ -198,7 +210,7 @@ def batch_check_eligibility(
         for course in courses
     }
 
-def visualize_dag(dag: Dict, output_path: str = "agents2/prereq_graph.png"):
+def visualize_dag(dag: Dict, output_path: str = str(GRAPH_FILE)):
     try:
         import networkx as nx
         import matplotlib.pyplot as plt

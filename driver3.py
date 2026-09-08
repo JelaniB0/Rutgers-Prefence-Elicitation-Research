@@ -1,13 +1,15 @@
 import os
 import asyncio
+import json
 from datetime import datetime
-from dotenv import load_dotenv
 import re
 
 
-from agent_framework.openai import OpenAIChatClient
+from agent_framework.openai import OpenAIResponsesClient
 from agent_framework import WorkflowBuilder, WorkflowOutputEvent, Executor, WorkflowContext, handler
 from query_logger3 import log_query                          # <-- updated import
+from query_logger3 import log_turn_metrics
+from agents2.inference_metrics import instrument_capability, usage_scope
 
 from agents2.parser_agent import ParserAgent
 from agents2.data_agent import DataAgent
@@ -16,6 +18,9 @@ from agents2.transcript_agent import TranscriptAgent
 from agents2.constraint_agent import ConstraintAgent
 from agents2.shared_types import ConversationState
 from agents2.dag_builder import build_dag
+from agents2.azure_openai import ModelConfig, create_agent_client, get_azure_openai_settings
+from agents2.paths import COURSES_FILE, SCHEMA_FILE, DAG_FILE
+from agents2.pathway_search import pathways_for_transcript
 from agents2.orchestrator_agent import (
     UserQuery,
     OrchestratorRequest,
@@ -24,57 +29,56 @@ from agents2.orchestrator_agent import (
     RoutingContext
 )
 
-load_dotenv()
 
 # Spoke Executors, each does one job, sends AgentResult back to orchestrator
 
 class ParserExecutor(Executor):
 
-    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+    def __init__(self, chat_client: OpenAIResponsesClient, model_id: str):
         super().__init__(id="parser")
         self.parser = ParserAgent(
             client=chat_client,
-            model="gpt-4.1-mini",
-            schema_path="agents2/query_schema.json"
+            model=model_id,
+            schema_path=str(SCHEMA_FILE)
         )
-        self.thread = self.parser.get_new_thread()
 
     @handler
+    @instrument_capability
     async def handle(self, message: UserQuery, ctx: WorkflowContext[AgentResult]) -> None:
         enriched_query = message.user_query
-        if message.conversation_state.resolved_courses:
-            course_titles = [v["title"] for v in message.conversation_state.resolved_courses.values()]
-            enriched_query = (
-                f"{message.user_query}\n\n"
-                f"[Session context — courses discussed so far: {', '.join(course_titles)}]"
-            )
 
-        response = await self.parser.parse(enriched_query, message.conversation_state, thread=self.thread)
-
-        if hasattr(response, "metadata") and response.metadata:
-            input_tokens = response.metadata.get("input_token_count", 0) or 0
-            output_tokens = response.metadata.get("output_token_count", 0) or 0
-            message.conversation_state.add_usage(input_tokens, output_tokens)
+        response = await self.parser.parse(enriched_query, message.conversation_state, thread=None)
 
         if not response.success:
             await ctx.yield_output("I encountered an error parsing your query. Please try again.")
             return
-        message.conversation_state.user_query = message.user_query
+        if response.data.get("reference_error"):
+            message.conversation_state.request_clarification(
+                response.data.get("effective_query", message.user_query), response.data,
+                ["specific_courses"], response.data["reference_error"])
+            await ctx.yield_output(response.data["reference_error"])
+            return
+        if response.data.get("clarification_question"):
+            await ctx.yield_output(response.data["clarification_question"])
+            return
+        effective_query = response.data.get("effective_query", message.user_query)
+        message.conversation_state.user_query = effective_query
         message.conversation_state.last_intent = response.data.get("intent")
         await ctx.send_message(
-            OrchestratorRequest(message.user_query, response.data, message.conversation_state)
+            OrchestratorRequest(effective_query, response.data, message.conversation_state)
         )
 
 
 class DataExecutor(Executor):
 
-    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+    def __init__(self, chat_client: OpenAIResponsesClient, model_id: str):
         super().__init__(id="data")
         self.data_agent = DataAgent(
-            client=chat_client, model=model_id, courses_file="rutgers_courses.json"
+            client=chat_client, model=model_id, courses_file=str(COURSES_FILE)
         )
 
     @handler
+    @instrument_capability
     async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name not in ("data_fetch", "data_lookup", "data_prereq"):
             return
@@ -144,18 +148,26 @@ class DataExecutor(Executor):
             await ctx.send_message(AgentResult(
                 message.user_query, message.parsed_data,
                 agent_name="data_prereq",
-                data={"courses": results},
+                data={"courses": results, "pathways": self._pathways(results, message.conversation_state)},
                 conversation_state=message.conversation_state
             ))
+
+    @staticmethod
+    def _pathways(results, state):
+        with DAG_FILE.open(encoding="utf-8") as stream:
+            dag = json.load(stream)
+        return [pathways_for_transcript(dag, result["course"]["code"], state.transcript_data)
+                for result in results if result.get("course", {}).get("code")]
 
 
 class ConstraintExecutor(Executor):
 
-    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+    def __init__(self, chat_client: OpenAIResponsesClient, model_id: str):
         super().__init__(id="constraint")
         self.constraint_agent = ConstraintAgent(client=chat_client, model=model_id)
 
     @handler
+    @instrument_capability
     async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name not in ("constraint_full", "constraint_prereq"):
             return
@@ -201,11 +213,12 @@ class ConstraintExecutor(Executor):
 
 class PlanningExecutor(Executor):
 
-    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+    def __init__(self, chat_client: OpenAIResponsesClient, model_id: str):
         super().__init__(id="planning")
         self.planning_agent = PlanningAgent(client=chat_client, model=model_id)
 
     @handler
+    @instrument_capability
     async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name != "planning":
             return
@@ -244,11 +257,12 @@ class PlanningExecutor(Executor):
 
 class TranscriptExecutor(Executor):
 
-    def __init__(self, chat_client: OpenAIChatClient, model_id: str):
+    def __init__(self, chat_client: OpenAIResponsesClient, model_id: str):
         super().__init__(id="transcript")
         self.transcript_agent = TranscriptAgent(client=chat_client, model=model_id)
 
     @handler
+    @instrument_capability
     async def handle(self, message: AgentResult, ctx: WorkflowContext[AgentResult]) -> None:
         if message.agent_name != "transcript":
             return
@@ -267,11 +281,6 @@ class TranscriptExecutor(Executor):
 
         message.conversation_state.awaiting_transcript = False
         response = await self.transcript_agent.parse_transcript(file_path, message.conversation_state)
-
-        if hasattr(response, "metadata") and response.metadata:
-            input_tokens = response.metadata.get("input_token_count", 0) or 0
-            output_tokens = response.metadata.get("output_token_count", 0) or 0
-            message.conversation_state.add_usage(input_tokens, output_tokens)
 
         if not response.success:
             await ctx.yield_output(f"I couldn't read that transcript: {', '.join(response.errors)}")
@@ -297,19 +306,15 @@ class TranscriptExecutor(Executor):
 
 # Workflow assembly — hub and spoke approach where orchestrator acts as hub
 
-def build_workflow(chat_client: OpenAIChatClient, model_id: str):
-    orchestrator_client = OpenAIChatClient(
-        base_url=os.environ.get("GITHUB_ENDPOINT"),
-        api_key=os.environ.get("GITHUB_TOKEN"),
-        model_id="gpt-4.1-mini"
-    )
-
-    parser       = ParserExecutor(chat_client, model_id)
-    orchestrator = OrchestratorExecutor(orchestrator_client, "gpt-4.1-mini")
-    data         = DataExecutor(chat_client, model_id)
-    constraint   = ConstraintExecutor(chat_client, model_id)
-    planning     = PlanningExecutor(chat_client, model_id)
-    transcript   = TranscriptExecutor(chat_client, model_id)
+def build_workflow(chat_client: OpenAIResponsesClient, model_config: ModelConfig, topology: str = "star"):
+    if topology != "star":
+        raise ValueError(f"Unsupported topology: {topology!r}; only 'star' is implemented.")
+    parser       = ParserExecutor(chat_client, model_config.parser)
+    orchestrator = OrchestratorExecutor(chat_client, model_config.orchestrator, model_config.response_writer)
+    data         = DataExecutor(chat_client, model_config.data)
+    constraint   = ConstraintExecutor(chat_client, model_config.constraint)
+    planning     = PlanningExecutor(chat_client, model_config.planning)
+    transcript   = TranscriptExecutor(chat_client, model_config.transcript)
 
     workflow = (
         WorkflowBuilder()
@@ -391,27 +396,25 @@ def _collect_feedback_and_hallucination() -> tuple[str, str, str, str, str]:
 async def main():
     print("Rutgers CS Course Advisor - Hub & Spoke Multi-Agent Workflow")
 
-    chat_client = OpenAIChatClient(
-        base_url=os.environ.get("GITHUB_ENDPOINT"),
-        api_key=os.environ.get("GITHUB_TOKEN"),
-        model_id=os.environ.get("GITHUB_MODEL_ID")
-    )
-    model_id = os.environ.get("GITHUB_MODEL_ID")
+    settings = get_azure_openai_settings()
+    chat_client = create_agent_client(settings)
+    model_config = settings.models
+    conversation_state = ConversationState()
+    session_id = datetime.now().isoformat(timespec="microseconds")
 
     # Build DAG at startup
-    await build_dag(
-        courses_path="rutgers_courses.json",
-        output_path="agents2/prereq_dag.json"
-    )
-
-    workflow, _ = build_workflow(chat_client, model_id)
+    try:
+        with usage_scope(conversation_state, "startup.dag"):
+            await build_dag(courses_path=str(COURSES_FILE), output_path=str(DAG_FILE))
+        with usage_scope(conversation_state, "startup.index"):
+            workflow, _ = build_workflow(chat_client, model_config)
+    finally:
+        log_turn_metrics(session_id, conversation_state.inference_metrics.snapshot(), phase="startup",
+                         model_config=model_config.to_dict())
 
     print("Hello! I'm your Rutgers CS course advisor.")
     print("Ask me about course recommendations, prerequisites, or upload your transcript.")
     print("Type 'quit' to exit.\n")
-
-    conversation_state = ConversationState()
-    session_id = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     agent_sources = {
         "parser":       ["LLM", "query_schema.json"],
@@ -493,6 +496,8 @@ async def main():
 
             plan_steps = " -> ".join(routing_ctx.agents_call_order) if routing_ctx else ""
             turn_sources = {a: agent_sources.get(a, ["LLM"]) for a in agents_invoked}
+            if routing_ctx and "data_prereq" in routing_ctx.agents_call_order:
+                turn_sources["data"] = ["rutgers_courses.json", "prereq_dag.json", "BFS", "DFS"]
 
             should_log = (
                 response_text and
@@ -519,7 +524,13 @@ async def main():
                     hallucinated=hallucinated,
                     hallucination_type=hallucination_type,
                     hallucination_notes=hallucination_notes,
+                    research=conversation_state.inference_metrics.snapshot(),
                 )
+                snapshot = conversation_state.inference_metrics.snapshot()
+                query_cost = snapshot["query"]["estimated_inference_cost_usd"]
+                session_cost = snapshot["session"]["estimated_inference_cost_usd"]
+                print(f"[Research] Estimated query cost (USD): {query_cost or 'unavailable'} | "
+                      f"Session estimated cost (USD): {session_cost or 'unavailable'}")
 
         except Exception as e:
             print(f"[Workflow] Error: {e}")
@@ -543,7 +554,13 @@ async def main():
                     hallucinated="NULL",
                     hallucination_type="",
                     hallucination_notes="",
+                    research=conversation_state.inference_metrics.snapshot(),
                 )
+        finally:
+            log_turn_metrics(session_id, conversation_state.inference_metrics.snapshot(),
+                             routing_events=conversation_state.routing_events,
+                             parsed_intent=conversation_state.last_intent,
+                             model_config=model_config.to_dict())
 
 
 if __name__ == "__main__":

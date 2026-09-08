@@ -1,5 +1,11 @@
 {
   "schema_version": "1.0",
+  "application_scope": "Rutgers–New Brunswick only. Course resolution uses titles/codes. Campus is not an entity, memory preference, missing field, or clarification requirement.",
+  "optional_memory_output": {
+    "clarification_action": "When pending clarification exists: resume for an answer, incomplete for an ambiguous/non-answer, new_task only for explicit cancellation or task change; otherwise null.",
+    "memory_updates": "Explicit user facts only: interests/goals accept add, remove, replace lists; preferences overwrite scalar values or clear with null.",
+    "course_reference": "null for new queries; otherwise source latest/recommendations/lookup_courses/pathway_targets and optional one-based indices. Null indices means the entire referenced set."
+  },
   "description": "Query validation schema for course recommendation system",
   "last_updated": "2024-01-15",
   

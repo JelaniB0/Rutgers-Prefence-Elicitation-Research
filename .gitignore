@@ -6,6 +6,16 @@ __pycache__/
 preference-env/
 env/
 .venv/
+myenv/
+venv/
+
+# Runtime caches and newly generated local results (tracked research stays tracked).
+chroma_db/
+.pytest_cache/
+.ruff_cache/
+*.log
+*_calls.jsonl
+*_metrics.csv
 
 .DS_Store
 Thumbs.db

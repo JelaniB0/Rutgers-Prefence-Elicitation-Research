@@ -286,7 +286,7 @@
     "title": "MACHINE LEARNING PRINCIPLES (NB)",
     "item_id": "51265",
     "detail_url": "https://dn.rutgers.edu/DN/Audit/ViewItem.aspx?pageid=DNViewItem&itemID=51265&catid=750&degreeid=731",
-    "description": "Prereq: 01:198112, 0:198:206, 01:640:250. Systematic introduction to machine learning, covering theoretical as well as practical aspects of the use of statistical methods. Topics include linear models for classification and regression, support vector machines, regularization and model selection, and introduction to deep learning. Application examples are taken from areas like computer vision, natural language processing, information retrieval and others.",
+    "description": "Prereq: 01:198:112, 0:198:206, 01:640:250. Systematic introduction to machine learning, covering theoretical as well as practical aspects of the use of statistical methods. Topics include linear models for classification and regression, support vector machines, regularization and model selection, and introduction to deep learning. Application examples are taken from areas like computer vision, natural language processing, information retrieval and others.",
     "credits": "4"
   },
   {

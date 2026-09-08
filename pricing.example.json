@@ -1,0 +1,15 @@
+{
+  "version": "replace-with-your-pricing-review-date",
+  "deployments": {
+    "replace-with-AZURE_OPENAI_DEPLOYMENT": {
+      "model": "replace-with-deployed-model-version",
+      "deployment_type": "replace-with-your-Azure-deployment-type-and-region",
+      "input_per_million": null,
+      "output_per_million": null,
+      "cached_input_per_million": null,
+      "currency": "USD",
+      "source": "replace-with-verified-rate-source-or-contract-reference",
+      "version": "replace-with-rate-effective-date"
+    }
+  }
+}

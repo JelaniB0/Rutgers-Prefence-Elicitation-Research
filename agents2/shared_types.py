@@ -9,6 +9,9 @@ without creating circular dependencies between agent modules.
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List
 from enum import Enum
+from copy import deepcopy
+from .advising_scope import clean_parsed_scope, without_campus, mentions_campus
+from .inference_metrics import InferenceMetrics
 
 
 class ConversationState:
@@ -44,6 +47,169 @@ class ConversationState:
         self.input_tokens = 0
         self.output_tokens = 0
         self.awaiting_transcript: bool = False
+        self.inference_metrics = InferenceMetrics()
+        self.routing_ctx = None
+        self.routing_iteration = 0
+        self.routing_events = []
+        self.extracted_entities = {}
+        self.interests = []
+        self.goals = []
+        self.preferences = {}
+        self.last_recommendations = []
+        self.last_lookup_courses = []
+        self.last_pathway_targets = []
+        self.latest_result_kind = None
+        self.pending_clarification = None
+        self.clarification_events = []
+
+    def request_clarification(self, query, parsed, missing_fields=None, question=""):
+        """Remember an unresolved task only when a clarification is actually shown."""
+        clean_parsed_scope(parsed)
+        entities = deepcopy(parsed.get("entities", {}))
+        fields = missing_fields or parsed.get("missing_critical_info", [])
+        allowed = {"target_course", "specific_courses", "interests", "year", "career_path",
+                   "credit_hours", "difficulty_preference", "time_constraints", "file_path"}
+        fields = [f for f in fields if isinstance(f, str) and f in allowed] if isinstance(fields, list) else []
+        if not fields:
+            fields = ["target_course"] if parsed.get("intent") in ("prerequisite_check", "course_info") else ["interests"]
+        if mentions_campus(question):
+            question = "Please specify: " + ", ".join(fields).replace("_", " ") + "."
+        self.pending_clarification = {"original_query": query, "intent": parsed.get("intent"),
+                                      "known_entities": entities, "missing_fields": fields,
+                                      "question": question}
+        self.clarification_events.append({"action": "requested", "original_intent": parsed.get("intent"),
+                                          "missing_fields": list(fields)})
+
+    def resume_clarification(self, parsed):
+        """Preserve task identity; only nonempty reply entities replace known values."""
+        clean_parsed_scope(parsed)
+        pending = self.pending_clarification
+        if not pending:
+            return
+        pending["missing_fields"] = without_campus(pending["missing_fields"])
+        pending["known_entities"] = without_campus(pending["known_entities"])
+        event = {"pending_existed": True, "original_intent": pending["intent"],
+                 "missing_fields": list(pending["missing_fields"]), "merged": False, "cleared": False,
+                 "explicit_task_change": parsed.get("clarification_action") == "new_task"}
+        self.clarification_events.append(event)
+        if event["explicit_task_change"]:
+            self.pending_clarification = None
+            event["cleared"] = True
+            return
+        supplied = {key: value for key, value in parsed.get("entities", {}).items()
+                    if value not in (None, "", [])}
+        if not supplied.get("target_course") and supplied.get("specific_courses"):
+            supplied["target_course"] = supplied["specific_courses"][0]
+        merged = dict(pending["known_entities"], **supplied)
+        if supplied.get("target_course") and "target_course" in pending["missing_fields"]:
+            merged["specific_courses"] = supplied.get("specific_courses") or [supplied["target_course"]]
+        parsed["intent"] = pending["intent"]
+        parsed["entities"] = merged
+        parsed["effective_query"] = pending["original_query"]
+        parsed["clarification_resumed"] = True
+        remaining = [key for key in pending["missing_fields"] if key not in supplied]
+        if parsed.get("clarification_action") == "incomplete" and not remaining:
+            remaining = list(pending["missing_fields"])
+        event["merged"] = bool(supplied)
+        event["missing_fields"] = remaining
+        if remaining:
+            pending.update(known_entities=merged, missing_fields=remaining)
+            parsed["clarification_question"] = "Please clarify: " + ", ".join(remaining).replace("_", " ") + "."
+        else:
+            self.pending_clarification = None
+            parsed["needs_clarification"] = False
+            parsed["missing_critical_info"] = []
+            event["cleared"] = True
+
+    def apply_memory_updates(self, updates):
+        """Apply explicit user facts only; lists support add/remove/replace."""
+        if not isinstance(updates, dict):
+            return
+        updates = without_campus(updates)
+        for key in ("interests", "goals"):
+            change = updates.get(key)
+            if isinstance(change, list):
+                change = {"add": change}
+            if not isinstance(change, dict):
+                continue
+            clean = lambda values: [v.strip()[:120] for v in values
+                                    if isinstance(v, str) and v.strip()] if isinstance(values, list) else []
+            current = clean(change["replace"]) if isinstance(change.get("replace"), list) else list(getattr(self, key))
+            removed = {v.casefold() for v in clean(change.get("remove", []))}
+            current = [v for v in current if v.casefold() not in removed]
+            current += clean(change.get("add", []))
+            unique = {}
+            for value in current:
+                unique.setdefault(value.casefold(), value)
+            setattr(self, key, list(unique.values())[-12:])
+        preferences = updates.get("preferences", {})
+        if isinstance(preferences, dict):
+            for key in ("difficulty_preference", "gpa_priority", "credit_hours", "time_constraints", "year"):
+                if key not in preferences:
+                    continue
+                value = preferences[key]
+                if value is None:
+                    self.preferences.pop(key, None)
+                elif isinstance(value, (str, int, float, bool)):
+                    self.preferences[key] = value[:160] if isinstance(value, str) else value
+
+    def remember_results(self, kind, courses):
+        """Bounded, ordered references, not cached eligibility verdicts."""
+        if kind not in ("recommendations", "lookup_courses", "pathway_targets"):
+            return
+        references = []
+        for item in courses:
+            course = item.get("course", item)
+            code = course.get("code") or course.get("course_code")
+            if code and code not in {r["code"] for r in references}:
+                references.append({"code": code, "title": course.get("title") or course.get("course_name", "")})
+        if references:
+            setattr(self, "last_" + kind, references[:7])
+            self.latest_result_kind = kind
+
+    def get_context(self, capability):
+        """Project bounded memory only; transcript/constraints use existing paths."""
+        if capability == "constraint":
+            return {}  # No interests, chat history, or stale eligibility assertions.
+        context = {"interests": self.interests, "goals": self.goals, "preferences": self.preferences}
+        if capability != "data":
+            context.update(last_recommendations=self.last_recommendations,
+                           last_lookup_courses=self.last_lookup_courses,
+                           last_pathway_targets=self.last_pathway_targets,
+                           latest_result_kind=self.latest_result_kind)
+        if capability == "parser":
+            context["pending_clarification"] = self.pending_clarification
+            context["recent_messages"] = [{"role": m["role"], "content": m["content"][:1600]}
+                                          for m in self.conversation_history[-4:]]
+        return deepcopy(context)
+
+    def enrich_parsed_query(self, parsed):
+        """Apply updates before inheriting defaults; resolve explicit parser references."""
+        self.apply_memory_updates(parsed.get("memory_updates"))
+        entities = parsed.setdefault("entities", {})
+        defaults = dict(self.preferences, interests=self.interests, career_path="; ".join(self.goals))
+        for key, value in defaults.items():
+            if entities.get(key) in (None, "", []):
+                entities[key] = deepcopy(value)
+        reference = parsed.get("course_reference")
+        if not isinstance(reference, dict):
+            return
+        source = reference.get("source", "latest")
+        kind = self.latest_result_kind if source == "latest" else source
+        courses = getattr(self, "last_" + kind, []) if kind in ("recommendations", "lookup_courses", "pathway_targets") else []
+        indices = reference.get("indices")
+        if indices is not None:
+            if not isinstance(indices, list) or not indices or any(type(i) is not int or not 1 <= i <= len(courses) for i in indices):
+                courses = []
+            else:
+                courses = [courses[i - 1] for i in indices]
+        if not courses:
+            parsed["reference_error"] = "Which courses do you mean? Please name them so I can use the right list."
+            return
+        parsed["reference_courses"] = deepcopy(courses)
+        entities["specific_courses"] = [c["code"] for c in courses]
+        entities["target_course"] = courses[0]["code"]
+        entities["related_courses"] = [c["code"] for c in courses[1:]]
 
 
     def add_usage(self, input_tokens: int, output_tokens: int) -> None:
@@ -51,8 +217,14 @@ class ConversationState:
         self.output_tokens += output_tokens
 
     def reset_usage(self) -> None:
+        self.clarification_events = []
         self.input_tokens = 0
         self.output_tokens = 0
+        self.inference_metrics.reset_query()
+        self.routing_ctx = None
+        self.routing_iteration = 0
+        self.routing_events = []
+        self.last_intent = ""
     
     def add_message(self, role: str, content: str):
         """Add a message to conversation history"""

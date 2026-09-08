@@ -25,9 +25,10 @@ import json
 import traceback
 from typing import Dict, Any, Optional, Tuple, List
 from agent_framework import ChatAgent
-from agent_framework.openai import OpenAIChatClient
+from agent_framework.openai import OpenAIResponsesClient
 from .shared_types import AgentResponse, ConversationState, ConstraintViolation
 from .dag_builder import batch_check_eligibility
+from .paths import DAG_FILE
 
 # Configurations
 
@@ -83,18 +84,18 @@ class ConstraintAgent(ChatAgent):
     """
 
 
-    def __init__(self, client: OpenAIChatClient, model: str):
+    def __init__(self, client: OpenAIResponsesClient, model: str):
         """
         Initialize constraint agent
 
         Args:
-            client: OpenAIChatClient instance shared with other agents
+            client: OpenAIResponsesClient instance shared with other agents
             model: Model ID string to use
         """
 
         super().__init__(
             chat_client=client,
-            model=model,
+            default_options={"model_id": model},
             instructions=self.SYSTEM_PROMPT
         )
 
@@ -103,7 +104,7 @@ class ConstraintAgent(ChatAgent):
         # print(f"[ConstraintAgent] Initialized with model: {model}, using LLM-based constraint validation")
 
     def _load_or_build_dag(self) -> Dict:
-        dag_path = "agents2/prereq_dag.json"
+        dag_path = DAG_FILE
         if os.path.exists(dag_path):
             with open(dag_path) as f:
                 return json.load(f)
@@ -554,4 +555,4 @@ class ConstraintAgent(ChatAgent):
 
     # Design decision made where we inject all courses of interest into 1 prompt and validate all courses with 1 LLM call instead of 10 LLM calls -> decreases cost, especially for low resource
     # project. 
-    # the note above is for prereq checker. 
+    # the note above is for prereq checker.

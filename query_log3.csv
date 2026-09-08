@@ -1053,3 +1053,208 @@ Courses to look forward to:
 - Computer Security (01:198:419) is a highly relevant course for cybersecurity but currently you do not meet the prerequisites as it requires either Operating Systems Design (01:198:416) or Internet Technology (01:198:352), which you have not completed. I recommend enrolling in one of those courses next to unlock this valuable cybersecurity elective.
 
 You've done a great job completing key prerequisites like Data Structures and Discrete Structures which enable these recommendations. Keep up your strong work, and pursuing the mentioned pathway courses will open even more cybersecurity electives for you!",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",15241,1542,yes,NULL,no,,
+2026-08-24 22:53:38,2026-08-24 10:57:42 PM,2.99,can you take my resume,I encountered an error parsing your query. Please try again.,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",0,0,NULL,NULL,NULL,,
+2026-08-24 22:57:54,2026-08-24 10:59:51 PM,2.16,can i give you my transcript,I encountered an error parsing your query. Please try again.,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",0,0,no,NULL,NULL,,
+2026-08-24 23:00:02,2026-08-24 11:00:44 PM,2.00,can i give you my transcript,I encountered an error parsing your query. Please try again.,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",0,0,no,NULL,NULL,,
+2026-09-07 00:22:59,2026-09-07 12:34:53 AM,48.20,can you recommend me some courses in AI,I had trouble fetching courses. Please try again.,data_fetch,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",4243,2022,NULL,NULL,NULL,,
+2026-09-07 00:35:09,2026-09-07 12:37:58 AM,88.74,can  you recommend me courses in AI,"{
+  ""reasoning"": ""Student requested AI course recommendations; data_fetch is done and transcript is not on file, so we must run planning to rank and tailor options before responding."",
+  ""mode"": ""route"",
+  ""next_agents"": [
+    ""planning""
+  ],
+  ""response"": null
+}",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",6783,2832,no,n,no,,
+2026-09-07 00:49:47,2026-09-07 12:53:47 AM,101.20,can you recommend me courses in AI?,"{
+  ""reasoning"": ""The student asked for AI course recommendations (a subject mention requires routing). I previously asked a clarifying question but received no interests or transcript, so per routing rules I must fetch catalog/course data first for a course_recommendation flow."",
+  ""mode"": ""route"",
+  ""next_agents"": [
+    ""data_fetch""
+  ],
+  ""response"": null
+}",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",14260,7118,NULL,NULL,NULL,,
+2026-09-07 01:03:21,2026-09-07 01:06:01 AM,91.88,can you recommend me courses in AI,"Here are AI-related course recommendations based on course descriptions. No transcript is on file, so I did not check your eligibility—see the prerequisites listed for each course and let me know your completed courses or upload your transcript if you want personalized eligibility checking.
+
+1) Introduction to Artificial Intelligence (01:198:440)
+   This survey covers core AI topics (search, knowledge representation, natural language understanding, computer vision) and is a strong starting point to identify areas you want to pursue further.
+   Prerequisites: Prereq: (01:198:205 INTRODUCTION TO DISCRETE STRUCTURES I or 14:332:202 DISCRETE MATH ECE or 14:332:312 DISCRETE MATHEMATICS ECE) AND (01:640:152 CALCULUS II FOR MATHEMATICAL AND PHYSICAL SCIENCES or 01:640:192 HONORS CALCULUS II).
+
+2) MACHINE LEARNING PRINCIPLES (01:198:461)
+   A systematic introduction to machine learning (theory and practice) covering linear models, SVMs, regularization, model selection, and introductory deep learning—central for modern AI work.
+   Prerequisites: Prereq: 01:198112, 0:198:206, 01:640:250.
+
+3) INTRODUCTION TO DEEP LEARNING (01:198:462)
+   Focuses on neural networks and modern deep learning methods and applications—recommended if you want hands-on/deep-model experience for CV or NLP.
+   Prerequisites: Prereq: 01:640:250 and 01:198:112 and (01:198:206 OR 01:640:477 OR 01:960:379).
+
+4) Brain-inspired Computing (01:198:425)
+   Specialized course on biologically inspired and neuromorphic approaches—good if you are interested in neuroscience-inspired models, robotics, or niche AI hardware/software interfaces.
+   Prerequisites: Prerequisites: 01:198:206 (Discrete Structures II).
+
+5) Introduction to Data Science (01:198:439)
+   Covers data preparation, analysis, and tools that underpin AI/ML pipelines—useful for applied AI work where data wrangling and interpretation matter.
+   Prerequisites: Prerequisites: 01:198:205 (Discrete Structures I) and 01:640:152.
+
+Other courses you might consider (lower priority for a pure AI track but useful):
+- Principles of Information and Data Management (01:198:336): More database/knowledge-modeling oriented—useful for information modeling and large-scale data systems but less directly focused on ML/DL algorithms.
+- Data Management for Data Science (01:198:210): Practical data acquisition/curation skills that support AI projects but do not focus on core AI methods.
+
+If you want a more tailored list, tell me your academic level/year, which AI subareas (ML, NLP, CV, robotics, etc.) you prefer, whether you want introductory vs advanced courses, and what relevant courses you've already completed (or upload your transcript).",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",8521,3226,yes,NULL,no,,
+2026-09-07 01:03:21,2026-09-07 01:10:03 AM,94.78,can you recommend me courses I should take for my senior year,"1) Principles of Information and Data Management (01:198:336)
+   I ranked this first because it teaches database modeling, querying, and data-integration skills broadly valuable for backend, data engineering, and analytics roles.
+   Prerequisites: 01:640:152 (completed: B+), 01:198:112 Data Structures (completed: A), 01:198:205 Discrete Structures I (completed: A).
+
+2) Systems Programming (01:198:214)
+   Strong practical course for software engineering and systems roles (C-level programming, tooling, and performance); useful senior-level skillset.
+   Prerequisites: 01:198:112 Data Structures (completed: A), 01:640:152 (completed: B+).
+
+3) Data Management for Data Science (01:198:210)
+   Hands-on focus on acquiring, cleaning, and managing real datasets—directly applicable to data science and ML engineering roles.
+   Prerequisites: 01:198:142 or 01:198:111 (you completed 01:198:111, grade: A).
+
+4) Numerical Analysis and Computing (01:198:323)
+   Useful if you want stronger quantitative/computational skills (scientific computing, ML foundations, simulation); narrower but technically valuable.
+   Prerequisites: 01:640:152 (completed: B+), 01:640:250 (completed: B+).
+
+5) ALGORITHMS IN SOCIETY (01:198:345)
+   Good interdisciplinary elective on the societal impacts of algorithmic decision-making—complements technical coursework for policy/ethics-aware roles.
+   Prerequisites: 01:198:112 Data Structures (completed: A) or 01:198:210.
+
+Additionally, two courses from the candidate set are currently ineligible based on prerequisites:
+- Database Systems Implementation (01:198:437): requires 01:198:336 and 01:198:214. Suggestion: take 01:198:214 and 01:198:336 first, then enroll in 01:198:437 in a later semester.
+- Distributed Systems: Concepts and Design (01:198:417): requires 01:198:416 (Operating Systems Design). Take 01:198:416 before 01:198:417.
+
+If you want, I can tailor these recommendations to your goals (industry vs. grad school), preferred subareas (AI/ML, systems, databases, etc.), or a target credit load/schedule—what do you want to prioritize next year?",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",22637,5073,yes,NULL,no,,
+2026-09-07 01:03:21,2026-09-07 01:12:55 AM,112.19,wanna do like an AI subtrack,"Based on your transcript and stated interest in AI, here are ranked course suggestions with brief reasoning and prerequisite notes.
+
+1) Brain-inspired Computing (NB) (01:198:425)
+   Direct match to AI interest: focuses on neuro-mimetic and neuromorphic approaches for vision and movement. Great if you want a computational-neuroscience/neuromorphic angle on AI.
+   Prerequisites: 01:198:206 (Discrete Structures II) — satisfied per your transcript/constraint check.
+
+2) Data Management for Data Science (NB) (01:198:210)
+   Highly relevant for applied ML/AI work: teaches data acquisition, curation, and large-dataset management needed for ML pipelines and projects.
+   Prerequisites: 01:198:142 or 01:198:111 (Introduction to Computer Science) — 01:198:111 is completed per your transcript.
+
+3) Numerical Analysis and Computing (NB) (01:198:323)
+   Useful mathematical/algorithmic foundations (approximation, linear algebra solvers, numerical stability) that support ML algorithm development and research.
+   Prerequisites: 01:640:152 and 01:640:250 — both are listed as met in the constraint check.
+
+4) ALGORITHMS IN SOCIETY (NB) (01:198:345)
+   Good for understanding real-world deployment, ethical/policy implications, and case studies of algorithmic decision systems — helpful for responsible AI work.
+   Prerequisites: 01:198:112 (Data Structures) — satisfied per your transcript.
+
+5) Systems Programming (NB) (01:198:214)
+   Lower direct AI-methods relevance but useful for performance-critical ML/AI code, embedded ML, and systems-level optimization. Helpful if you plan to build/optimize inference engines.
+   Prerequisites: 01:198:112 (Data Structures) and 01:640:152; course description also lists corequisite 01:198:211 (you have 01:198:211 completed).
+
+Not recommended right now: Distributed Systems: Concepts and Design (NB) (01:198:417)
+   This course is currently ineligible because it requires 01:198:416 (Operating Systems Design), which you have not met per the constraint check. Suggest taking 01:198:416 first if you want to take 01:198:417 later.
+
+If you want, I can:
+- Turn this into a semester-by-semester plan (given you are a senior and have 91 credits), or
+- Narrow recommendations to a specific AI subarea (ML, NLP, CV, robotics, neuromorphic, theory), or
+- Check scheduling/availability for any of these courses. Which would you prefer?",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",22677,5442,yes,NULL,no,,
+2026-09-07 01:03:21,2026-09-07 01:15:12 AM,93.51,which 2 should i take most immediately?,"1) Systems Programming (NB) (01:198:214)
+   Recommended because: Foundational systems-level skills (C-level programming, low-level debugging, scripting) that prepare you for OS and systems work; it also unlocks follow-on courses.
+   Prerequisites: 01:198:112 (Data Structures) and 01:640:152 — both are recorded as satisfied for you in the constraint check. Corequisite: 01:198:211 (you have this completed).
+
+2) Principles of Programming Languages (NB) (01:198:314)
+   Recommended because: Strong conceptual breadth on paradigms, types, interpreters/compilers — useful across software engineering and advanced CS topics.
+   Prerequisites: 01:198:205, 01:198:211, 01:640:152 — all are recorded as satisfied for you in the constraint check.
+
+Note: Numerical Analysis (01:198:323) and Brain-inspired Computing (01:198:425) are also eligible but were ranked lower as more specialized. Operating Systems (01:198:416) and Distributed Systems (01:198:417) are currently ineligible; taking 01:198:214 now is the recommended first step to become eligible for 01:198:416 and then 01:198:417.",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",25236,4087,yes,NULL,no,,
+2026-09-07T18:13:29.490534,2026-09-07T18:14:29,25.94,What are the prerequisites for Introduction to Artificial Intelligence?,"Prerequisites for Introduction to Artificial Intelligence (01:198:440):
+- One of:
+  - 01:198:205 Introduction to Discrete Structures I
+  - 14:332:202 Discrete Math ECE
+  - 14:332:312 Discrete Mathematics ECE
+- And one of:
+  - 01:640:152 Calculus II for Mathematical and Physical Sciences
+  - 01:640:192 Honors Calculus II",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json,prereq_dag.json,BFS,DFS",5099,2514,yes,NULL,NULL,,
+2026-09-07T18:13:29.490534,2026-09-07T18:16:12,16.63,How can I take machine learning,Which specific Machine Learning course at Rutgers are you aiming for (course code or exact title and campus)?,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",3175,1883,yes,NULL,NULL,,
+2026-09-07T18:13:29.490534,2026-09-07T18:18:10,27.05,machine learning principles,"Machine Learning Principles (01:198:461, New Brunswick)
+Description: Systematic introduction to machine learning, covering theoretical and practical aspects of statistical methods. Topics include linear models for classification and regression, support vector machines, regularization and model selection, and an introduction to deep learning, with applications in areas like computer vision, NLP, and information retrieval.
+Prerequisites: 01:198:112, 0:198:206, 01:640:250.
+Would you like details on the syllabus, how it fits in your plan, or how it compares with related courses?",data_lookup,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json",4898,2726,NULL,NULL,NULL,,
+2026-09-07T18:33:55.765147,2026-09-07T18:34:54,20.21,How can I take machine learning?,"Which specific Rutgers machine learning course are you asking about—please provide the course code and campus (e.g., 01:198:439 at New Brunswick or 16:198:535)?",,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",3130,2287,NULL,NULL,NULL,,
+2026-09-07T18:33:55.765147,2026-09-07T18:35:41,9.22,Machine Learning Principles,Please clarify: campus.,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",1700,1372,NULL,NULL,NULL,,
+2026-09-07T18:33:55.765147,2026-09-07T18:36:10,6.34,new brunswick,Please clarify: campus.,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",1710,815,NULL,NULL,NULL,,
+2026-09-07T18:41:43.992218,2026-09-07T18:42:38,30.44,How can I take machine learning?,Please specify: target course.,,parser|orchestrator,"parser:LLM,query_schema.json|orchestrator:LLM",3188,2342,NULL,NULL,NULL,,
+2026-09-07T18:41:43.992218,2026-09-07T18:44:10,49.48,Machine Learning Principles,"Here’s how to reach 01:198:461 MACHINE LEARNING PRINCIPLES:
+
+Required prerequisites for 01:198:461:
+- 01:198:112 Data Structures
+- 01:198:206 Discrete Structures II
+- 01:640:250 (title not available in the retrieved data)
+
+Shortest pathway (if you haven’t taken the CS prerequisites yet):
+1) 01:198:111 Introduction to Computer Science
+2) 01:198:112 Data Structures and 01:198:205 Discrete Structures I (these can be taken in parallel if allowed)
+3) 01:198:206 Discrete Structures II
+Plus: complete 01:640:250. After these are done, you can enroll in 01:198:461.
+
+If you tell me which of these courses you’ve already completed or are currently taking, I can tailor the shortest path and timing for you.",data_prereq,parser|orchestrator|data,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json,prereq_dag.json,BFS,DFS",5775,4883,yes,NULL,no,,
+2026-09-07T18:41:43.992218,2026-09-07T18:48:24,121.76,"I prefer challenging, theory-heavy courses.","Here are challenging, theory-heavy Rutgers CS courses ranked for your interests:
+
+1) Design and Analysis of Algorithms (01:198:344)
+   Rigorous focus on algorithm design paradigms and correctness/complexity proofs—core theoretical CS and suitably challenging.
+   Prerequisites: 01:198:112 (Data Structures), 01:198:205 (Discrete Structures I), 01:198:206 (Discrete Structures II).
+
+2) Discrete Structures II (01:198:206)
+   Deepens theory with counting, relations, graph theory, and recurrences; excellent for strengthening proof skills.
+   Prerequisites: 01:198:205 (Discrete Structures I).
+
+3) Principles of Programming Languages (NB) (01:198:314)
+   Strong theoretical alignment via formal syntax/semantics and multiple paradigms (functional, logic) with emphasis on reasoning.
+   Prerequisites: 01:198:205 (Discrete Structures I), 01:198:211 (Computer Architecture), 01:640:152 (Calculus II).
+
+4) Discrete Structures I (01:198:205)
+   Foundations in logic and proof techniques—essential preparation for higher-level theory and algorithms.
+   Prerequisites: 01:198:111 (Introduction to Computer Science).
+
+5) Data Structures (01:198:112)
+   Provides core abstractions and complexity analysis that support theoretical work and upper-level algorithms.
+   Prerequisites: 01:198:111 (Introduction to Computer Science).
+
+Lower-priority options to consider later:
+- Introduction to Computer Science (01:198:111): Foundational programming; valuable background but less aligned with your theory-first preference.
+- Introduction to Artificial Intelligence (NB) (01:198:440): Useful survey of AI topics, but less directly theory-centered than the courses above.
+
+If you want, I can tailor this further around a target semester or specific subfields (e.g., algorithms, formal languages, logic), or check eligibility once prerequisites are clear.",data_fetch -> planning,parser|orchestrator|data|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|planning:LLM",13514,13030,yes,NULL,no,,
+2026-09-07T18:41:43.992218,2026-09-07T18:57:55,87.56,How can I take computer security? give me both the most immediate path and also one where I can branch out a little.,"Here’s how you can reach Computer Security (01:198:419) given your record:
+
+What 419 requires:
+- 01:198:205 (Discrete Structures I) or 14:332:202, and one of 01:198:416 (Operating Systems Design) or 01:198:352 (Internet Technology), and 01:640:152.
+- From your transcript, you’ve completed 01:198:205 and 01:640:152. The remaining piece is either 01:198:416 or 01:198:352.
+
+Most immediate path (shortest step count):
+- Next: 01:198:352 Internet Technology.
+- Then: 01:198:419 Computer Security in the following term once 352 is done.
+
+Branch-out path (broader systems background first):
+- Next: 01:198:416 Operating Systems Design (also satisfies the 419 prerequisite).
+- Then: 01:198:419 Computer Security after 416.
+- Optional enrichments while on this path (not required for 419 but you’re eligible to explore): 01:198:214 Systems Programming or 01:198:314 Principles of Programming Languages.
+
+Either 352 or 416 will make you eligible for 419—choose based on which aligns better with your interests and what’s offered in your desired term.",data_prereq -> constraint_prereq,parser|orchestrator|data|constraint,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json,prereq_dag.json,BFS,DFS|constraint:LLM",12343,7694,yes,n,no,,
+2026-09-07T18:41:43.992218,2026-09-07T19:01:24,125.62,"if you were to recommend me 3 courses to take for senior year, what would they be?","Here are three senior-year picks tailored to your interest in theory and a challenging workload:
+
+1) Principles of Programming Languages (01:198:314)
+   Why: Strong theoretical focus on formal languages, parsing, semantics, types, and models of computation; rigorous and senior-appropriate.
+   Prerequisites: 01:198:205 (Discrete Structures I), 01:198:211, 01:640:152.
+   Eligibility: Your record shows these prerequisites are satisfied (you have 01:198:205 and 01:198:211; the math prerequisite is satisfied per your record).
+
+2) Numerical Analysis and Computing (01:198:323)
+   Why: Mathematically rigorous treatment of approximation, numerical linear algebra, and ODE solvers—good complement to theory interests.
+   Prerequisites: 01:640:152 and 01:640:250.
+   Eligibility: Satisfied per your record (you have 01:640:250; the Calculus prerequisite is satisfied per your record).
+
+3) ALGORITHMS IN SOCIETY (01:198:345)
+   Why: Explores real-world decision-making algorithms with analytical depth; broadens perspective while still engaging algorithmic thinking.
+   Prerequisites: 01:198:112 or 01:198:210.
+   Eligibility: Met via your completed 01:198:112.
+
+Future option to unlock:
+- Computer Security (01:198:419): Not currently eligible because it requires one of 01:198:416 (Operating Systems Design) or 01:198:352 (Internet Technology). Taking either 416 or 352 would open 419.
+
+If you want alternatives within theory (e.g., complexity, PL/compilers, or math-heavy electives), I can refine this further based on what you’d like to emphasize.",data_fetch -> constraint_full -> planning,parser|orchestrator|data|constraint|planning,"parser:LLM,query_schema.json|orchestrator:LLM|data:rutgers_courses.json|constraint:LLM|planning:LLM",22510,12745,yes,NULL,no,,

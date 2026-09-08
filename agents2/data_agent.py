@@ -2,21 +2,22 @@
 Data Agent code, RAG yet for semantic search.
 """
 
-import os
 import json
 from agent_framework import ChatAgent
-from agent_framework.openai import OpenAIChatClient
+from agent_framework.openai import OpenAIResponsesClient
 from typing import Dict, List
 import re
-from openai import AsyncOpenAI
 import chromadb
+from chromadb.errors import NotFoundError
 from chromadb.utils import embedding_functions
-from dotenv import load_dotenv
+from agents2.inference_metrics import instrument_embeddings
 import httpx
 import time
 from datetime import date
 
 from .shared_types import AgentResponse, ConversationState
+from .azure_openai import get_azure_openai_settings
+from .paths import COURSES_FILE, CHROMA_DIR
 
 class DataAgent(ChatAgent):
     """
@@ -24,25 +25,20 @@ class DataAgent(ChatAgent):
     to resumes and other sources of data, plan to have agent extract data from external database. 
     """
 
-    def __init__(self, client: OpenAIChatClient, model: str, courses_file: str = "rutgers_courses.json"):
+    def __init__(self, client: OpenAIResponsesClient, model: str, courses_file: str = str(COURSES_FILE)):
         """
         Initialize data agent with RAG-based semantic search
         """
 
         super().__init__(
             chat_client=client,
-            model=model,
+            default_options={"model_id": model},
             instructions=self._get_system_message()
         )
 
         self.model = model
         self.courses_file = courses_file
         self.courses_data=self._load_courses()
-
-        self.embedding_client = AsyncOpenAI(
-            api_key=os.environ["GITHUB_TOKEN"],
-            base_url="https://models.inference.ai.azure.com/"
-        )
 
         self.vector_db= self._initialize_vector_db()
         self._index_courses()
@@ -54,30 +50,32 @@ class DataAgent(ChatAgent):
 
         # print(f"[DataAgent] Initialized with model: {model}")
         # print(f"[DataAgent] Loaded {len(self.courses_data)} courses")
-        # print(f"[DataAgent] Vector database initialized with GitHub Models embeddings")
+        # print(f"[DataAgent] Vector database initialized with Azure OpenAI embeddings")
 
     def _initialize_vector_db(self):
         """
-        Initialize ChromaDB with Github model embeddings. 
+        Initialize ChromaDB with Azure OpenAI v1 embeddings.
         """
 
-        client = chromadb.PersistentClient(path="./chroma_db")
-        github_embedfunc = embedding_functions.OpenAIEmbeddingFunction(
-            api_key=os.environ["GITHUB_TOKEN"],
-            api_base="https://models.inference.ai.azure.com/",
-            model_name="text-embedding-3-small" # supported by git models
+        client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+        settings = get_azure_openai_settings()
+        azure_embedfunc = embedding_functions.OpenAIEmbeddingFunction(
+            api_key=settings.api_key,
+            api_base=settings.endpoint,
+            model_name=settings.embedding_deployment,
         )
+        instrument_embeddings(azure_embedfunc, settings.embedding_deployment)
 
         try:
             collection = client.get_collection(
                 name = "rutgers_courses",
-                embedding_function=github_embedfunc
+                embedding_function=azure_embedfunc
             )
             # print("[DataAgent] using existing embedding collection.")
-        except:
+        except NotFoundError:
             collection = client.create_collection(
                 name="rutgers_courses",
-                embedding_function=github_embedfunc,
+                embedding_function=azure_embedfunc,
                 metadata={
                     "hnsw:space": "cosine", # don't know what this does necessarily
                     "description": "Rutgers CS courses with semantic search"
@@ -199,7 +197,12 @@ class DataAgent(ChatAgent):
             # print(f"[DataAgent] Fetching courses for intent: {intent}")
             # print(f"[DataAgent] Entities: {entities}")
 
-            matched_courses = await self._rag_retrieve(entities, intent)
+            if parsed_data.get("reference_courses"):
+                codes = [c["code"] for c in parsed_data["reference_courses"]]
+                catalog = {c["code"]: c for c in self.courses_data}
+                matched_courses = [catalog[code] for code in codes if code in catalog]
+            else:
+                matched_courses = await self._rag_retrieve(entities, intent)
 
             # filter out courses already taken or in progress based on transcript data in conversation state. 
             if state.transcript_data:
@@ -259,7 +262,7 @@ class DataAgent(ChatAgent):
         
     async def _rag_retrieve(self, entities: Dict, intent: str) -> List[Dict]:
         """
-        RAG-based semantic search using github models
+        RAG-based semantic search using the configured Azure deployment.
 
         Args - Extracted entities (entities: interests, year, etc), intent - Query intent
 

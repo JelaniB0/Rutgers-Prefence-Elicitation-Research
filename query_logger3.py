@@ -1,147 +1,91 @@
-"""
-Creates CSV log of queries, execution plan steps, agents invoked, sources used,
-and hallucination tracking.
-
-Hallucination columns:
-  hallucinated        — yes | no | NULL (skipped)
-  hallucination_type  — course_invented | prereq_wrong | code_wrong | ranking_wrong | other
-  hallucination_notes — free-text detail entered by the user
-"""
-
+"""Append-only evaluation CSV and compact per-turn model-usage JSONL."""
 import csv
-import os
+import json
 from datetime import datetime
+from pathlib import Path
+from agents2.paths import QUERY_LOG_FILE
 
-CSV_LOG_FILE = "query_log3.csv"
-
-CSV_COLUMNS = [
-    "session_id",
-    "timestamp",
-    "response_time_sec",
-    "query",
-    "response",
-    "plan_steps",
-    "agents_invoked",
-    "sources_and_tools",
-    "input_tokens",
-    "output_tokens",
-    "satisfied",
-    "feedback",
-    "hallucinated",
-    "hallucination_type",
-    "hallucination_notes",
+CSV_LOG_FILE = str(QUERY_LOG_FILE)
+LEGACY_COLUMNS = [
+    "session_id", "timestamp", "response_time_sec", "query", "response",
+    "plan_steps", "agents_invoked", "sources_and_tools", "input_tokens",
+    "output_tokens", "satisfied", "feedback", "hallucinated",
+    "hallucination_type", "hallucination_notes",
 ]
-
-HALLUCINATION_TYPES = [
-    "course_invented",   # recommended a course that doesn't exist
-    "prereq_wrong",      # stated incorrect prerequisite information
-    "code_wrong",        # used a wrong course code
-    "ranking_wrong",     # ranked ineligible course as eligible or vice versa
-    "other",
+CSV_COLUMNS = LEGACY_COLUMNS + [
+    "query_id", "model_id", "topology", "llm_call_count", "model_call_count",
+    "estimated_inference_cost_usd", "cumulative_session_cost_usd",
+    "session_input_tokens", "session_output_tokens", "session_llm_call_count",
+    "usage_complete",
 ]
+HALLUCINATION_TYPES = ["course_invented", "prereq_wrong", "code_wrong", "ranking_wrong", "other"]
 
 
-def _migrate_csv(filepath: str) -> None:
-    """
-    Rewrites CSV to match current schema exactly.
-    Drops blank rows during migration.
-    """
-    with open(filepath, mode="r", newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        rows = list(reader)
-
-    cleaned_rows = []
-    for row in rows:
-        if any(v.strip() for v in row.values()):
-            cleaned_rows.append({col: row.get(col, "") for col in CSV_COLUMNS})
-
-    with open(filepath, mode="w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, lineterminator='\n')
-        writer.writeheader()
-        writer.writerows(cleaned_rows)
-
-
-def _csv_exists(filepath: str = CSV_LOG_FILE) -> None:
-    """
-    Creates CSV with headers if missing.
-    Only migrates if the schema has actually changed — never rewrites unnecessarily.
-    """
-    if not os.path.exists(filepath):
-        with open(filepath, mode="w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, lineterminator='\n')
+def _append_csv(path, row, columns):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    exists = path.exists() and path.stat().st_size > 0
+    if exists:
+        with path.open(newline="", encoding="utf-8") as stream:
+            if next(csv.reader(stream), []) != columns:
+                raise ValueError(f"Unexpected log schema in {path}; existing data was not changed.")
+    with path.open("a", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=columns, extrasaction="ignore", lineterminator="\n")
+        if not exists:
             writer.writeheader()
-        return
-
-    with open(filepath, mode="r", newline="", encoding="utf-8") as f:
-        for line in f:
-            if line.strip():
-                existing_columns = next(csv.reader([line]))
-                break
-        else:
-            existing_columns = []
-
-    if existing_columns != CSV_COLUMNS:
-        _migrate_csv(filepath)
+        writer.writerow(row)
 
 
-def log_query(
-    session_id: str,
-    query: str,
-    response: str,
-    agents_invoked: list[str],
-    agent_sources: dict[str, list[str]] | None = None,
-    plan_steps: str = "",
-    input_tokens: int = 0,
-    output_tokens: int = 0,
-    response_time_sec: float = 0.0,
-    satisfied: str = "",
-    feedback: str = "",
-    hallucinated: str = "NULL",
-    hallucination_type: str = "",
-    hallucination_notes: str = "",
-    filepath: str = CSV_LOG_FILE,
-) -> None:
-    """
-    Appends a row to the CSV log with details of the query,
-    execution plan, agents invoked, sources/tools used, and hallucination data.
-    """
+def log_query(session_id, query, response, agents_invoked, agent_sources=None,
+              plan_steps="", input_tokens=0, output_tokens=0, response_time_sec=0.0,
+              satisfied="", feedback="", hallucinated="NULL", hallucination_type="",
+              hallucination_notes="", filepath=CSV_LOG_FILE, *, model_id="",
+              topology="star", research=None):
     if not query or not query.strip():
         return
+    research = research or {}
+    if "calls" in research:
+        # Actual returned calls, not the shared client's default deployment.
+        model_id = "|".join(sorted({c["model_id"] for c in research["calls"] if c.get("model_id")}))
+    turn, session = research.get("query", {}), research.get("session", {})
+    sources = agent_sources or {}
+    row = dict(session_id=session_id, timestamp=datetime.now().isoformat(timespec="seconds"),
+               response_time_sec=f"{response_time_sec:.2f}", query=query, response=response,
+               plan_steps=plan_steps, agents_invoked="|".join(agents_invoked),
+               sources_and_tools="|".join(f"{a}:{','.join(sources.get(a, ['LLM']))}" for a in agents_invoked),
+               input_tokens=turn.get("input_tokens", input_tokens), output_tokens=turn.get("output_tokens", output_tokens),
+               satisfied=satisfied, feedback=feedback, hallucinated=hallucinated,
+               hallucination_type=hallucination_type, hallucination_notes=hallucination_notes,
+               query_id=research.get("query_id"), model_id=model_id, topology=topology,
+               llm_call_count=turn.get("llm_call_count"), model_call_count=turn.get("model_call_count"),
+               estimated_inference_cost_usd=turn.get("estimated_inference_cost_usd"),
+               cumulative_session_cost_usd=session.get("estimated_inference_cost_usd"),
+               session_input_tokens=session.get("input_tokens"), session_output_tokens=session.get("output_tokens"),
+               session_llm_call_count=session.get("llm_call_count"), usage_complete=turn.get("usage_complete"))
+    path = Path(filepath)
+    if path.exists() and path.stat().st_size:
+        with path.open(newline="", encoding="utf-8") as stream:
+            header = next(csv.reader(stream), [])
+        if header == LEGACY_COLUMNS:
+            _append_csv(path.with_name(path.stem + "_metrics.csv"), row, CSV_COLUMNS)
+            _append_csv(path, row, LEGACY_COLUMNS)
+            return
+    _append_csv(path, row, CSV_COLUMNS)
 
-    _csv_exists(filepath)
 
-    agent_sources = agent_sources or {}
-
-    agents_str = "|".join(agents_invoked) if agents_invoked else "orchestrator"
-
-    source_parts: list[str] = []
-    for agent in agents_invoked:
-        sources = agent_sources.get(agent)
-        if sources:
-            source_parts.append(f"{agent}:{','.join(sources)}")
-        else:
-            source_parts.append(f"{agent}:LLM")
-
-    sources_str = "|".join(source_parts) if source_parts else "orchestrator:LLM"
-
-    row = {
-        "session_id":          session_id,
-        "timestamp":           datetime.now().strftime("%Y-%m-%d %I:%M:%S %p"),
-        "response_time_sec":   f"{response_time_sec:.2f}",
-        "query":               query,
-        "response":            response,
-        "plan_steps":          plan_steps,
-        "agents_invoked":      agents_str,
-        "sources_and_tools":   sources_str,
-        "input_tokens":        input_tokens,
-        "output_tokens":       output_tokens,
-        "satisfied":           satisfied,
-        "feedback":            feedback,
-        "hallucinated":        hallucinated,
-        "hallucination_type":  hallucination_type,
-        "hallucination_notes": hallucination_notes,
-    }
-
-    with open(filepath, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, lineterminator='\n')
-        writer.writerow(row)
+def log_turn_metrics(session_id, research, *, routing_events=None, topology="star",
+                     phase="query", parsed_intent=None, model_config=None, filepath=CSV_LOG_FILE):
+    """All attempted turns, including uploads/errors; no prompt/transcript content."""
+    path = Path(filepath)
+    path = path.with_name(path.stem + "_calls.jsonl")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    events = [dict(event, guardrail_modified=bool(event.get("interventions") or
+                                                event.get("terminal_fallback")))
+              for event in (routing_events or [])]
+    record = dict(research, session_id=session_id, topology=topology, phase=phase,
+                  parsed_intent=parsed_intent,
+                  model_config=model_config or {},
+                  timestamp=datetime.now().isoformat(timespec="seconds"),
+                  routing_events=events)
+    with path.open("a", encoding="utf-8") as stream:
+        stream.write(json.dumps(record, ensure_ascii=False) + "\n")
